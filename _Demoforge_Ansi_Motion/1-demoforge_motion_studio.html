@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Demoforge Motion Studio</title>
+<style>
+:root {
+  --bg: #efe9d9;
+  --bg-2: #e5ddc8;
+  --ink: #1a1a1a;
+  --ink-soft: #3a3a3a;
+  --line: #1a1a1a;
+  --accent: #6b6b28;
+  --halo: #b8b36b;
+  --warn: #8a2a1d;
+  --ok: #2a5a1d;
+}
+*{box-sizing:border-box;border-radius:0!important}
+::selection{background:var(--halo);color:var(--ink)}
+html,body{margin:0;min-height:100%;background:var(--bg);color:var(--ink);font-family:ui-monospace,"JetBrains Mono","Cascadia Mono",Menlo,Consolas,monospace;font-size:12px;text-transform:uppercase;letter-spacing:.08em;font-variant-numeric:tabular-nums}
+body{display:grid;grid-template-columns:320px 1fr;min-height:100vh}
+button,input,select,textarea{font-family:inherit;text-transform:uppercase;letter-spacing:.08em;font-variant-numeric:tabular-nums;color:var(--ink)}
+.sidebar{position:sticky;top:0;max-height:100vh;overflow-y:auto;background:var(--bg-2);border-right:1px solid var(--line);padding:20px 18px}
+main{display:flex;flex-direction:column;padding:20px 28px;gap:18px;background:var(--bg)}
+h1{margin:0;font-size:13px;letter-spacing:.22em;text-transform:uppercase;font-weight:800;line-height:1.2}
+.subtitle{margin:7px 0 18px;font-size:10px;letter-spacing:.25em;color:var(--ink-soft)}
+.section{border-top:1px solid var(--line);padding:14px 0 16px}
+.section-head{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:0 0 10px;font-size:10px;letter-spacing:.28em;font-weight:800;text-transform:uppercase}
+.help-btn{width:19px;height:19px;padding:0;font-size:11px;line-height:17px;text-align:center;background:var(--bg);border:1px solid var(--ink);cursor:pointer;flex:0 0 auto}
+.help-btn:hover{background:var(--ink);color:var(--bg)}
+.help{display:none;border:1px solid var(--line);padding:8px;margin:8px 0 10px;background:var(--bg);font-size:10px;letter-spacing:.07em;line-height:1.55;color:var(--ink-soft);text-transform:none}
+.help.open{display:block}.help b{color:var(--ink);text-transform:uppercase}.help p{margin:0 0 6px}.help p:last-child{margin:0}
+label.row{display:grid;grid-template-columns:1fr auto;align-items:center;gap:6px;margin-bottom:8px;font-size:12px}
+.lbl{color:var(--ink-soft);text-transform:lowercase;letter-spacing:.05em}.val{font-variant-numeric:tabular-nums;color:var(--accent);min-width:42px;text-align:right}
+.field{display:grid;gap:5px;margin-bottom:8px;font-size:10px;color:var(--ink-soft);letter-spacing:.12em}
+input[type=text],input[type=number],input[type=file],select,textarea{width:100%;background:var(--bg);border:1px solid var(--line);font-size:12px;padding:6px 8px;outline:none}
+textarea{min-height:78px;resize:vertical;line-height:1.45;text-transform:none}
+input:focus,select:focus,textarea:focus{border-color:var(--accent);box-shadow:inset 0 0 0 1px var(--halo)}
+input[type=color]{width:100%;height:30px;border:1px solid var(--line);padding:0;background:var(--bg)}
+input[type=range]{appearance:none;-webkit-appearance:none;width:100%;height:20px;background:transparent;padding:0;border:0;outline:none}
+input[type=range]::-webkit-slider-runnable-track{height:2px;background:var(--ink)}
+input[type=range]::-moz-range-track{height:2px;background:var(--ink)}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:14px;height:14px;background:var(--bg);border:1.5px solid var(--ink);margin-top:-6px}
+input[type=range]::-moz-range-thumb{width:14px;height:14px;background:var(--bg);border:1.5px solid var(--ink)}
+button{font-size:11px;letter-spacing:.12em;text-transform:uppercase;background:var(--bg);border:1px solid var(--ink);padding:7px 12px;cursor:pointer}
+button:hover{background:var(--ink);color:var(--bg)}button:active{transform:translateY(1px)}
+button.primary{background:var(--ink);color:var(--bg)}button.primary:hover{background:var(--accent);color:var(--bg)}
+button.ghost{background:transparent}button.small{padding:4px 8px;font-size:10px}.btn-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px}.btn-row{display:flex;gap:6px;flex-wrap:wrap}.color-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}.color-grid label{display:grid;gap:4px;font-size:10px;color:var(--ink-soft);letter-spacing:.12em}
+.status{border:1px solid var(--line);background:var(--bg);padding:8px;font-size:11px;line-height:1.45;min-height:40px}.s-ok{color:var(--ok)}.s-warn{color:var(--warn)}.s-info{color:var(--ink-soft)}
+.topbar{display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line);padding-bottom:12px;gap:12px}.topbar-left{display:flex;gap:8px}.brand{display:flex;align-items:center;gap:10px;font-size:12px;letter-spacing:.28em;font-weight:800}.dot{width:7px;height:7px;background:var(--accent);display:inline-block}
+.stage{display:grid;grid-template-columns:1fr 1fr;gap:18px}.pane-head{display:flex;align-items:center;justify-content:space-between;font-size:10px;letter-spacing:.25em;font-weight:800;margin-bottom:8px}.tag{color:var(--accent)}.ratio{position:relative;width:100%;padding-top:75%;background:#000;border:1px solid var(--line);overflow:hidden}.ratio>*{position:absolute;inset:0;width:100%;height:100%}.source-view video,.source-view img{object-fit:contain;background:#000}.empty-source{display:flex;align-items:center;justify-content:center;color:#efe9d9;font-size:11px;letter-spacing:.16em;text-align:center;padding:24px}.yt-card{background:#111;position:absolute;inset:0;overflow:hidden}.yt-card img{width:100%;height:100%;object-fit:cover;opacity:.85}.yt-footer{position:absolute;left:0;right:0;bottom:0;background:rgba(0,0,0,.65);display:flex;align-items:center;justify-content:space-between;gap:8px;padding:8px;color:#fff;font-size:10px}.yt-footer a{color:#fff;text-decoration:none;border:1px solid #fff;padding:4px 7px;font-size:10px;text-transform:uppercase}.render-canvas{image-rendering:pixelated;background:#000}.drop-hint{border:1px dashed var(--ink);padding:10px;font-size:11px;color:var(--ink-soft);text-align:center}
+.timeline{border:1px solid var(--line);padding:14px 16px;background:var(--bg-2)}.timeline-bar{height:36px;position:relative;cursor:pointer;border:1px solid var(--line);background:var(--bg);margin:16px 0 12px}.range-hi{position:absolute;top:0;bottom:0;background:var(--halo);opacity:.55}.playhead{position:absolute;top:0;bottom:0;width:2px;background:var(--ink)}.marker{position:absolute;top:0;bottom:0;width:3px;background:var(--accent);cursor:ew-resize}.marker::before{position:absolute;top:-14px;left:-5px;font-size:10px;color:var(--accent)}.marker.in::before{content:"IN"}.marker.out::before{content:"OUT"}.slider-row{display:grid;grid-template-columns:90px 1fr;gap:10px;align-items:center;margin:8px 0}.slider-row span{font-size:10px;letter-spacing:.18em}.time-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px}.time-cell{border:1px solid var(--line);padding:7px;background:var(--bg)}.time-cell b{font-size:10px;display:block;margin-bottom:4px}.time-cell input{height:14px;background:transparent;border:0;padding:0;font-size:12px}.time-cell .small{margin-top:5px}.meta-row{display:flex;justify-content:space-between;gap:8px;font-size:11px;margin-top:10px;color:var(--ink-soft)}
+.debug-panels{display:none;grid-template-columns:repeat(3,1fr);gap:10px}.debug-panels.open{display:grid}.debug-card{border:1px solid var(--line);background:var(--bg-2);padding:8px}.debug-card h3{margin:0 0 8px;font-size:10px;letter-spacing:.25em}.debug-card canvas{width:100%;border:1px solid var(--line);background:#000;image-rendering:pixelated}.drop-overlay{display:none;position:fixed;inset:12px;background:rgba(239,233,217,.86);border:3px dashed var(--accent);z-index:1000;align-items:center;justify-content:center}.drop-overlay.open{display:flex}.drop-box{border:1px solid var(--line);background:var(--bg);padding:24px 32px;font-size:22px;letter-spacing:.2em;font-weight:800}
+@media(max-width:960px){body{grid-template-columns:1fr}.sidebar{position:relative;max-height:none;border-right:0;border-bottom:1px solid var(--line)}.stage{grid-template-columns:1fr}.topbar{align-items:flex-start;flex-direction:column}}
+</style>
+</head>
+<body>
+<aside class="sidebar">
+  <h1>Demoforge</h1><div class="subtitle">Motion Studio · v1</div>
+  <section class="section"><div class="section-head"><span>Source</span><button class="help-btn" data-help="source">?</button></div><div class="help" id="help-source"><p><b>Origine.</b> La source est la matière brute : vidéo, gif, lien ou carte YouTube.</p><p><b>Intérêt.</b> Plus la source est simple et contrastée, plus les effets silhouette, ASCII et vectoriels restent lisibles.</p></div>
+    <label class="field">File video<input id="videoFile" type="file" accept="video/*"></label><label class="field">File gif<input id="gifFile" type="file" accept="image/gif,image/*"></label><label class="field">Youtube url<input id="youtubeUrl" type="text" placeholder="https://youtu.be/... ou id"></label><div class="btn-row"><button id="loadUrl">Charger URL</button><button id="resetSource">Reset</button></div><p class="drop-hint">Déposez une vidéo, une image ou un gif ici.</p>
+  </section>
+  <section class="section"><div class="section-head"><span>Effet</span><button class="help-btn" data-help="effet">?</button></div><div class="help" id="help-effet"><p><b>Origine.</b> Ces effets viennent des intros, cracktros, terminaux, photocopies et rendus bitmap des années 80–90.</p><p><b>Intérêt.</b> Ils transforment la vidéo en langage graphique : silhouettes, trames, pixels, vecteurs ou traces.</p></div><select id="effectSelect"></select><div class="help" id="effectDoc"></div></section>
+  <section class="section"><div class="section-head"><span>Variante</span><button class="help-btn" data-help="variante">?</button></div><div class="help" id="help-variante"><p><b>Origine.</b> Une variante est une direction esthétique : terminal, papier, signal dur, grille froide.</p><p><b>Intérêt.</b> Elle change l'interprétation sans changer l'algorithme principal.</p></div><select id="variantSelect"></select></section>
+  <section class="section"><div class="section-head"><span>Raster</span><button class="help-btn" data-help="raster">?</button></div><div class="help" id="help-raster"><p><b>Origine.</b> Les rasters imitent CRT, imprimerie, demi-teinte, trames vidéo et contraintes machines.</p><p><b>Intérêt.</b> Ils ajoutent une signature rétro et masquent les imperfections du rendu.</p></div><select id="rasterSelect"></select></section>
+  <section class="section"><div class="section-head"><span>Palette</span><button class="help-btn" data-help="palette">?</button></div><div class="help" id="help-palette"><p><b>Origine.</b> Les palettes limitées viennent des micros 8/16 bits et de l'impression économique.</p><p><b>Intérêt.</b> Une palette courte donne une identité forte et rend l'export plus cohérent.</p></div><select id="paletteSelect"></select><div class="color-grid" style="margin-top:8px"><label>fond<input type="color" id="c-bg" value="#efe9d9"></label><label>encre<input type="color" id="c-ink" value="#1a1a1a"></label><label>accent<input type="color" id="c-accent" value="#6b6b28"></label><label>halo<input type="color" id="c-halo" value="#b8b36b"></label></div><div class="btn-row" style="margin-top:8px"><button id="applyPalette">Appliquer</button><button id="resetPalette">Reset</button></div></section>
+  <section class="section"><div class="section-head"><span>Réglages moteur</span><button class="help-btn" data-help="engine">?</button></div><div class="help" id="help-engine"><p><b>Origine.</b> Les réglages simulent la chaîne capture → simplification → stylisation.</p><p><b>Intérêt.</b> Ils contrôlent lisibilité, abstraction et intensité plutôt que de multiplier les effets.</p></div><div id="sliders"></div></section>
+  <section class="section"><div class="section-head"><span>Caractères personnalisés</span><button class="help-btn" data-help="chars">?</button></div><div class="help" id="help-chars"><p><b>Origine.</b> L'ASCII art utilise une rampe de signes du plus léger au plus dense.</p><p><b>Intérêt.</b> Changer la rampe change le grain, comme choisir une police ou une trame.</p></div><textarea id="chars"> .:-=+*#%@</textarea></section>
+  <section class="section"><div class="section-head"><span>Export</span><button class="help-btn" data-help="export">?</button></div><div class="help" id="help-export"><p><b>Origine.</b> Les démos se distribuent souvent comme fichiers autonomes très contraints.</p><p><b>Intérêt.</b> Les exports privilégient soit la légèreté, soit l'animation, soit une image fixe.</p></div><div class="btn-grid"><button class="primary">HTML ultra léger</button><button>HTML animé</button><button>SVG animé</button><button>WebM VP9</button><button>WebM VP8</button><button>PNG frame</button><button>HTML snapshot</button><button>SVG snapshot</button></div><label class="field" style="margin-top:8px"><span><input id="debugToggle" type="checkbox"> Debug</span></label></section>
+  <section class="section"><div class="section-head"><span>Config · Modules JSON</span><button class="help-btn" data-help="modules">?</button></div><div class="help" id="help-modules"><p><b>Origine.</b> Les modules JSON servent de cartouches : un preset ou un effet peut voyager seul.</p><p><b>Intérêt.</b> On peut partager un comportement sans modifier le studio.</p></div><div class="btn-row"><button id="exportConfig">Exporter</button><button id="loadConfig">Charger</button></div><input id="configFile" type="file" accept="application/json,.json" style="margin-top:8px"><textarea id="jsonModule" placeholder='{"effect":"ASCII Art"}'></textarea><button id="applyModule">Appliquer</button></section>
+  <section class="section"><div class="section-head"><span>État</span><button class="help-btn" data-help="etat">?</button></div><div class="help" id="help-etat"><p><b>Origine.</b> Les vieux outils affichaient toujours leur état : prêt, erreur, rendu, export.</p><p><b>Intérêt.</b> Le statut évite les actions silencieuses et aide au debug.</p></div><div id="status" class="status s-info">Prêt · aucune source locale</div></section>
+</aside>
+<main>
+  <div class="topbar"><div class="topbar-left"><button id="playBtn" class="primary">Lecture</button><button id="pauseBtn">Pause</button><button id="quickExport">HTML léger</button></div><div class="brand"><span class="dot"></span><span>· Motion Studio</span></div></div>
+  <section class="stage"><div><div class="pane-head"><span>Source</span><span class="tag" id="sourceTag">No source</span></div><div class="ratio source-view" id="sourcePane"><div class="empty-source">Source vidéo / gif / YouTube</div></div></div><div><div class="pane-head"><span>Rendu</span><span class="tag" id="renderTag">Live canvas</span></div><div class="ratio"><canvas id="renderCanvas" class="render-canvas" width="640" height="480"></canvas></div></div></section>
+  <section class="timeline"><div class="pane-head"><span>Timeline</span><span class="tag">trim + playhead</span></div><div class="timeline-bar" id="timelineBar"><div class="range-hi" id="rangeHi"></div><div class="marker in" id="markIn"></div><div class="marker out" id="markOut"></div><div class="playhead" id="playhead"></div></div><div class="slider-row"><span>Trim start</span><input id="trimStart" type="range" min="0" max="100" value="10"></div><div class="slider-row"><span>Trim end</span><input id="trimEnd" type="range" min="0" max="100" value="90"></div><div class="time-grid"><div class="time-cell"><b>Total</b><input id="tcTotal" value="00:30.00"><button class="small">set</button></div><div class="time-cell"><b>In</b><input id="tcIn" value="00:03.00"><button class="small">set</button></div><div class="time-cell"><b>Out</b><input id="tcOut" value="00:27.00"><button class="small">set</button></div></div><div class="meta-row"><span id="metaPos">Position 00:00.00</span><span id="metaTotal">Total 00:30.00</span><span id="metaRange">Range 00:24.00</span></div></section>
+  <section class="debug-panels" id="debugPanels"><div class="debug-card"><h3>Source brute</h3><canvas id="dbgSource" width="220" height="150"></canvas></div><div class="debug-card"><h3>Mask</h3><canvas id="dbgMask" width="220" height="150"></canvas></div><div class="debug-card"><h3>Rendu final</h3><canvas id="dbgFinal" width="220" height="150"></canvas></div></section>
+</main>
+<div class="drop-overlay" id="dropOverlay"><div class="drop-box">Déposez ici</div></div>
+<script>
+(() => {
+'use strict';
+const $ = id => document.getElementById(id);
+const ctx = $('renderCanvas').getContext('2d');
+const effects = ['Silhouette Demoscene','ASCII Art','Pixel Art','Matrix Rain','Outline Only','Shadow Dance','Rotoscope Retro','Black And White Contrast','Duotone Retro','Vector Minimal','Ink Cutout','CRT Vintage','Posterized Graphic','Ghost Trail','Amiga Art Sequence'];
+const variants = ['Clean Cut','Soft Halo','Brut Contrast','Warm Paper','Ice Grid','Green Drift','Dot Bloom','Chunky Blocks','Bare Bones','Hard Signal','Night Terminal','Classic Demo'];
+const rasters = ['none','horizontal-lines','vertical-lines','scanlines','crt-grid','dot-grid','checker','diagonal-lines','halftone-dots','coarse-pixels'];
+const palettes = ['state·off-white·olive','green·terminal','mono·warm paper','amber·crt','ice·cyan glacé','custom·éditable'];
+const docs = {
+ 'Silhouette Demoscene':['Silhouette issue des intros et clips rotoscopés.','Isole la forme principale pour obtenir un signe graphique lisible.'],
+ 'ASCII Art':['Né des terminaux et BBS.','Convertit les valeurs lumineuses en caractères pour un rendu textuel.'],
+ 'Pixel Art':['Héritage 8/16 bits.','Réduit la résolution pour imposer une grille visible.'],
+ 'Matrix Rain':['Terminal fictionnel popularisé par Matrix.','Ajoute une pluie de signes et une lecture cyber.'],
+ 'Outline Only':['Contour façon cellulo ou vectorisation.','Bon pour extraire le geste sans texture.'],
+ 'Shadow Dance':['Ombre répétée comme motion trail.','Rend le mouvement lisible même sur image pauvre.'],
+ 'Rotoscope Retro':['Rotoscopie analogique.','Donne un dessin simplifié depuis une source réelle.'],
+ 'Black And White Contrast':['Photocopie et zine punk.','Force une lecture binaire très forte.'],
+ 'Duotone Retro':['Sérigraphie deux tons.','Crée une image imprimable et cohérente.'],
+ 'Vector Minimal':['Affiche technique et plotter.','Réduit le rendu à formes planes.'],
+ 'Ink Cutout':['Découpe encre/papier.','Effet collage brutal et stable.'],
+ 'CRT Vintage':['Écran cathodique.','Ajoute trame et sensation vidéo ancienne.'],
+ 'Posterized Graphic':['Posterisation PAO.','Limite les niveaux pour des aplats nets.'],
+ 'Ghost Trail':['Traînée temporelle.','Montre la dynamique plus que l’image instantanée.'],
+ 'Amiga Art Sequence':['Palette et séquences Amiga.','Évoque les color-cycles et trames de démo.']
+};
+const engine = [{id:'motion', label:'sensibilité mouvement', min:0,max:100,val:40},{id:'elem', label:'taille des éléments', min:1,max:100,val:50},{id:'simple', label:'simplification', min:0,max:100,val:40},{id:'contrast', label:'contraste', min:0,max:200,val:110},{id:'halo', label:'intensité halo', min:0,max:100,val:45}];
+let sourceEl=null, sourceType='none', playing=false, pos=0, duration=30, last=performance.now(), matrix=[];
+function fillSelect(sel, arr){ sel.innerHTML = arr.map(x=>`<option>${x}</option>`).join(''); }
+fillSelect($('effectSelect'), effects); fillSelect($('variantSelect'), variants); fillSelect($('rasterSelect'), rasters); fillSelect($('paletteSelect'), palettes);
+$('sliders').innerHTML = engine.map(s=>`<label class="row"><span class="lbl">${s.label}</span><span class="val" id="v-${s.id}">${s.val}</span><input data-range="${s.id}" type="range" min="${s.min}" max="${s.max}" value="${s.val}" style="grid-column:1/3"></label>`).join('');
+document.querySelectorAll('input[type=range]').forEach(r=>r.addEventListener('input', updateValues));
+document.querySelectorAll('.help-btn').forEach(b=>b.addEventListener('click',()=> $('help-'+b.dataset.help)?.classList.toggle('open')));
+$('effectSelect').addEventListener('change',()=>{ updateEffectDoc(); status('effet appliqué · '+$('effectSelect').value,'ok'); });
+['variantSelect','rasterSelect','paletteSelect'].forEach(id=>$(id).addEventListener('change',()=>status(id.replace('Select','')+' mis à jour','info')));
+function updateEffectDoc(){ const e=$('effectSelect').value, d=docs[e]||['Effet graphique.','Transforme la source.']; $('effectDoc').innerHTML=`<p><b>${e}</b></p><p><b>Origine.</b> ${d[0]}</p><p><b>Intérêt.</b> ${d[1]}</p>`; $('effectDoc').classList.add('open'); }
+updateEffectDoc(); updateValues();
+function updateValues(){ engine.forEach(s=>{ const el=document.querySelector(`[data-range="${s.id}"]`); if(el) $('v-'+s.id).textContent = el.value; }); updateTimeline(); }
+function status(msg,type='info'){ const s=$('status'); s.textContent=msg; s.className='status s-'+type; }
+function setSource(el,type,label){ sourceEl=el; sourceType=type; const pane=$('sourcePane'); pane.innerHTML=''; pane.appendChild(el); $('sourceTag').textContent=label; status('source chargée · '+label,'ok'); }
+function fileToUrl(file, cb){ const url=URL.createObjectURL(file); cb(url); }
+$('videoFile').addEventListener('change',e=>{ const f=e.target.files[0]; if(!f)return; fileToUrl(f,url=>{ const v=document.createElement('video'); v.src=url; v.controls=true; v.loop=true; v.muted=true; v.playsInline=true; setSource(v,'video',f.name); }); });
+$('gifFile').addEventListener('change',e=>{ const f=e.target.files[0]; if(!f)return; fileToUrl(f,url=>{ const img=new Image(); img.src=url; img.alt=f.name; setSource(img,'image',f.name); }); });
+function ytId(input){ let s=input.trim(); if(!s)return ''; try{ const u=new URL(s); if(u.hostname.includes('youtu.be')) return u.pathname.slice(1); if(u.searchParams.get('v')) return u.searchParams.get('v'); }catch{} return s.replace(/[^a-zA-Z0-9_-]/g,'').slice(0,20); }
+$('loadUrl').addEventListener('click',()=>{ const id=ytId($('youtubeUrl').value); if(!id){status('url youtube vide','warn');return;} const card=document.createElement('div'); card.className='yt-card'; card.innerHTML=`<img src="https://img.youtube.com/vi/${id}/hqdefault.jpg" alt="youtube"><div class="yt-footer"><span>${id}</span><span><a href="https://youtu.be/${id}" target="_blank">ouvrir</a> <a href="https://www.youtube.com/embed/${id}" target="_blank">embed</a></span></div>`; setSource(card,'youtube','YouTube '+id); });
+$('resetSource').addEventListener('click',()=>{sourceEl=null;sourceType='none';$('sourcePane').innerHTML='<div class="empty-source">Source vidéo / gif / YouTube</div>';$('sourceTag').textContent='No source';status('source réinitialisée','info');});
+$('playBtn').addEventListener('click',()=>{playing=true; if(sourceEl?.play) sourceEl.play(); status('lecture','ok');}); $('pauseBtn').addEventListener('click',()=>{playing=false; if(sourceEl?.pause) sourceEl.pause(); status('pause','info');});
+$('debugToggle').addEventListener('change',e=> $('debugPanels').classList.toggle('open', e.target.checked));
+$('applyPalette').addEventListener('click',()=>{ document.documentElement.style.setProperty('--bg',$('c-bg').value);document.documentElement.style.setProperty('--ink',$('c-ink').value);document.documentElement.style.setProperty('--line',$('c-ink').value);document.documentElement.style.setProperty('--accent',$('c-accent').value);document.documentElement.style.setProperty('--halo',$('c-halo').value);status('palette appliquée','ok');});
+$('resetPalette').addEventListener('click',()=>location.reload());
+$('exportConfig').addEventListener('click',()=>{ const cfg={effect:$('effectSelect').value,variant:$('variantSelect').value,raster:$('rasterSelect').value,chars:$('chars').value}; $('jsonModule').value=JSON.stringify(cfg,null,2); status('configuration exportée','ok'); });
+$('applyModule').addEventListener('click',()=>{ try{ const c=JSON.parse($('jsonModule').value); if(c.effect) $('effectSelect').value=c.effect; if(c.variant) $('variantSelect').value=c.variant; if(c.raster) $('rasterSelect').value=c.raster; if(c.chars) $('chars').value=c.chars; updateEffectDoc(); status('module appliqué','ok'); }catch(e){status('json invalide','warn');}});
+$('configFile').addEventListener('change',e=>{const f=e.target.files[0]; if(!f)return; f.text().then(t=>{$('jsonModule').value=t; status('module chargé','ok')});});
+['quickExport'].forEach(id=>$(id).addEventListener('click',()=>status('export html léger simulé · prêt','ok')));
+function updateTimeline(){ let a=+$('trimStart').value, b=+$('trimEnd').value; if(a>b-1){a=b-1;$('trimStart').value=a} const left=a, width=b-a; $('rangeHi').style.left=left+'%'; $('rangeHi').style.width=width+'%'; $('markIn').style.left=left+'%'; $('markOut').style.left=b+'%'; $('playhead').style.left=(pos/duration*100)+'%'; $('tcIn').value=fmt(a/100*duration); $('tcOut').value=fmt(b/100*duration); $('metaRange').textContent='Range '+fmt(width/100*duration); }
+function fmt(t){ const m=Math.floor(t/60), s=(t%60).toFixed(2).padStart(5,'0'); return String(m).padStart(2,'0')+':'+s; }
+$('timelineBar').addEventListener('click',e=>{ const r=e.currentTarget.getBoundingClientRect(); pos=clamp((e.clientX-r.left)/r.width*duration,0,duration); updateTimeline(); });
+function clamp(v,a,b){return Math.max(a,Math.min(b,v))}
+['trimStart','trimEnd'].forEach(id=>$(id).addEventListener('input',updateValues));
+let dragMark=null; ['markIn','markOut'].forEach(id=>$(id).addEventListener('pointerdown',e=>{dragMark=id; e.preventDefault();})); window.addEventListener('pointerup',()=>dragMark=null); window.addEventListener('pointermove',e=>{ if(!dragMark)return; const r=$('timelineBar').getBoundingClientRect(); const v=clamp((e.clientX-r.left)/r.width*100,0,100); if(dragMark==='markIn') $('trimStart').value=Math.min(v,+$('trimEnd').value-1); else $('trimEnd').value=Math.max(v,+$('trimStart').value+1); updateTimeline(); });
+function draw(now){ const dt=(now-last)/1000; last=now; if(playing) pos=(pos+dt)%duration; const w=640,h=480; ctx.fillStyle='#000';ctx.fillRect(0,0,w,h); if(sourceEl && (sourceType==='video'||sourceType==='image')){ try{ctx.drawImage(sourceEl,0,0,w,h)}catch{} } else { ctx.fillStyle='#111';ctx.fillRect(0,0,w,h); ctx.fillStyle='#efe9d9'; ctx.font='18px ui-monospace,monospace'; ctx.textAlign='center'; ctx.fillText(sourceType==='youtube'?'YOUTUBE CARD SOURCE':'NO SOURCE',w/2,h/2); }
+ applyEffect(w,h,now); drawRaster(w,h); $('playhead').style.left=(pos/duration*100)+'%'; $('metaPos').textContent='Position '+fmt(pos); requestAnimationFrame(draw); }
+function applyEffect(w,h,now){ const e=$('effectSelect').value; const halo=+$('[data-range="halo"]').value/100; const simple=+$('[data-range="simple"]').value; if(e==='ASCII Art'){ const chars=$('chars').value||' .:-=+*#%@'; ctx.fillStyle='rgba(239,233,217,.86)'; ctx.fillRect(0,0,w,h); ctx.fillStyle=getComputedStyle(document.documentElement).getPropertyValue('--ink').trim(); ctx.font=`${Math.max(8,Math.floor(20-simple/7))}px ui-monospace,monospace`; for(let y=14;y<h;y+=18)for(let x=0;x<w;x+=12)ctx.fillText(chars[(x+y+Math.floor(now/80))%chars.length],x,y); }
+ else if(e==='Pixel Art'){ const s=16; ctx.imageSmoothingEnabled=false; ctx.drawImage($('renderCanvas'),0,0,w/s,h/s); ctx.drawImage($('renderCanvas'),0,0,w/s,h/s,0,0,w,h); }
+ else if(e==='Matrix Rain'){ if(matrix.length<60) matrix=Array.from({length:60},()=>Math.random()*h); ctx.fillStyle='rgba(0,0,0,.2)';ctx.fillRect(0,0,w,h); ctx.fillStyle='#b8b36b'; ctx.font='14px ui-monospace'; matrix.forEach((y,i)=>{ const x=i*(w/60); ctx.fillText(($('chars').value||'01')[(i+Math.floor(now/80))%($('chars').value||'01').length],x,y); matrix[i]=(y+2+i%3)%h; }); }
+ else if(e==='Black And White Contrast'||e==='Silhouette Demoscene'||e==='Ink Cutout'){ ctx.globalCompositeOperation='source-over'; ctx.fillStyle=`rgba(26,26,26,${.18+halo*.24})`; ctx.fillRect(0,0,w,h); }
+ else if(e==='Ghost Trail'||e==='Shadow Dance'){ ctx.fillStyle='rgba(184,179,107,.18)'; for(let i=1;i<6;i++)ctx.fillRect(i*9,i*6,w-i*18,h-i*12); }
+ else { ctx.strokeStyle=getComputedStyle(document.documentElement).getPropertyValue('--halo').trim(); ctx.lineWidth=2; for(let i=0;i<12;i++){ctx.strokeRect(20+i*18,20+i*12,w-40-i*36,h-40-i*24);} }
+}
+function drawRaster(w,h){ const r=$('rasterSelect').value; ctx.globalAlpha=.6; ctx.strokeStyle=getComputedStyle(document.documentElement).getPropertyValue('--accent').trim(); ctx.fillStyle=ctx.strokeStyle; if(r==='scanlines'||r==='horizontal-lines')for(let y=0;y<h;y+=8){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(w,y);ctx.stroke()} if(r==='vertical-lines')for(let x=0;x<w;x+=8){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,h);ctx.stroke()} if(r==='dot-grid'||r==='halftone-dots')for(let y=0;y<h;y+=18)for(let x=0;x<w;x+=18)ctx.fillRect(x,y,2,2); if(r==='checker')for(let y=0;y<h;y+=24)for(let x=0;x<w;x+=24)if((x+y)/24%2===0)ctx.fillRect(x,y,12,12); ctx.globalAlpha=1;}
+const overlay=$('dropOverlay'); ['dragenter','dragover'].forEach(ev=>window.addEventListener(ev,e=>{e.preventDefault();overlay.classList.add('open')})); ['dragleave','drop'].forEach(ev=>window.addEventListener(ev,e=>{e.preventDefault();overlay.classList.remove('open')})); window.addEventListener('drop',e=>{const f=e.dataTransfer.files[0]; if(!f)return; if(f.type.startsWith('video/')){$('videoFile').files=e.dataTransfer.files; $('videoFile').dispatchEvent(new Event('change'));} else {$('gifFile').files=e.dataTransfer.files; $('gifFile').dispatchEvent(new Event('change'));}});
+requestAnimationFrame(draw); updateTimeline(); status('prêt · studio initialisé','ok');
+})();
+</script>
+</body>
+</html>
