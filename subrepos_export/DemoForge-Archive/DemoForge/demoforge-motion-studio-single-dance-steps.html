@@ -1,0 +1,492 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Demoforge Motion Studio — Single HTML</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #11131a;
+      --panel: #191c26;
+      --text: #f5f7fb;
+      --muted: #9aa3b2;
+      --accent: #7c5cff;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top, #24273a 0, var(--bg) 52%);
+      color: var(--text);
+    }
+
+    .studio {
+      width: min(920px, calc(100vw - 32px));
+      padding: 28px;
+      border-radius: 28px;
+      background: color-mix(in srgb, var(--panel) 92%, transparent);
+      box-shadow: 0 24px 80px rgba(0, 0, 0, 0.36);
+    }
+
+    .studio h1 {
+      margin: 0 0 8px;
+      font-size: clamp(28px, 5vw, 52px);
+      letter-spacing: -0.05em;
+    }
+
+    .studio p {
+      margin: 0 0 24px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    .stage {
+      min-height: 380px;
+      display: grid;
+      place-items: center;
+      border-radius: 24px;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02)),
+        radial-gradient(circle at center, rgba(124, 92, 255, 0.22), transparent 54%);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .stage::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      bottom: 54px;
+      width: 190px;
+      height: 26px;
+      border-radius: 50%;
+      background: rgba(0, 0, 0, 0.22);
+      transform: translateX(-50%) scale(var(--shadow-scale, 1));
+      filter: blur(5px);
+      opacity: var(--shadow-opacity, 0.55);
+      pointer-events: none;
+    }
+
+    .character {
+      width: 170px;
+      height: 250px;
+      position: relative;
+      transform-origin: 50% 88%;
+      will-change: transform;
+      transition: filter 160ms ease;
+      z-index: 1;
+    }
+
+    .character[data-dance-state="peak"] { filter: drop-shadow(0 0 24px rgba(124, 92, 255, 0.82)); }
+    .character[data-dance-state="active"] { filter: drop-shadow(0 0 14px rgba(124, 92, 255, 0.42)); }
+
+    .head {
+      width: 72px;
+      height: 72px;
+      margin: 0 auto 8px;
+      border-radius: 50%;
+      background: #f5cfa6;
+      position: relative;
+      z-index: 4;
+      transform: rotate(var(--head-rotate, 0deg));
+      will-change: transform;
+    }
+
+    .head::before,
+    .head::after {
+      content: "";
+      position: absolute;
+      top: 28px;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #171923;
+    }
+
+    .head::before { left: 22px; }
+    .head::after { right: 22px; }
+
+    .torso {
+      width: 92px;
+      height: 100px;
+      margin: 0 auto;
+      border-radius: 28px 28px 18px 18px;
+      background: linear-gradient(135deg, #7c5cff, #20d6ff);
+      position: relative;
+      z-index: 3;
+      transform-origin: 50% 90%;
+      transform: rotate(var(--torso-rotate, 0deg)) skewX(var(--torso-skew, 0deg));
+      will-change: transform;
+    }
+
+    .arm,
+    .leg {
+      position: absolute;
+      display: block;
+      border-radius: 999px;
+      transform-origin: 50% 12%;
+      will-change: transform;
+    }
+
+    .arm {
+      top: 98px;
+      width: 22px;
+      height: 88px;
+      background: #f5cfa6;
+      z-index: 2;
+    }
+
+    .arm-left {
+      left: 30px;
+      transform: rotate(var(--left-arm-rotate, 24deg)) translateY(var(--left-arm-y, 0px));
+    }
+
+    .arm-right {
+      right: 30px;
+      transform: rotate(var(--right-arm-rotate, -24deg)) translateY(var(--right-arm-y, 0px));
+    }
+
+    .leg {
+      top: 172px;
+      width: 28px;
+      height: 78px;
+      background: #303447;
+      z-index: 1;
+    }
+
+    .leg-left {
+      left: 57px;
+      transform: rotate(var(--left-leg-rotate, 0deg)) translate(var(--left-leg-x, 0px), var(--left-leg-y, 0px));
+    }
+
+    .leg-right {
+      right: 57px;
+      transform: rotate(var(--right-leg-rotate, 0deg)) translate(var(--right-leg-x, 0px), var(--right-leg-y, 0px));
+    }
+
+    .foot {
+      position: absolute;
+      bottom: -5px;
+      width: 42px;
+      height: 14px;
+      border-radius: 999px;
+      background: #252838;
+      transform-origin: 50% 50%;
+      will-change: transform;
+    }
+
+    .foot-left {
+      left: 45px;
+      transform: translate(var(--left-foot-x, 0px), var(--left-foot-y, 0px)) rotate(var(--left-foot-rotate, 0deg));
+    }
+
+    .foot-right {
+      right: 45px;
+      transform: translate(var(--right-foot-x, 0px), var(--right-foot-y, 0px)) rotate(var(--right-foot-rotate, 0deg));
+    }
+
+    .controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
+      margin-top: 20px;
+    }
+
+    .controls input[type="file"] {
+      max-width: 100%;
+      color: var(--muted);
+    }
+
+    button {
+      border: 0;
+      border-radius: 999px;
+      padding: 10px 16px;
+      background: var(--accent);
+      color: white;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    audio {
+      width: 100%;
+      margin-top: 14px;
+    }
+  </style>
+</head>
+<body>
+  <main class="studio">
+    <h1>Demoforge Motion Studio</h1>
+    <p>Version HTML unique : le personnage fait de vrais pas synchronisés avec l’égaliseur audio.</p>
+
+    <section class="stage" aria-label="Scène de prévisualisation">
+      <div id="dancingCharacter" class="character" aria-label="Personnage synchronisé avec l’audio">
+        <div class="head"></div>
+        <span class="arm arm-left"></span>
+        <span class="arm arm-right"></span>
+        <div class="torso"></div>
+        <span class="leg leg-left"></span>
+        <span class="leg leg-right"></span>
+        <span class="foot foot-left"></span>
+        <span class="foot foot-right"></span>
+      </div>
+    </section>
+
+    <div class="controls">
+      <input id="audioFile" type="file" accept="audio/*" />
+      <button id="resetDance" type="button">Reset animation</button>
+    </div>
+
+    <audio id="audioPlayer" controls></audio>
+  </main>
+
+  <script>
+    /**
+     * Demoforge Motion Studio — dance/equalizer synchronization module.
+     * Version HTML unique, sans dépendance.
+     */
+    (function (global) {
+      'use strict';
+
+      const DEFAULTS = {
+        fftSize: 512,
+        smoothingTimeConstant: 0.78,
+        idleThreshold: 0.035,
+        peakThreshold: 0.18,
+        attack: 0.34,
+        release: 0.12,
+        peakDecay: 0.90,
+        bassRange: [0, 0.18],
+        midRange: [0.18, 0.55],
+        trebleRange: [0.55, 1]
+      };
+
+      function clamp(value, min, max) {
+        return Math.min(max, Math.max(min, value));
+      }
+
+      function lerp(current, target, amount) {
+        return current + (target - current) * clamp(amount, 0, 1);
+      }
+
+      function averageBand(data, startRatio, endRatio) {
+        if (!data || data.length === 0) return 0;
+        const start = Math.floor(clamp(startRatio, 0, 1) * data.length);
+        const end = Math.max(start + 1, Math.floor(clamp(endRatio, 0, 1) * data.length));
+        let total = 0;
+        for (let i = start; i < end; i += 1) total += data[i];
+        return total / ((end - start) * 255);
+      }
+
+      function resolveElement(target) {
+        if (typeof target === 'string') return document.querySelector(target);
+        return target || null;
+      }
+
+      function createAnalyserFromSource(audioContext, source, options) {
+        const analyser = audioContext.createAnalyser();
+        analyser.fftSize = options.fftSize;
+        analyser.smoothingTimeConstant = options.smoothingTimeConstant;
+
+        if (source instanceof AnalyserNode) return source;
+
+        if (source instanceof HTMLMediaElement) {
+          const mediaSource = audioContext.createMediaElementSource(source);
+          mediaSource.connect(analyser);
+          analyser.connect(audioContext.destination);
+          return analyser;
+        }
+
+        if (source && typeof source.connect === 'function') {
+          source.connect(analyser);
+          return analyser;
+        }
+
+        throw new Error('initDanceSync requires an HTMLMediaElement, AudioNode, or AnalyserNode source.');
+      }
+
+      function readLevels(state) {
+        state.analyser.getByteFrequencyData(state.frequencyData);
+
+        const bass = averageBand(state.frequencyData, state.options.bassRange[0], state.options.bassRange[1]);
+        const mid = averageBand(state.frequencyData, state.options.midRange[0], state.options.midRange[1]);
+        const treble = averageBand(state.frequencyData, state.options.trebleRange[0], state.options.trebleRange[1]);
+
+        // Les basses déclenchent les changements de pas; les mids/aigus modulent bras et tête.
+        const amplitude = clamp((bass * 0.60) + (mid * 0.30) + (treble * 0.10), 0, 1);
+        const attackOrRelease = amplitude > state.energy ? state.options.attack : state.options.release;
+
+        state.energy = lerp(state.energy, amplitude, attackOrRelease);
+        state.peak = Math.max(state.energy, state.peak * state.options.peakDecay);
+
+        const beatPulse = clamp((bass - state.lastBass) * 3.2, 0, 1);
+        if (beatPulse > 0.18 || state.beatCooldown <= 0) {
+          state.stepIndex = (state.stepIndex + 1) % state.steps.length;
+          state.beatCooldown = 7;
+        }
+        state.beatCooldown -= 1;
+        state.stepProgress = lerp(state.stepProgress, beatPulse > 0.18 ? 0 : 1, 0.16 + state.energy * 0.20);
+        state.lastBass = bass;
+
+        return { bass, mid, treble, amplitude, energy: state.energy, peak: state.peak, beatPulse };
+      }
+
+      function setVar(element, name, value, unit) {
+        element.style.setProperty(name, Number.isFinite(value) ? value.toFixed(2) + (unit || '') : value);
+      }
+
+      function applyDanceStep(state, levels) {
+        const el = state.character;
+        const idle = levels.energy < state.options.idleThreshold;
+        const peakStrength = clamp((levels.peak - state.options.peakThreshold) / Math.max(0.001, 1 - state.options.peakThreshold), 0, 1);
+        const intensity = idle ? 0.16 : clamp(levels.energy * 1.35 + peakStrength * 0.55, 0, 1);
+        const step = idle ? state.idleStep : state.steps[state.stepIndex];
+        const p = state.stepProgress;
+        const snap = Math.sin(p * Math.PI);
+        const groove = Math.sin((state.stepIndex + p) * Math.PI * 2);
+
+        const x = (step.x * intensity) + (groove * levels.mid * 5);
+        const y = (-Math.abs(snap) * step.hop * intensity) + (idle ? Math.sin(Date.now() * 0.002) * 2 : 0);
+        const rotate = step.body * intensity + (levels.mid - levels.treble) * 5;
+        const scale = 1 + levels.bass * 0.06 + peakStrength * 0.05;
+
+        el.style.transform = [
+          `translate3d(${x.toFixed(2)}px, ${y.toFixed(2)}px, 0)`,
+          `rotate(${rotate.toFixed(2)}deg)`,
+          `scale(${scale.toFixed(3)})`
+        ].join(' ');
+
+        // Pas chorégraphiés : chaque beat alterne appui, jambe libre, pieds et bras.
+        setVar(el, '--torso-rotate', step.body * intensity, 'deg');
+        setVar(el, '--torso-skew', step.skew * intensity, 'deg');
+        setVar(el, '--head-rotate', (-step.body * 0.75 + levels.treble * 9) * intensity, 'deg');
+
+        setVar(el, '--left-arm-rotate', step.leftArm * intensity, 'deg');
+        setVar(el, '--right-arm-rotate', step.rightArm * intensity, 'deg');
+        setVar(el, '--left-arm-y', -snap * step.leftArmLift * intensity, 'px');
+        setVar(el, '--right-arm-y', -snap * step.rightArmLift * intensity, 'px');
+
+        setVar(el, '--left-leg-rotate', step.leftLeg * intensity, 'deg');
+        setVar(el, '--right-leg-rotate', step.rightLeg * intensity, 'deg');
+        setVar(el, '--left-leg-x', step.leftLegX * intensity, 'px');
+        setVar(el, '--right-leg-x', step.rightLegX * intensity, 'px');
+        setVar(el, '--left-leg-y', -snap * step.leftKnee * intensity, 'px');
+        setVar(el, '--right-leg-y', -snap * step.rightKnee * intensity, 'px');
+
+        setVar(el, '--left-foot-x', step.leftFootX * intensity, 'px');
+        setVar(el, '--right-foot-x', step.rightFootX * intensity, 'px');
+        setVar(el, '--left-foot-y', -snap * step.leftKnee * 0.8 * intensity, 'px');
+        setVar(el, '--right-foot-y', -snap * step.rightKnee * 0.8 * intensity, 'px');
+        setVar(el, '--left-foot-rotate', step.leftFoot * intensity, 'deg');
+        setVar(el, '--right-foot-rotate', step.rightFoot * intensity, 'deg');
+
+        const stage = el.closest('.stage');
+        if (stage) {
+          setVar(stage, '--shadow-scale', 1 + intensity * 0.16 - Math.abs(y) * 0.006, '');
+          setVar(stage, '--shadow-opacity', 0.48 + intensity * 0.22, '');
+        }
+
+        el.dataset.danceState = idle ? 'idle' : (peakStrength > 0.28 || levels.beatPulse > 0.35 ? 'peak' : 'active');
+      }
+
+      function initDanceSync(config) {
+        const options = Object.assign({}, DEFAULTS, config && config.options);
+        const character = resolveElement(config && config.character);
+        const source = config && config.source;
+        const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+        const audioContext = (config && config.audioContext) || new AudioContextClass();
+
+        if (!character) throw new Error('initDanceSync requires a character element or selector.');
+        const analyser = (config && config.analyser) || createAnalyserFromSource(audioContext, source, options);
+
+        return {
+          audioContext,
+          analyser,
+          character,
+          options,
+          frequencyData: new Uint8Array(analyser.frequencyBinCount),
+          energy: 0,
+          peak: 0,
+          lastBass: 0,
+          beatCooldown: 0,
+          stepIndex: 0,
+          stepProgress: 1,
+          lastLevels: null,
+          idleStep: { x: 0, hop: 3, body: 2, skew: 1, leftArm: 22, rightArm: -22, leftArmLift: 4, rightArmLift: 4, leftLeg: -2, rightLeg: 2, leftLegX: 0, rightLegX: 0, leftKnee: 1, rightKnee: 1, leftFootX: 0, rightFootX: 0, leftFoot: -2, rightFoot: 2 },
+          steps: [
+            { x: -24, hop: 18, body: -10, skew: -5, leftArm: -72, rightArm: 46, leftArmLift: 28, rightArmLift: 8, leftLeg: -24, rightLeg: 18, leftLegX: -15, rightLegX: 7, leftKnee: 4, rightKnee: 18, leftFootX: -18, rightFootX: 10, leftFoot: -18, rightFoot: 15 },
+            { x: 22, hop: 16, body: 11, skew: 5, leftArm: -38, rightArm: 76, leftArmLift: 8, rightArmLift: 30, leftLeg: -12, rightLeg: 30, leftLegX: -5, rightLegX: 20, leftKnee: 16, rightKnee: 3, leftFootX: -9, rightFootX: 24, leftFoot: -10, rightFoot: 21 },
+            { x: 0, hop: 22, body: 0, skew: 0, leftArm: -92, rightArm: 92, leftArmLift: 36, rightArmLift: 36, leftLeg: -18, rightLeg: 18, leftLegX: -12, rightLegX: 12, leftKnee: 18, rightKnee: 18, leftFootX: -15, rightFootX: 15, leftFoot: -14, rightFoot: 14 },
+            { x: 16, hop: 13, body: 15, skew: 7, leftArm: 54, rightArm: -78, leftArmLift: 12, rightArmLift: 34, leftLeg: 28, rightLeg: -14, leftLegX: 19, rightLegX: -7, leftKnee: 2, rightKnee: 16, leftFootX: 24, rightFootX: -10, leftFoot: 18, rightFoot: -12 },
+            { x: -18, hop: 13, body: -15, skew: -7, leftArm: 78, rightArm: -54, leftArmLift: 34, rightArmLift: 12, leftLeg: 14, rightLeg: -28, leftLegX: 7, rightLegX: -19, leftKnee: 16, rightKnee: 2, leftFootX: 10, rightFootX: -24, leftFoot: 12, rightFoot: -18 }
+          ]
+        };
+      }
+
+      function updateDanceSync(state) {
+        if (!state || !state.analyser || !state.character) return null;
+        if (state.audioContext && state.audioContext.state === 'suspended') {
+          state.audioContext.resume().catch(function () {});
+        }
+        const levels = readLevels(state);
+        applyDanceStep(state, levels);
+        state.lastLevels = levels;
+        return levels;
+      }
+
+      function resetDanceSync(state) {
+        if (!state) return;
+        state.energy = 0;
+        state.peak = 0;
+        state.lastBass = 0;
+        state.beatCooldown = 0;
+        state.stepIndex = 0;
+        state.stepProgress = 1;
+        state.lastLevels = null;
+        if (state.character) {
+          state.character.style.transform = '';
+          state.character.removeAttribute('style');
+          delete state.character.dataset.danceState;
+        }
+      }
+
+      global.initDanceSync = initDanceSync;
+      global.updateDanceSync = updateDanceSync;
+      global.resetDanceSync = resetDanceSync;
+    })(window);
+  </script>
+
+  <script>
+    const audioPlayer = document.getElementById('audioPlayer');
+    const audioFile = document.getElementById('audioFile');
+    const resetDance = document.getElementById('resetDance');
+    let danceSync = null;
+
+    audioFile.addEventListener('change', function () {
+      const file = audioFile.files && audioFile.files[0];
+      if (!file) return;
+      audioPlayer.src = URL.createObjectURL(file);
+      if (!danceSync) {
+        danceSync = initDanceSync({ character: '#dancingCharacter', source: audioPlayer });
+      }
+    });
+
+    resetDance.addEventListener('click', function () {
+      resetDanceSync(danceSync);
+    });
+
+    function render() {
+      updateDanceSync(danceSync);
+      requestAnimationFrame(render);
+    }
+
+    render();
+  </script>
+</body>
+</html>

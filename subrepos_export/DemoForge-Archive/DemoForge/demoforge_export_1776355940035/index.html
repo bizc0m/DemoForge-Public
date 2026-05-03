@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<!--
+  ╔══════════════════════════════════════════════════════╗
+  ║  Créé avec DemoForge v1.1                            ║
+  ║  DemoForge Export — 2026-04-16  ║
+  ║                                                      ║
+  ║  Effets basés sur les traditions de la demoscene     ║
+  ║  depuis 1986. Voir CREDITS.json pour les attributions║
+  ╚══════════════════════════════════════════════════════╝
+-->
+<html><head><meta charset="UTF-8"><title>DemoForge Export — DemoForge</title>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+<style>*{margin:0;padding:0;box-sizing:border-box}body{background:#000;overflow:hidden;display:flex;align-items:center;justify-content:center;height:100vh}
+canvas{image-rendering:pixelated;image-rendering:crisp-edges}
+#info{position:fixed;bottom:10px;left:50%;transform:translateX(-50%);font-family:VT323,monospace;color:#00ff88;font-size:14px;opacity:.5}
+</style></head><body>
+<canvas id="c" width="640" height="400"></canvas>
+<div id="info">SPACE to pause | DemoForge v1.1</div>
+<script>
+"use strict";
+class BaseEffect {
+  constructor(p={}) { this.params = Object.assign({}, this.constructor.defaultParams, p); this.canvas=null; this.ctx=null; }
+  static get attribution() { return {}; }
+  static get defaultParams() { return {}; }
+  static get paramDefs() { return {LAME:{},NOOB:{},L33T:{},ROXOR:{}}; }
+  init(c, ctx, audio) { this.canvas=c; this.ctx=ctx; this.audio=audio; }
+  update(dt, bi) {}
+  render(ctx, t) {}
+  destroy() {}
+  serialize() { return {effect:this.constructor.name, params:{...this.params}}; }
+}\n\nclass MatrixRain extends BaseEffect {
+  static get attribution() { return {
+    name:"matrix_rain", display_name:"Matrix Rain",
+    origin_year:1999, origin_hardware:"PC — inspiré du film The Matrix",
+    origin_group:"—", origin_coder:"—",
+    first_prod:"The Matrix (film), 1999",
+    reference_url:"",
+    technique:"Colonnes de caractères tombant à des vitesses différentes. Chaque colonne a une tête brillante (blanc/vert clair) suivie d'une traînée qui s'estompe. Les caractères changent aléatoirement pendant la chute. Adapté en demoscene avec des charsets custom (katakana, CP-437, etc.).",
+    difficulty:1, era:"GEN5_NEWSCHOOL", tags:["pc","matrix","ascii","rain"]
+  };}
+  static get defaultParams() { return {
+    charset:"MATRIX", speed:0.5, trailLength:20,
+    headColor:"#ccffcc", trailColor:"#00aa00", fontSize:14, density:0.95
+  };}
+  static get paramDefs() { return {
+    LAME:{},
+    NOOB:{
+      speed:{type:"range",min:0.2,max:1.5,step:0.1,label:"Speed"},
+      trailLength:{type:"range",min:5,max:40,step:1,label:"Trail"},
+      density:{type:"range",min:0.5,max:1,step:0.05,label:"Density"}
+    },
+    L33T:{
+      charset:{type:"select",options:["MATRIX","ASCII","KATAKANA","BINARY","DEMOSCENE"],label:"Charset"},
+      speed:{type:"range",min:0.1,max:3,step:0.05,label:"Speed"},
+      trailLength:{type:"range",min:3,max:60,step:1,label:"Trail Length"},
+      fontSize:{type:"range",min:8,max:24,step:1,label:"Font Size"},
+      headColor:{type:"color",label:"Head Color"},
+      trailColor:{type:"color",label:"Trail Color"},
+      density:{type:"range",min:0.3,max:1,step:0.05,label:"Density"}
+    },
+    ROXOR:{
+      charset:{type:"select",options:["MATRIX","ASCII","KATAKANA","BINARY","DEMOSCENE"],label:"Charset"},
+      speed:{type:"range",min:0.01,max:5,step:0.01,label:"Speed"},
+      trailLength:{type:"range",min:1,max:100,step:1,label:"Trail"},
+      fontSize:{type:"range",min:6,max:32,step:1,label:"Font Size"},
+      headColor:{type:"color",label:"Head"},
+      trailColor:{type:"color",label:"Trail"},
+      density:{type:"range",min:0.1,max:1,step:0.01,label:"Density"}
+    }
+  };}
+  _cols=[]; _charsets={
+    MATRIX:"アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン0123456789",
+    ASCII:"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%&*",
+    KATAKANA:"アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモ",
+    BINARY:"01",
+    DEMOSCENE:"ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789<>[]{}|/\\!@#$%^&*()_+-=~`"
+  };
+  init(c,ctx,a){super.init(c,ctx,a);this._initCols();}
+  _initCols(){
+    this._cols=[];
+    const cols=Math.ceil(640/this.params.fontSize);
+    for(let i=0;i<cols;i++){
+      this._cols.push({y:Math.random()*-50,speed:0.3+Math.random()*0.7,chars:[],active:Math.random()<this.params.density});
+    }
+  }
+  update(dt,bi){
+    const p=this.params, cs=this._charsets[p.charset]||this._charsets.MATRIX;
+    for(const col of this._cols){
+      if(!col.active&&Math.random()<0.01) col.active=true;
+      if(!col.active) continue;
+      col.y+=col.speed*p.speed*60*dt;
+      const maxY=Math.ceil(400/p.fontSize);
+      if(col.y>maxY+p.trailLength){
+        col.y=Math.random()*-10;
+        col.speed=0.3+Math.random()*0.7;
+        col.active=Math.random()<p.density;
+      }
+      col.headChar=cs[Math.floor(Math.random()*cs.length)];
+    }
+  }
+  render(ctx,t){
+    const p=this.params, cs=this._charsets[p.charset]||this._charsets.MATRIX, fs=p.fontSize;
+    ctx.font=`${fs}px "VT323",monospace`;
+    ctx.textBaseline="top";
+    const hc=p.headColor, tc=p.trailColor;
+    const hr=parseInt(hc.slice(1,3),16),hg=parseInt(hc.slice(3,5),16),hb=parseInt(hc.slice(5,7),16);
+    const tr=parseInt(tc.slice(1,3),16),tg=parseInt(tc.slice(3,5),16),tb=parseInt(tc.slice(5,7),16);
+    for(let i=0;i<this._cols.length;i++){
+      const col=this._cols[i];
+      if(!col.active) continue;
+      const headY=Math.floor(col.y);
+      for(let j=0;j<p.trailLength;j++){
+        const cy=headY-j;
+        if(cy<0||cy*fs>400) continue;
+        const fade=1-j/p.trailLength;
+        if(j===0){
+          ctx.fillStyle=hc; ctx.globalAlpha=1;
+        } else {
+          ctx.fillStyle=`rgb(${Math.floor(tr*fade)},${Math.floor(tg*fade)},${Math.floor(tb*fade)})`;
+          ctx.globalAlpha=fade*0.9;
+        }
+        const ch = j===0 ? col.headChar : cs[Math.floor(Math.random()*cs.length)];
+        ctx.fillText(ch, Math.floor(i*fs), Math.floor(cy*fs));
+      }
+    }
+    ctx.globalAlpha=1;
+  }
+}\n\nclass SinusScroller extends BaseEffect {
+  static get attribution() { return {
+    name:"sinus_scroller", display_name:"Sinus Scroller",
+    origin_year:1987, origin_hardware:"Amiga OCS — Blitter",
+    origin_group:"Skid Row", origin_coder:"Yragael",
+    first_prod:"Skid Row cracktro série 1991",
+    reference_url:"https://www.stashofcode.fr/coder-une-cracktro-sur-amiga-1",
+    technique:"Texte défilant horizontalement avec ondulation sinusoïdale verticale. Le blitter Amiga copiait chaque caractère ligne par ligne avec un décalage Y calculé via une table sinus précalculée. Le scrollspeed est un entier (px/frame) pour un mouvement pixel-perfect sans sub-pixel.",
+    difficulty:2, era:"GEN1_CRACKTRO", tags:["amiga","scroller","sinus","blitter"]
+  };}
+  static get defaultParams() { return {
+    text:"    WELCOME TO DEMOFORGE !!!   THE DEMOSCENE DEMO EDITOR *** GREETINGS TO ALL SCENERS AROUND THE WORLD ...   AMIGA FOREVER !!! *** CODED WITH LOVE FOR THE SCENE ***    ",
+    fontSize:28, fontColor:"#00ff88", scrollSpeed:2,
+    waveAmplitude:30, waveFrequency:0.08, waveSpeed:3.0,
+    yPosition:320, paletteCycling:true, cycleSpeed:60
+  };}
+  static get paramDefs() { return {
+    LAME:{ text:{type:"text",label:"Scroller Text"} },
+    NOOB:{
+      text:{type:"text",label:"Scroller Text"},
+      scrollSpeed:{type:"range",min:1,max:5,step:1,label:"Speed"},
+      waveAmplitude:{type:"range",min:0,max:60,step:5,label:"Wave"},
+      fontColor:{type:"color",label:"Color"}
+    },
+    L33T:{
+      text:{type:"text",label:"Scroller Text"},
+      fontSize:{type:"range",min:12,max:48,step:2,label:"Font Size"},
+      scrollSpeed:{type:"range",min:1,max:8,step:1,label:"Speed (px/frame)"},
+      waveAmplitude:{type:"range",min:0,max:100,step:1,label:"Wave Amplitude"},
+      waveFrequency:{type:"range",min:0.01,max:0.3,step:0.01,label:"Wave Frequency"},
+      waveSpeed:{type:"range",min:0.5,max:8,step:0.1,label:"Wave Speed"},
+      yPosition:{type:"range",min:50,max:380,step:1,label:"Y Position"},
+      fontColor:{type:"color",label:"Color"},
+      paletteCycling:{type:"checkbox",label:"Rainbow Cycling"},
+      cycleSpeed:{type:"range",min:10,max:200,step:5,label:"Cycle Speed"}
+    },
+    ROXOR:{
+      text:{type:"textarea",label:"Scroller Text"},
+      fontSize:{type:"range",min:8,max:64,step:1,label:"Font Size"},
+      scrollSpeed:{type:"range",min:1,max:12,step:1,label:"Speed"},
+      waveAmplitude:{type:"range",min:0,max:150,step:1,label:"Amplitude"},
+      waveFrequency:{type:"range",min:0.005,max:0.5,step:0.005,label:"Frequency"},
+      waveSpeed:{type:"range",min:0.1,max:12,step:0.1,label:"Wave Speed"},
+      yPosition:{type:"range",min:0,max:400,step:1,label:"Y Position"},
+      fontColor:{type:"color",label:"Color"},
+      paletteCycling:{type:"checkbox",label:"Rainbow"},
+      cycleSpeed:{type:"range",min:1,max:360,step:1,label:"Cycle deg/s"}
+    }
+  };}
+  _sx=640;
+  update(dt,bi) { this._sx -= this.params.scrollSpeed; }
+  render(ctx,t) {
+    const p=this.params;
+    ctx.font=`bold ${p.fontSize}px "Press Start 2P",monospace`;
+    ctx.textBaseline="middle";
+    const cw=p.fontSize*0.95;
+    const tw=p.text.length*cw;
+    if(this._sx < -tw) this._sx=640;
+    for(let i=0;i<p.text.length;i++){
+      const x=Math.floor(this._sx+i*cw);
+      if(x<-cw||x>660)continue;
+      const wy=Math.floor(Math.sin(x*p.waveFrequency+t*p.waveSpeed)*p.waveAmplitude);
+      const dy=Math.floor(p.yPosition+wy);
+      if(p.paletteCycling){
+        ctx.fillStyle=`hsl(${(i*12+t*p.cycleSpeed)%360},100%,60%)`;
+      } else { ctx.fillStyle=p.fontColor; }
+      ctx.fillText(p.text[i],x,dy);
+    }
+  }
+}\n\nclass DYCPScroller extends BaseEffect {
+  static get attribution() { return {
+    name:"dycp_scroller", display_name:"DYCP Scroller",
+    origin_year:1986, origin_hardware:"C64 sprites hardware / Amiga BOBs",
+    origin_group:"—", origin_coder:"Raistlin",
+    first_prod:"C64 DXYCP demos mid-80s",
+    reference_url:"https://codebase64.org/doku.php?id=base:dycp_-_pair_of_sines",
+    technique:"Different Y Coordinate Per character — chaque lettre a une position Y indépendante calculée via sin(). Sur C64, les 8 sprites hardware étaient multiplexés sur plusieurs lignes raster pour afficher plus de caractères que le hardware ne le permettait normalement.",
+    difficulty:3, era:"GEN1_CRACKTRO", tags:["c64","amiga","scroller","dycp","sprites"]
+  };}
+  static get defaultParams() { return {
+    text:"    * GREETINGS TO ALL SCENERS * THIS IS DYCP STYLE * EACH CHAR HAS ITS OWN Y POSITION * CLASSIC C64 TECHNIQUE *    ",
+    fontSize:24, scrollSpeed:2, waveType:"sin",
+    amplitude:50, frequency:0.4, waveSpeed:3.0,
+    charSpacing:2, paletteCycling:true, phasePerChar:0.4, beatBounce:true
+  };}
+  static get paramDefs() { return {
+    LAME:{ text:{type:"text",label:"Text"} },
+    NOOB:{
+      text:{type:"text",label:"Text"},
+      scrollSpeed:{type:"range",min:1,max:5,step:1,label:"Speed"},
+      amplitude:{type:"range",min:10,max:80,step:5,label:"Wave Height"}
+    },
+    L33T:{
+      text:{type:"text",label:"Text"},
+      fontSize:{type:"range",min:12,max:48,step:2,label:"Size"},
+      scrollSpeed:{type:"range",min:1,max:8,step:1,label:"Speed"},
+      waveType:{type:"select",options:["sin","cos","combined"],label:"Wave Type"},
+      amplitude:{type:"range",min:0,max:120,step:1,label:"Amplitude"},
+      frequency:{type:"range",min:0.1,max:1.5,step:0.05,label:"Frequency"},
+      waveSpeed:{type:"range",min:0.5,max:8,step:0.1,label:"Wave Speed"},
+      phasePerChar:{type:"range",min:0.05,max:1.5,step:0.05,label:"Phase/Char"},
+      paletteCycling:{type:"checkbox",label:"Rainbow"},
+      beatBounce:{type:"checkbox",label:"Beat Bounce"}
+    },
+    ROXOR:{
+      text:{type:"textarea",label:"Text"},
+      fontSize:{type:"range",min:8,max:64,step:1,label:"Size"},
+      scrollSpeed:{type:"range",min:1,max:12,step:1,label:"Speed"},
+      waveType:{type:"select",options:["sin","cos","combined","random"],label:"Wave"},
+      amplitude:{type:"range",min:0,max:180,step:1,label:"Amplitude"},
+      frequency:{type:"range",min:0.01,max:3,step:0.01,label:"Frequency"},
+      waveSpeed:{type:"range",min:0.1,max:15,step:0.1,label:"Wave Speed"},
+      phasePerChar:{type:"range",min:0.01,max:3,step:0.01,label:"Phase/Char"},
+      charSpacing:{type:"range",min:0,max:10,step:1,label:"Char Spacing"},
+      paletteCycling:{type:"checkbox",label:"Rainbow"},
+      beatBounce:{type:"checkbox",label:"Beat Bounce"}
+    }
+  };}
+  _sx=640; _bAmp=1;
+  update(dt,bi) {
+    this._sx -= this.params.scrollSpeed;
+    if(this.params.beatBounce && bi.beat) this._bAmp=1.5;
+    this._bAmp += (1 - this._bAmp) * 0.08;
+  }
+  _wave(i,t) {
+    const p=this.params, ph=i*p.phasePerChar+t*p.waveSpeed;
+    switch(p.waveType){
+      case"cos": return Math.cos(ph*p.frequency)*p.amplitude*this._bAmp;
+      case"combined": return (Math.sin(ph*p.frequency)+Math.sin(ph*p.frequency*2.3)*0.5+Math.cos(ph*p.frequency*0.7)*0.3)*p.amplitude*this._bAmp*0.55;
+      default: return Math.sin(ph*p.frequency)*p.amplitude*this._bAmp;
+    }
+  }
+  render(ctx,t) {
+    const p=this.params;
+    ctx.font=`bold ${p.fontSize}px "Press Start 2P",monospace`;
+    ctx.textBaseline="middle";
+    const cw=p.fontSize*0.9+p.charSpacing;
+    const tw=p.text.length*cw;
+    if(this._sx < -tw) this._sx=640;
+    const baseY=200;
+    for(let i=0;i<p.text.length;i++){
+      const x=Math.floor(this._sx+i*cw);
+      if(x<-cw||x>660)continue;
+      const y=Math.floor(baseY+this._wave(i,t));
+      if(p.paletteCycling){
+        ctx.fillStyle=`hsl(${(i*15+t*80)%360},100%,65%)`;
+      } else { ctx.fillStyle="#00ffaa"; }
+      ctx.fillText(p.text[i],x,y);
+    }
+  }
+}
+
+const canvas=document.getElementById("c");
+const ctx=canvas.getContext("2d");
+ctx.imageSmoothingEnabled=false;
+const W=innerWidth,H=innerHeight,ar=640/400;
+let cw=W,ch=H;if(cw/ch>ar)cw=Math.floor(ch*ar);else ch=Math.floor(cw/ar);
+canvas.style.width=cw+"px";canvas.style.height=ch+"px";
+
+const effectsData=[{"effect":"MatrixRain","params":{"charset":"KATAKANA","speed":0.6,"trailLength":25,"headColor":"#ccffcc","trailColor":"#00aa00","fontSize":14,"density":0.9}},{"effect":"SinusScroller","params":{"text":"On Est Grave les best","fontSize":22,"fontColor":"#00ff44","scrollSpeed":2,"waveAmplitude":6,"waveFrequency":0.08,"waveSpeed":3,"yPosition":340,"paletteCycling":false,"cycleSpeed":60}},{"effect":"DYCPScroller","params":{"text":"Whaoou on petes du ponney\n","fontSize":24,"scrollSpeed":2,"waveType":"sin","amplitude":50,"frequency":0.4,"waveSpeed":3,"charSpacing":2,"paletteCycling":true,"phasePerChar":0.4,"beatBounce":true}}];
+const effects=[];
+for(const ed of effectsData){
+  const Cls=eval(ed.effect);
+  const fx=new Cls(ed.params);
+  fx.init(canvas,ctx,null);
+  effects.push(fx);
+}
+
+let playing=true,lastTime=0;
+document.addEventListener("keydown",e=>{if(e.code==="Space"){e.preventDefault();playing=!playing;}});
+
+function loop(ts){
+  requestAnimationFrame(loop);
+  const dt=ts-lastTime;lastTime=ts;
+  if(dt>100||!playing)return;
+  ctx.save();ctx.imageSmoothingEnabled=false;
+  ctx.fillStyle="#000011";ctx.fillRect(0,0,640,400);
+  const bi={bpm:125,row:Math.floor(ts/80)%64,order:0,beat:false,bassEnergy:0};
+  for(const fx of effects){ctx.save();ctx.imageSmoothingEnabled=false;fx.update(dt/1000,bi);fx.render(ctx,ts/1000);ctx.restore();ctx.imageSmoothingEnabled=false;}
+  ctx.restore();
+}
+requestAnimationFrame(loop);
+</script></body></html>

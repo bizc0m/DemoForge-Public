@@ -1,0 +1,1496 @@
+<!DOCTYPE html>
+<!--
+  ╔══════════════════════════════════════════╗
+  ║  DemoForge v1.1 — Demoscene Demo Editor  ║
+  ║  Full build: 8 Effects + BMFont + Audio  ║
+  ║  + Timeline DnD + ZIP Export + Attrib    ║
+  ║                                          ║
+  ║  Effets basés sur les traditions de la   ║
+  ║  demoscene depuis 1986.                  ║
+  ║  Voir CREDITS.JSON pour les attributions ║
+  ╚══════════════════════════════════════════╝
+-->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DemoForge v1.1 — Demoscene Demo Editor</title>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#0a0a0f;--panel:#12121a;--panel-border:#1e1e2e;
+  --accent:#00ff88;--accent2:#ff00aa;--accent3:#00aaff;
+  --text:#c0c0d0;--text-dim:#606070;--text-bright:#ffffff;
+  --lame:#ff6600;--noob:#ffcc00;--l33t:#00ff88;--roxor:#ff00aa;
+  --timeline-bg:#0d0d14;
+}
+html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;font-size:13px}
+#app{display:grid;grid-template-columns:220px 1fr 280px;grid-template-rows:44px 1fr 170px;height:100vh;gap:1px;background:var(--panel-border)}
+
+/* TOOLBAR */
+#toolbar{grid-column:1/-1;background:var(--panel);display:flex;align-items:center;padding:0 12px;gap:8px}
+#toolbar .logo{font-family:'Press Start 2P',monospace;font-size:10px;color:var(--accent);letter-spacing:1px;margin-right:12px}
+#toolbar .logo span{color:var(--accent2)}
+.level-btn{padding:4px 10px;border:1px solid var(--panel-border);background:transparent;color:var(--text-dim);font-family:'VT323',monospace;font-size:15px;cursor:pointer;border-radius:3px;transition:all .15s}
+.level-btn.active{border-color:var(--accent);color:var(--accent);background:rgba(0,255,136,.08)}
+.level-btn[data-level="LAME"].active{border-color:var(--lame);color:var(--lame);background:rgba(255,102,0,.08)}
+.level-btn[data-level="NOOB"].active{border-color:var(--noob);color:var(--noob);background:rgba(255,204,0,.08)}
+.level-btn[data-level="L33T"].active{border-color:var(--l33t);color:var(--l33t);background:rgba(0,255,136,.08)}
+.level-btn[data-level="ROXOR"].active{border-color:var(--roxor);color:var(--roxor);background:rgba(255,0,170,.08)}
+.tb-sep{width:1px;height:24px;background:var(--panel-border);margin:0 4px}
+.tb-btn{padding:4px 12px;border:1px solid var(--panel-border);background:transparent;color:var(--text);cursor:pointer;border-radius:3px;font-size:13px;display:flex;align-items:center;gap:4px;white-space:nowrap}
+.tb-btn:hover{border-color:var(--accent);color:var(--accent)}
+.tb-btn.play-btn{color:#0f0;border-color:#0a3}
+.tb-btn.export-btn{color:var(--accent2);border-color:var(--accent2)}
+.tb-spacer{flex:1}
+.tb-vol{width:60px;accent-color:var(--accent);height:3px}
+
+/* LIBRARY */
+#library{background:var(--panel);overflow-y:auto;padding:8px}
+.lib-section{margin-bottom:12px}
+.lib-section h3{font-family:'VT323',monospace;font-size:14px;color:var(--text-dim);text-transform:uppercase;letter-spacing:2px;padding:4px 0;border-bottom:1px solid var(--panel-border);margin-bottom:4px}
+.lib-item{padding:6px 8px;cursor:pointer;border-radius:3px;display:flex;align-items:center;gap:8px;font-size:12px;transition:background .1s}
+.lib-item:hover{background:rgba(255,255,255,.04)}
+.lib-item.active{background:rgba(0,255,136,.08);color:var(--accent)}
+.lib-item .icon{font-size:16px;width:22px;text-align:center}
+.lib-item .era{font-size:9px;color:var(--text-dim);margin-left:auto;font-family:'VT323',monospace}
+.lib-item .rm{margin-left:4px;color:var(--text-dim);font-size:10px;cursor:pointer;opacity:0;transition:opacity .1s}
+.lib-item:hover .rm{opacity:1}
+.lib-item .rm:hover{color:#f44}
+
+/* PREVIEW */
+#preview-wrap{background:#000;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+#preview-canvas{image-rendering:pixelated;image-rendering:crisp-edges}
+#preview-fps{position:absolute;top:6px;right:8px;font-family:'VT323',monospace;font-size:14px;color:var(--accent);opacity:.7}
+#preview-time{position:absolute;top:6px;left:8px;font-family:'VT323',monospace;font-size:14px;color:var(--text-dim);opacity:.7}
+
+/* INSPECTOR */
+#inspector{background:var(--panel);overflow-y:auto;padding:10px;position:relative}
+#inspector h3{font-family:'VT323',monospace;font-size:14px;color:var(--accent);margin-bottom:8px}
+.insp-group{margin-bottom:10px}
+.insp-group label{display:flex;justify-content:space-between;align-items:center;font-size:11px;color:var(--text-dim);margin-bottom:3px}
+.insp-group label span.val{color:var(--text);font-family:'VT323',monospace;font-size:13px}
+.insp-group input[type=range]{width:100%;accent-color:var(--accent);height:4px;-webkit-appearance:none;background:var(--panel-border);border-radius:2px;outline:none}
+.insp-group input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:12px;height:12px;border-radius:50%;background:var(--accent);cursor:pointer}
+.insp-group input[type=color]{width:28px;height:22px;border:1px solid var(--panel-border);background:transparent;cursor:pointer;border-radius:3px;padding:0}
+.insp-group input[type=text],.insp-group textarea{width:100%;background:var(--bg);border:1px solid var(--panel-border);color:var(--text);padding:4px 6px;border-radius:3px;font-family:'VT323',monospace;font-size:13px;resize:vertical}
+.insp-group select{width:100%;background:var(--bg);border:1px solid var(--panel-border);color:var(--text);padding:4px 6px;border-radius:3px;font-size:12px}
+
+/* ATTRIBUTION PANEL */
+.attr-card{background:var(--bg);border:1px solid var(--panel-border);border-radius:4px;padding:10px;margin-top:10px;cursor:pointer;transition:border-color .15s}
+.attr-card:hover{border-color:var(--accent2)}
+.attr-card h4{font-family:'VT323',monospace;font-size:13px;color:var(--accent2);margin-bottom:6px;display:flex;align-items:center;gap:6px}
+.attr-row{display:flex;gap:6px;font-size:11px;margin-bottom:3px;color:var(--text-dim)}
+.attr-row .al{color:var(--text);min-width:70px}
+
+#attr-overlay{position:absolute;top:0;left:0;right:0;bottom:0;background:var(--panel);z-index:20;overflow-y:auto;padding:12px;transform:translateX(100%);transition:transform .25s ease;display:flex;flex-direction:column}
+#attr-overlay.open{transform:translateX(0)}
+#attr-overlay .attr-back{cursor:pointer;color:var(--accent);font-family:'VT323',monospace;font-size:14px;margin-bottom:10px;display:flex;align-items:center;gap:6px}
+#attr-overlay .attr-back:hover{text-decoration:underline}
+.attr-full-title{font-family:'Press Start 2P',monospace;font-size:12px;color:var(--accent2);margin-bottom:12px;line-height:1.6}
+.attr-full-row{display:flex;gap:8px;font-size:12px;margin-bottom:6px;align-items:flex-start}
+.attr-full-row .afi{width:20px;text-align:center;flex-shrink:0}
+.attr-full-row .afl{color:var(--text-dim);min-width:90px;flex-shrink:0}
+.attr-full-row .afv{color:var(--text)}
+.attr-tech{margin-top:12px;padding:10px;background:var(--bg);border:1px solid var(--panel-border);border-radius:4px;font-size:11px;line-height:1.6;color:var(--text)}
+.attr-tech h5{font-family:'VT323',monospace;color:var(--accent);font-size:14px;margin-bottom:6px}
+.attr-links{margin-top:10px}
+.attr-links a{display:block;color:var(--accent3);font-size:11px;margin-bottom:4px;text-decoration:none;word-break:break-all}
+.attr-links a:hover{text-decoration:underline}
+
+/* TIMELINE */
+#timeline{grid-column:1/-1;background:var(--timeline-bg);display:flex;flex-direction:column;overflow:hidden}
+#timeline-ruler{height:22px;background:var(--bg);border-bottom:1px solid var(--panel-border);position:relative;margin-left:110px;cursor:pointer}
+.ruler-mark{position:absolute;top:0;height:100%;border-left:1px solid rgba(255,255,255,.08);font-size:9px;color:var(--text-dim);padding:3px 0 0 3px;font-family:'VT323',monospace}
+#timeline-tracks{flex:1;overflow-y:auto;position:relative}
+.tl-track{display:flex;align-items:center;height:34px;border-bottom:1px solid rgba(255,255,255,.03)}
+.tl-track-label{width:110px;padding:0 8px;font-size:11px;color:var(--text-dim);flex-shrink:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:flex;align-items:center;gap:4px}
+.tl-track-label .tl-del{font-size:9px;cursor:pointer;color:var(--text-dim);opacity:0;transition:opacity .1s}
+.tl-track:hover .tl-del{opacity:1}
+.tl-track-label .tl-del:hover{color:#f44}
+.tl-track-bar{flex:1;height:24px;margin:0 4px;position:relative}
+.tl-block{position:absolute;height:100%;border-radius:3px;opacity:.85;cursor:grab;display:flex;align-items:center;padding:0 6px;font-size:10px;font-family:'VT323',monospace;color:rgba(0,0,0,.7);font-weight:bold;transition:opacity .1s;user-select:none;min-width:30px}
+.tl-block:hover{opacity:1}
+.tl-block.sel{outline:2px solid var(--accent);outline-offset:-1px;opacity:1}
+.tl-block .tl-resize{position:absolute;right:0;top:0;width:8px;height:100%;cursor:ew-resize;border-radius:0 3px 3px 0}
+#timeline-playhead{position:absolute;top:0;width:2px;height:100%;background:var(--accent);pointer-events:none;z-index:10;box-shadow:0 0 6px var(--accent)}
+</style>
+</head>
+<body>
+<div id="app">
+
+<!-- TOOLBAR -->
+<div id="toolbar">
+  <div class="logo">DEMO<span>FORGE</span> v1.1</div>
+  <button class="level-btn active" data-level="LAME" onclick="setLevel('LAME')">LAME</button>
+  <button class="level-btn" data-level="NOOB" onclick="setLevel('NOOB')">NOOB</button>
+  <button class="level-btn" data-level="L33T" onclick="setLevel('L33T')">L33T</button>
+  <button class="level-btn" data-level="ROXOR" onclick="setLevel('ROXOR')">ROXOR</button>
+  <div class="tb-sep"></div>
+  <button class="tb-btn play-btn" id="btn-play" onclick="togglePlay()">&#9654; Play</button>
+  <button class="tb-btn" onclick="engine.stop()">&#9632; Stop</button>
+  <div class="tb-sep"></div>
+  <span style="font-size:11px;color:var(--text-dim)">&#9834;</span>
+  <input type="range" class="tb-vol" min="0" max="100" value="70" oninput="audioEngine.setVolume(this.value/100)" title="Volume">
+  <div class="tb-spacer"></div>
+  <button class="tb-btn export-btn" onclick="exportDemo()">&#128230; Export ZIP</button>
+</div>
+
+<!-- LIBRARY -->
+<div id="library">
+  <div class="lib-section">
+    <h3>Effects</h3>
+    <div class="lib-item" data-effect="CopperBars" onclick="selectEffect('CopperBars')" draggable="true">
+      <span class="icon">&#127912;</span> Copper Bars <span class="era">1985</span>
+    </div>
+    <div class="lib-item" data-effect="SinusScroller" onclick="selectEffect('SinusScroller')" draggable="true">
+      <span class="icon">&#127754;</span> Sinus Scroller <span class="era">1987</span>
+    </div>
+    <div class="lib-item" data-effect="DYCPScroller" onclick="selectEffect('DYCPScroller')" draggable="true">
+      <span class="icon">&#128172;</span> DYCP Scroller <span class="era">1986</span>
+    </div>
+    <div class="lib-item" data-effect="Starfield3D" onclick="selectEffect('Starfield3D')" draggable="true">
+      <span class="icon">&#11088;</span> Starfield 3D <span class="era">1987</span>
+    </div>
+    <div class="lib-item" data-effect="PlasmaEffect" onclick="selectEffect('PlasmaEffect')" draggable="true">
+      <span class="icon">&#127752;</span> Plasma <span class="era">1992</span>
+    </div>
+    <div class="lib-item" data-effect="FireEffect" onclick="selectEffect('FireEffect')" draggable="true">
+      <span class="icon">&#128293;</span> Fire <span class="era">1992</span>
+    </div>
+    <div class="lib-item" data-effect="BounceLogo" onclick="selectEffect('BounceLogo')" draggable="true">
+      <span class="icon">&#128640;</span> Bounce Logo <span class="era">1987</span>
+    </div>
+    <div class="lib-item" data-effect="MatrixRain" onclick="selectEffect('MatrixRain')" draggable="true">
+      <span class="icon">&#129702;</span> Matrix Rain <span class="era">1999</span>
+    </div>
+  </div>
+  <div class="lib-section">
+    <h3>Presets</h3>
+    <div class="lib-item" onclick="loadPreset('cracktro_amiga')"><span class="icon">&#128190;</span> Cracktro Amiga</div>
+    <div class="lib-item" onclick="loadPreset('starfield_demo')"><span class="icon">&#128190;</span> Starfield Warp</div>
+    <div class="lib-item" onclick="loadPreset('plasma_fire')"><span class="icon">&#128190;</span> Plasma & Fire</div>
+    <div class="lib-item" onclick="loadPreset('megademo_92')"><span class="icon">&#128190;</span> Megademo 1992</div>
+    <div class="lib-item" onclick="loadPreset('matrix_night')"><span class="icon">&#128190;</span> Matrix Night</div>
+  </div>
+  <div class="lib-section">
+    <h3>Audio</h3>
+    <div class="lib-item" onclick="audioEngine.toggleBeat()"><span class="icon">&#9834;</span> <span id="audio-label">Beat OFF</span></div>
+    <div class="lib-item" style="font-size:10px;color:var(--text-dim);padding:4px 8px">BPM: <input type="number" id="bpm-input" value="125" min="60" max="240" style="width:50px;background:var(--bg);border:1px solid var(--panel-border);color:var(--text);text-align:center;font-family:VT323;font-size:13px" onchange="audioEngine.bpm=+this.value"></div>
+  </div>
+</div>
+
+<!-- PREVIEW -->
+<div id="preview-wrap">
+  <canvas id="preview-canvas" width="640" height="400"></canvas>
+  <div id="preview-fps">60 FPS</div>
+  <div id="preview-time">0:00.0</div>
+</div>
+
+<!-- INSPECTOR -->
+<div id="inspector">
+  <h3 id="insp-title">Select an effect</h3>
+  <div id="insp-params"></div>
+  <div id="insp-attribution"></div>
+  <div id="attr-overlay">
+    <div class="attr-back" onclick="closeAttribution()">&#8592; BACK</div>
+    <div id="attr-overlay-content"></div>
+  </div>
+</div>
+
+<!-- TIMELINE -->
+<div id="timeline">
+  <div id="timeline-ruler" onclick="seekTimeline(event)"></div>
+  <div id="timeline-tracks">
+    <div id="timeline-playhead" style="left:0"></div>
+  </div>
+</div>
+</div>
+
+<script>
+"use strict";
+
+// ═══════════════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════════════
+const STATE = {
+  level: "LAME", playing: false, time: 0, startTime: 0,
+  selectedEffect: null, duration: 30000,
+  fps: 0, _fc: 0, _ft: 0
+};
+
+// ═══════════════════════════════════════════════════
+// AUDIO ENGINE — Web Audio API beat generator
+// ═══════════════════════════════════════════════════
+const audioEngine = {
+  ctx: null, bpm: 125, volume: 0.7,
+  _beating: false, _lastBeat: 0, _beatOn: false,
+  _bassEnergy: 0, _kick: false,
+  _osc: null, _gain: null,
+
+  init() {
+    this.ctx = new (window.AudioContext || window.webkitAudioContext)();
+    this._gain = this.ctx.createGain();
+    this._gain.gain.value = 0;
+    this._gain.connect(this.ctx.destination);
+  },
+
+  ensureCtx() {
+    if (!this.ctx) this.init();
+    if (this.ctx.state === "suspended") this.ctx.resume();
+  },
+
+  toggleBeat() {
+    this.ensureCtx();
+    this._beating = !this._beating;
+    document.getElementById("audio-label").textContent = this._beating ? "Beat ON" : "Beat OFF";
+    if (this._beating) {
+      this._gain.gain.value = this.volume * 0.3;
+      this._scheduleBeat();
+    } else {
+      this._gain.gain.value = 0;
+    }
+  },
+
+  _scheduleBeat() {
+    if (!this._beating) return;
+    const now = this.ctx.currentTime;
+    const beatInterval = 60 / this.bpm;
+    // Kick sound
+    const osc = this.ctx.createOscillator();
+    const g = this.ctx.createGain();
+    osc.type = "sine";
+    osc.frequency.setValueAtTime(160, now);
+    osc.frequency.exponentialRampToValueAtTime(40, now + 0.08);
+    g.gain.setValueAtTime(this.volume * 0.4, now);
+    g.gain.exponentialRampToValueAtTime(0.001, now + 0.12);
+    osc.connect(g);
+    g.connect(this.ctx.destination);
+    osc.start(now);
+    osc.stop(now + 0.15);
+    this._kick = true;
+    this._bassEnergy = 1.0;
+    setTimeout(() => { this._kick = false; }, 80);
+    setTimeout(() => this._scheduleBeat(), beatInterval * 1000);
+  },
+
+  setVolume(v) { this.volume = v; },
+
+  getBeatInfo() {
+    this._bassEnergy *= 0.92;
+    const beatInterval = 60000 / this.bpm;
+    const row = Math.floor(STATE.time / (beatInterval / 4)) % 64;
+    const order = Math.floor(STATE.time / (beatInterval * 16));
+    return {
+      bpm: this.bpm, row, order,
+      beat: this._kick,
+      bassEnergy: this._bassEnergy
+    };
+  }
+};
+
+// ═══════════════════════════════════════════════════
+// BMFont — Procedural bitmap font renderer
+// ═══════════════════════════════════════════════════
+const BMFont = {
+  _cache: {},
+  _charSet: " !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~",
+
+  getFont(size, family) {
+    const key = size + "_" + (family || "px");
+    if (this._cache[key]) return this._cache[key];
+    const c = document.createElement("canvas");
+    const ctx = c.getContext("2d");
+    const fam = family || "'Press Start 2P', monospace";
+    ctx.font = size + "px " + fam;
+    const metrics = {};
+    for (const ch of this._charSet) {
+      const m = ctx.measureText(ch);
+      const w = Math.ceil(m.width) || size;
+      metrics[ch] = { w, h: size };
+    }
+    const font = { size, family: fam, metrics };
+    this._cache[key] = font;
+    return font;
+  },
+
+  drawChar(ctx, ch, x, y, size, family, color) {
+    ctx.font = `${size}px ${family || "'Press Start 2P', monospace"}`;
+    ctx.fillStyle = color || "#fff";
+    ctx.textBaseline = "top";
+    ctx.fillText(ch, Math.floor(x), Math.floor(y));
+  },
+
+  measureText(text, size, family, spacing) {
+    const font = this.getFont(size, family);
+    let w = 0;
+    const sp = spacing || 0;
+    for (const ch of text) {
+      const m = font.metrics[ch] || font.metrics["?"];
+      w += (m ? m.w : size * 0.6) + sp;
+    }
+    return w;
+  }
+};
+
+// ═══════════════════════════════════════════════════
+// ENGINE
+// ═══════════════════════════════════════════════════
+const engine = {
+  canvas: null, ctx: null, effects: [], rafId: null, lastTime: 0,
+
+  init() {
+    this.canvas = document.getElementById("preview-canvas");
+    this.ctx = this.canvas.getContext("2d");
+    this.ctx.imageSmoothingEnabled = false;
+    this.resize();
+    window.addEventListener("resize", () => this.resize());
+    audioEngine.init();
+    this.loop(0);
+  },
+
+  resize() {
+    const wrap = document.getElementById("preview-wrap");
+    const ar = 640 / 400;
+    let w = wrap.clientWidth, h = wrap.clientHeight;
+    if (w / h > ar) w = Math.floor(h * ar); else h = Math.floor(w / ar);
+    this.canvas.style.width = w + "px";
+    this.canvas.style.height = h + "px";
+  },
+
+  loop(timestamp) {
+    this.rafId = requestAnimationFrame(t => this.loop(t));
+    const dt = timestamp - this.lastTime;
+    this.lastTime = timestamp;
+    if (dt > 100) return;
+
+    STATE._fc++;
+    STATE._ft += dt;
+    if (STATE._ft >= 500) {
+      STATE.fps = Math.round(STATE._fc / (STATE._ft / 1000));
+      document.getElementById("preview-fps").textContent = STATE.fps + " FPS";
+      STATE._fc = 0; STATE._ft = 0;
+    }
+
+    if (STATE.playing) {
+      STATE.time = timestamp - STATE.startTime;
+      if (STATE.time >= STATE.duration) { STATE.time = 0; STATE.startTime = timestamp; }
+      const sec = STATE.time / 1000;
+      document.getElementById("preview-time").textContent =
+        Math.floor(sec/60) + ":" + (Math.floor(sec)%60+"").padStart(2,"0") + "." + Math.floor((sec%1)*10);
+    }
+
+    const ctx = this.ctx;
+    ctx.save();
+    ctx.imageSmoothingEnabled = false;
+    ctx.fillStyle = "#000011";
+    ctx.fillRect(0, 0, 640, 400);
+
+    const beatInfo = audioEngine.getBeatInfo();
+    for (const fx of this.effects) {
+      ctx.save();
+      ctx.imageSmoothingEnabled = false;
+      fx.update(dt / 1000, beatInfo);
+      fx.render(ctx, STATE.time / 1000);
+      ctx.restore();
+      ctx.imageSmoothingEnabled = false;
+    }
+    ctx.restore();
+    updatePlayhead();
+  },
+
+  play() {
+    if (!STATE.playing) {
+      STATE.playing = true;
+      STATE.startTime = this.lastTime - STATE.time;
+      document.getElementById("btn-play").innerHTML = "&#9646;&#9646; Pause";
+    }
+  },
+  pause() { STATE.playing = false; document.getElementById("btn-play").innerHTML = "&#9654; Play"; },
+  stop() { STATE.playing = false; STATE.time = 0; document.getElementById("btn-play").innerHTML = "&#9654; Play"; },
+  addEffect(Cls, params) {
+    const fx = new Cls(params);
+    fx.init(this.canvas, this.ctx, audioEngine);
+    this.effects.push(fx);
+    return fx;
+  },
+  removeEffect(fx) {
+    const i = this.effects.indexOf(fx);
+    if (i >= 0) { fx.destroy(); this.effects.splice(i, 1); }
+  },
+  clearEffects() { for (const fx of this.effects) fx.destroy(); this.effects = []; }
+};
+
+function togglePlay() { STATE.playing ? engine.pause() : engine.play(); }
+
+// ═══════════════════════════════════════════════════
+// BASE EFFECT
+// ═══════════════════════════════════════════════════
+class BaseEffect {
+  constructor(p={}) { this.params = Object.assign({}, this.constructor.defaultParams, p); this.canvas=null; this.ctx=null; }
+  static get attribution() { return {}; }
+  static get defaultParams() { return {}; }
+  static get paramDefs() { return {LAME:{},NOOB:{},L33T:{},ROXOR:{}}; }
+  init(c, ctx, audio) { this.canvas=c; this.ctx=ctx; this.audio=audio; }
+  update(dt, bi) {}
+  render(ctx, t) {}
+  destroy() {}
+  serialize() { return {effect:this.constructor.name, params:{...this.params}}; }
+}
+
+// ═══════════════════════════════════════════════════
+// CopperBars (1985)
+// ═══════════════════════════════════════════════════
+class CopperBars extends BaseEffect {
+  static get attribution() { return {
+    name:"copper_bars", display_name:"Copper Bars",
+    origin_year:1985, origin_hardware:"Amiga OCS — Copper coprocessor",
+    origin_group:"Bamiga Sector One", origin_coder:"—",
+    first_prod:"Destroyer cracktro, 1987",
+    reference_url:"https://eab.abime.net/showthread.php?t=44895",
+    technique:"Changement de registres de couleur synchronisé avec le balayage horizontal de l'écran. Le copper Amiga pouvait modifier les registres de couleur à chaque ligne de balayage (scanline), permettant des dégradés et animations impossibles avec le seul CPU. Chaque barre est composée de 16 sous-couleurs interpolées pour simuler un dégradé lisse.",
+    difficulty:2, era:"GEN1_CRACKTRO", tags:["amiga","copper","hardware","raster"]
+  };}
+  static get defaultParams() { return {
+    barCount:8, barHeight:20, speed:1.0,
+    palette:["#ff4400","#ff8800","#ffcc00","#00ff88","#0088ff","#8800ff","#ff0088","#ff4400"],
+    amplitude:100, frequency:1.0, blendMode:"normal", beatSync:true
+  };}
+  static get paramDefs() { return {
+    LAME:{},
+    NOOB:{
+      barCount:{type:"range",min:2,max:16,step:1,label:"Bar Count"},
+      speed:{type:"range",min:0.2,max:3,step:0.1,label:"Speed"},
+      amplitude:{type:"range",min:20,max:300,step:5,label:"Amplitude"}
+    },
+    L33T:{
+      barCount:{type:"range",min:2,max:32,step:1,label:"Bar Count"},
+      barHeight:{type:"range",min:4,max:80,step:1,label:"Bar Height"},
+      speed:{type:"range",min:0.1,max:5,step:0.1,label:"Speed"},
+      amplitude:{type:"range",min:0,max:300,step:1,label:"Amplitude"},
+      frequency:{type:"range",min:0.1,max:4,step:0.1,label:"Frequency"},
+      blendMode:{type:"select",options:["normal","lighter","multiply"],label:"Blend Mode"}
+    },
+    ROXOR:{
+      barCount:{type:"range",min:1,max:64,step:1,label:"Bar Count"},
+      barHeight:{type:"range",min:1,max:120,step:1,label:"Bar Height"},
+      speed:{type:"range",min:0.01,max:10,step:0.01,label:"Speed"},
+      amplitude:{type:"range",min:0,max:400,step:1,label:"Amplitude"},
+      frequency:{type:"range",min:0.01,max:8,step:0.01,label:"Frequency"},
+      blendMode:{type:"select",options:["normal","lighter","multiply","screen"],label:"Blend Mode"},
+      beatSync:{type:"checkbox",label:"Beat Sync"}
+    }
+  };}
+  _bp=0;
+  update(dt,bi) { if (this.params.beatSync && bi.beat) this._bp=1; this._bp*=0.92; }
+  render(ctx,t) {
+    const p=this.params, W=640, H=400;
+    const gco=ctx.globalCompositeOperation;
+    if (p.blendMode==="lighter") ctx.globalCompositeOperation="lighter";
+    for (let i=0;i<p.barCount;i++) {
+      const phase=(i/p.barCount)*Math.PI*2;
+      const amp=p.amplitude+this._bp*40;
+      const y=Math.floor(H/2+Math.sin(t*p.speed*2+phase*p.frequency)*amp);
+      const col=p.palette[i%p.palette.length];
+      const bh=p.barHeight;
+      for (let s=0;s<bh;s++) {
+        const br=Math.sin(s/bh*Math.PI);
+        const sy=Math.floor(y-bh/2+s);
+        if(sy<0||sy>=H) continue;
+        ctx.fillStyle=col; ctx.globalAlpha=0.3+br*0.7;
+        ctx.fillRect(0,sy,W,1);
+      }
+    }
+    ctx.globalAlpha=1; ctx.globalCompositeOperation=gco;
+  }
+}
+
+// ═══════════════════════════════════════════════════
+// SinusScroller (1987)
+// ═══════════════════════════════════════════════════
+class SinusScroller extends BaseEffect {
+  static get attribution() { return {
+    name:"sinus_scroller", display_name:"Sinus Scroller",
+    origin_year:1987, origin_hardware:"Amiga OCS — Blitter",
+    origin_group:"Skid Row", origin_coder:"Yragael",
+    first_prod:"Skid Row cracktro série 1991",
+    reference_url:"https://www.stashofcode.fr/coder-une-cracktro-sur-amiga-1",
+    technique:"Texte défilant horizontalement avec ondulation sinusoïdale verticale. Le blitter Amiga copiait chaque caractère ligne par ligne avec un décalage Y calculé via une table sinus précalculée. Le scrollspeed est un entier (px/frame) pour un mouvement pixel-perfect sans sub-pixel.",
+    difficulty:2, era:"GEN1_CRACKTRO", tags:["amiga","scroller","sinus","blitter"]
+  };}
+  static get defaultParams() { return {
+    text:"    WELCOME TO DEMOFORGE !!!   THE DEMOSCENE DEMO EDITOR *** GREETINGS TO ALL SCENERS AROUND THE WORLD ...   AMIGA FOREVER !!! *** CODED WITH LOVE FOR THE SCENE ***    ",
+    fontSize:28, fontColor:"#00ff88", scrollSpeed:2,
+    waveAmplitude:30, waveFrequency:0.08, waveSpeed:3.0,
+    yPosition:320, paletteCycling:true, cycleSpeed:60
+  };}
+  static get paramDefs() { return {
+    LAME:{ text:{type:"text",label:"Scroller Text"} },
+    NOOB:{
+      text:{type:"text",label:"Scroller Text"},
+      scrollSpeed:{type:"range",min:1,max:5,step:1,label:"Speed"},
+      waveAmplitude:{type:"range",min:0,max:60,step:5,label:"Wave"},
+      fontColor:{type:"color",label:"Color"}
+    },
+    L33T:{
+      text:{type:"text",label:"Scroller Text"},
+      fontSize:{type:"range",min:12,max:48,step:2,label:"Font Size"},
+      scrollSpeed:{type:"range",min:1,max:8,step:1,label:"Speed (px/frame)"},
+      waveAmplitude:{type:"range",min:0,max:100,step:1,label:"Wave Amplitude"},
+      waveFrequency:{type:"range",min:0.01,max:0.3,step:0.01,label:"Wave Frequency"},
+      waveSpeed:{type:"range",min:0.5,max:8,step:0.1,label:"Wave Speed"},
+      yPosition:{type:"range",min:50,max:380,step:1,label:"Y Position"},
+      fontColor:{type:"color",label:"Color"},
+      paletteCycling:{type:"checkbox",label:"Rainbow Cycling"},
+      cycleSpeed:{type:"range",min:10,max:200,step:5,label:"Cycle Speed"}
+    },
+    ROXOR:{
+      text:{type:"textarea",label:"Scroller Text"},
+      fontSize:{type:"range",min:8,max:64,step:1,label:"Font Size"},
+      scrollSpeed:{type:"range",min:1,max:12,step:1,label:"Speed"},
+      waveAmplitude:{type:"range",min:0,max:150,step:1,label:"Amplitude"},
+      waveFrequency:{type:"range",min:0.005,max:0.5,step:0.005,label:"Frequency"},
+      waveSpeed:{type:"range",min:0.1,max:12,step:0.1,label:"Wave Speed"},
+      yPosition:{type:"range",min:0,max:400,step:1,label:"Y Position"},
+      fontColor:{type:"color",label:"Color"},
+      paletteCycling:{type:"checkbox",label:"Rainbow"},
+      cycleSpeed:{type:"range",min:1,max:360,step:1,label:"Cycle deg/s"}
+    }
+  };}
+  _sx=640;
+  update(dt,bi) { this._sx -= this.params.scrollSpeed; }
+  render(ctx,t) {
+    const p=this.params;
+    ctx.font=`bold ${p.fontSize}px "Press Start 2P",monospace`;
+    ctx.textBaseline="middle";
+    const cw=p.fontSize*0.95;
+    const tw=p.text.length*cw;
+    if(this._sx < -tw) this._sx=640;
+    for(let i=0;i<p.text.length;i++){
+      const x=Math.floor(this._sx+i*cw);
+      if(x<-cw||x>660)continue;
+      const wy=Math.floor(Math.sin(x*p.waveFrequency+t*p.waveSpeed)*p.waveAmplitude);
+      const dy=Math.floor(p.yPosition+wy);
+      if(p.paletteCycling){
+        ctx.fillStyle=`hsl(${(i*12+t*p.cycleSpeed)%360},100%,60%)`;
+      } else { ctx.fillStyle=p.fontColor; }
+      ctx.fillText(p.text[i],x,dy);
+    }
+  }
+}
+
+// ═══════════════════════════════════════════════════
+// DYCPScroller (1986)
+// ═══════════════════════════════════════════════════
+class DYCPScroller extends BaseEffect {
+  static get attribution() { return {
+    name:"dycp_scroller", display_name:"DYCP Scroller",
+    origin_year:1986, origin_hardware:"C64 sprites hardware / Amiga BOBs",
+    origin_group:"—", origin_coder:"Raistlin",
+    first_prod:"C64 DXYCP demos mid-80s",
+    reference_url:"https://codebase64.org/doku.php?id=base:dycp_-_pair_of_sines",
+    technique:"Different Y Coordinate Per character — chaque lettre a une position Y indépendante calculée via sin(). Sur C64, les 8 sprites hardware étaient multiplexés sur plusieurs lignes raster pour afficher plus de caractères que le hardware ne le permettait normalement.",
+    difficulty:3, era:"GEN1_CRACKTRO", tags:["c64","amiga","scroller","dycp","sprites"]
+  };}
+  static get defaultParams() { return {
+    text:"    * GREETINGS TO ALL SCENERS * THIS IS DYCP STYLE * EACH CHAR HAS ITS OWN Y POSITION * CLASSIC C64 TECHNIQUE *    ",
+    fontSize:24, scrollSpeed:2, waveType:"sin",
+    amplitude:50, frequency:0.4, waveSpeed:3.0,
+    charSpacing:2, paletteCycling:true, phasePerChar:0.4, beatBounce:true
+  };}
+  static get paramDefs() { return {
+    LAME:{ text:{type:"text",label:"Text"} },
+    NOOB:{
+      text:{type:"text",label:"Text"},
+      scrollSpeed:{type:"range",min:1,max:5,step:1,label:"Speed"},
+      amplitude:{type:"range",min:10,max:80,step:5,label:"Wave Height"}
+    },
+    L33T:{
+      text:{type:"text",label:"Text"},
+      fontSize:{type:"range",min:12,max:48,step:2,label:"Size"},
+      scrollSpeed:{type:"range",min:1,max:8,step:1,label:"Speed"},
+      waveType:{type:"select",options:["sin","cos","combined"],label:"Wave Type"},
+      amplitude:{type:"range",min:0,max:120,step:1,label:"Amplitude"},
+      frequency:{type:"range",min:0.1,max:1.5,step:0.05,label:"Frequency"},
+      waveSpeed:{type:"range",min:0.5,max:8,step:0.1,label:"Wave Speed"},
+      phasePerChar:{type:"range",min:0.05,max:1.5,step:0.05,label:"Phase/Char"},
+      paletteCycling:{type:"checkbox",label:"Rainbow"},
+      beatBounce:{type:"checkbox",label:"Beat Bounce"}
+    },
+    ROXOR:{
+      text:{type:"textarea",label:"Text"},
+      fontSize:{type:"range",min:8,max:64,step:1,label:"Size"},
+      scrollSpeed:{type:"range",min:1,max:12,step:1,label:"Speed"},
+      waveType:{type:"select",options:["sin","cos","combined","random"],label:"Wave"},
+      amplitude:{type:"range",min:0,max:180,step:1,label:"Amplitude"},
+      frequency:{type:"range",min:0.01,max:3,step:0.01,label:"Frequency"},
+      waveSpeed:{type:"range",min:0.1,max:15,step:0.1,label:"Wave Speed"},
+      phasePerChar:{type:"range",min:0.01,max:3,step:0.01,label:"Phase/Char"},
+      charSpacing:{type:"range",min:0,max:10,step:1,label:"Char Spacing"},
+      paletteCycling:{type:"checkbox",label:"Rainbow"},
+      beatBounce:{type:"checkbox",label:"Beat Bounce"}
+    }
+  };}
+  _sx=640; _bAmp=1;
+  update(dt,bi) {
+    this._sx -= this.params.scrollSpeed;
+    if(this.params.beatBounce && bi.beat) this._bAmp=1.5;
+    this._bAmp += (1 - this._bAmp) * 0.08;
+  }
+  _wave(i,t) {
+    const p=this.params, ph=i*p.phasePerChar+t*p.waveSpeed;
+    switch(p.waveType){
+      case"cos": return Math.cos(ph*p.frequency)*p.amplitude*this._bAmp;
+      case"combined": return (Math.sin(ph*p.frequency)+Math.sin(ph*p.frequency*2.3)*0.5+Math.cos(ph*p.frequency*0.7)*0.3)*p.amplitude*this._bAmp*0.55;
+      default: return Math.sin(ph*p.frequency)*p.amplitude*this._bAmp;
+    }
+  }
+  render(ctx,t) {
+    const p=this.params;
+    ctx.font=`bold ${p.fontSize}px "Press Start 2P",monospace`;
+    ctx.textBaseline="middle";
+    const cw=p.fontSize*0.9+p.charSpacing;
+    const tw=p.text.length*cw;
+    if(this._sx < -tw) this._sx=640;
+    const baseY=200;
+    for(let i=0;i<p.text.length;i++){
+      const x=Math.floor(this._sx+i*cw);
+      if(x<-cw||x>660)continue;
+      const y=Math.floor(baseY+this._wave(i,t));
+      if(p.paletteCycling){
+        ctx.fillStyle=`hsl(${(i*15+t*80)%360},100%,65%)`;
+      } else { ctx.fillStyle="#00ffaa"; }
+      ctx.fillText(p.text[i],x,y);
+    }
+  }
+}
+
+// ═══════════════════════════════════════════════════
+// Starfield3D (1987)
+// ═══════════════════════════════════════════════════
+class Starfield3D extends BaseEffect {
+  static get attribution() { return {
+    name:"starfield_3d", display_name:"Starfield 3D",
+    origin_year:1987, origin_hardware:"Amiga OCS / C64",
+    origin_group:"UNIT A", origin_coder:"—",
+    first_prod:"F/A-18 Interceptor cracktro ~1989",
+    reference_url:"",
+    technique:"Projection perspective 3D vers 2D. Chaque étoile a des coordonnées (x,y,z). À chaque frame, z est décrémenté (l'étoile s'approche). La projection : screen_x = (x/z) × FOV + center. La taille et la luminosité augmentent quand z diminue, créant l'illusion de profondeur.",
+    difficulty:1, era:"GEN1_CRACKTRO", tags:["amiga","c64","3d","starfield"]
+  };}
+  static get defaultParams() { return { starCount:200,speed:3,fieldOfView:300,starColor:"#ffffff",maxSize:3,warpMode:false,warpLength:20 }; }
+  static get paramDefs() { return {
+    LAME:{},
+    NOOB:{ starCount:{type:"range",min:50,max:500,step:10,label:"Stars"}, speed:{type:"range",min:1,max:10,step:0.5,label:"Speed"} },
+    L33T:{
+      starCount:{type:"range",min:50,max:1500,step:10,label:"Stars"}, speed:{type:"range",min:0.5,max:15,step:0.5,label:"Speed"},
+      fieldOfView:{type:"range",min:100,max:800,step:10,label:"FOV"}, maxSize:{type:"range",min:1,max:8,step:0.5,label:"Max Size"},
+      warpMode:{type:"checkbox",label:"Warp Mode"}, warpLength:{type:"range",min:5,max:60,step:1,label:"Warp Trail"},
+      starColor:{type:"color",label:"Color"}
+    },
+    ROXOR:{
+      starCount:{type:"range",min:10,max:2000,step:1,label:"Stars"}, speed:{type:"range",min:0.1,max:20,step:0.1,label:"Speed"},
+      fieldOfView:{type:"range",min:50,max:1200,step:1,label:"FOV"}, maxSize:{type:"range",min:0.5,max:12,step:0.1,label:"Size"},
+      warpMode:{type:"checkbox",label:"Warp"}, warpLength:{type:"range",min:1,max:100,step:1,label:"Trail"},
+      starColor:{type:"color",label:"Color"}
+    }
+  };}
+  _stars=[];
+  init(c,ctx,a) { super.init(c,ctx,a); this._initStars(); }
+  _initStars() { this._stars=[]; for(let i=0;i<this.params.starCount;i++) this._stars.push({x:(Math.random()-.5)*1600,y:(Math.random()-.5)*1000,z:Math.random()*1000+1}); }
+  update(dt,bi) {
+    while(this._stars.length<this.params.starCount) this._stars.push({x:(Math.random()-.5)*1600,y:(Math.random()-.5)*1000,z:1000});
+    while(this._stars.length>this.params.starCount) this._stars.pop();
+    for(const s of this._stars){ s.z-=this.params.speed; if(s.z<1){s.x=(Math.random()-.5)*1600;s.y=(Math.random()-.5)*1000;s.z=1000;} }
+  }
+  render(ctx,t) {
+    const p=this.params,cx=320,cy=200;
+    for(const s of this._stars){
+      const sx=Math.floor(s.x/s.z*p.fieldOfView+cx), sy=Math.floor(s.y/s.z*p.fieldOfView+cy);
+      if(sx<0||sx>640||sy<0||sy>400)continue;
+      const sz=Math.max(.5,p.maxSize*(1-s.z/1000)), br=Math.min(1,(1-s.z/1000)*1.5);
+      if(p.warpMode){
+        const pz=s.z+p.speed*(p.warpLength/2), px=Math.floor(s.x/pz*p.fieldOfView+cx), py=Math.floor(s.y/pz*p.fieldOfView+cy);
+        ctx.strokeStyle=p.starColor; ctx.globalAlpha=br; ctx.lineWidth=Math.max(.5,sz*.5);
+        ctx.beginPath();ctx.moveTo(px,py);ctx.lineTo(sx,sy);ctx.stroke();
+      } else {
+        ctx.fillStyle=p.starColor; ctx.globalAlpha=br;
+        ctx.fillRect(Math.floor(sx-sz/2),Math.floor(sy-sz/2),Math.ceil(sz),Math.ceil(sz));
+      }
+    }
+    ctx.globalAlpha=1;
+  }
+}
+
+// ═══════════════════════════════════════════════════
+// BounceLogo (1987)
+// ═══════════════════════════════════════════════════
+class BounceLogo extends BaseEffect {
+  static get attribution() { return {
+    name:"bounce_logo", display_name:"Bounce Logo",
+    origin_year:1987, origin_hardware:"Amiga OCS sprites / BOBs",
+    origin_group:"Alpha Flight", origin_coder:"—",
+    first_prod:"Dr. Mabuse's First Amiga Intro, 1987",
+    reference_url:"https://www.youtube.com/watch?v=WiVDxt3oks4",
+    technique:"Logo rebondissant aux bords de l'écran avec physique gravité + amortissement. Sur Amiga, les BOBs (Blitter Objects) étaient des sprites logiciels dessinés par le blitter. L'effet squash & stretch au rebond simule une déformation physique réaliste.",
+    difficulty:1, era:"GEN1_CRACKTRO", tags:["amiga","logo","bounce","bobs","sprites"]
+  };}
+  static get defaultParams() { return {
+    text:"DEMOFORGE", fontSize:36, fontColor:"#ff00aa",
+    gravity:0.4, damping:0.75, squash:true, squashAmt:0.3,
+    trail:false, beatEject:false
+  };}
+  static get paramDefs() { return {
+    LAME:{ text:{type:"text",label:"Logo Text"} },
+    NOOB:{
+      text:{type:"text",label:"Logo Text"},
+      gravity:{type:"range",min:0.1,max:1.5,step:0.1,label:"Gravity"},
+      fontColor:{type:"color",label:"Color"}
+    },
+    L33T:{
+      text:{type:"text",label:"Logo Text"},
+      fontSize:{type:"range",min:16,max:64,step:2,label:"Font Size"},
+      gravity:{type:"range",min:0.1,max:2,step:0.05,label:"Gravity"},
+      damping:{type:"range",min:0.5,max:0.95,step:0.05,label:"Damping"},
+      squash:{type:"checkbox",label:"Squash & Stretch"},
+      squashAmt:{type:"range",min:0,max:1,step:0.05,label:"Squash Amount"},
+      trail:{type:"checkbox",label:"Motion Trail"},
+      beatEject:{type:"checkbox",label:"Beat Eject"},
+      fontColor:{type:"color",label:"Color"}
+    },
+    ROXOR:{
+      text:{type:"text",label:"Logo Text"},
+      fontSize:{type:"range",min:8,max:80,step:1,label:"Font Size"},
+      gravity:{type:"range",min:0.01,max:3,step:0.01,label:"Gravity"},
+      damping:{type:"range",min:0.3,max:0.99,step:0.01,label:"Damping"},
+      squash:{type:"checkbox",label:"Squash"},
+      squashAmt:{type:"range",min:0,max:1,step:0.01,label:"Squash Amt"},
+      trail:{type:"checkbox",label:"Trail"},
+      beatEject:{type:"checkbox",label:"Beat Eject"},
+      fontColor:{type:"color",label:"Color"}
+    }
+  };}
+  _x=100;_y=80;_vx=2.5;_vy=0;_sq=0;_trails=[];
+  update(dt,bi) {
+    const p=this.params;
+    this._vy+=p.gravity;
+    this._x+=this._vx; this._y+=this._vy;
+    ctx_tmp_w = 640; ctx_tmp_h = 400;
+    const tw=p.text.length*p.fontSize*0.65;
+    if(this._x<0){this._x=0;this._vx=Math.abs(this._vx);}
+    if(this._x+tw>640){this._x=640-tw;this._vx=-Math.abs(this._vx);}
+    if(this._y+p.fontSize>400){
+      this._y=400-p.fontSize;
+      this._vy=-Math.abs(this._vy)*p.damping;
+      this._sq=1;
+    }
+    if(this._y<0){this._y=0;this._vy=Math.abs(this._vy);}
+    this._sq*=0.85;
+    if(p.beatEject&&bi.beat) this._vy=-12;
+    if(p.trail) {
+      this._trails.push({x:this._x,y:this._y,a:0.4});
+      if(this._trails.length>20) this._trails.shift();
+      for(const tr of this._trails) tr.a*=0.88;
+    }
+  }
+  render(ctx,t) {
+    const p=this.params;
+    ctx.font=`bold ${p.fontSize}px "Press Start 2P",monospace`;
+    ctx.textBaseline="top";
+    if(p.trail){
+      for(const tr of this._trails){
+        ctx.globalAlpha=tr.a*0.3;
+        ctx.fillStyle=p.fontColor;
+        ctx.fillText(p.text,Math.floor(tr.x),Math.floor(tr.y));
+      }
+    }
+    ctx.globalAlpha=1;
+    ctx.save();
+    const cx=Math.floor(this._x+p.text.length*p.fontSize*0.325);
+    const cy=Math.floor(this._y+p.fontSize/2);
+    ctx.translate(cx,cy);
+    if(p.squash&&this._sq>0.01){
+      ctx.scale(1+this._sq*p.squashAmt,1-this._sq*p.squashAmt);
+    }
+    ctx.translate(-cx,-cy);
+    ctx.fillStyle=p.fontColor;
+    ctx.shadowColor=p.fontColor;
+    ctx.shadowBlur=8;
+    ctx.fillText(p.text,Math.floor(this._x),Math.floor(this._y));
+    ctx.shadowBlur=0;
+    ctx.restore();
+  }
+}
+
+// ═══════════════════════════════════════════════════
+// PlasmaEffect (1992)
+// ═══════════════════════════════════════════════════
+class PlasmaEffect extends BaseEffect {
+  static get attribution() { return {
+    name:"plasma", display_name:"Plasma",
+    origin_year:1992, origin_hardware:"PC VGA Mode 13h / Amiga OCS",
+    origin_group:"Future Crew", origin_coder:"Pixel (Pasi Hytönen)",
+    first_prod:"Second Reality, 1993",
+    reference_url:"https://www.pouet.net/prod.php?which=5",
+    technique:"Combinaison de 4 fonctions sinusoïdales pour chaque pixel : sin(x), sin(y), sin(x+y), sin(sqrt(x²+y²)). La valeur résultante indexe une palette de couleurs cyclique. En mode 13h (320×200, 256 couleurs), la palette pouvait être modifiée via les registres VGA DAC pour créer des animations fluides sans recalculer les pixels.",
+    difficulty:3, era:"GEN3_GOLDEN", tags:["pc","vga","plasma","sinus","palette"]
+  };}
+  static get defaultParams() { return {scale:0.03,speed:1.0,palette:"rainbow",resolution:4,colorOffset:0}; }
+  static get paramDefs() { return {
+    LAME:{},
+    NOOB:{
+      speed:{type:"range",min:0.2,max:3,step:0.1,label:"Speed"},
+      palette:{type:"select",options:["rainbow","fire","ice","phosphor"],label:"Palette"}
+    },
+    L33T:{
+      scale:{type:"range",min:0.005,max:0.1,step:0.005,label:"Scale"},
+      speed:{type:"range",min:0.1,max:5,step:0.1,label:"Speed"},
+      palette:{type:"select",options:["rainbow","fire","ice","phosphor"],label:"Palette"},
+      resolution:{type:"range",min:1,max:8,step:1,label:"Resolution"},
+      colorOffset:{type:"range",min:0,max:360,step:1,label:"Color Offset"}
+    },
+    ROXOR:{
+      scale:{type:"range",min:0.001,max:0.2,step:0.001,label:"Scale"},
+      speed:{type:"range",min:0.01,max:10,step:0.01,label:"Speed"},
+      palette:{type:"select",options:["rainbow","fire","ice","phosphor"],label:"Palette"},
+      resolution:{type:"range",min:1,max:16,step:1,label:"Resolution"},
+      colorOffset:{type:"range",min:0,max:360,step:1,label:"Color Offset"}
+    }
+  };}
+  _off=null;_oc=null;
+  _pal(){ const p=[];for(let i=0;i<256;i++){const t=i/256;switch(this.params.palette){
+    case"fire":p.push([Math.min(255,Math.floor(t*3*255)),Math.floor(t*t*255),Math.floor(t*t*t*128)]);break;
+    case"ice":p.push([Math.floor(t*t*128),Math.floor(t*200),Math.min(255,Math.floor(t*2*255))]);break;
+    case"phosphor":p.push([Math.floor(t*t*64),Math.min(255,Math.floor(t*2*255)),Math.floor(t*t*64)]);break;
+    default:const h=(t*360+this.params.colorOffset)%360,c=255,x=Math.floor(c*(1-Math.abs((h/60)%2-1)));
+      if(h<60)p.push([c,x,0]);else if(h<120)p.push([x,c,0]);else if(h<180)p.push([0,c,x]);
+      else if(h<240)p.push([0,x,c]);else if(h<300)p.push([x,0,c]);else p.push([c,0,x]);
+  }}return p;}
+  render(ctx,time){
+    const p=this.params,res=p.resolution,pw=Math.ceil(640/res),ph=Math.ceil(400/res);
+    if(!this._off||this._off.width!==pw){this._off=document.createElement("canvas");this._off.width=pw;this._off.height=ph;this._oc=this._off.getContext("2d");}
+    const pal=this._pal(),img=this._oc.createImageData(pw,ph),d=img.data,t=time*p.speed,sc=p.scale;
+    for(let y=0;y<ph;y++)for(let x=0;x<pw;x++){
+      const rx=x*res,ry=y*res;
+      let v=Math.sin(rx*sc+t)+Math.sin(ry*sc+t*1.3)+Math.sin((rx+ry)*sc*.5+t*.7)+Math.sin(Math.sqrt(rx*rx+ry*ry)*sc*.5);
+      const ci=Math.floor((v+4)/8*255)&255,idx=(y*pw+x)*4;
+      d[idx]=pal[ci][0];d[idx+1]=pal[ci][1];d[idx+2]=pal[ci][2];d[idx+3]=255;
+    }
+    this._oc.putImageData(img,0,0);
+    ctx.imageSmoothingEnabled=false;ctx.drawImage(this._off,0,0,640,400);ctx.imageSmoothingEnabled=false;
+  }
+}
+
+// ═══════════════════════════════════════════════════
+// FireEffect (1992)
+// ═══════════════════════════════════════════════════
+class FireEffect extends BaseEffect {
+  static get attribution() { return {
+    name:"fire", display_name:"Fire Effect",
+    origin_year:1992, origin_hardware:"PC VGA Mode 13h",
+    origin_group:"Iguana", origin_coder:"Jare",
+    first_prod:"Eurochart #4, 1992",
+    reference_url:"",
+    technique:"Buffer 2D (cols×rows) de valeurs 0-255. La dernière ligne (source) est remplie aléatoirement. Chaque frame, chaque cellule prend la moyenne de ses 3 voisines du dessous, moins un facteur de refroidissement. La valeur indexe une palette feu (noir→rouge→jaune→blanc). Simple mais visuellement spectaculaire.",
+    difficulty:2, era:"GEN3_GOLDEN", tags:["pc","vga","fire","procedural"]
+  };}
+  static get defaultParams() { return {cols:160,rows:100,cooling:6,turbulence:0.1,palette:"classic",speedMult:1.0}; }
+  static get paramDefs() { return {
+    LAME:{},
+    NOOB:{
+      cooling:{type:"range",min:2,max:15,step:1,label:"Cooling"},
+      turbulence:{type:"range",min:0,max:0.4,step:0.05,label:"Turbulence"},
+      palette:{type:"select",options:["classic","blue","green","purple"],label:"Palette"}
+    },
+    L33T:{
+      cols:{type:"range",min:40,max:320,step:10,label:"Columns"},rows:{type:"range",min:20,max:200,step:5,label:"Rows"},
+      cooling:{type:"range",min:1,max:30,step:1,label:"Cooling"},turbulence:{type:"range",min:0,max:0.5,step:0.01,label:"Turbulence"},
+      palette:{type:"select",options:["classic","blue","green","purple"],label:"Palette"},
+      speedMult:{type:"range",min:0.5,max:3,step:0.1,label:"Speed"}
+    },
+    ROXOR:{
+      cols:{type:"range",min:20,max:640,step:1,label:"Columns"},rows:{type:"range",min:10,max:400,step:1,label:"Rows"},
+      cooling:{type:"range",min:1,max:50,step:1,label:"Cooling"},turbulence:{type:"range",min:0,max:1,step:0.01,label:"Turbulence"},
+      palette:{type:"select",options:["classic","blue","green","purple"],label:"Palette"},
+      speedMult:{type:"range",min:0.1,max:5,step:0.01,label:"Speed"}
+    }
+  };}
+  _buf=null;_off=null;_oc=null;_pl=[];
+  init(c,ctx,a){super.init(c,ctx,a);this._rebuild();}
+  _rebuild(){const p=this.params;this._buf=new Uint8Array(p.cols*p.rows);this._off=document.createElement("canvas");this._off.width=p.cols;this._off.height=p.rows;this._oc=this._off.getContext("2d");this._mkpal();}
+  _mkpal(){this._pl=[];for(let i=0;i<256;i++){const t=i/255;switch(this.params.palette){
+    case"blue":this._pl.push([0,Math.floor(t*t*128),Math.min(255,Math.floor(t*3*255))]);break;
+    case"green":this._pl.push([Math.floor(t*t*64),Math.min(255,Math.floor(t*3*255)),0]);break;
+    case"purple":this._pl.push([Math.min(255,Math.floor(t*2.5*255)),0,Math.min(255,Math.floor(t*3*255))]);break;
+    default:this._pl.push([Math.min(255,Math.floor(t*3*255)),Math.floor(Math.pow(t,1.5)*255),Math.floor(t*t*t*200)]);
+  }}}
+  update(dt,bi){const p=this.params,st=Math.max(1,Math.round(p.speedMult));
+    for(let s=0;s<st;s++){
+      for(let x=0;x<p.cols;x++) this._buf[(p.rows-1)*p.cols+x]=Math.random()>p.turbulence?Math.floor(Math.random()*256):0;
+      for(let y=0;y<p.rows-1;y++)for(let x=0;x<p.cols;x++){
+        const l=x>0?this._buf[(y+1)*p.cols+x-1]:0, c=this._buf[(y+1)*p.cols+x], r=x<p.cols-1?this._buf[(y+1)*p.cols+x+1]:0;
+        this._buf[y*p.cols+x]=Math.max(0,Math.floor((l+c+r)/3)-p.cooling+Math.floor(Math.random()*3));
+      }
+    }
+  }
+  render(ctx,t){const p=this.params,img=this._oc.createImageData(p.cols,p.rows),d=img.data;
+    for(let i=0;i<p.cols*p.rows;i++){const v=this._buf[i],c=this._pl[v];d[i*4]=c[0];d[i*4+1]=c[1];d[i*4+2]=c[2];d[i*4+3]=255;}
+    this._oc.putImageData(img,0,0);ctx.imageSmoothingEnabled=false;ctx.drawImage(this._off,0,0,640,400);ctx.imageSmoothingEnabled=false;
+  }
+}
+
+// ═══════════════════════════════════════════════════
+// MatrixRain (1999)
+// ═══════════════════════════════════════════════════
+class MatrixRain extends BaseEffect {
+  static get attribution() { return {
+    name:"matrix_rain", display_name:"Matrix Rain",
+    origin_year:1999, origin_hardware:"PC — inspiré du film The Matrix",
+    origin_group:"—", origin_coder:"—",
+    first_prod:"The Matrix (film), 1999",
+    reference_url:"",
+    technique:"Colonnes de caractères tombant à des vitesses différentes. Chaque colonne a une tête brillante (blanc/vert clair) suivie d'une traînée qui s'estompe. Les caractères changent aléatoirement pendant la chute. Adapté en demoscene avec des charsets custom (katakana, CP-437, etc.).",
+    difficulty:1, era:"GEN5_NEWSCHOOL", tags:["pc","matrix","ascii","rain"]
+  };}
+  static get defaultParams() { return {
+    charset:"MATRIX", speed:0.5, trailLength:20,
+    headColor:"#ccffcc", trailColor:"#00aa00", fontSize:14, density:0.95
+  };}
+  static get paramDefs() { return {
+    LAME:{},
+    NOOB:{
+      speed:{type:"range",min:0.2,max:1.5,step:0.1,label:"Speed"},
+      trailLength:{type:"range",min:5,max:40,step:1,label:"Trail"},
+      density:{type:"range",min:0.5,max:1,step:0.05,label:"Density"}
+    },
+    L33T:{
+      charset:{type:"select",options:["MATRIX","ASCII","KATAKANA","BINARY","DEMOSCENE"],label:"Charset"},
+      speed:{type:"range",min:0.1,max:3,step:0.05,label:"Speed"},
+      trailLength:{type:"range",min:3,max:60,step:1,label:"Trail Length"},
+      fontSize:{type:"range",min:8,max:24,step:1,label:"Font Size"},
+      headColor:{type:"color",label:"Head Color"},
+      trailColor:{type:"color",label:"Trail Color"},
+      density:{type:"range",min:0.3,max:1,step:0.05,label:"Density"}
+    },
+    ROXOR:{
+      charset:{type:"select",options:["MATRIX","ASCII","KATAKANA","BINARY","DEMOSCENE"],label:"Charset"},
+      speed:{type:"range",min:0.01,max:5,step:0.01,label:"Speed"},
+      trailLength:{type:"range",min:1,max:100,step:1,label:"Trail"},
+      fontSize:{type:"range",min:6,max:32,step:1,label:"Font Size"},
+      headColor:{type:"color",label:"Head"},
+      trailColor:{type:"color",label:"Trail"},
+      density:{type:"range",min:0.1,max:1,step:0.01,label:"Density"}
+    }
+  };}
+  _cols=[]; _charsets={
+    MATRIX:"アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン0123456789",
+    ASCII:"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%&*",
+    KATAKANA:"アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモ",
+    BINARY:"01",
+    DEMOSCENE:"ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789<>[]{}|/\\!@#$%^&*()_+-=~`"
+  };
+  init(c,ctx,a){super.init(c,ctx,a);this._initCols();}
+  _initCols(){
+    this._cols=[];
+    const cols=Math.ceil(640/this.params.fontSize);
+    for(let i=0;i<cols;i++){
+      this._cols.push({y:Math.random()*-50,speed:0.3+Math.random()*0.7,chars:[],active:Math.random()<this.params.density});
+    }
+  }
+  update(dt,bi){
+    const p=this.params, cs=this._charsets[p.charset]||this._charsets.MATRIX;
+    for(const col of this._cols){
+      if(!col.active&&Math.random()<0.01) col.active=true;
+      if(!col.active) continue;
+      col.y+=col.speed*p.speed*60*dt;
+      const maxY=Math.ceil(400/p.fontSize);
+      if(col.y>maxY+p.trailLength){
+        col.y=Math.random()*-10;
+        col.speed=0.3+Math.random()*0.7;
+        col.active=Math.random()<p.density;
+      }
+      col.headChar=cs[Math.floor(Math.random()*cs.length)];
+    }
+  }
+  render(ctx,t){
+    const p=this.params, cs=this._charsets[p.charset]||this._charsets.MATRIX, fs=p.fontSize;
+    ctx.font=`${fs}px "VT323",monospace`;
+    ctx.textBaseline="top";
+    const hc=p.headColor, tc=p.trailColor;
+    const hr=parseInt(hc.slice(1,3),16),hg=parseInt(hc.slice(3,5),16),hb=parseInt(hc.slice(5,7),16);
+    const tr=parseInt(tc.slice(1,3),16),tg=parseInt(tc.slice(3,5),16),tb=parseInt(tc.slice(5,7),16);
+    for(let i=0;i<this._cols.length;i++){
+      const col=this._cols[i];
+      if(!col.active) continue;
+      const headY=Math.floor(col.y);
+      for(let j=0;j<p.trailLength;j++){
+        const cy=headY-j;
+        if(cy<0||cy*fs>400) continue;
+        const fade=1-j/p.trailLength;
+        if(j===0){
+          ctx.fillStyle=hc; ctx.globalAlpha=1;
+        } else {
+          ctx.fillStyle=`rgb(${Math.floor(tr*fade)},${Math.floor(tg*fade)},${Math.floor(tb*fade)})`;
+          ctx.globalAlpha=fade*0.9;
+        }
+        const ch = j===0 ? col.headChar : cs[Math.floor(Math.random()*cs.length)];
+        ctx.fillText(ch, Math.floor(i*fs), Math.floor(cy*fs));
+      }
+    }
+    ctx.globalAlpha=1;
+  }
+}
+
+// ═══════════════════════════════════════════════════
+// EFFECT REGISTRY
+// ═══════════════════════════════════════════════════
+const EFFECT_REGISTRY = { CopperBars, SinusScroller, DYCPScroller, Starfield3D, PlasmaEffect, FireEffect, BounceLogo, MatrixRain };
+
+// ═══════════════════════════════════════════════════
+// PRESETS
+// ═══════════════════════════════════════════════════
+const PRESETS = {
+  cracktro_amiga: { name:"Cracktro Amiga 1991", effects:[
+    {cls:"CopperBars",params:{barCount:8,amplitude:100,speed:1.2,beatSync:true}},
+    {cls:"Starfield3D",params:{starCount:150,speed:2,maxSize:2}},
+    {cls:"BounceLogo",params:{text:"DEMOFORGE",fontSize:32,fontColor:"#ff00aa",squash:true,gravity:0.4}},
+    {cls:"DYCPScroller",params:{text:"    * GREETINGS TO ALL SCENERS * AMIGA OCS FOREVER * CRACKTRO STYLE *    ",scrollSpeed:2,amplitude:35,fontSize:20}}
+  ]},
+  starfield_demo: { name:"Starfield Warp", effects:[
+    {cls:"Starfield3D",params:{starCount:500,speed:8,warpMode:true,warpLength:30,maxSize:3}},
+    {cls:"SinusScroller",params:{text:"    HYPERSPACE ENGAGED *** WARP DRIVE ACTIVATED *** DESTINATION: UNKNOWN    ",scrollSpeed:3,waveAmplitude:40,fontSize:20,yPosition:360,fontColor:"#00aaff"}}
+  ]},
+  plasma_fire: { name:"Plasma & Fire", effects:[
+    {cls:"PlasmaEffect",params:{scale:0.025,speed:1.2,palette:"rainbow",resolution:4}},
+    {cls:"FireEffect",params:{cols:160,rows:80,cooling:5,palette:"classic"}}
+  ]},
+  megademo_92: { name:"Megademo 1992", effects:[
+    {cls:"CopperBars",params:{barCount:12,amplitude:120,speed:0.8,barHeight:16}},
+    {cls:"PlasmaEffect",params:{scale:0.02,speed:0.8,palette:"phosphor",resolution:6}},
+    {cls:"Starfield3D",params:{starCount:100,speed:2,maxSize:2}},
+    {cls:"DYCPScroller",params:{text:"    * MEGADEMO 1992 * CODING IS NOT A CRIME * RESPECT THE SCENE *    ",fontSize:22,scrollSpeed:2,amplitude:45,waveType:"combined"}}
+  ]},
+  matrix_night: { name:"Matrix Night", effects:[
+    {cls:"MatrixRain",params:{charset:"KATAKANA",speed:0.6,trailLength:25,fontSize:14,density:0.9}},
+    {cls:"SinusScroller",params:{text:"    WAKE UP NEO... THE MATRIX HAS YOU... FOLLOW THE WHITE RABBIT    ",scrollSpeed:2,waveAmplitude:15,fontSize:22,yPosition:340,fontColor:"#00ff44",paletteCycling:false}}
+  ]}
+};
+
+// ═══════════════════════════════════════════════════
+// LEVEL SELECTOR
+// ═══════════════════════════════════════════════════
+function setLevel(lv) {
+  STATE.level = lv;
+  document.querySelectorAll(".level-btn").forEach(b => b.classList.toggle("active", b.dataset.level === lv));
+  if (STATE.selectedEffect) renderInspector(STATE.selectedEffect);
+}
+
+// ═══════════════════════════════════════════════════
+// INSPECTOR
+// ═══════════════════════════════════════════════════
+function selectEffect(name) {
+  document.querySelectorAll(".lib-item").forEach(el => el.classList.remove("active"));
+  const el = document.querySelector(`.lib-item[data-effect="${name}"]`);
+  if (el) el.classList.add("active");
+  const Cls = EFFECT_REGISTRY[name];
+  if (!Cls) return;
+  let fx = engine.effects.find(f => f instanceof Cls);
+  if (!fx) { fx = engine.addEffect(Cls, {}); addTrackToTimeline(fx); }
+  STATE.selectedEffect = fx;
+  renderInspector(fx);
+}
+
+function renderInspector(fx) {
+  const Cls = fx.constructor, attr = Cls.attribution;
+  document.getElementById("insp-title").textContent = attr.display_name || Cls.name;
+  const defs = Cls.paramDefs[STATE.level] || {};
+  let html = "";
+  for (const [key, def] of Object.entries(defs)) {
+    const val = fx.params[key];
+    html += `<div class="insp-group">`;
+    if (def.type === "range") {
+      html += `<label>${def.label} <span class="val" id="val-${key}">${val}</span></label>`;
+      html += `<input type="range" min="${def.min}" max="${def.max}" step="${def.step}" value="${val}" oninput="updateParam('${key}',parseFloat(this.value),this)">`;
+    } else if (def.type === "color") {
+      html += `<label>${def.label} <input type="color" value="${val}" oninput="updateParam('${key}',this.value)"></label>`;
+    } else if (def.type === "text") {
+      html += `<label>${def.label}</label><input type="text" value="${String(val).replace(/"/g,'&quot;')}" oninput="updateParam('${key}',this.value)">`;
+    } else if (def.type === "textarea") {
+      html += `<label>${def.label}</label><textarea rows="3" oninput="updateParam('${key}',this.value)">${val}</textarea>`;
+    } else if (def.type === "select") {
+      html += `<label>${def.label}</label><select onchange="updateParam('${key}',this.value)">`;
+      for (const o of def.options) html += `<option value="${o}" ${o===val?"selected":""}>${o}</option>`;
+      html += `</select>`;
+    } else if (def.type === "checkbox") {
+      html += `<label><input type="checkbox" ${val?"checked":""} onchange="updateParam('${key}',this.checked)"> ${def.label}</label>`;
+    }
+    html += `</div>`;
+  }
+  if (!Object.keys(defs).length) html = `<p style="color:var(--text-dim);font-size:11px;margin:8px 0">Preset mode — switch to NOOB+ for parameters.</p>`;
+  document.getElementById("insp-params").innerHTML = html;
+
+  // Attribution summary card
+  if (attr.name) {
+    document.getElementById("insp-attribution").innerHTML = `
+      <div class="attr-card" onclick="openAttribution()">
+        <h4>&#128214; ${attr.display_name}</h4>
+        <div class="attr-row"><span class="al">Year</span> ${attr.origin_year}</div>
+        <div class="attr-row"><span class="al">Hardware</span> ${attr.origin_hardware}</div>
+        <div class="attr-row"><span class="al">Group</span> ${attr.origin_group||"—"}</div>
+        <div style="margin-top:6px;font-size:10px;color:var(--accent2);cursor:pointer">&#9654; EN SAVOIR PLUS</div>
+      </div>`;
+  } else { document.getElementById("insp-attribution").innerHTML = ""; }
+}
+
+function updateParam(key, value, slider) {
+  if (!STATE.selectedEffect) return;
+  STATE.selectedEffect.params[key] = value;
+  if (slider) { const v = document.getElementById("val-" + key); if (v) v.textContent = value; }
+  const fx = STATE.selectedEffect;
+  if (fx instanceof FireEffect && (key==="cols"||key==="rows")) fx._rebuild();
+  if (fx instanceof FireEffect && key==="palette") fx._mkpal();
+  if (fx instanceof MatrixRain && (key==="fontSize"||key==="density")) fx._initCols();
+}
+
+// ═══════════════════════════════════════════════════
+// ATTRIBUTION PANEL (slide-in)
+// ═══════════════════════════════════════════════════
+function openAttribution() {
+  if (!STATE.selectedEffect) return;
+  const attr = STATE.selectedEffect.constructor.attribution;
+  const el = document.getElementById("attr-overlay-content");
+  el.innerHTML = `
+    <div class="attr-full-title">${attr.display_name}</div>
+    <div class="attr-full-row"><span class="afi">&#128197;</span><span class="afl">Inventé en</span><span class="afv">${attr.origin_year} — ${attr.origin_hardware}</span></div>
+    <div class="attr-full-row"><span class="afi">&#128421;</span><span class="afl">Hardware</span><span class="afv">${attr.origin_hardware}</span></div>
+    <div class="attr-full-row"><span class="afi">&#128101;</span><span class="afl">Groupe</span><span class="afv">${attr.origin_group||"—"}</span></div>
+    <div class="attr-full-row"><span class="afi">&#127916;</span><span class="afl">Première prod</span><span class="afv">${attr.first_prod||"—"}</span></div>
+    <div class="attr-full-row"><span class="afi">&#128104;&#8205;&#128187;</span><span class="afl">Codeur</span><span class="afv">${attr.origin_coder||"—"}</span></div>
+    <div class="attr-full-row"><span class="afi">&#127942;</span><span class="afl">Difficulté</span><span class="afv">${"&#9733;".repeat(attr.difficulty||1)}${"&#9734;".repeat(5-(attr.difficulty||1))}</span></div>
+    <div class="attr-full-row"><span class="afi">&#128198;</span><span class="afl">Ère</span><span class="afv">${attr.era}</span></div>
+    <div class="attr-tech"><h5>&#128221; La technique</h5>${attr.technique}</div>
+    ${attr.reference_url ? `<div class="attr-links"><h5 style="font-family:VT323;color:var(--accent3);font-size:13px;margin-bottom:4px">&#128279; Références</h5><a href="${attr.reference_url}" target="_blank">${attr.reference_url}</a></div>` : ""}
+    <div style="margin-top:10px;font-size:10px;color:var(--text-dim)">Tags: ${(attr.tags||[]).map(t=>"#"+t).join(" ")}</div>
+  `;
+  document.getElementById("attr-overlay").classList.add("open");
+}
+function closeAttribution() { document.getElementById("attr-overlay").classList.remove("open"); }
+
+// ═══════════════════════════════════════════════════
+// TIMELINE — tracks, drag, resize, playhead
+// ═══════════════════════════════════════════════════
+const TRACK_COLORS = ["#ff6644","#44ff88","#4488ff","#ff44aa","#ffaa44","#44ffff","#aa44ff","#aaff44"];
+let trackIdx = 0;
+const trackData = [];
+
+function addTrackToTimeline(fx) {
+  const attr = fx.constructor.attribution;
+  const name = attr.display_name || fx.constructor.name;
+  const tracks = document.getElementById("timeline-tracks");
+  const color = TRACK_COLORS[trackIdx % TRACK_COLORS.length];
+  const td = { fx, startPct: 0, widthPct: 100, color, name };
+  trackData.push(td);
+  trackIdx++;
+
+  const track = document.createElement("div");
+  track.className = "tl-track";
+  track.dataset.idx = trackData.length - 1;
+
+  const label = document.createElement("div");
+  label.className = "tl-track-label";
+  label.innerHTML = `<span class="tl-del" onclick="removeTrack(${trackData.length-1})" title="Remove">&#10005;</span> ${name}`;
+
+  const bar = document.createElement("div");
+  bar.className = "tl-track-bar";
+
+  const block = document.createElement("div");
+  block.className = "tl-block";
+  block.style.left = td.startPct + "%";
+  block.style.width = td.widthPct + "%";
+  block.style.background = color;
+  block.textContent = name;
+  block.dataset.idx = trackData.length - 1;
+
+  // Resize handle
+  const rh = document.createElement("div");
+  rh.className = "tl-resize";
+  block.appendChild(rh);
+
+  // Click to select
+  block.addEventListener("click", (e) => {
+    if (e.target === rh) return;
+    document.querySelectorAll(".tl-block").forEach(b => b.classList.remove("sel"));
+    block.classList.add("sel");
+    STATE.selectedEffect = fx;
+    renderInspector(fx);
+  });
+
+  // Drag to move
+  let dragStart = null;
+  block.addEventListener("mousedown", (e) => {
+    if (e.target === rh) return;
+    e.preventDefault();
+    dragStart = { x: e.clientX, left: td.startPct };
+    const barRect = bar.getBoundingClientRect();
+    const onMove = (ev) => {
+      const dx = ev.clientX - dragStart.x;
+      const pctDx = (dx / barRect.width) * 100;
+      td.startPct = Math.max(0, Math.min(100 - td.widthPct, dragStart.left + pctDx));
+      block.style.left = td.startPct + "%";
+    };
+    const onUp = () => { document.removeEventListener("mousemove", onMove); document.removeEventListener("mouseup", onUp); };
+    document.addEventListener("mousemove", onMove);
+    document.addEventListener("mouseup", onUp);
+  });
+
+  // Resize
+  rh.addEventListener("mousedown", (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    const startX = e.clientX;
+    const startW = td.widthPct;
+    const barRect = bar.getBoundingClientRect();
+    const onMove = (ev) => {
+      const dx = ev.clientX - startX;
+      const pctDx = (dx / barRect.width) * 100;
+      td.widthPct = Math.max(5, Math.min(100 - td.startPct, startW + pctDx));
+      block.style.width = td.widthPct + "%";
+    };
+    const onUp = () => { document.removeEventListener("mousemove", onMove); document.removeEventListener("mouseup", onUp); };
+    document.addEventListener("mousemove", onMove);
+    document.addEventListener("mouseup", onUp);
+  });
+
+  bar.appendChild(block);
+  track.appendChild(label);
+  track.appendChild(bar);
+  tracks.appendChild(track);
+}
+
+function removeTrack(idx) {
+  const td = trackData[idx];
+  if (!td) return;
+  engine.removeEffect(td.fx);
+  trackData[idx] = null;
+  const tracks = document.getElementById("timeline-tracks");
+  const el = tracks.querySelector(`[data-idx="${idx}"]`);
+  if (el && el.closest(".tl-track")) el.closest(".tl-track").remove();
+  if (STATE.selectedEffect === td.fx) {
+    STATE.selectedEffect = null;
+    document.getElementById("insp-title").textContent = "Select an effect";
+    document.getElementById("insp-params").innerHTML = "";
+    document.getElementById("insp-attribution").innerHTML = "";
+  }
+}
+
+function renderRuler() {
+  const ruler = document.getElementById("timeline-ruler");
+  ruler.innerHTML = "";
+  const totalSec = STATE.duration / 1000;
+  for (let s = 0; s <= totalSec; s += 5) {
+    const mark = document.createElement("div");
+    mark.className = "ruler-mark";
+    mark.style.left = (s / totalSec * 100) + "%";
+    mark.textContent = s + "s";
+    ruler.appendChild(mark);
+  }
+}
+
+function seekTimeline(e) {
+  const ruler = document.getElementById("timeline-ruler");
+  const rect = ruler.getBoundingClientRect();
+  const pct = (e.clientX - rect.left) / rect.width;
+  STATE.time = pct * STATE.duration;
+  STATE.startTime = engine.lastTime - STATE.time;
+}
+
+function updatePlayhead() {
+  document.getElementById("timeline-playhead").style.left = (STATE.time / STATE.duration * 100) + "%";
+}
+
+// ═══════════════════════════════════════════════════
+// DRAG & DROP from Library
+// ═══════════════════════════════════════════════════
+document.querySelectorAll(".lib-item[draggable]").forEach(item => {
+  item.addEventListener("dragstart", e => {
+    e.dataTransfer.setData("text/plain", item.dataset.effect);
+    e.dataTransfer.effectAllowed = "copy";
+  });
+});
+document.getElementById("timeline-tracks").addEventListener("dragover", e => { e.preventDefault(); e.dataTransfer.dropEffect = "copy"; });
+document.getElementById("timeline-tracks").addEventListener("drop", e => {
+  e.preventDefault();
+  const name = e.dataTransfer.getData("text/plain");
+  if (name && EFFECT_REGISTRY[name]) selectEffect(name);
+});
+
+// ═══════════════════════════════════════════════════
+// EXPORT — Full ZIP (JSZip)
+// ═══════════════════════════════════════════════════
+async function exportDemo() {
+  if (typeof JSZip === "undefined") { alert("JSZip not loaded. Check your connection."); return; }
+
+  const credits = {
+    production: { title: "DemoForge Export", created_with: "DemoForge v1.1", created_by: "DemoForge User", created_at: new Date().toISOString(), demoforge_version: "1.1.0" },
+    effects: engine.effects.map(fx => {
+      const a = fx.constructor.attribution;
+      return {
+        id: a.name, display_name: a.display_name,
+        concept: { origin_year: a.origin_year, origin_hardware: a.origin_hardware, technique: a.technique, origin_group: a.origin_group, origin_coder: a.origin_coder, first_production: a.first_prod, era: a.era },
+        implementation: { author: "DemoForge contributors", license: "MIT" }
+      };
+    }),
+    inspiration: [
+      "Demoscene — patrimoine culturel immatériel (France, 2021)",
+      "FREAX — The Brief History of the Demoscene",
+      "The Mod Archive — modarchive.org",
+      "int10h.org — Ultimate Oldschool PC Font Pack"
+    ]
+  };
+
+  // Build standalone HTML
+  const effectsJSON = JSON.stringify(engine.effects.map(fx => fx.serialize()));
+  const standaloneHTML = buildStandaloneHTML(effectsJSON, credits);
+
+  const readme = `DEMOFORGE EXPORT\n================\n\nCreated with DemoForge v1.1\nDate: ${new Date().toISOString()}\n\nHOW TO VIEW:\n- Open index.html in any modern browser (Chrome 100+, Firefox 100+, Safari 15+)\n- Works offline (file:// protocol)\n- Press SPACE to start/pause\n\nCREDITS:\n- See CREDITS.json for full attribution\n- All effects based on demoscene traditions since 1985\n\nDEMOSCENE:\n- The demoscene is a computer art subculture recognized as UNESCO\n  Intangible Cultural Heritage (France, 2021; Finland, 2020; Germany, 2021)\n- Each effect in this demo credits its original inventors\n\nMade with love for the scene.\n`;
+
+  const zip = new JSZip();
+  zip.file("index.html", standaloneHTML);
+  zip.file("CREDITS.json", JSON.stringify(credits, null, 2));
+  zip.file("README.txt", readme);
+
+  const blob = await zip.generateAsync({ type: "blob", compression: "DEFLATE", compressionOptions: { level: 9 } });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "demoforge_export_" + Date.now() + ".zip";
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+function buildStandaloneHTML(effectsJSON, credits) {
+  // Grab effect class source code
+  const classSources = [];
+  for (const fx of engine.effects) {
+    const cls = fx.constructor;
+    classSources.push(cls.toString());
+  }
+  // Also need BaseEffect
+  classSources.unshift(BaseEffect.toString());
+
+  return `<!DOCTYPE html>
+<!--
+  ╔══════════════════════════════════════════════════════╗
+  ║  Créé avec DemoForge v1.1                            ║
+  ║  ${credits.production.title} — ${credits.production.created_at.slice(0,10)}  ║
+  ║                                                      ║
+  ║  Effets basés sur les traditions de la demoscene     ║
+  ║  depuis 1986. Voir CREDITS.json pour les attributions║
+  ╚══════════════════════════════════════════════════════╝
+-->
+<html><head><meta charset="UTF-8"><title>${credits.production.title} — DemoForge</title>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+<style>*{margin:0;padding:0;box-sizing:border-box}body{background:#000;overflow:hidden;display:flex;align-items:center;justify-content:center;height:100vh}
+canvas{image-rendering:pixelated;image-rendering:crisp-edges}
+#info{position:fixed;bottom:10px;left:50%;transform:translateX(-50%);font-family:VT323,monospace;color:#00ff88;font-size:14px;opacity:.5}
+</style></head><body>
+<canvas id="c" width="640" height="400"></canvas>
+<div id="info">SPACE to pause | DemoForge v1.1</div>
+<script>
+"use strict";
+${classSources.join("\\n\\n")}
+
+const canvas=document.getElementById("c");
+const ctx=canvas.getContext("2d");
+ctx.imageSmoothingEnabled=false;
+const W=innerWidth,H=innerHeight,ar=640/400;
+let cw=W,ch=H;if(cw/ch>ar)cw=Math.floor(ch*ar);else ch=Math.floor(cw/ar);
+canvas.style.width=cw+"px";canvas.style.height=ch+"px";
+
+const effectsData=${effectsJSON};
+const effects=[];
+for(const ed of effectsData){
+  const Cls=eval(ed.effect);
+  const fx=new Cls(ed.params);
+  fx.init(canvas,ctx,null);
+  effects.push(fx);
+}
+
+let playing=true,lastTime=0;
+document.addEventListener("keydown",e=>{if(e.code==="Space"){e.preventDefault();playing=!playing;}});
+
+function loop(ts){
+  requestAnimationFrame(loop);
+  const dt=ts-lastTime;lastTime=ts;
+  if(dt>100||!playing)return;
+  ctx.save();ctx.imageSmoothingEnabled=false;
+  ctx.fillStyle="#000011";ctx.fillRect(0,0,640,400);
+  const bi={bpm:125,row:Math.floor(ts/80)%64,order:0,beat:false,bassEnergy:0};
+  for(const fx of effects){ctx.save();ctx.imageSmoothingEnabled=false;fx.update(dt/1000,bi);fx.render(ctx,ts/1000);ctx.restore();ctx.imageSmoothingEnabled=false;}
+  ctx.restore();
+}
+requestAnimationFrame(loop);
+<\/script></body></html>`;
+}
+
+// ═══════════════════════════════════════════════════
+// KEYBOARD SHORTCUTS
+// ═══════════════════════════════════════════════════
+document.addEventListener("keydown", (e) => {
+  if (e.target.tagName === "INPUT" || e.target.tagName === "TEXTAREA" || e.target.tagName === "SELECT") return;
+  if (e.code === "Space") { e.preventDefault(); togglePlay(); }
+  if (e.code === "Escape") {
+    closeAttribution();
+    STATE.selectedEffect = null;
+    document.querySelectorAll(".lib-item,.tl-block").forEach(el => el.classList.remove("active","sel"));
+    document.getElementById("insp-title").textContent = "Select an effect";
+    document.getElementById("insp-params").innerHTML = "";
+    document.getElementById("insp-attribution").innerHTML = "";
+  }
+  if (e.ctrlKey && e.code === "KeyE") { e.preventDefault(); exportDemo(); }
+});
+
+// ═══════════════════════════════════════════════════
+// PRESET LOADER
+// ═══════════════════════════════════════════════════
+function loadPreset(id) {
+  const preset = PRESETS[id];
+  if (!preset) return;
+  engine.clearEffects();
+  const tracks = document.getElementById("timeline-tracks");
+  // Keep playhead, remove tracks
+  const ph = document.getElementById("timeline-playhead");
+  tracks.innerHTML = "";
+  tracks.appendChild(ph);
+  trackIdx = 0;
+  trackData.length = 0;
+  STATE.selectedEffect = null;
+
+  for (const item of preset.effects) {
+    const Cls = EFFECT_REGISTRY[item.cls];
+    if (Cls) {
+      const fx = engine.addEffect(Cls, item.params);
+      addTrackToTimeline(fx);
+    }
+  }
+  if (engine.effects.length > 0) {
+    STATE.selectedEffect = engine.effects[0];
+    renderInspector(engine.effects[0]);
+  }
+  engine.play();
+}
+
+// ═══════════════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════════════
+document.addEventListener("DOMContentLoaded", () => {
+  engine.init();
+  renderRuler();
+  loadPreset("cracktro_amiga");
+});
+
+</script>
+</body>
+</html>

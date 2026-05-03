@@ -1,0 +1,830 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DemoForge Studio HTML</title>
+  <style>
+    :root {
+      --bg-1: #09111e;
+      --bg-2: #050913;
+      --panel: rgba(11, 18, 35, 0.96);
+      --panel-2: rgba(18, 29, 54, 0.98);
+      --line: rgba(140, 196, 255, 0.16);
+      --text: #eef6ff;
+      --muted: #9fb3da;
+      --accent: #6ce5ff;
+      --accent-2: #ffd46a;
+      --ok: #8affbf;
+      --warn: #ffc86b;
+      --danger: #ff8f8f;
+      --radius: 18px;
+      --shadow: 0 22px 60px rgba(0, 0, 0, 0.35);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: "Trebuchet MS", Verdana, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 15% 10%, rgba(108,229,255,0.18), transparent 24%),
+        radial-gradient(circle at 88% 5%, rgba(255,212,106,0.14), transparent 18%),
+        linear-gradient(180deg, var(--bg-1), var(--bg-2));
+    }
+
+    .app {
+      width: min(1480px, calc(100% - 20px));
+      margin: 10px auto 28px;
+      display: grid;
+      grid-template-columns: 330px minmax(0, 1fr) 380px;
+      gap: 16px;
+      align-items: start;
+    }
+
+    .panel,
+    .stage {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 18px;
+      display: grid;
+      gap: 14px;
+    }
+
+    .hero {
+      padding: 14px;
+      border-radius: 16px;
+      background:
+        linear-gradient(135deg, rgba(108,229,255,0.12), rgba(255,212,106,0.12)),
+        rgba(255,255,255,0.02);
+      display: grid;
+      gap: 8px;
+    }
+
+    h1, h2, h3, p { margin: 0; }
+    h1 { font-size: clamp(1.9rem, 3vw, 2.6rem); line-height: 1; }
+    h2 { font-size: 0.96rem; text-transform: uppercase; letter-spacing: 0.08em; }
+    h3 { font-size: 1rem; }
+    .muted { color: var(--muted); }
+
+    .section { display: grid; gap: 10px; }
+    .grid-2, .grid-3 { display: grid; gap: 10px; }
+    .grid-2 { grid-template-columns: 1fr 1fr; }
+    .grid-3 { grid-template-columns: repeat(3, 1fr); }
+
+    button, select, input, textarea {
+      font: inherit;
+      color: var(--text);
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(7, 11, 20, 0.96);
+    }
+
+    button {
+      min-height: 42px;
+      padding: 10px 12px;
+      cursor: pointer;
+      font-weight: 700;
+      background: linear-gradient(180deg, rgba(108,229,255,0.2), rgba(50,82,162,0.18));
+      transition: transform 120ms ease, border-color 120ms ease;
+    }
+
+    button:hover,
+    button:focus-visible {
+      transform: translateY(-1px);
+      border-color: rgba(255,255,255,0.28);
+    }
+
+    button.primary {
+      background: linear-gradient(180deg, rgba(138,255,191,0.24), rgba(38,116,74,0.18));
+    }
+
+    button.warning {
+      background: linear-gradient(180deg, rgba(255,200,107,0.24), rgba(140,91,21,0.18));
+    }
+
+    button.active {
+      border-color: rgba(108,229,255,0.48);
+      box-shadow: 0 0 0 1px rgba(108,229,255,0.18) inset;
+    }
+
+    label {
+      display: grid;
+      gap: 6px;
+      font-weight: 700;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 10px 12px;
+    }
+
+    textarea {
+      min-height: 96px;
+      resize: vertical;
+    }
+
+    input[type="range"] {
+      padding: 0;
+      accent-color: var(--accent);
+    }
+
+    .pill-row {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .pill {
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.08);
+      font-size: 0.86rem;
+    }
+
+    .stage-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .canvas-shell {
+      position: relative;
+      overflow: hidden;
+      border-radius: 18px;
+      border: 1px solid rgba(255,255,255,0.08);
+      background: #000;
+      aspect-ratio: 16 / 10;
+      min-height: 390px;
+    }
+
+    canvas {
+      display: block;
+      width: 100%;
+      height: 100%;
+      image-rendering: pixelated;
+    }
+
+    .effect-list,
+    .output-list {
+      display: grid;
+      gap: 10px;
+    }
+
+    .effect-card,
+    .output-card {
+      background: var(--panel-2);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 16px;
+      padding: 12px;
+      display: grid;
+      gap: 8px;
+    }
+
+    .effect-card.active {
+      border-color: rgba(108,229,255,0.45);
+      box-shadow: 0 0 0 1px rgba(108,229,255,0.14) inset;
+    }
+
+    .row-between {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    .tiny {
+      font-size: 0.84rem;
+      color: var(--muted);
+    }
+
+    pre,
+    .output-box {
+      margin: 0;
+      padding: 12px;
+      overflow: auto;
+      min-height: 180px;
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,0.08);
+      background: rgba(3, 7, 12, 0.96);
+      color: #dff7ff;
+      font-family: "Courier New", monospace;
+      font-size: 0.85rem;
+      line-height: 1.35;
+      white-space: pre-wrap;
+    }
+
+    .status-ok { color: var(--ok); }
+    .status-warn { color: var(--warn); }
+    .status-danger { color: var(--danger); }
+    a { color: var(--accent); }
+
+    @media (max-width: 1220px) {
+      .app { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 720px) {
+      .grid-2, .grid-3 { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <main class="app">
+    <aside class="panel">
+      <div class="hero">
+        <h1>DemoForge Studio</h1>
+        <p>Version HTML autonome, plus robuste et vraiment éditable. Tout reste local, direct et visible.</p>
+      </div>
+
+      <section class="section">
+        <h2>Niveaux</h2>
+        <label for="levelSelect">Niveau global
+          <select id="levelSelect">
+            <option value="0">0 — Noob</option>
+            <option value="3">3 — Sceener</option>
+            <option value="7">7 — Leet</option>
+            <option value="10">10 — R0x0r</option>
+          </select>
+        </label>
+        <div class="pill-row">
+          <span class="pill" id="levelPill">Mode: Noob</span>
+          <span class="pill" id="levelNumberPill">Valeur: 0</span>
+        </div>
+        <div class="tiny" id="levelDescription">Mode simple avec texte, fontes, couleurs et aperçu immédiat.</div>
+      </section>
+
+      <section class="section">
+        <h2>Effets</h2>
+        <div class="grid-2">
+          <button type="button" class="effect-button active" data-effect="scroller">Scroller / Texte</button>
+          <button type="button" class="effect-button" data-effect="rasters">Raster / Copper</button>
+          <button type="button" class="effect-button" data-effect="plasma">Plasma</button>
+          <button type="button" class="effect-button" data-effect="starfield">Starfield</button>
+          <button type="button" class="effect-button" data-effect="ascii">ASCII / NFO</button>
+          <button type="button" class="effect-button" data-effect="music">Musique / Export</button>
+        </div>
+      </section>
+
+      <section class="section">
+        <h2>Preset intégrable</h2>
+        <label for="presetRepo">Repo preset
+          <input id="presetRepo" type="text" placeholder="https://codeberg.org/...">
+        </label>
+        <label for="presetFormat">Format preset
+          <select id="presetFormat">
+            <option value="json">Preset JSON simple</option>
+            <option value="repo-json">Repo + manifest JSON</option>
+            <option value="zip-pack">ZIP pack intégré</option>
+          </select>
+        </label>
+        <label for="presetTitle">Titre preset
+          <input id="presetTitle" type="text" value="Cracktro Amiga 1991">
+        </label>
+      </section>
+
+      <section class="section">
+        <h2>Actions</h2>
+        <div class="grid-2">
+          <button type="button" id="generateReadmeButton" class="primary">Générer README</button>
+          <button type="button" id="generateHtmlButton">Générer HTML</button>
+          <button type="button" id="generateJsonButton">Générer JSON</button>
+          <button type="button" id="copyOutputButton" class="warning">Copier sortie</button>
+        </div>
+      </section>
+    </aside>
+
+    <section class="stage">
+      <div class="stage-top">
+        <div>
+          <h2>Aperçu temps réel</h2>
+          <p class="muted">Le canvas réagit aux paramètres édités. Ce n’est pas un mock figé.</p>
+        </div>
+        <div class="pill-row">
+          <span class="pill" id="activeEffectPill">Effet: Scroller / Texte</span>
+          <span class="pill" id="musicPill">Musique: Externe</span>
+          <span class="pill" id="exportPill">Export: Demo</span>
+        </div>
+      </div>
+
+      <div class="canvas-shell">
+        <canvas id="previewCanvas" width="960" height="600"></canvas>
+      </div>
+
+      <div class="output-list">
+        <div class="output-card">
+          <div class="row-between">
+            <strong>Sortie active</strong>
+            <span class="tiny" id="outputKind">README export source</span>
+          </div>
+          <div class="output-box" id="outputBox">Clique sur un bouton de génération.</div>
+        </div>
+      </div>
+    </section>
+
+    <aside class="panel">
+      <section class="effect-card active" data-panel="scroller">
+        <div class="row-between">
+          <h3>Scroller / Texte</h3>
+          <span class="pill">Texte + fonte + couleurs</span>
+        </div>
+        <label for="textValue">Texte
+          <input id="textValue" type="text" value="HELLO DEMOSCENE">
+        </label>
+        <label for="fontSelect">Fonte
+          <select id="fontSelect">
+            <option value="'Trebuchet MS', Verdana, sans-serif">Trebuchet UI</option>
+            <option value="'Courier New', monospace">Courier New</option>
+            <option value="'Verdana', sans-serif">Verdana</option>
+            <option value="monospace">Monospace</option>
+          </select>
+        </label>
+        <div class="grid-2">
+          <label for="colorA">Couleur 1
+            <input id="colorA" type="color" value="#00d8ff">
+          </label>
+          <label for="colorB">Couleur 2
+            <input id="colorB" type="color" value="#ffd05f">
+          </label>
+        </div>
+        <div class="advanced-3">
+          <label for="speedRange">Vitesse
+            <input id="speedRange" type="range" min="1" max="10" value="5">
+          </label>
+        </div>
+        <div class="advanced-7">
+          <label for="sizeRange">Taille
+            <input id="sizeRange" type="range" min="24" max="160" value="72">
+          </label>
+        </div>
+      </section>
+
+      <section class="effect-card hidden" data-panel="rasters">
+        <div class="row-between">
+          <h3>Raster / Copper</h3>
+          <span class="pill">Couleurs changeables</span>
+        </div>
+        <div class="grid-2">
+          <label for="rasterA">Barre A
+            <input id="rasterA" type="color" value="#00ffff">
+          </label>
+          <label for="rasterB">Barre B
+            <input id="rasterB" type="color" value="#ffcc44">
+          </label>
+        </div>
+        <div class="advanced-3">
+          <label for="barCount">Nombre de barres
+            <input id="barCount" type="range" min="3" max="18" value="8">
+          </label>
+        </div>
+        <div class="advanced-7">
+          <label for="barSpeed">Vitesse
+            <input id="barSpeed" type="range" min="1" max="10" value="5">
+          </label>
+        </div>
+      </section>
+
+      <section class="effect-card hidden" data-panel="plasma">
+        <div class="row-between">
+          <h3>Plasma</h3>
+          <span class="pill">Palette + intensité</span>
+        </div>
+        <div class="grid-2">
+          <label for="plasmaA">Palette A
+            <input id="plasmaA" type="color" value="#8b5cf6">
+          </label>
+          <label for="plasmaB">Palette B
+            <input id="plasmaB" type="color" value="#22d3ee">
+          </label>
+        </div>
+        <div class="advanced-3">
+          <label for="plasmaScale">Échelle
+            <input id="plasmaScale" type="range" min="1" max="10" value="5">
+          </label>
+        </div>
+      </section>
+
+      <section class="effect-card hidden" data-panel="starfield">
+        <div class="row-between">
+          <h3>Starfield</h3>
+          <span class="pill">Densité + vitesse</span>
+        </div>
+        <div class="advanced-3">
+          <label for="starCount">Nombre d’étoiles
+            <input id="starCount" type="range" min="40" max="300" value="160">
+          </label>
+        </div>
+        <div class="advanced-7">
+          <label for="starSpeed">Vitesse
+            <input id="starSpeed" type="range" min="1" max="10" value="5">
+          </label>
+        </div>
+      </section>
+
+      <section class="effect-card hidden" data-panel="ascii">
+        <div class="row-between">
+          <h3>ASCII / NFO</h3>
+          <span class="pill">Éditable en direct</span>
+        </div>
+        <label for="nfoText">Contenu ASCII / NFO
+          <textarea id="nfoText">╔════════════════════╗
+║  DEMOFORGE MINI   ║
+║  HELLO SCENERS    ║
+╚════════════════════╝</textarea>
+        </label>
+      </section>
+
+      <section class="effect-card hidden" data-panel="music">
+        <div class="row-between">
+          <h3>Musique / Export</h3>
+          <span class="pill">Externe ou intégrée</span>
+        </div>
+        <label for="musicMode">Mode musique
+          <select id="musicMode">
+            <option value="external">URL extérieure</option>
+            <option value="embedded">Intégrée dans le fichier</option>
+          </select>
+        </label>
+        <label for="musicUrl">URL musique
+          <input id="musicUrl" type="text" value="https://example.com/demo.mod">
+        </label>
+        <label for="exportMode">Type d’export
+          <select id="exportMode">
+            <option value="demo">Export Demo</option>
+            <option value="pedago">Export Demo Pedago</option>
+            <option value="pedago_source">Export Demo Pedago + Source</option>
+          </select>
+        </label>
+        <label for="exportFormat">Format
+          <select id="exportFormat">
+            <option value="html_pure">HTML Pure</option>
+            <option value="html_packer">HTML Packer</option>
+          </select>
+        </label>
+      </section>
+    </aside>
+  </main>
+
+  <script>
+    const canvas = document.getElementById("previewCanvas");
+    const ctx = canvas.getContext("2d");
+
+    const levelSelect = document.getElementById("levelSelect");
+    const levelPill = document.getElementById("levelPill");
+    const levelNumberPill = document.getElementById("levelNumberPill");
+    const levelDescription = document.getElementById("levelDescription");
+    const activeEffectPill = document.getElementById("activeEffectPill");
+    const musicPill = document.getElementById("musicPill");
+    const exportPill = document.getElementById("exportPill");
+    const outputBox = document.getElementById("outputBox");
+    const outputKind = document.getElementById("outputKind");
+
+    const presetRepo = document.getElementById("presetRepo");
+    const presetFormat = document.getElementById("presetFormat");
+    const presetTitle = document.getElementById("presetTitle");
+
+    const textValue = document.getElementById("textValue");
+    const fontSelect = document.getElementById("fontSelect");
+    const colorA = document.getElementById("colorA");
+    const colorB = document.getElementById("colorB");
+    const speedRange = document.getElementById("speedRange");
+    const sizeRange = document.getElementById("sizeRange");
+
+    const rasterA = document.getElementById("rasterA");
+    const rasterB = document.getElementById("rasterB");
+    const barCount = document.getElementById("barCount");
+    const barSpeed = document.getElementById("barSpeed");
+
+    const plasmaA = document.getElementById("plasmaA");
+    const plasmaB = document.getElementById("plasmaB");
+    const plasmaScale = document.getElementById("plasmaScale");
+
+    const starCount = document.getElementById("starCount");
+    const starSpeed = document.getElementById("starSpeed");
+
+    const nfoText = document.getElementById("nfoText");
+    const musicMode = document.getElementById("musicMode");
+    const musicUrl = document.getElementById("musicUrl");
+    const exportMode = document.getElementById("exportMode");
+    const exportFormat = document.getElementById("exportFormat");
+
+    const generateReadmeButton = document.getElementById("generateReadmeButton");
+    const generateHtmlButton = document.getElementById("generateHtmlButton");
+    const generateJsonButton = document.getElementById("generateJsonButton");
+    const copyOutputButton = document.getElementById("copyOutputButton");
+
+    const state = {
+      level: 0,
+      effect: "scroller",
+      frame: 0
+    };
+
+    const levelMap = {
+      0: { name: "Noob", description: "Mode simple avec texte, fontes, couleurs et aperçu immédiat." },
+      3: { name: "Sceener", description: "Paramètres utiles visibles, réglages de scène et presets intégrables." },
+      7: { name: "Leet", description: "Contrôle avancé, taille, vitesse, densité et logique plus détaillée." },
+      10: { name: "R0x0r", description: "Mode expert pour tout exposer, documenter et exporter sans limites UI." }
+    };
+
+    function updateLevelUI() {
+      const info = levelMap[state.level];
+      levelPill.textContent = "Mode: " + info.name;
+      levelNumberPill.textContent = "Valeur: " + state.level;
+      levelDescription.textContent = info.description;
+      document.querySelectorAll(".advanced-3").forEach((node) => node.classList.toggle("hidden", state.level < 3));
+      document.querySelectorAll(".advanced-7").forEach((node) => node.classList.toggle("hidden", state.level < 7));
+    }
+
+    function updateButtons() {
+      document.querySelectorAll(".effect-button").forEach((button) => {
+        button.classList.toggle("active", button.dataset.effect === state.effect);
+      });
+    }
+
+    function updatePanels() {
+      document.querySelectorAll("[data-panel]").forEach((panel) => {
+        const active = panel.dataset.panel === state.effect;
+        panel.classList.toggle("hidden", !active);
+        panel.classList.toggle("active", active);
+      });
+      const activeButton = document.querySelector(`.effect-button[data-effect="${state.effect}"]`);
+      activeEffectPill.textContent = "Effet: " + (activeButton ? activeButton.textContent : state.effect);
+    }
+
+    function updateMusicExportPills() {
+      musicPill.textContent = "Musique: " + (musicMode.value === "embedded" ? "Intégrée" : "Externe");
+      exportPill.textContent = "Export: " + exportMode.options[exportMode.selectedIndex].text;
+    }
+
+    function drawBackground() {
+      const gradient = ctx.createLinearGradient(0, 0, 0, canvas.height);
+      gradient.addColorStop(0, "#081728");
+      gradient.addColorStop(0.55, "#11294b");
+      gradient.addColorStop(1, "#02050b");
+      ctx.fillStyle = gradient;
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+    }
+
+    function drawFrame() {
+      ctx.save();
+      ctx.strokeStyle = "rgba(255,255,255,0.12)";
+      ctx.lineWidth = 3;
+      ctx.strokeRect(10, 10, canvas.width - 20, canvas.height - 20);
+      ctx.restore();
+    }
+
+    function drawScroller() {
+      const t = state.frame * (Number(speedRange.value) / 4);
+      const x = canvas.width / 2;
+      const y = canvas.height / 2 + Math.sin(t * 0.05) * 12;
+      const size = Number(sizeRange.value);
+      const text = textValue.value || "HELLO DEMOSCENE";
+      const grad = ctx.createLinearGradient(0, y - 50, 0, y + 50);
+      grad.addColorStop(0, colorA.value);
+      grad.addColorStop(1, colorB.value);
+
+      ctx.save();
+      ctx.imageSmoothingEnabled = false;
+      ctx.textAlign = "center";
+      ctx.textBaseline = "middle";
+      ctx.font = `900 ${size}px ${fontSelect.value}`;
+      ctx.fillStyle = "rgba(0,0,0,0.35)";
+      ctx.fillText(text, Math.floor(x + 5), Math.floor(y + 7));
+      ctx.fillStyle = grad;
+      ctx.shadowColor = colorA.value;
+      ctx.shadowBlur = state.level >= 7 ? 18 : 8;
+      ctx.fillText(text, Math.floor(x), Math.floor(y));
+      ctx.restore();
+    }
+
+    function drawRasters() {
+      const bars = Number(barCount.value);
+      const speed = Number(barSpeed.value);
+      const height = canvas.height / bars;
+      for (let i = 0; i < bars; i += 1) {
+        const yy = i * height + Math.sin((state.frame * 0.035 * speed) + i * 0.8) * 10;
+        ctx.fillStyle = i % 2 === 0 ? rasterA.value : rasterB.value;
+        ctx.globalAlpha = 0.22 + (i / bars) * 0.24;
+        ctx.fillRect(0, Math.floor(yy), canvas.width, Math.ceil(height - 4));
+      }
+      ctx.globalAlpha = 1;
+    }
+
+    function drawPlasma() {
+      const cell = 14 - Math.floor(Number(plasmaScale.value) / 2);
+      for (let y = 0; y < canvas.height; y += cell) {
+        for (let x = 0; x < canvas.width; x += cell) {
+          const v = Math.sin((x + state.frame * 2) * 0.018) + Math.sin((y - state.frame) * 0.024);
+          ctx.fillStyle = v > 0 ? plasmaA.value : plasmaB.value;
+          ctx.globalAlpha = 0.18 + ((v + 2) / 4) * 0.34;
+          ctx.fillRect(x, y, cell + 1, cell + 1);
+        }
+      }
+      ctx.globalAlpha = 1;
+    }
+
+    function drawStarfield() {
+      const count = Number(starCount.value);
+      const speed = Number(starSpeed.value);
+      for (let i = 0; i < count; i += 1) {
+        const px = (i * 61 + state.frame * speed * (1 + (i % 5))) % canvas.width;
+        const py = (i * 37 + (i % 9) * 17) % canvas.height;
+        const size = 1 + (i % 3);
+        ctx.fillStyle = i % 2 === 0 ? colorA.value : colorB.value;
+        ctx.fillRect(Math.floor(px), Math.floor(py), size, size);
+      }
+    }
+
+    function drawAscii() {
+      const lines = (nfoText.value || "").split("\n");
+      ctx.save();
+      ctx.imageSmoothingEnabled = false;
+      ctx.font = "700 20px monospace";
+      ctx.textBaseline = "top";
+      ctx.fillStyle = "#dbe5ef";
+      lines.forEach((line, index) => {
+        ctx.fillText(line, 70, 90 + index * 28);
+      });
+      ctx.restore();
+    }
+
+    function renderCanvas() {
+      ctx.imageSmoothingEnabled = false;
+      drawBackground();
+      if (state.effect === "scroller") drawScroller();
+      if (state.effect === "rasters") drawRasters();
+      if (state.effect === "plasma") drawPlasma();
+      if (state.effect === "starfield") drawStarfield();
+      if (state.effect === "ascii") drawAscii();
+      if (state.effect === "music") drawScroller();
+      drawFrame();
+    }
+
+    function tick() {
+      state.frame += 1;
+      renderCanvas();
+      requestAnimationFrame(tick);
+    }
+
+    function buildDataModel() {
+      return {
+        title: presetTitle.value || "Preset sans titre",
+        level: state.level,
+        level_name: levelMap[state.level].name,
+        effect: state.effect,
+        preset_repo: presetRepo.value || "",
+        preset_format: presetFormat.value,
+        export_mode: exportMode.value,
+        export_format: exportFormat.value,
+        music: {
+          mode: musicMode.value,
+          url: musicUrl.value || ""
+        },
+        source_reference: "https://democyclopedie.wordpress.com/2015/04/01/liste-des-effets/"
+      };
+    }
+
+    function buildReadme() {
+      const data = buildDataModel();
+      const lines = [
+        "# DemoForge Studio Export",
+        "",
+        "Titre : " + data.title,
+        "Effet actif : " + data.effect,
+        "Niveau : " + data.level_name + " (" + data.level + ")",
+        "Mode export : " + data.export_mode,
+        "Format export : " + data.export_format,
+        "Repo preset : " + (data.preset_repo || "aucun"),
+        "Format preset : " + data.preset_format,
+        "Musique : " + data.music.mode,
+        "URL musique : " + (data.music.url || "aucune"),
+        "",
+        "Source d'inspiration principale :",
+        "- " + data.source_reference,
+        "",
+        "Ce fichier README accompagne un export de démonstration HTML."
+      ];
+      outputKind.textContent = "README export source";
+      outputBox.textContent = lines.join("\n");
+    }
+
+    function buildJson() {
+      const data = buildDataModel();
+      outputKind.textContent = "Preset / export JSON";
+      outputBox.textContent = JSON.stringify(data, null, 2);
+    }
+
+    function buildHtml() {
+      const data = buildDataModel();
+      const html = [
+        "<!DOCTYPE html>",
+        "<html lang=\"fr\">",
+        "<head>",
+        "  <meta charset=\"UTF-8\">",
+        "  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">",
+        "  <title>" + escapeHtml(data.title) + "</title>",
+        "</head>",
+        "<body>",
+        "  <h1>" + escapeHtml(data.title) + "</h1>",
+        "  <p>Effet actif : " + escapeHtml(data.effect) + "</p>",
+        "  <p>Niveau : " + escapeHtml(data.level_name) + " (" + data.level + ")</p>",
+        "  <p>Mode export : " + escapeHtml(data.export_mode) + "</p>",
+        "  <p>Format export : " + escapeHtml(data.export_format) + "</p>",
+        "  <p>Musique : " + escapeHtml(data.music.mode) + "</p>",
+        "  <p>URL musique : " + escapeHtml(data.music.url || "aucune") + "</p>",
+        "  <p>Source : <a href=\"" + data.source_reference + "\">Democyclopedie</a></p>",
+        "</body>",
+        "</html>"
+      ].join("\n");
+      outputKind.textContent = "HTML direct";
+      outputBox.textContent = html;
+    }
+
+    function escapeHtml(value) {
+      return String(value)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;");
+    }
+
+    function handleRealtimeUpdate() {
+      updateMusicExportPills();
+      renderCanvas();
+    }
+
+    levelSelect.addEventListener("change", () => {
+      state.level = Number(levelSelect.value);
+      updateLevelUI();
+      handleRealtimeUpdate();
+    });
+
+    document.querySelectorAll(".effect-button").forEach((button) => {
+      button.addEventListener("click", () => {
+        state.effect = button.dataset.effect;
+        updateButtons();
+        updatePanels();
+        handleRealtimeUpdate();
+      });
+    });
+
+    [
+      textValue,
+      fontSelect,
+      colorA,
+      colorB,
+      speedRange,
+      sizeRange,
+      rasterA,
+      rasterB,
+      barCount,
+      barSpeed,
+      plasmaA,
+      plasmaB,
+      plasmaScale,
+      starCount,
+      starSpeed,
+      nfoText,
+      presetRepo,
+      presetFormat,
+      presetTitle,
+      musicMode,
+      musicUrl,
+      exportMode,
+      exportFormat
+    ].forEach((node) => {
+      node.addEventListener("input", handleRealtimeUpdate);
+      node.addEventListener("change", handleRealtimeUpdate);
+    });
+
+    generateReadmeButton.addEventListener("click", buildReadme);
+    generateHtmlButton.addEventListener("click", buildHtml);
+    generateJsonButton.addEventListener("click", buildJson);
+
+    copyOutputButton.addEventListener("click", async () => {
+      try {
+        await navigator.clipboard.writeText(outputBox.textContent);
+        outputKind.textContent = outputKind.textContent + " — copié";
+      } catch {
+        outputKind.textContent = outputKind.textContent + " — copie impossible";
+      }
+    });
+
+    updateLevelUI();
+    updateButtons();
+    updatePanels();
+    updateMusicExportPills();
+    buildReadme();
+    tick();
+  </script>
+</body>
+</html>

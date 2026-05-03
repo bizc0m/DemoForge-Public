@@ -1,0 +1,68 @@
+{
+  "production": {
+    "title": "DemoForge Export",
+    "created_with": "DemoForge v1.1",
+    "created_by": "DemoForge User",
+    "created_at": "2026-04-16T16:12:20.015Z",
+    "demoforge_version": "1.1.0"
+  },
+  "effects": [
+    {
+      "id": "matrix_rain",
+      "display_name": "Matrix Rain",
+      "concept": {
+        "origin_year": 1999,
+        "origin_hardware": "PC — inspiré du film The Matrix",
+        "technique": "Colonnes de caractères tombant à des vitesses différentes. Chaque colonne a une tête brillante (blanc/vert clair) suivie d'une traînée qui s'estompe. Les caractères changent aléatoirement pendant la chute. Adapté en demoscene avec des charsets custom (katakana, CP-437, etc.).",
+        "origin_group": "—",
+        "origin_coder": "—",
+        "first_production": "The Matrix (film), 1999",
+        "era": "GEN5_NEWSCHOOL"
+      },
+      "implementation": {
+        "author": "DemoForge contributors",
+        "license": "MIT"
+      }
+    },
+    {
+      "id": "sinus_scroller",
+      "display_name": "Sinus Scroller",
+      "concept": {
+        "origin_year": 1987,
+        "origin_hardware": "Amiga OCS — Blitter",
+        "technique": "Texte défilant horizontalement avec ondulation sinusoïdale verticale. Le blitter Amiga copiait chaque caractère ligne par ligne avec un décalage Y calculé via une table sinus précalculée. Le scrollspeed est un entier (px/frame) pour un mouvement pixel-perfect sans sub-pixel.",
+        "origin_group": "Skid Row",
+        "origin_coder": "Yragael",
+        "first_production": "Skid Row cracktro série 1991",
+        "era": "GEN1_CRACKTRO"
+      },
+      "implementation": {
+        "author": "DemoForge contributors",
+        "license": "MIT"
+      }
+    },
+    {
+      "id": "dycp_scroller",
+      "display_name": "DYCP Scroller",
+      "concept": {
+        "origin_year": 1986,
+        "origin_hardware": "C64 sprites hardware / Amiga BOBs",
+        "technique": "Different Y Coordinate Per character — chaque lettre a une position Y indépendante calculée via sin(). Sur C64, les 8 sprites hardware étaient multiplexés sur plusieurs lignes raster pour afficher plus de caractères que le hardware ne le permettait normalement.",
+        "origin_group": "—",
+        "origin_coder": "Raistlin",
+        "first_production": "C64 DXYCP demos mid-80s",
+        "era": "GEN1_CRACKTRO"
+      },
+      "implementation": {
+        "author": "DemoForge contributors",
+        "license": "MIT"
+      }
+    }
+  ],
+  "inspiration": [
+    "Demoscene — patrimoine culturel immatériel (France, 2021)",
+    "FREAX — The Brief History of the Demoscene",
+    "The Mod Archive — modarchive.org",
+    "int10h.org — Ultimate Oldschool PC Font Pack"
+  ]
+}

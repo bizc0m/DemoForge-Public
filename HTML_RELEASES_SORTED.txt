@@ -1,0 +1,474 @@
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/V15.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CNC_CodingIsNotACrime-backup-2026-04-16-A/index.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CNC_CodingIsNotACrime-backup-2026-04-16-B/index.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CNC_CodingIsNotACrime-backup-2026-04-16-C/index.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CNC_UPLOAD/CNC-CODEX/index.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/DEMOFORGE_DOC.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/DEMOFORGE_MINI.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/DEMOFORGE_STUDIO.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/DEMOFORGE_STUDIO_V2.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/DEMOFORGE_STUDIO_V3.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/demoscene-editor-kids.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/index.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/index-CNC-V1.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/index-CNC-V1.1.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/index-CNC-V1.2.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/index-CNC-V1.3.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/index-CNC-V1.4.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/index-CNC-V1.5.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/index-CNC-V1.6.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge-Motion/DEMOFORGE_FULLSCREEN_DEMO.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge-Motion/DEMOFORGE_FULLSCREEN_DEMO_V1.0.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge-Motion/DEMOFORGE_FULLSCREEN_DEMO_V1.1.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge-Motion/demoforge_motion_studio.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge-Motion/demoforge_phone_dancer.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge-Motion/demoforge_phone_dancer_backup_before_restart.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge-Motion/index.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge-Motion/state_of_the_art_key_visuals.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/1-demoforge_motion_studio.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/CNC Coding Is Not A Crime -Clean - Base.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/DEMOFORGE_DOC.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/DEMOFORGE_MINI.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/DEMOFORGE_STUDIO.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/DEMOFORGE_STUDIO_V2.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/DEMOFORGE_STUDIO_V3.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/DemoForge V6 — Editor-Emergent.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/DemoForge V6 — Editor-Emergent_files/saved_resource.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/DemoForge_V6_Motion_Studio_from_uploaded.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/EMERGENT- VERSION/Emergent _ Fullstack App.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/Emergent _ Fullstack App-DemoforgV9_files 2/demoforge_v9.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/Emergent _ Fullstack App-DemoforgV9_files 2/saved_resource.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/Emergent _ Fullstack App-DemoforgV9_files 2/saved_resource(1).html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/Emergent _ Fullstack App-DemoforgV9_files/demoforge_v9.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/Emergent _ Fullstack App-DemoforgV9_files/saved_resource.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/Emergent _ Fullstack App-DemoforgV9_files/saved_resource(1).html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/Emergent _ Fullstack App_files 2/demoforge_v9.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/Emergent _ Fullstack App_files/demoforge_v9.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/Hello World.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/Module 1.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/NO-demoforge_unique_clean.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/The Union Demo.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/The Union Demo (1).html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/V15.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/demoforge-2030-V1.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/demoforge-2030-V1 (1).html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/demoforge-motion-studio-single-dance-steps.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/demoforge_7.60_edu_0.6.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/demoforge_7.60_edu_0.8.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/demoforge_7.80.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/demoforge_8.00_stable.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/demoforge_8.20.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/demoforge_8.40.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/demoforge_8.60.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/demoforge_V1.0.0_Razor1911.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/demoforge_V5.74_stable_fx_icons.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/demoforge_V5.76_CMOS_Cosmos_12_templates.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/demoforge_V5.78_i18n_chapter_json_profile.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/demoforge_V5.80_scroll_pro_chain_exports.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/demoforge_V5.82_BASE_DEMO_STABLE.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/demoforge_V5.84_BASE_PROLOCK_EXPORT_FIXED.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/demoforge_V5.86_MAX_active.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/demoforge_V5.86_Pro_Easter_Egg.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/demoforge_V5.86_Pro_Easter_Egg_auto_serial.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/demoforge_V5.86_Pro_Easter_Egg_levels.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/demoforge_V5.87_MAX_active.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/demoforge_V5.88_FIXED.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/demoforge_V5.89_MAX_READY.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/demoforge_V5.91_CALQUES_COMPACT_ZX_BROWSER.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/demoforge_V5.92_LAYERS_UNDO_FONTS.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/demoforge_V5.93_LAYERS_FIXED_FONT_LOADER.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/demoforge_V5.94_REINTEGRATED.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/demoforge_V5.95_MEDIA_IMPORT_FIXED.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/demoforge_clean_direct.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/demoforge_editor_layers_music_export_fixed.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/demoforge_editor_music_export.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/demoforge_edu_audio_timeline.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/demoforge_edu_base.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/demoforge_edu_v0.2.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/demoforge_edu_v0.4.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/demoforge_export_1776355940035/index.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/demoforge_export_music.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/demoforge_export_music (1).html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/demoforge_full_layer_editor.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/demoforge_full_layer_editor_v2.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/demoforge_full_layer_editor_v4_multilang_assets.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/demoforge_full_layer_editor_v5_fixed.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/demoforge_full_layer_editor_v6_links_emoji.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/demoforge_full_layer_editor_v7_repaired_links.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/demoforge_full_layer_editor_v8_ui_presets.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/demoforge_motion_studio_v0_9.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/demoforge_motion_studio_v1_3_fx_presets.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/demoforge_motion_studio_v1_4_audio_fonts_integrated.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/demoforge_motion_studio_v1_5_fonts_integrated.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/demoforge_motion_studio_v1_6_left_demos_restored.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/demoforge_motion_studio_v1_7_repaired.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/demoforge_motion_studio_v1_full_emergent_clean.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/demoforge_motion_studio_v1_merged.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/demoforge_motion_studio_v8_90.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/demoforge_motion_studio_v9_10.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/demoforge_motion_studio_v9_30.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/demoforge_motion_studio_v9_50.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/demoforge_motion_studio_v9_70.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/demoforge_motion_studio_v10_00_core.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/demoforge_music_demo.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/demoforge_music_demo (1).html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/demoforge_phone_dancer.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/demoforge_purist_mode.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/demoforge_union_style_editor.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/demoforge_union_style_editor_music.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/demoforge_v6_demo.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/demoforge_v6_demo (1).html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/demoforge_v9.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/demoforge_v9_merged_v10fx.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/demoforge_v10_rebuild.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/demoforge_v10_step1.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/demoforge_vgm_nd_ui_player.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/demomaker (1).html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/demomaker (2).html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/demomaker-V1.1.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/demomaker-V2.0.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/demomaker-V2.0 (1).html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/demomaker_export_1776623126861.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/demoscene_audio_lab.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/fullscreen-demo.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/hello-world.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/hextales_v4.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/index.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/index-CNC-V1.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/index-CNC-V1.1.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/index-CNC-V1.2.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/index-CNC-V1.3.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/index-CNC-V1.4.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/index-CNC-V1.5.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/index-CNC-V1.6.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/index-demoforge-V1.1.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/sources.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/state_of_the_art_key_visuals.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/union_style_demo.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/union_style_demo (1).html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/versionning.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/versions/v1.1/index.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/versions/v1.2/index.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/versions/v1.3/index.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/versions/v1.4/index.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/versions/v1.5/index.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/versions/v1.6/index.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/versions/v1.7/index.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/versions/v1/index.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/!demoforge_full_layer_editor_v3_dragdrop.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/!demoforge_mvp.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/#MOTION/demoforge_export_music (3).html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/#MOTION/demoforge_fullscreen_animated.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/#MOTION/demoforge_fullscreen_lite.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/#MOTION/demoforge_lite_fullscreen.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/#MOTION/demoforge_motion_compact.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/#MOTION/demoforge_motion_compact (1).html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/#MOTION/demoforge_motion_compact (2).html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/#MOTION/demoforge_motion_compact (3).html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/#MOTION/demoforge_motion_studio.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/#MOTION/demoforge_motion_studio_pure.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/#MOTION/demoforge_motion_studio_pure_animated_exports.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/#MOTION/demoforge_motion_studio_pure_animated_exports_dnd_fixed.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/#MOTION/demoforge_optimized_fullscreen.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/#MOTION/demoforge_retro_demo_editor.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/#MOTION/demoforge_snapshot.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/#MOTION/!!! demoforge_motion_studio_v2_exports_config.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/#MOTION/#FINAL_MOTION.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/_Emergent _ Fullstack App.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/_Emergent _ Fullstack App-DemoforgV9.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/_Emergent _ Fullstack App-DemoforgV9_files/demoforge_v9.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/_Emergent _ Fullstack App-DemoforgV9_files/saved_resource.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/_Emergent _ Fullstack App-DemoforgV9_files/saved_resource(1).html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/_Emergent _ Fullstack App_files/demoforge_v9.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/EMERGENT- VERSION/._Emergent _ Fullstack App.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V11/Illsutration/EFFET OUI - COULEUR NON.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V11/Illsutration/Interface OK - Colonne OK _v10_00_core.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V11/Illsutration/Preview - Demo - TEMPLATE -BASE .html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V11/OK demoforge_9.00.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V11/Preset-Music-v7_repaired_links.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V11/!!! demoforge_8.80_clean.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/DEMOFORGE MOTION STUDIO — V14_files/saved_resource.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/DEMOMAKER_v2_optimized.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/DemoForge V6 — Editor-Emergent_files/._saved_resource.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/DemoForge V10 Merge - Ok.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/EFFET_OUI_WebGL_Standalone_Test.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/EFFET_OUI_WebGL_Standalone_Test (1).html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/Emergent _ Fullstack App.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/Emergent _ Fullstack App_files/demoforge_v9.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/Emergent _ Fullstack App_files/saved_resource.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/Emergent _ Fullstack App_files/saved_resource(1).html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/V13.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/V14.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/V15.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/X-demoforge_motion_studio_v1_6_left_demos_restored.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/demoforge_SINGLE_FILE_OPTIMIZED_v19_7.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/demoforge_V0.20.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/demoforge_V0.20 (1).html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/demoforge_V0.20 (2).html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/demoforge_V0.20 (3).html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/demoforge_V0.40.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/demoforge_V0.40 (1).html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/demoforge_V0.40 (2).html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/demoforge_V0.40 (3).html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/demoforge_V1.00.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/demoforge_V1_66.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/demoforge_V1_66_1.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/demoforge_V1_66_2.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/demoforge_V1_66_3.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/demoforge_V1_66_4.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/demoforge_V1_66_5.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/demoforge_V1_66_6.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/demoforge_V1_66_6_retro_integrated.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/demoforge_V1_66_6_retro_integrated_v2.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/demoforge_V5.86_DEBUG_MAX_LEVELS.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/demoforge_VERIFIED_SAFE_B_C/demoforge_B_VERIFIED_SAFE_OS_simulation.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/demoforge_VERIFIED_SAFE_B_C/demoforge_C_VERIFIED_SAFE_lite_demo.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/demoforge_VERSIONED_HTML_B_C/demoforge_B_VERIFIED_SAFE_OS_simulation_v19_7_versioned.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/demoforge_VERSIONED_HTML_B_C/demoforge_C_VERIFIED_SAFE_lite_demo_v19_7_versioned.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/demoforge_all_files_numbered 2/1.4_demoforge_motion_studio_v1_5_fonts_integrated.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/demoforge_all_files_numbered 2/1.5_demoforge_motion_studio_v9_10_from_v8_90_patch.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/demoforge_all_files_numbered 2/1.6_demoforge_motion_studio_v1_7_repaired.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/demoforge_all_files_numbered 2/1.7_demoforge_motion_studio_v9_50.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/demoforge_all_files_numbered 2/1.8_demoforge_motion_studio_v1_6_left_demos_restored.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/demoforge_all_files_numbered 2/1.10_demoforge_motion_studio_v9_30.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/demoforge_all_files_numbered 2/1.11_demoforge_motion_studio_v10_00_core.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/demoforge_all_files_numbered 2/1.12_demoforge_motion_studio_v9_70.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/demoforge_all_files_numbered 2/1.13_demoforge_motion_studio_v8_70.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/demoforge_all_files_numbered 2/1.14_demoscene_audio_lab.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/demoforge_all_files_numbered 2/1.15_demoforge_motion_studio_v1_4_audio_fonts_integrated.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/demoforge_all_files_numbered 2/1.16_demomaker_(1).html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/demoforge_all_files_numbered 2/1.17_D.C.K.___Demo_Construction_Kit_VB.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/demoforge_all_files_numbered 2/1.18_index-CNC-V1.8.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/demoforge_all_files_numbered 2/1.19_index-CNC-V1.7.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/demoforge_all_files_numbered 2/1.20_index-CNC-V2.0.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/demoforge_all_files_numbered 2/1.21_index-CNC-V1.9.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/demoforge_all_files_numbered 2/1.22_index-CNC-V3.9.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/demoforge_all_files_numbered 2/1.23_index-CNC-V2.0_(1).html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/demoforge_all_files_numbered 2/1.24_demoforge_motion_studio_v1_3_fx_presets.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/demoforge_all_files_numbered 2/1.27_demoforge_motion_studio_v1_full_emergent_clean.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/demoforge_all_files_numbered 2/1.28_demoforge_motion_studio_v1_merged.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/demoforge_all_files_numbered 2/1.29_demoforge_motion_studio_v1_clean.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/demoforge_all_files_numbered 2/1.30_demoforge_motion_studio_v1_2_full_clean.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/demoforge_all_files_numbered 2/1.31_demoforge_motion_studio_v0_9.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/demoforge_all_files_numbered 2/1.33_demoforge_motion_studio_v8_90.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/demoforge_all_files_numbered/1.4_demoforge_motion_studio_v1_5_fonts_integrated.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/demoforge_all_files_numbered/1.5_demoforge_motion_studio_v9_10_from_v8_90_patch.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/demoforge_all_files_numbered/1.6_demoforge_motion_studio_v1_7_repaired.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/demoforge_all_files_numbered/1.7_demoforge_motion_studio_v9_50.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/demoforge_all_files_numbered/1.8_demoforge_motion_studio_v1_6_left_demos_restored.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/demoforge_all_files_numbered/1.10_demoforge_motion_studio_v9_30.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/demoforge_all_files_numbered/1.11_demoforge_motion_studio_v10_00_core.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/demoforge_all_files_numbered/1.12_demoforge_motion_studio_v9_70.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/demoforge_all_files_numbered/1.13_demoforge_motion_studio_v8_70.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/demoforge_all_files_numbered/1.14_demoscene_audio_lab.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/demoforge_all_files_numbered/1.15_demoforge_motion_studio_v1_4_audio_fonts_integrated.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/demoforge_all_files_numbered/1.16_demomaker_(1).html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/demoforge_all_files_numbered/1.17_D.C.K.___Demo_Construction_Kit_VB.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/demoforge_all_files_numbered/1.18_index-CNC-V1.8.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/demoforge_all_files_numbered/1.19_index-CNC-V1.7.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/demoforge_all_files_numbered/1.20_index-CNC-V2.0.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/demoforge_all_files_numbered/1.21_index-CNC-V1.9.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/demoforge_all_files_numbered/1.22_index-CNC-V3.9.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/demoforge_all_files_numbered/1.23_index-CNC-V2.0_(1).html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/demoforge_all_files_numbered/1.24_demoforge_motion_studio_v1_3_fx_presets.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/demoforge_all_files_numbered/1.27_demoforge_motion_studio_v1_full_emergent_clean.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/demoforge_all_files_numbered/1.28_demoforge_motion_studio_v1_merged.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/demoforge_all_files_numbered/1.29_demoforge_motion_studio_v1_clean.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/demoforge_all_files_numbered/1.30_demoforge_motion_studio_v1_2_full_clean.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/demoforge_all_files_numbered/1.31_demoforge_motion_studio_v0_9.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/demoforge_all_files_numbered/1.33_demoforge_motion_studio_v8_90.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/demoforge_all_releases 2-5/demoforge_V1.0.0_Razor1911.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/demoforge_all_releases 2-5/demoforge_V5.72_Razor1911_final_presets.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/demoforge_all_releases 2-5/demoforge_V5.74_stable_fx_icons.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/demoforge_all_releases 2-5/demoforge_V5.76_CMOS_Cosmos_12_templates.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/demoforge_all_releases 2-5/demoforge_V5.78_i18n_chapter_json_profile.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/demoforge_all_releases 2-5/demoforge_V5.80_scroll_pro_chain_exports.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/demoforge_all_releases 2-5/demoforge_V5.82_BASE_DEMO_STABLE.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/demoforge_all_releases 2-5/demoforge_V5.84_BASE_PROLOCK_EXPORT_FIXED.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/demoforge_all_releases 2-5/demoforge_V5.86_DEBUG_MAX_LEVELS.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/demoforge_all_releases 2-5/demoforge_editor_layers_music_export_fixed.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/demoforge_all_releases 2-5/demoforge_editor_music_export.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/demoforge_all_releases 2-5/demoforge_editor_music_export_v2_limits.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/demoforge_all_releases 2-5/demoforge_full_layer_editor.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/demoforge_all_releases 2-5/demoforge_full_layer_editor_v2.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/demoforge_all_releases 2-5/demoforge_full_layer_editor_v3_dragdrop.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/demoforge_all_releases 2-5/demoforge_full_layer_editor_v4_multilang_assets.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/demoforge_all_releases 2-5/demoforge_full_layer_editor_v5_fixed.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/demoforge_all_releases 2-5/demoforge_full_layer_editor_v6_links_emoji.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/demoforge_all_releases 2-5/demoforge_full_layer_editor_v7_repaired_links.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/demoforge_all_releases 2-5/demoforge_purist_mode.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/demoforge_all_releases 2-5/demoforge_union_style_editor.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/demoforge_all_releases 2-5/demoforge_union_style_editor_music.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/demoforge_all_releases 2-5/demoforge_union_vgm_direct_no_overlay.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/demoforge_all_releases 2-5/demoforge_vgm_nd_ui_player.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/demoforge_motion_studio_v1_clean.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/demoforge_motion_studio_v9_10_from_v8_90_patch.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/demoforge_motion_studio_v11_20_timeline_clean_design.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/demoforge_motion_studio_v11_40_timeline_bottom.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/demoforge_motion_studio_v11_60_top_menu_layers.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/demoforge_motion_studio_v11_80_clean.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/demoforge_motion_studio_v12_00_interface_complete.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/demoforge_motion_studio_v12_20_layer_move_clean.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/demoforge_motion_studio_v12_40_drag_timeline_resize.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/demoforge_motion_studio_v12_80_ui_fixes.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/demoforge_motion_studio_v13_00_reprise.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/demoforge_motion_studio_v13_20_header_drag_layers.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/demoforge_motion_studio_v13_40_layer_drag_sort.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/demoforge_releases (2)/demoforge_V0.20.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/demoforge_releases (2)/demoforge_V0.40.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/demoforge_releases (2)/demoforge_V0.60.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/demoforge_releases (2)/demoforge_V0.80.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/demoforge_releases (2)/demoforge_V1.00.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/demoforge_releases (2)/demoforge_V1.20.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/demoforge_releases (2)/demoforge_V1.35.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/demoforge_releases (2)/demoforge_V1.50.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/demoforge_releases (2)/demoforge_V1.65.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/demoforge_release_pack_versioned_1_1_to_1_3_v2/1.1_V8.90_REFERENCE.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/demoforge_release_pack_versioned_1_1_to_1_3_v2/1.2_V9.10_NO_GRID.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/demoforge_release_pack_versioned_1_1_to_1_3_v2/1.3_V9.30_STABLE_RELEASE.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/demoforge_single_file_app.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/demoforge_v9_demo.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/demoforge_v9_demo (1).html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/demoforge_v19_7_dropdown_base_skin_B_C/demoforge_B_v19_7_dropdown_base_skin.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/demoforge_v19_7_dropdown_base_skin_B_C/demoforge_C_v19_7_dropdown_base_skin.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/demoforge_v19_7_picker_no_c64_mint_B_C/demoforge_B_v19_7_OS_picker_no_c64_mint.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/demoforge_v19_7_picker_no_c64_mint_B_C/demoforge_C_v19_7_lite_picker_no_c64_mint.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/demoforge_versions_B_C/demoforge_B_true_retro_OS_simulation.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/demoforge_versions_B_C/demoforge_C_lite_demo_mode.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/retro-skins.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/retro-skins (1).html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/retro-skins (2).html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/_DemoForge_releases_8-9/demoforge_7.60_edu_0.6.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/_DemoForge_releases_8-9/demoforge_7.60_edu_0.8.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/_DemoForge_releases_8-9/demoforge_7.80.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/_DemoForge_releases_8-9/demoforge_8.00_stable.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/_DemoForge_releases_8-9/demoforge_8.20.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/_DemoForge_releases_8-9/demoforge_8.40.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/_DemoForge_releases_8-9/demoforge_8.60.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/_DemoForge_releases_8-9/demoforge_8.80_clean.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/_DemoForge_releases_8-9/demoforge_9.20.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/_DemoForge_releases_8-9/demoforge_edu_audio_timeline.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/_DemoForge_releases_8-9/demoforge_edu_base.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/_DemoForge_releases_8-9/demoforge_edu_v0.4.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/_DemoForge_releases_8-9/_DemoForge V6 — Editor-Emergent.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/_demoforge_all_1-5/demoforge_V1.0.0_Razor1911.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/_demoforge_all_1-5/demoforge_V5.72_Razor1911_final_presets.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/_demoforge_all_1-5/demoforge_V5.74_stable_fx_icons.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/_demoforge_all_1-5/demoforge_V5.76_CMOS_Cosmos_12_templates.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/_demoforge_all_1-5/demoforge_V5.78_i18n_chapter_json_profile.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/_demoforge_all_1-5/demoforge_V5.80_scroll_pro_chain_exports.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/_demoforge_all_1-5/demoforge_V5.82_BASE_DEMO_STABLE.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/_demoforge_all_1-5/demoforge_V5.84_BASE_PROLOCK_EXPORT_FIXED.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/_demoforge_all_1-5/demoforge_V5.86_DEBUG_MAX_LEVELS.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/_demoforge_all_1-5/demoforge_editor_layers_music_export_fixed.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/_demoforge_all_1-5/demoforge_editor_music_export.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/_demoforge_all_1-5/demoforge_editor_music_export_v2_limits.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/_demoforge_all_1-5/demoforge_full_layer_editor.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/_demoforge_all_1-5/demoforge_full_layer_editor_v2.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/_demoforge_all_1-5/demoforge_full_layer_editor_v3_dragdrop.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/_demoforge_all_1-5/demoforge_full_layer_editor_v4_multilang_assets.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/_demoforge_all_1-5/demoforge_full_layer_editor_v5_fixed.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/_demoforge_all_1-5/demoforge_full_layer_editor_v6_links_emoji.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/_demoforge_all_1-5/demoforge_full_layer_editor_v7_repaired_links.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/_demoforge_all_1-5/demoforge_purist_mode.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/_demoforge_all_1-5/demoforge_union_style_editor.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/_demoforge_all_1-5/demoforge_union_style_editor_music.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/_demoforge_all_1-5/demoforge_union_vgm_direct_no_overlay.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/V15-V20/_demoforge_all_1-5/demoforge_vgm_nd_ui_player.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/demoforge_export_1776355940035/._index.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/#MOTION/._demoforge_export_music (3).html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/#MOTION/._demoforge_fullscreen_animated.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/#MOTION/._demoforge_fullscreen_lite.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/#MOTION/._demoforge_lite_fullscreen.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/#MOTION/._demoforge_motion_compact.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/#MOTION/._demoforge_motion_compact (1).html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/#MOTION/._demoforge_motion_compact (2).html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/#MOTION/._demoforge_motion_compact (3).html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/#MOTION/._demoforge_motion_studio.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/#MOTION/._demoforge_motion_studio_pure.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/#MOTION/._demoforge_motion_studio_pure_animated_exports.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/#MOTION/._demoforge_motion_studio_pure_animated_exports_dnd_fixed.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/#MOTION/._demoforge_optimized_fullscreen.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/#MOTION/._demoforge_retro_demo_editor.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/#MOTION/._demoforge_snapshot.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/#MOTION/._!!! demoforge_motion_studio_v2_exports_config.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/#MOTION/._#FINAL_MOTION.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/._1-demoforge_motion_studio.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/._CNC Coding Is Not A Crime -Clean - Base.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/._DemoForge V6 — Editor-Emergent.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/._DemoForge_V6_Motion_Studio_from_uploaded.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/._Hello World.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/._Module 1.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/._NO-demoforge_unique_clean.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/._The Union Demo.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/._The Union Demo (1).html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/._demoforge-2030-V1.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/._demoforge-2030-V1 (1).html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/._demoforge-motion-studio-single-dance-steps.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/._demoforge_7.60_edu_0.6.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/._demoforge_7.60_edu_0.8.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/._demoforge_7.80.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/._demoforge_8.00_stable.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/._demoforge_8.20.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/._demoforge_8.40.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/._demoforge_8.60.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/._demoforge_V1.0.0_Razor1911.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/._demoforge_V5.74_stable_fx_icons.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/._demoforge_V5.76_CMOS_Cosmos_12_templates.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/._demoforge_V5.78_i18n_chapter_json_profile.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/._demoforge_V5.80_scroll_pro_chain_exports.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/._demoforge_V5.82_BASE_DEMO_STABLE.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/._demoforge_V5.84_BASE_PROLOCK_EXPORT_FIXED.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/._demoforge_V5.86_MAX_active.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/._demoforge_V5.86_Pro_Easter_Egg.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/._demoforge_V5.86_Pro_Easter_Egg_auto_serial.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/._demoforge_V5.86_Pro_Easter_Egg_levels.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/._demoforge_V5.87_MAX_active.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/._demoforge_V5.88_FIXED.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/._demoforge_V5.89_MAX_READY.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/._demoforge_V5.91_CALQUES_COMPACT_ZX_BROWSER.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/._demoforge_V5.92_LAYERS_UNDO_FONTS.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/._demoforge_V5.93_LAYERS_FIXED_FONT_LOADER.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/._demoforge_V5.94_REINTEGRATED.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/._demoforge_V5.95_MEDIA_IMPORT_FIXED.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/._demoforge_clean_direct.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/._demoforge_editor_layers_music_export_fixed.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/._demoforge_editor_music_export.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/._demoforge_edu_audio_timeline.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/._demoforge_edu_base.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/._demoforge_edu_v0.2.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/._demoforge_edu_v0.4.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/._demoforge_export_music.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/._demoforge_export_music (1).html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/._demoforge_full_layer_editor.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/._demoforge_full_layer_editor_v2.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/._demoforge_full_layer_editor_v4_multilang_assets.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/._demoforge_full_layer_editor_v5_fixed.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/._demoforge_full_layer_editor_v6_links_emoji.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/._demoforge_full_layer_editor_v7_repaired_links.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/._demoforge_full_layer_editor_v8_ui_presets.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/._demoforge_music_demo.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/._demoforge_music_demo (1).html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/._demoforge_phone_dancer.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/._demoforge_purist_mode.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/._demoforge_union_style_editor.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/._demoforge_union_style_editor_music.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/._demoforge_v6_demo.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/._demoforge_v6_demo (1).html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/._demoforge_vgm_nd_ui_player.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/._demomaker (1).html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/._demomaker (2).html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/._demomaker-V1.1.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/._demomaker-V2.0.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/._demomaker-V2.0 (1).html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/._demomaker_export_1776623126861.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/._hello-world.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/._index.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/._index-demoforge-V1.1.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/._state_of_the_art_key_visuals.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/._union_style_demo.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/._union_style_demo (1).html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/._!demoforge_full_layer_editor_v3_dragdrop.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/._!demoforge_mvp.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/demoforge_v19_7_SPIRIT_retro_dropdown_B_C/demoforge_B_v19_7_spirit_retro_dropdown.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/demoforge_v19_7_SPIRIT_retro_dropdown_B_C/demoforge_C_v19_7_spirit_retro_dropdown.html

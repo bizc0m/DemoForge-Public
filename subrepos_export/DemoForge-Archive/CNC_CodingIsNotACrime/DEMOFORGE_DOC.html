@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DemoForge - Doc fonctionnelle HTML</title>
+  <style>
+    :root {
+      --bg: #08111d;
+      --panel: rgba(10, 18, 34, 0.94);
+      --panel-2: rgba(18, 29, 53, 0.98);
+      --line: rgba(137, 186, 255, 0.18);
+      --text: #eef5ff;
+      --muted: #9db1d8;
+      --cyan: #66e4ff;
+      --gold: #ffd66e;
+      --ok: #8affb7;
+      --danger: #ff8d8d;
+      --radius: 20px;
+      --shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Trebuchet MS", Verdana, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 15% 10%, rgba(102, 228, 255, 0.18), transparent 24%),
+        radial-gradient(circle at 85% 5%, rgba(255, 214, 110, 0.12), transparent 18%),
+        linear-gradient(180deg, #0c1728, var(--bg));
+    }
+
+    main {
+      width: min(1280px, calc(100% - 24px));
+      margin: 12px auto 40px;
+      display: grid;
+      gap: 16px;
+    }
+
+    .panel {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 20px;
+    }
+
+    .hero {
+      display: grid;
+      gap: 10px;
+      background:
+        linear-gradient(135deg, rgba(102, 228, 255, 0.12), rgba(255, 214, 110, 0.12)),
+        var(--panel);
+    }
+
+    h1, h2, h3, p {
+      margin: 0;
+    }
+
+    h1 {
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      line-height: 1;
+    }
+
+    h2 {
+      font-size: 1.2rem;
+      margin-bottom: 12px;
+    }
+
+    h3 {
+      font-size: 1rem;
+      margin-bottom: 8px;
+    }
+
+    .muted {
+      color: var(--muted);
+    }
+
+    .grid {
+      display: grid;
+      gap: 16px;
+    }
+
+    .grid-2 {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .grid-3 {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .pill-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .pill {
+      padding: 7px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: rgba(255, 255, 255, 0.05);
+      font-size: 0.92rem;
+    }
+
+    .level-bar {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 8px;
+    }
+
+    .level-card,
+    .effect-card,
+    .format-card,
+    .export-card {
+      background: var(--panel-2);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 16px;
+      padding: 14px;
+      display: grid;
+      gap: 8px;
+    }
+
+    .effect-list {
+      display: grid;
+      gap: 12px;
+    }
+
+    .effect-card ul,
+    .panel ul {
+      margin: 0;
+      padding-left: 18px;
+    }
+
+    .mock-controls {
+      display: grid;
+      gap: 10px;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .control {
+      display: grid;
+      gap: 6px;
+      padding: 12px;
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    label {
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+
+    select,
+    input,
+    textarea {
+      width: 100%;
+      padding: 10px 12px;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: rgba(6, 10, 19, 0.95);
+      color: var(--text);
+      font: inherit;
+    }
+
+    textarea {
+      min-height: 110px;
+      resize: vertical;
+    }
+
+    code,
+    pre {
+      font-family: "IBM Plex Mono", "Courier New", monospace;
+    }
+
+    pre {
+      margin: 0;
+      padding: 14px;
+      overflow: auto;
+      border-radius: 16px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(2, 6, 12, 0.95);
+      color: #dff7ff;
+    }
+
+    a {
+      color: var(--cyan);
+    }
+
+    .ok {
+      color: var(--ok);
+    }
+
+    .danger {
+      color: var(--danger);
+    }
+
+    @media (max-width: 920px) {
+      .grid-2,
+      .grid-3,
+      .mock-controls,
+      .level-bar {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <section class="panel hero">
+      <h1>DemoForge</h1>
+      <p>Document HTML simple pour cadrer l'éditeur de démos demoscene : effets, presets, niveaux, exports, musique, fontes et formats d'intégration.</p>
+      <div class="pill-row">
+        <span class="pill">Canvas 2D + WebGL2</span>
+        <span class="pill">HTML pur</span>
+        <span class="pill">Effets par section</span>
+        <span class="pill">Exports multiples</span>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>Source de référence</h2>
+      <p class="muted">Base documentaire principale pour la liste des effets et l'inspiration historique :</p>
+      <p><a href="https://democyclopedie.wordpress.com/2015/04/01/liste-des-effets/" target="_blank" rel="noreferrer">Liste des effets et des démos référencés – L'encyclopédie des démos Atari ST</a></p>
+    </section>
+
+    <section class="panel">
+      <h2>Niveaux de complexité</h2>
+      <p class="muted">Chaque effet doit adapter son panneau selon un niveau numérique et verbal.</p>
+      <div class="level-bar">
+        <div class="level-card">
+          <strong>0 — Noob</strong>
+          <span class="muted">Très simple, presets, texte et bouton export.</span>
+        </div>
+        <div class="level-card">
+          <strong>3 — Sceener</strong>
+          <span class="muted">Réglages utiles, paramètres visibles, rythme de scène.</span>
+        </div>
+        <div class="level-card">
+          <strong>7 — Leet</strong>
+          <span class="muted">Contrôle fin, valeurs numériques, comportement avancé.</span>
+        </div>
+        <div class="level-card">
+          <strong>10 — R0x0r</strong>
+          <span class="muted">Paramètres internes, raw, contraintes hardware et export total.</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>Interface d'idée : texte, fontes et raster</h2>
+      <p class="muted">Quand c'est pertinent, chaque effet peut exposer du texte, un sélecteur de fonte, et des couleurs type raster / palette.</p>
+      <div class="mock-controls">
+        <div class="control">
+          <label for="mockText">Texte modifiable</label>
+          <input id="mockText" type="text" value="HELLO DEMOSCENE">
+        </div>
+        <div class="control">
+          <label for="mockFont">Sélecteur de fonte</label>
+          <select id="mockFont">
+            <option>Press Start 2P</option>
+            <option>Silkscreen</option>
+            <option>VT323</option>
+            <option>IBM VGA</option>
+            <option>Amiga Topaz</option>
+          </select>
+        </div>
+        <div class="control">
+          <label for="mockRaster1">Couleur raster 1</label>
+          <input id="mockRaster1" type="color" value="#00d8ff">
+        </div>
+        <div class="control">
+          <label for="mockRaster2">Couleur raster 2</label>
+          <input id="mockRaster2" type="color" value="#ffd05f">
+        </div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>Effets : une section dédiée par effet</h2>
+      <p class="muted">Chaque effet doit disposer de sa propre section UI, de son bloc d'attribution, de ses paramètres, et de son niveau recommandé.</p>
+      <div class="effect-list">
+        <article class="effect-card">
+          <h3>Scroller / Texte</h3>
+          <p class="muted">Texte éditable, fonte choisissable, vitesse, taille, palette, modes noob → r0x0r.</p>
+          <ul>
+            <li>texte changeable</li>
+            <li>sélecteur de fontes</li>
+            <li>couleurs / raster / gradient</li>
+            <li>export versionné</li>
+          </ul>
+        </article>
+        <article class="effect-card">
+          <h3>Raster Bars / Copper Bars</h3>
+          <p class="muted">Palette changeable, hauteur des barres, vitesse, synchro musique, attribution historique.</p>
+        </article>
+        <article class="effect-card">
+          <h3>Plasma</h3>
+          <p class="muted">Palette, résolution, vitesse, formule simple ou avancée selon le niveau.</p>
+        </article>
+        <article class="effect-card">
+          <h3>Starfield</h3>
+          <p class="muted">Densité, vitesse, profondeur, couleurs, mode simple ou expert.</p>
+        </article>
+        <article class="effect-card">
+          <h3>Fire / ASCII / NFO</h3>
+          <p class="muted">ASCII et textmode intégrables quand le style le demande, avec fontes dédiées.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="panel grid grid-2">
+      <div class="format-card">
+        <h2>Preset intégrable</h2>
+        <p class="muted">On doit pouvoir intégrer un preset externe depuis un repo ou un fichier standardisé.</p>
+        <ul>
+          <li>repo Git donné par l'utilisateur</li>
+          <li>preset JSON versionné</li>
+          <li>format documenté pour rendre un preset intégrable</li>
+          <li>attribution incluse</li>
+        </ul>
+      </div>
+      <div class="format-card">
+        <h2>Format suggéré</h2>
+        <pre>{
+  "preset_id": "cracktro_amiga_1991",
+  "title": "Cracktro Amiga 1991",
+  "level": 3,
+  "effects": [
+    { "id": "copper_bars" },
+    { "id": "dycp_scroller" }
+  ],
+  "fonts": ["amiga_topaz_1200"],
+  "music": {
+    "type": "external",
+    "url": "https://..."
+  }
+}</pre>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>Exports prévus</h2>
+      <div class="grid grid-3">
+        <article class="export-card">
+          <strong>Export HTML Pure</strong>
+          <p class="muted">Sortie HTML autonome, lisible et modifiable.</p>
+        </article>
+        <article class="export-card">
+          <strong>Export HTML Packer</strong>
+          <p class="muted">Version compressée / packée pour diffusion ou challenge taille.</p>
+        </article>
+        <article class="export-card">
+          <strong>README export source</strong>
+          <p class="muted">Documentation exportée avec sources, crédits et instructions.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>Modes d'export de production</h2>
+      <ul>
+        <li><strong>Export Demo</strong> : version simple, orientée lecture / diffusion</li>
+        <li><strong>Export Demo Pedago</strong> : version avec explications et attribution</li>
+        <li><strong>Export Demo Pedago + Source</strong> : version éducative et modifiable en temps réel</li>
+      </ul>
+      <p class="muted">Tous les exports doivent rester exportables ensuite et idéalement réimportables.</p>
+    </section>
+
+    <section class="panel grid grid-2">
+      <div class="format-card">
+        <h2>Musique</h2>
+        <ul>
+          <li>taper une URL de musique extérieure</li>
+          <li>intégrer la musique directement dans le fichier exporté</li>
+          <li>garder une source lisible</li>
+          <li>supporter un mode simple et un mode scène / tracker</li>
+        </ul>
+      </div>
+      <div class="format-card">
+        <h2>Types de musique</h2>
+        <pre>{
+  "music": {
+    "mode": "external_or_embedded",
+    "url": "https://example.com/demo.mod",
+    "embed": true,
+    "source_label": "ModArchive",
+    "source_url": "https://modarchive.org/"
+  }
+}</pre>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>Résumé produit</h2>
+      <ul>
+        <li>Chaque effet a une section dédiée</li>
+        <li>Le niveau numérique pilote la complexité de l'interface</li>
+        <li>Le texte, les fontes et les couleurs doivent être changeables quand le cas s'y prête</li>
+        <li>Les presets doivent être intégrables via repo ou format documenté</li>
+        <li>Les exports doivent couvrir simple, pédagogique et source modifiable</li>
+        <li>La musique peut être externe ou intégrée</li>
+      </ul>
+      <p class="ok">Document prêt à ouvrir dans un navigateur et à utiliser comme base de travail produit.</p>
+      <p class="danger">Ce document est une doc fonctionnelle simple, pas encore l'éditeur lui-même.</p>
+    </section>
+  </main>
+</body>
+</html>

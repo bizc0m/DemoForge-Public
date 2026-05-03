@@ -1,0 +1,1365 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DemoForge Studio V2</title>
+  <style>
+    :root {
+      --bg0: #07111e;
+      --bg1: #0d1830;
+      --panel: rgba(8, 15, 28, 0.96);
+      --panel2: rgba(15, 26, 47, 0.98);
+      --line: rgba(130, 200, 255, 0.16);
+      --text: #eef7ff;
+      --muted: #95add8;
+      --accent: #69e0ff;
+      --accent2: #ffd76b;
+      --good: #8bffbe;
+      --warn: #ffc26d;
+      --danger: #ff9494;
+      --shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
+      --radius: 18px;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      color: var(--text);
+      font-family: "Trebuchet MS", Verdana, sans-serif;
+      background:
+        radial-gradient(circle at 10% 8%, rgba(105,224,255,0.18), transparent 22%),
+        radial-gradient(circle at 88% 6%, rgba(255,215,107,0.14), transparent 16%),
+        linear-gradient(180deg, var(--bg1), var(--bg0));
+    }
+
+    .app {
+      width: min(1560px, calc(100% - 20px));
+      margin: 10px auto 24px;
+      display: grid;
+      grid-template-columns: 340px minmax(0, 1fr) 360px;
+      gap: 14px;
+      align-items: start;
+    }
+
+    .panel,
+    .center {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 16px;
+      display: grid;
+      gap: 14px;
+    }
+
+    .hero {
+      padding: 14px;
+      border-radius: 16px;
+      background:
+        linear-gradient(135deg, rgba(105,224,255,0.12), rgba(255,215,107,0.12)),
+        rgba(255,255,255,0.02);
+      display: grid;
+      gap: 8px;
+    }
+
+    h1, h2, h3, p { margin: 0; }
+    h1 { font-size: clamp(1.8rem, 3vw, 2.4rem); line-height: 1; }
+    h2 { font-size: 0.95rem; text-transform: uppercase; letter-spacing: 0.08em; }
+    h3 { font-size: 1rem; }
+    .muted { color: var(--muted); }
+    .tiny { font-size: 0.84rem; color: var(--muted); }
+    .section { display: grid; gap: 10px; }
+    .grid2, .grid3 { display: grid; gap: 10px; }
+    .grid2 { grid-template-columns: 1fr 1fr; }
+    .grid3 { grid-template-columns: repeat(3, 1fr); }
+
+    button, input, select, textarea {
+      font: inherit;
+      color: var(--text);
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(6, 11, 22, 0.98);
+    }
+
+    button {
+      min-height: 40px;
+      padding: 10px 12px;
+      cursor: pointer;
+      font-weight: 700;
+      background: linear-gradient(180deg, rgba(105,224,255,0.2), rgba(48,84,166,0.16));
+      transition: transform 120ms ease, border-color 120ms ease;
+    }
+
+    button:hover,
+    button:focus-visible {
+      transform: translateY(-1px);
+      border-color: rgba(255,255,255,0.28);
+    }
+
+    button.primary {
+      background: linear-gradient(180deg, rgba(139,255,190,0.22), rgba(32,98,69,0.18));
+    }
+
+    button.warning {
+      background: linear-gradient(180deg, rgba(255,194,109,0.22), rgba(129,82,25,0.18));
+    }
+
+    button.danger {
+      background: linear-gradient(180deg, rgba(255,148,148,0.22), rgba(129,39,39,0.18));
+    }
+
+    button.effect-add.active,
+    .layer-card.active {
+      border-color: rgba(105,224,255,0.48);
+      box-shadow: 0 0 0 1px rgba(105,224,255,0.18) inset;
+    }
+
+    label {
+      display: grid;
+      gap: 6px;
+      font-weight: 700;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 10px 12px;
+    }
+
+    textarea { min-height: 100px; resize: vertical; }
+    input[type="range"] { padding: 0; accent-color: var(--accent); }
+
+    .pill-row {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .pill {
+      border-radius: 999px;
+      padding: 6px 10px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.08);
+      font-size: 0.86rem;
+    }
+
+    .toolbar,
+    .row-between {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .canvas-shell {
+      position: relative;
+      overflow: hidden;
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,0.08);
+      background: #000;
+      aspect-ratio: 16 / 10;
+      min-height: 400px;
+    }
+
+    canvas {
+      display: block;
+      width: 100%;
+      height: 100%;
+      image-rendering: pixelated;
+    }
+
+    .layer-list,
+    .timeline-list,
+    .output-stack {
+      display: grid;
+      gap: 10px;
+    }
+
+    .layer-card,
+    .timeline-row,
+    .output-box {
+      background: var(--panel2);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 16px;
+      padding: 12px;
+      display: grid;
+      gap: 8px;
+    }
+
+    .timeline-track {
+      position: relative;
+      height: 56px;
+      border-radius: 14px;
+      background:
+        linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px) 0 0 / 10% 100%,
+        rgba(3, 7, 14, 0.95);
+      overflow: hidden;
+    }
+
+    .timeline-block {
+      position: absolute;
+      top: 8px;
+      bottom: 8px;
+      border-radius: 10px;
+      padding: 8px;
+      border: 1px solid rgba(255,255,255,0.16);
+      background: linear-gradient(180deg, rgba(105,224,255,0.22), rgba(79,107,206,0.16));
+      font-size: 0.82rem;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+
+    .timeline-block.selected {
+      border-color: rgba(255,215,107,0.7);
+      box-shadow: 0 0 0 1px rgba(255,215,107,0.22) inset;
+    }
+
+    .timeline-head {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: var(--accent2);
+      box-shadow: 0 0 16px rgba(255,215,107,0.65);
+      pointer-events: none;
+    }
+
+    .inspector-block.hidden,
+    .hidden {
+      display: none !important;
+    }
+
+    .output-box {
+      min-height: 180px;
+      white-space: pre-wrap;
+      overflow: auto;
+      font-family: "Courier New", monospace;
+      font-size: 0.85rem;
+      line-height: 1.35;
+      background: rgba(2, 6, 12, 0.98);
+    }
+
+    .status-good { color: var(--good); }
+    .status-warn { color: var(--warn); }
+    .status-danger { color: var(--danger); }
+
+    @media (max-width: 1240px) {
+      .app { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 760px) {
+      .grid2, .grid3 { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <main class="app">
+    <aside class="panel">
+      <div class="hero">
+        <h1>DemoForge Studio V2</h1>
+        <p>Reboot utile : vrai scrolling, vraie timeline, vrais calques, transparence, niveaux actifs et export HTML direct.</p>
+      </div>
+
+      <section class="section">
+        <h2>Niveaux</h2>
+        <label for="levelSelect">Complexité
+          <select id="levelSelect">
+            <option value="0">0 — Noob</option>
+            <option value="3">3 — Sceener</option>
+            <option value="7">7 — Leet</option>
+            <option value="10">10 — R0x0r</option>
+          </select>
+        </label>
+        <div class="pill-row">
+          <span class="pill" id="levelPill">Mode: Noob</span>
+          <span class="pill" id="levelDescPill">UI simple</span>
+        </div>
+        <p class="tiny" id="levelDescription">Affiche les paramètres les plus simples pour construire vite.</p>
+      </section>
+
+      <section class="section">
+        <h2>Ajouter un calque</h2>
+        <div class="grid2">
+          <button type="button" class="effect-add" data-type="scroller">Scroller</button>
+          <button type="button" class="effect-add" data-type="rasters">Raster</button>
+          <button type="button" class="effect-add" data-type="plasma">Plasma</button>
+          <button type="button" class="effect-add" data-type="starfield">Starfield</button>
+          <button type="button" class="effect-add" data-type="ascii">ASCII / NFO</button>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="row-between">
+          <h2>Calques</h2>
+          <button type="button" id="duplicateLayerButton">Dupliquer</button>
+        </div>
+        <div class="layer-list" id="layerList"></div>
+      </section>
+
+      <section class="section">
+        <h2>Projet / preset</h2>
+        <label for="projectTitle">Titre
+          <input id="projectTitle" type="text" value="DemoForge Live Build">
+        </label>
+        <label for="presetRepo">Repo intégrable
+          <input id="presetRepo" type="text" value="https://codeberg.org/893/CNC-CODEX">
+        </label>
+        <label for="presetFormat">Format preset
+          <select id="presetFormat">
+            <option value="json">Preset JSON</option>
+            <option value="repo-json">Repo + manifest JSON</option>
+            <option value="zip-pack">Zip pack</option>
+          </select>
+        </label>
+      </section>
+
+      <section class="section">
+        <h2>Export</h2>
+        <label for="musicMode">Musique
+          <select id="musicMode">
+            <option value="external">URL extérieure</option>
+            <option value="embedded">Intégrée au fichier</option>
+          </select>
+        </label>
+        <label for="musicUrl">Lien / source
+          <input id="musicUrl" type="text" value="https://example.com/demo.mod">
+        </label>
+        <label for="exportMode">Type
+          <select id="exportMode">
+            <option value="demo">Export Demo</option>
+            <option value="pedago">Export Demo Pedago</option>
+            <option value="pedago_source">Export Demo Pedago + Source</option>
+          </select>
+        </label>
+        <label for="exportFormat">Format
+          <select id="exportFormat">
+            <option value="html_pure">HTML Pure</option>
+            <option value="html_packer">HTML Packer</option>
+          </select>
+        </label>
+        <div class="grid2">
+          <button type="button" class="primary" id="downloadHtmlButton">Exporter HTML</button>
+          <button type="button" id="generateReadmeButton">Générer README</button>
+          <button type="button" id="generateSourceButton">Générer source</button>
+          <button type="button" class="warning" id="copyOutputButton">Copier sortie</button>
+        </div>
+      </section>
+    </aside>
+
+    <section class="center">
+      <div class="toolbar">
+        <div>
+          <h2>Preview temps réel</h2>
+          <p class="muted">Le calcul mélange les calques actifs selon la timeline et l’opacité.</p>
+        </div>
+        <div class="pill-row">
+          <span class="pill" id="activeLayerPill">Calque: aucun</span>
+          <span class="pill" id="timePill">Temps: 0.0s</span>
+          <span class="pill" id="transportPill">Pause</span>
+        </div>
+      </div>
+
+      <div class="grid3">
+        <button type="button" class="primary" id="playPauseButton">Play</button>
+        <button type="button" id="stopButton">Stop</button>
+        <button type="button" id="rewindButton">Revenir début</button>
+      </div>
+
+      <div class="canvas-shell">
+        <canvas id="previewCanvas" width="960" height="600"></canvas>
+      </div>
+
+      <section class="section">
+        <div class="row-between">
+          <h2>Timeline</h2>
+          <span class="tiny">Clique sur une barre pour sélectionner un calque. Clique dans la piste pour déplacer la tête.</span>
+        </div>
+        <label for="timelineRange">Tête de lecture
+          <input id="timelineRange" type="range" min="0" max="20" step="0.01" value="0">
+        </label>
+        <div class="timeline-list" id="timelineList"></div>
+      </section>
+
+      <section class="output-stack">
+        <div class="row-between">
+          <h2>Sortie</h2>
+          <span class="tiny" id="outputTypeLabel">README export source</span>
+        </div>
+        <div class="output-box" id="outputBox">Le studio est prêt. Sélectionne un calque, bouge la timeline, puis exporte.</div>
+      </section>
+    </section>
+
+    <aside class="panel">
+      <section class="section">
+        <div class="row-between">
+          <h2>Inspector</h2>
+          <button type="button" class="danger" id="deleteLayerButton">Supprimer</button>
+        </div>
+        <div id="emptyInspector" class="tiny">Ajoute ou sélectionne un calque pour éditer ses paramètres.</div>
+        <div id="inspector" class="hidden">
+          <label for="layerName">Nom du calque
+            <input id="layerName" type="text">
+          </label>
+          <div class="grid2">
+            <label for="layerStart">Début (s)
+              <input id="layerStart" type="number" min="0" max="20" step="0.1">
+            </label>
+            <label for="layerDuration">Durée (s)
+              <input id="layerDuration" type="number" min="0.5" max="20" step="0.1">
+            </label>
+          </div>
+          <div class="grid2">
+            <label for="layerOpacity">Opacité
+              <input id="layerOpacity" type="range" min="0" max="1" step="0.01">
+            </label>
+            <label for="layerBlend">Blend
+              <select id="layerBlend">
+                <option value="source-over">Normal</option>
+                <option value="lighter">Add</option>
+                <option value="screen">Screen</option>
+                <option value="multiply">Multiply</option>
+              </select>
+            </label>
+          </div>
+          <label for="layerEnabled">État
+            <select id="layerEnabled">
+              <option value="true">Actif</option>
+              <option value="false">Muet</option>
+            </select>
+          </label>
+
+          <div class="inspector-block" data-type="scroller">
+            <label for="scrollText">Texte du scroller
+              <input id="scrollText" type="text">
+            </label>
+            <label for="scrollFont">Fonte
+              <select id="scrollFont">
+                <option value="'Trebuchet MS', Verdana, sans-serif">Trebuchet UI</option>
+                <option value="'Courier New', monospace">Courier New</option>
+                <option value="'Verdana', sans-serif">Verdana</option>
+                <option value="monospace">Monospace</option>
+              </select>
+            </label>
+            <div class="grid2">
+              <label for="scrollColorA">Couleur 1
+                <input id="scrollColorA" type="color">
+              </label>
+              <label for="scrollColorB">Couleur 2
+                <input id="scrollColorB" type="color">
+              </label>
+            </div>
+            <label for="scrollBaseY" data-level="3">Position Y
+              <input id="scrollBaseY" type="range" min="60" max="540" step="1">
+            </label>
+            <label for="scrollSpeed" data-level="0">Vitesse scroll
+              <input id="scrollSpeed" type="range" min="20" max="420" step="1">
+            </label>
+            <label for="scrollSize" data-level="3">Taille
+              <input id="scrollSize" type="range" min="24" max="140" step="1">
+            </label>
+            <label for="scrollWaveAmp" data-level="7">Amplitude sinus
+              <input id="scrollWaveAmp" type="range" min="0" max="120" step="1">
+            </label>
+            <label for="scrollWaveFreq" data-level="10">Fréquence sinus
+              <input id="scrollWaveFreq" type="range" min="0" max="0.08" step="0.001">
+            </label>
+          </div>
+
+          <div class="inspector-block hidden" data-type="rasters">
+            <div class="grid2">
+              <label for="rasterColorA">Couleur A
+                <input id="rasterColorA" type="color">
+              </label>
+              <label for="rasterColorB">Couleur B
+                <input id="rasterColorB" type="color">
+              </label>
+            </div>
+            <label for="rasterBars" data-level="0">Nombre de barres
+              <input id="rasterBars" type="range" min="2" max="24" step="1">
+            </label>
+            <label for="rasterSpeed" data-level="3">Vitesse
+              <input id="rasterSpeed" type="range" min="0" max="3" step="0.01">
+            </label>
+            <label for="rasterAmp" data-level="7">Amplitude
+              <input id="rasterAmp" type="range" min="0" max="220" step="1">
+            </label>
+          </div>
+
+          <div class="inspector-block hidden" data-type="plasma">
+            <div class="grid2">
+              <label for="plasmaColorA">Palette A
+                <input id="plasmaColorA" type="color">
+              </label>
+              <label for="plasmaColorB">Palette B
+                <input id="plasmaColorB" type="color">
+              </label>
+            </div>
+            <label for="plasmaScale" data-level="0">Échelle
+              <input id="plasmaScale" type="range" min="4" max="40" step="1">
+            </label>
+            <label for="plasmaSpeed" data-level="3">Vitesse
+              <input id="plasmaSpeed" type="range" min="0.1" max="4" step="0.01">
+            </label>
+          </div>
+
+          <div class="inspector-block hidden" data-type="starfield">
+            <label for="starCount" data-level="0">Nombre d'étoiles
+              <input id="starCount" type="range" min="20" max="400" step="1">
+            </label>
+            <label for="starSpeed" data-level="3">Vitesse
+              <input id="starSpeed" type="range" min="0.5" max="12" step="0.1">
+            </label>
+            <label for="starWarp" data-level="7">Warp
+              <input id="starWarp" type="range" min="0" max="1" step="0.01">
+            </label>
+          </div>
+
+          <div class="inspector-block hidden" data-type="ascii">
+            <label for="asciiText">Contenu ASCII / NFO
+              <textarea id="asciiText"></textarea>
+            </label>
+            <div class="grid2">
+              <label for="asciiFg">Texte
+                <input id="asciiFg" type="color">
+              </label>
+              <label for="asciiBg">Fond
+                <input id="asciiBg" type="color">
+              </label>
+            </div>
+            <label for="asciiSize" data-level="3">Taille
+              <input id="asciiSize" type="range" min="10" max="28" step="1">
+            </label>
+          </div>
+
+          <div class="section" data-level="10">
+            <h3>ROXOR / Données brutes</h3>
+            <label for="rawJson">JSON du calque
+              <textarea id="rawJson"></textarea>
+            </label>
+            <button type="button" id="applyRawButton">Appliquer JSON</button>
+          </div>
+        </div>
+      </section>
+    </aside>
+  </main>
+
+  <script>
+    const canvas = document.getElementById("previewCanvas");
+    const ctx = canvas.getContext("2d");
+    ctx.imageSmoothingEnabled = false;
+
+    const levelSelect = document.getElementById("levelSelect");
+    const levelPill = document.getElementById("levelPill");
+    const levelDescPill = document.getElementById("levelDescPill");
+    const levelDescription = document.getElementById("levelDescription");
+    const layerList = document.getElementById("layerList");
+    const timelineList = document.getElementById("timelineList");
+    const timelineRange = document.getElementById("timelineRange");
+    const activeLayerPill = document.getElementById("activeLayerPill");
+    const timePill = document.getElementById("timePill");
+    const transportPill = document.getElementById("transportPill");
+    const outputBox = document.getElementById("outputBox");
+    const outputTypeLabel = document.getElementById("outputTypeLabel");
+    const emptyInspector = document.getElementById("emptyInspector");
+    const inspector = document.getElementById("inspector");
+
+    const projectTitle = document.getElementById("projectTitle");
+    const presetRepo = document.getElementById("presetRepo");
+    const presetFormat = document.getElementById("presetFormat");
+    const musicMode = document.getElementById("musicMode");
+    const musicUrl = document.getElementById("musicUrl");
+    const exportMode = document.getElementById("exportMode");
+    const exportFormat = document.getElementById("exportFormat");
+
+    const layerName = document.getElementById("layerName");
+    const layerStart = document.getElementById("layerStart");
+    const layerDuration = document.getElementById("layerDuration");
+    const layerOpacity = document.getElementById("layerOpacity");
+    const layerBlend = document.getElementById("layerBlend");
+    const layerEnabled = document.getElementById("layerEnabled");
+
+    const scrollText = document.getElementById("scrollText");
+    const scrollFont = document.getElementById("scrollFont");
+    const scrollColorA = document.getElementById("scrollColorA");
+    const scrollColorB = document.getElementById("scrollColorB");
+    const scrollBaseY = document.getElementById("scrollBaseY");
+    const scrollSpeed = document.getElementById("scrollSpeed");
+    const scrollSize = document.getElementById("scrollSize");
+    const scrollWaveAmp = document.getElementById("scrollWaveAmp");
+    const scrollWaveFreq = document.getElementById("scrollWaveFreq");
+
+    const rasterColorA = document.getElementById("rasterColorA");
+    const rasterColorB = document.getElementById("rasterColorB");
+    const rasterBars = document.getElementById("rasterBars");
+    const rasterSpeed = document.getElementById("rasterSpeed");
+    const rasterAmp = document.getElementById("rasterAmp");
+
+    const plasmaColorA = document.getElementById("plasmaColorA");
+    const plasmaColorB = document.getElementById("plasmaColorB");
+    const plasmaScale = document.getElementById("plasmaScale");
+    const plasmaSpeed = document.getElementById("plasmaSpeed");
+
+    const starCount = document.getElementById("starCount");
+    const starSpeed = document.getElementById("starSpeed");
+    const starWarp = document.getElementById("starWarp");
+
+    const asciiText = document.getElementById("asciiText");
+    const asciiFg = document.getElementById("asciiFg");
+    const asciiBg = document.getElementById("asciiBg");
+    const asciiSize = document.getElementById("asciiSize");
+
+    const rawJson = document.getElementById("rawJson");
+
+    const LEVELS = {
+      0: { label: "Noob", desc: "UI simple", help: "Affiche les paramètres de base pour construire vite." },
+      3: { label: "Sceener", desc: "Réglages clés", help: "Ajoute position, taille, vitesse et réglages utiles." },
+      7: { label: "Leet", desc: "Réglages avancés", help: "Expose les paramètres de mélange et de mouvement fins." },
+      10: { label: "R0x0r", desc: "Mode brut", help: "Ajoute le JSON direct et les paramètres les plus techniques." }
+    };
+
+    const EFFECT_COLORS = {
+      scroller: ["#00d8ff", "#ffd05f"],
+      rasters: ["#00ffff", "#ffcc44"],
+      plasma: ["#9158ff", "#31d7f7"],
+      starfield: ["#ffffff", "#89d2ff"],
+      ascii: ["#a8b0bf", "#000000"]
+    };
+
+    function makeId() {
+      return "fx-" + Math.random().toString(36).slice(2, 9);
+    }
+
+    function clamp(value, min, max) {
+      return Math.max(min, Math.min(max, value));
+    }
+
+    function cloneLayer(layer) {
+      return JSON.parse(JSON.stringify(layer));
+    }
+
+    function createLayer(type) {
+      const base = {
+        id: makeId(),
+        type,
+        name: type.toUpperCase(),
+        start: 0,
+        duration: 8,
+        opacity: 1,
+        blend: "source-over",
+        enabled: true,
+        params: {}
+      };
+
+      if (type === "scroller") {
+        base.name = "Scroller";
+        base.params = {
+          text: "HELLO DEMOSCENE // TRUE SCROLL",
+          font: "'Trebuchet MS', Verdana, sans-serif",
+          colorA: "#00d8ff",
+          colorB: "#ffd05f",
+          baseY: 320,
+          speed: 160,
+          size: 74,
+          waveAmp: 18,
+          waveFreq: 0.02
+        };
+      } else if (type === "rasters") {
+        base.name = "Raster Bars";
+        base.params = {
+          colorA: "#00ffff",
+          colorB: "#ffcc44",
+          bars: 8,
+          speed: 0.8,
+          amplitude: 90
+        };
+      } else if (type === "plasma") {
+        base.name = "Plasma";
+        base.params = {
+          colorA: "#9158ff",
+          colorB: "#31d7f7",
+          scale: 14,
+          speed: 1.1
+        };
+      } else if (type === "starfield") {
+        base.name = "Starfield";
+        base.params = {
+          count: 150,
+          speed: 4,
+          warp: 0.15,
+          stars: generateStars(150)
+        };
+      } else if (type === "ascii") {
+        base.name = "ASCII NFO";
+        base.params = {
+          text: "╔════════════════════╗\n║  DEMOFORGE V2     ║\n║  LIVE TIMELINE    ║\n╚════════════════════╝",
+          fg: "#a8b0bf",
+          bg: "#000000",
+          size: 18
+        };
+      }
+
+      return base;
+    }
+
+    function generateStars(count) {
+      const stars = [];
+      for (let i = 0; i < count; i += 1) {
+        stars.push({
+          x: (Math.random() - 0.5) * 2,
+          y: (Math.random() - 0.5) * 2,
+          z: Math.random()
+        });
+      }
+      return stars;
+    }
+
+    const state = {
+      level: 0,
+      duration: 20,
+      currentTime: 0,
+      playing: false,
+      selectedLayerId: null,
+      dragTimeline: false,
+      layers: [
+        createLayer("rasters"),
+        createLayer("starfield"),
+        createLayer("scroller")
+      ]
+    };
+
+    state.layers[0].start = 0;
+    state.layers[0].duration = 20;
+    state.layers[0].opacity = 0.5;
+    state.layers[1].start = 0;
+    state.layers[1].duration = 20;
+    state.layers[1].opacity = 0.85;
+    state.layers[2].start = 1;
+    state.layers[2].duration = 16;
+    state.selectedLayerId = state.layers[2].id;
+
+    function selectedLayer() {
+      return state.layers.find((layer) => layer.id === state.selectedLayerId) || null;
+    }
+
+    function currentLevel() {
+      return Number(levelSelect.value);
+    }
+
+    function activeLayersAt(time) {
+      return state.layers.filter((layer) => layer.enabled && time >= layer.start && time <= layer.start + layer.duration);
+    }
+
+    function colorMix(a, b, t) {
+      const pa = parseInt(a.slice(1), 16);
+      const pb = parseInt(b.slice(1), 16);
+      const ar = (pa >> 16) & 255;
+      const ag = (pa >> 8) & 255;
+      const ab = pa & 255;
+      const br = (pb >> 16) & 255;
+      const bg = (pb >> 8) & 255;
+      const bb = pb & 255;
+      const rr = Math.round(ar + (br - ar) * t);
+      const rg = Math.round(ag + (bg - ag) * t);
+      const rb = Math.round(ab + (bb - ab) * t);
+      return "rgb(" + rr + "," + rg + "," + rb + ")";
+    }
+
+    function renderBackground() {
+      const grad = ctx.createLinearGradient(0, 0, 0, canvas.height);
+      grad.addColorStop(0, "#040914");
+      grad.addColorStop(1, "#000000");
+      ctx.fillStyle = grad;
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = "rgba(255,255,255,0.03)";
+      for (let i = 0; i < canvas.height; i += 4) {
+        ctx.fillRect(0, i, canvas.width, 1);
+      }
+    }
+
+    function renderScroller(layer, localTime) {
+      const p = layer.params;
+      const text = p.text || "";
+      const fontSize = Number(p.size);
+      const offset = localTime * Number(p.speed);
+      ctx.font = "700 " + Math.floor(fontSize) + "px " + p.font;
+      ctx.textBaseline = "middle";
+      const width = ctx.measureText(text).width + 80;
+      const x = canvas.width - (offset % Math.max(width, 1));
+      const y = Number(p.baseY);
+      const waveAmp = Number(p.waveAmp);
+      const waveFreq = Number(p.waveFreq);
+      const grad = ctx.createLinearGradient(0, 0, canvas.width, 0);
+      grad.addColorStop(0, p.colorA);
+      grad.addColorStop(1, p.colorB);
+      ctx.fillStyle = grad;
+      ctx.shadowColor = p.colorA;
+      ctx.shadowBlur = 18;
+      for (let i = 0; i < text.length; i += 1) {
+        const char = text[i];
+        const left = x + ctx.measureText(text.slice(0, i)).width;
+        const yy = y + Math.sin((left * waveFreq) + (localTime * 3.2)) * waveAmp;
+        ctx.fillText(char, Math.floor(left), Math.floor(yy));
+        if (left > canvas.width + 20) {
+          break;
+        }
+      }
+      ctx.shadowBlur = 0;
+    }
+
+    function renderRasters(layer, localTime) {
+      const p = layer.params;
+      const bars = Number(p.bars);
+      const amp = Number(p.amplitude);
+      for (let i = 0; i < bars; i += 1) {
+        const t = bars <= 1 ? 0 : i / (bars - 1);
+        const y = canvas.height * 0.18 + i * (canvas.height * 0.62 / bars) + Math.sin(localTime * Number(p.speed) + (i * 0.5)) * amp;
+        const height = canvas.height / (bars + 3);
+        const grad = ctx.createLinearGradient(0, y, canvas.width, y + height);
+        grad.addColorStop(0, colorMix(p.colorA, p.colorB, t));
+        grad.addColorStop(0.5, colorMix(p.colorB, p.colorA, t));
+        grad.addColorStop(1, colorMix(p.colorA, p.colorB, t));
+        ctx.fillStyle = grad;
+        ctx.fillRect(0, Math.floor(y), canvas.width, Math.ceil(height));
+      }
+    }
+
+    function renderPlasma(layer, localTime) {
+      const p = layer.params;
+      const step = Number(p.scale);
+      for (let y = 0; y < canvas.height; y += step) {
+        for (let x = 0; x < canvas.width; x += step) {
+          const v =
+            Math.sin((x * 0.015) + (localTime * Number(p.speed))) +
+            Math.sin((y * 0.02) + (localTime * Number(p.speed) * 1.3)) +
+            Math.sin(((x + y) * 0.011) + (localTime * Number(p.speed) * 0.7));
+          const t = (v + 3) / 6;
+          ctx.fillStyle = colorMix(p.colorA, p.colorB, clamp(t, 0, 1));
+          ctx.fillRect(x, y, step, step);
+        }
+      }
+    }
+
+    function renderStarfield(layer, localTime) {
+      const p = layer.params;
+      const stars = p.stars || [];
+      const speed = Number(p.speed);
+      const warp = Number(p.warp);
+      ctx.fillStyle = "#ffffff";
+      for (let i = 0; i < stars.length; i += 1) {
+        const star = stars[i];
+        const z = ((star.z - ((localTime * speed * 0.15) % 1)) + 1) % 1;
+        const depth = 1 - z;
+        const px = (star.x / Math.max(z, 0.05)) * 160 + canvas.width / 2;
+        const py = (star.y / Math.max(z, 0.05)) * 120 + canvas.height / 2;
+        const size = Math.max(1, depth * 4);
+        ctx.globalAlpha = clamp(depth + 0.15, 0, 1);
+        ctx.fillStyle = "rgba(255,255,255,0.95)";
+        if (warp > 0.01) {
+          const trail = depth * 24 * warp;
+          ctx.fillRect(Math.floor(px), Math.floor(py), Math.ceil(size + trail), Math.ceil(size));
+        } else {
+          ctx.fillRect(Math.floor(px), Math.floor(py), Math.ceil(size), Math.ceil(size));
+        }
+      }
+      ctx.globalAlpha = 1;
+    }
+
+    function renderAscii(layer) {
+      const p = layer.params;
+      ctx.fillStyle = p.bg;
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = p.fg;
+      ctx.font = Math.floor(Number(p.size)) + "px 'Courier New', monospace";
+      ctx.textBaseline = "top";
+      const lines = String(p.text).split("\n");
+      const top = Math.floor((canvas.height - (lines.length * Number(p.size) * 1.28)) / 2);
+      lines.forEach((line, index) => {
+        const width = ctx.measureText(line).width;
+        const x = Math.floor((canvas.width - width) / 2);
+        const y = Math.floor(top + index * Number(p.size) * 1.28);
+        ctx.fillText(line, x, y);
+      });
+    }
+
+    function renderLayer(layer, time) {
+      const localTime = time - layer.start;
+      ctx.save();
+      ctx.globalAlpha = Number(layer.opacity);
+      ctx.globalCompositeOperation = layer.blend;
+      ctx.imageSmoothingEnabled = false;
+      if (layer.type === "scroller") {
+        renderScroller(layer, localTime);
+      } else if (layer.type === "rasters") {
+        renderRasters(layer, localTime);
+      } else if (layer.type === "plasma") {
+        renderPlasma(layer, localTime);
+      } else if (layer.type === "starfield") {
+        renderStarfield(layer, localTime);
+      } else if (layer.type === "ascii") {
+        renderAscii(layer, localTime);
+      }
+      ctx.restore();
+      ctx.imageSmoothingEnabled = false;
+    }
+
+    function render() {
+      renderBackground();
+      const active = activeLayersAt(state.currentTime);
+      active.forEach((layer) => renderLayer(layer, state.currentTime));
+      timePill.textContent = "Temps: " + state.currentTime.toFixed(1) + "s";
+    }
+
+    function syncInspector() {
+      const layer = selectedLayer();
+      activeLayerPill.textContent = layer ? "Calque: " + layer.name : "Calque: aucun";
+      emptyInspector.classList.toggle("hidden", !!layer);
+      inspector.classList.toggle("hidden", !layer);
+      document.querySelectorAll(".inspector-block").forEach((block) => {
+        block.classList.toggle("hidden", !layer || block.dataset.type !== layer.type);
+      });
+      if (!layer) {
+        rawJson.value = "";
+        return;
+      }
+
+      layerName.value = layer.name;
+      layerStart.value = layer.start.toFixed(1);
+      layerDuration.value = layer.duration.toFixed(1);
+      layerOpacity.value = String(layer.opacity);
+      layerBlend.value = layer.blend;
+      layerEnabled.value = String(layer.enabled);
+
+      if (layer.type === "scroller") {
+        scrollText.value = layer.params.text;
+        scrollFont.value = layer.params.font;
+        scrollColorA.value = layer.params.colorA;
+        scrollColorB.value = layer.params.colorB;
+        scrollBaseY.value = layer.params.baseY;
+        scrollSpeed.value = layer.params.speed;
+        scrollSize.value = layer.params.size;
+        scrollWaveAmp.value = layer.params.waveAmp;
+        scrollWaveFreq.value = layer.params.waveFreq;
+      } else if (layer.type === "rasters") {
+        rasterColorA.value = layer.params.colorA;
+        rasterColorB.value = layer.params.colorB;
+        rasterBars.value = layer.params.bars;
+        rasterSpeed.value = layer.params.speed;
+        rasterAmp.value = layer.params.amplitude;
+      } else if (layer.type === "plasma") {
+        plasmaColorA.value = layer.params.colorA;
+        plasmaColorB.value = layer.params.colorB;
+        plasmaScale.value = layer.params.scale;
+        plasmaSpeed.value = layer.params.speed;
+      } else if (layer.type === "starfield") {
+        starCount.value = layer.params.count;
+        starSpeed.value = layer.params.speed;
+        starWarp.value = layer.params.warp;
+      } else if (layer.type === "ascii") {
+        asciiText.value = layer.params.text;
+        asciiFg.value = layer.params.fg;
+        asciiBg.value = layer.params.bg;
+        asciiSize.value = layer.params.size;
+      }
+
+      rawJson.value = JSON.stringify(layer, null, 2);
+    }
+
+    function refreshLevelUi() {
+      state.level = currentLevel();
+      const meta = LEVELS[state.level];
+      levelPill.textContent = "Mode: " + meta.label;
+      levelDescPill.textContent = meta.desc;
+      levelDescription.textContent = meta.help;
+      document.querySelectorAll("[data-level]").forEach((node) => {
+        node.classList.toggle("hidden", state.level < Number(node.dataset.level));
+      });
+    }
+
+    function refreshLayerList() {
+      layerList.innerHTML = "";
+      state.layers.forEach((layer) => {
+        const card = document.createElement("button");
+        card.type = "button";
+        card.className = "layer-card" + (layer.id === state.selectedLayerId ? " active" : "");
+        card.innerHTML = "" +
+          "<div class='row-between'><strong>" + layer.name + "</strong><span class='pill'>" + layer.type + "</span></div>" +
+          "<div class='tiny'>start " + layer.start.toFixed(1) + "s · durée " + layer.duration.toFixed(1) + "s · alpha " + layer.opacity.toFixed(2) + "</div>" +
+          "<div class='tiny " + (layer.enabled ? "status-good" : "status-danger") + "'>" + (layer.enabled ? "actif" : "muet") + "</div>";
+        card.addEventListener("click", () => {
+          state.selectedLayerId = layer.id;
+          refreshUi();
+        });
+        layerList.appendChild(card);
+      });
+    }
+
+    function refreshTimeline() {
+      timelineRange.max = String(state.duration);
+      timelineRange.value = String(state.currentTime);
+      timelineList.innerHTML = "";
+      state.layers.forEach((layer) => {
+        const row = document.createElement("div");
+        row.className = "timeline-row";
+        const top = document.createElement("div");
+        top.className = "row-between";
+        top.innerHTML = "<strong>" + layer.name + "</strong><span class='tiny'>" + layer.type + " · alpha " + layer.opacity.toFixed(2) + "</span>";
+        const track = document.createElement("div");
+        track.className = "timeline-track";
+        track.dataset.layerId = layer.id;
+
+        const block = document.createElement("button");
+        block.type = "button";
+        block.className = "timeline-block" + (layer.id === state.selectedLayerId ? " selected" : "");
+        const left = (layer.start / state.duration) * 100;
+        const width = (layer.duration / state.duration) * 100;
+        block.style.left = left + "%";
+        block.style.width = Math.max(width, 4) + "%";
+        block.textContent = layer.name + " — " + layer.start.toFixed(1) + "s / " + layer.duration.toFixed(1) + "s";
+        block.addEventListener("click", (event) => {
+          event.stopPropagation();
+          state.selectedLayerId = layer.id;
+          refreshUi();
+        });
+
+        const head = document.createElement("div");
+        head.className = "timeline-head";
+        head.style.left = ((state.currentTime / state.duration) * 100) + "%";
+
+        track.addEventListener("click", (event) => {
+          const rect = track.getBoundingClientRect();
+          const ratio = clamp((event.clientX - rect.left) / rect.width, 0, 1);
+          state.currentTime = ratio * state.duration;
+          state.selectedLayerId = layer.id;
+          refreshUi();
+        });
+
+        track.appendChild(block);
+        track.appendChild(head);
+        row.appendChild(top);
+        row.appendChild(track);
+        timelineList.appendChild(row);
+      });
+    }
+
+    function refreshUi() {
+      refreshLevelUi();
+      refreshLayerList();
+      refreshTimeline();
+      syncInspector();
+      render();
+    }
+
+    function bindField(field, handler) {
+      field.addEventListener("input", handler);
+      field.addEventListener("change", handler);
+    }
+
+    function updateSelectedLayer(updater) {
+      const layer = selectedLayer();
+      if (!layer) {
+        return;
+      }
+      updater(layer);
+      if (layer.type === "starfield") {
+        const wanted = Number(layer.params.count);
+        if (!Array.isArray(layer.params.stars) || layer.params.stars.length !== wanted) {
+          layer.params.stars = generateStars(wanted);
+        }
+      }
+      refreshUi();
+    }
+
+    function exportReadme() {
+      const lines = [];
+      lines.push("# " + projectTitle.value);
+      lines.push("");
+      lines.push("Type: " + exportMode.value);
+      lines.push("Format: " + exportFormat.value);
+      lines.push("Musique: " + musicMode.value + " — " + musicUrl.value);
+      lines.push("Preset: " + presetFormat.value);
+      lines.push("Repo: " + presetRepo.value);
+      lines.push("");
+      lines.push("Calques:");
+      state.layers.forEach((layer, index) => {
+        lines.push((index + 1) + ". " + layer.name + " [" + layer.type + "] start=" + layer.start.toFixed(1) + " duration=" + layer.duration.toFixed(1) + " opacity=" + layer.opacity.toFixed(2));
+      });
+      return lines.join("\n");
+    }
+
+    function buildExportPayload() {
+      return {
+        title: projectTitle.value,
+        exportMode: exportMode.value,
+        exportFormat: exportFormat.value,
+        musicMode: musicMode.value,
+        musicUrl: musicUrl.value,
+        presetRepo: presetRepo.value,
+        presetFormat: presetFormat.value,
+        duration: state.duration,
+        level: state.level,
+        layers: state.layers.map((layer) => {
+          const copy = cloneLayer(layer);
+          if (copy.type === "starfield") {
+            delete copy.params.stars;
+          }
+          return copy;
+        })
+      };
+    }
+
+    function buildPedagoNotes() {
+      const notes = [];
+      notes.push("Pedago:");
+      notes.push("- Scroller: texte qui défile réellement de droite à gauche.");
+      notes.push("- Timeline: chaque calque a un début, une durée et une opacité.");
+      notes.push("- Mélange: l'alpha et le blend déterminent la fusion des effets.");
+      notes.push("- Niveaux: plus le niveau monte, plus l'inspector expose les paramètres.");
+      return notes.join("\n");
+    }
+
+    function exportSourceText() {
+      const payload = buildExportPayload();
+      const parts = [];
+      parts.push("const preset = " + JSON.stringify(payload, null, 2) + ";");
+      parts.push("");
+      if (exportMode.value !== "demo") {
+        parts.push("/*");
+        parts.push(buildPedagoNotes());
+        parts.push("*/");
+      }
+      return parts.join("\n");
+    }
+
+    function buildRuntimeData() {
+      const payload = buildExportPayload();
+      payload.layers = payload.layers.map((layer) => {
+        if (layer.type === "starfield") {
+          layer.params.stars = generateStars(layer.params.count);
+        }
+        return layer;
+      });
+      return payload;
+    }
+
+    function buildExportHtml() {
+      const payload = JSON.stringify(buildRuntimeData());
+      const notes = exportMode.value === "demo" ? "" : "\\n" + buildPedagoNotes().replace(/\n/g, "\\n");
+      return "<!DOCTYPE html>\\n<html lang='fr'>\\n<head>\\n<meta charset='UTF-8'>\\n<meta name='viewport' content='width=device-width, initial-scale=1.0'>\\n<title>" + projectTitle.value.replace(/</g, "&lt;") + "</title>\\n<style>body{margin:0;background:#000;color:#fff;font-family:Arial,sans-serif}canvas{display:block;width:100vw;height:100vh;image-rendering:pixelated}#hud{position:fixed;left:12px;top:12px;padding:10px 12px;background:rgba(0,0,0,.58);border:1px solid rgba(255,255,255,.15);border-radius:12px;font-size:12px;white-space:pre-wrap;max-width:420px}</style>\\n</head>\\n<body>\\n<canvas id='c' width='960' height='600'></canvas>\\n<div id='hud'>" + projectTitle.value.replace(/</g, "&lt;") + notes + "</div>\\n<script>const state=" + payload + ";const c=document.getElementById('c');const x=c.getContext('2d');x.imageSmoothingEnabled=false;function mix(a,b,t){const pa=parseInt(a.slice(1),16),pb=parseInt(b.slice(1),16),ar=(pa>>16)&255,ag=(pa>>8)&255,ab=pa&255,br=(pb>>16)&255,bg=(pb>>8)&255,bb=pb&255;return 'rgb('+Math.round(ar+(br-ar)*t)+','+Math.round(ag+(bg-ag)*t)+','+Math.round(ab+(bb-ab)*t)+')'}function bg(){const g=x.createLinearGradient(0,0,0,c.height);g.addColorStop(0,'#040914');g.addColorStop(1,'#000');x.fillStyle=g;x.fillRect(0,0,c.width,c.height);x.fillStyle='rgba(255,255,255,.03)';for(let i=0;i<c.height;i+=4){x.fillRect(0,i,c.width,1)}}function drawScroller(layer,t){const p=layer.params;x.font='700 '+Math.floor(p.size)+'px '+p.font;x.textBaseline='middle';const off=t*p.speed;const w=x.measureText(p.text).width+80;const sx=c.width-(off%Math.max(w,1));const grad=x.createLinearGradient(0,0,c.width,0);grad.addColorStop(0,p.colorA);grad.addColorStop(1,p.colorB);x.fillStyle=grad;x.shadowColor=p.colorA;x.shadowBlur=18;for(let i=0;i<p.text.length;i++){const ch=p.text[i];const left=sx+x.measureText(p.text.slice(0,i)).width;const yy=p.baseY+Math.sin((left*p.waveFreq)+(t*3.2))*p.waveAmp;x.fillText(ch,Math.floor(left),Math.floor(yy));if(left>c.width+20)break}x.shadowBlur=0}function drawRasters(layer,t){const p=layer.params;for(let i=0;i<p.bars;i++){const n=p.bars<=1?0:i/(p.bars-1);const y=c.height*.18+i*(c.height*.62/p.bars)+Math.sin((t*p.speed)+(i*.5))*p.amplitude;const h=c.height/(p.bars+3);const g=x.createLinearGradient(0,y,c.width,y+h);g.addColorStop(0,mix(p.colorA,p.colorB,n));g.addColorStop(.5,mix(p.colorB,p.colorA,n));g.addColorStop(1,mix(p.colorA,p.colorB,n));x.fillStyle=g;x.fillRect(0,Math.floor(y),c.width,Math.ceil(h))}}function drawPlasma(layer,t){const p=layer.params;const step=p.scale;for(let yy=0;yy<c.height;yy+=step){for(let xx=0;xx<c.width;xx+=step){const v=Math.sin((xx*.015)+(t*p.speed))+Math.sin((yy*.02)+(t*p.speed*1.3))+Math.sin(((xx+yy)*.011)+(t*p.speed*.7));const n=(v+3)/6;x.fillStyle=mix(p.colorA,p.colorB,Math.max(0,Math.min(1,n)));x.fillRect(xx,yy,step,step)}}}function drawStars(layer,t){const p=layer.params;for(const s of p.stars){const z=((s.z-((t*p.speed*.15)%1))+1)%1;const d=1-z;const px=(s.x/Math.max(z,.05))*160+c.width/2;const py=(s.y/Math.max(z,.05))*120+c.height/2;const size=Math.max(1,d*4);x.globalAlpha=Math.max(0,Math.min(1,d+.15));if(p.warp>0.01){const trail=d*24*p.warp;x.fillStyle='rgba(255,255,255,.95)';x.fillRect(Math.floor(px),Math.floor(py),Math.ceil(size+trail),Math.ceil(size))}else{x.fillStyle='rgba(255,255,255,.95)';x.fillRect(Math.floor(px),Math.floor(py),Math.ceil(size),Math.ceil(size))}}x.globalAlpha=1}function drawAscii(layer){const p=layer.params;x.fillStyle=p.bg;x.fillRect(0,0,c.width,c.height);x.fillStyle=p.fg;x.font=Math.floor(p.size)+\"px 'Courier New', monospace\";x.textBaseline='top';const lines=String(p.text).split('\\n');const top=Math.floor((c.height-(lines.length*p.size*1.28))/2);lines.forEach((line,i)=>{const w=x.measureText(line).width;const xx=Math.floor((c.width-w)/2);const yy=Math.floor(top+i*p.size*1.28);x.fillText(line,xx,yy)})}function drawLayer(layer,time){const t=time-layer.start;x.save();x.globalAlpha=layer.opacity;x.globalCompositeOperation=layer.blend;x.imageSmoothingEnabled=false;if(layer.type==='scroller')drawScroller(layer,t);else if(layer.type==='rasters')drawRasters(layer,t);else if(layer.type==='plasma')drawPlasma(layer,t);else if(layer.type==='starfield')drawStars(layer,t);else if(layer.type==='ascii')drawAscii(layer);x.restore();x.imageSmoothingEnabled=false}let last=performance.now(),time=0;function loop(now){const dt=(now-last)/1000;last=now;time=(time+dt)%state.duration;bg();for(const layer of state.layers){if(layer.enabled&&time>=layer.start&&time<=layer.start+layer.duration)drawLayer(layer,time)}requestAnimationFrame(loop)}requestAnimationFrame(loop);</script>\\n</body>\\n</html>";
+    }
+
+    function downloadFile(name, content, type) {
+      const blob = new Blob([content], { type });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = name;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
+    }
+
+    document.querySelectorAll(".effect-add").forEach((button) => {
+      button.addEventListener("click", () => {
+        const layer = createLayer(button.dataset.type);
+        layer.start = Number(state.currentTime.toFixed(1));
+        state.layers.push(layer);
+        state.selectedLayerId = layer.id;
+        refreshUi();
+      });
+    });
+
+    document.getElementById("duplicateLayerButton").addEventListener("click", () => {
+      const layer = selectedLayer();
+      if (!layer) {
+        return;
+      }
+      const copy = cloneLayer(layer);
+      copy.id = makeId();
+      copy.name = layer.name + " Copy";
+      copy.start = clamp(layer.start + 0.5, 0, state.duration - 0.5);
+      if (copy.type === "starfield") {
+        copy.params.stars = generateStars(copy.params.count);
+      }
+      state.layers.push(copy);
+      state.selectedLayerId = copy.id;
+      refreshUi();
+    });
+
+    document.getElementById("deleteLayerButton").addEventListener("click", () => {
+      if (!state.selectedLayerId) {
+        return;
+      }
+      const index = state.layers.findIndex((layer) => layer.id === state.selectedLayerId);
+      if (index < 0) {
+        return;
+      }
+      state.layers.splice(index, 1);
+      state.selectedLayerId = state.layers[index]?.id || state.layers[index - 1]?.id || null;
+      refreshUi();
+    });
+
+    document.getElementById("playPauseButton").addEventListener("click", () => {
+      state.playing = !state.playing;
+      transportPill.textContent = state.playing ? "Lecture" : "Pause";
+      document.getElementById("playPauseButton").textContent = state.playing ? "Pause" : "Play";
+    });
+
+    document.getElementById("stopButton").addEventListener("click", () => {
+      state.playing = false;
+      state.currentTime = 0;
+      transportPill.textContent = "Pause";
+      document.getElementById("playPauseButton").textContent = "Play";
+      refreshUi();
+    });
+
+    document.getElementById("rewindButton").addEventListener("click", () => {
+      state.currentTime = 0;
+      refreshUi();
+    });
+
+    bindField(timelineRange, () => {
+      state.currentTime = Number(timelineRange.value);
+      refreshUi();
+    });
+
+    bindField(levelSelect, refreshUi);
+
+    bindField(layerName, () => updateSelectedLayer((layer) => { layer.name = layerName.value || layer.name; }));
+    bindField(layerStart, () => updateSelectedLayer((layer) => { layer.start = clamp(Number(layerStart.value), 0, state.duration - 0.1); }));
+    bindField(layerDuration, () => updateSelectedLayer((layer) => { layer.duration = clamp(Number(layerDuration.value), 0.5, state.duration); }));
+    bindField(layerOpacity, () => updateSelectedLayer((layer) => { layer.opacity = clamp(Number(layerOpacity.value), 0, 1); }));
+    bindField(layerBlend, () => updateSelectedLayer((layer) => { layer.blend = layerBlend.value; }));
+    bindField(layerEnabled, () => updateSelectedLayer((layer) => { layer.enabled = layerEnabled.value === "true"; }));
+
+    bindField(scrollText, () => updateSelectedLayer((layer) => { layer.params.text = scrollText.value; }));
+    bindField(scrollFont, () => updateSelectedLayer((layer) => { layer.params.font = scrollFont.value; }));
+    bindField(scrollColorA, () => updateSelectedLayer((layer) => { layer.params.colorA = scrollColorA.value; }));
+    bindField(scrollColorB, () => updateSelectedLayer((layer) => { layer.params.colorB = scrollColorB.value; }));
+    bindField(scrollBaseY, () => updateSelectedLayer((layer) => { layer.params.baseY = Number(scrollBaseY.value); }));
+    bindField(scrollSpeed, () => updateSelectedLayer((layer) => { layer.params.speed = Number(scrollSpeed.value); }));
+    bindField(scrollSize, () => updateSelectedLayer((layer) => { layer.params.size = Number(scrollSize.value); }));
+    bindField(scrollWaveAmp, () => updateSelectedLayer((layer) => { layer.params.waveAmp = Number(scrollWaveAmp.value); }));
+    bindField(scrollWaveFreq, () => updateSelectedLayer((layer) => { layer.params.waveFreq = Number(scrollWaveFreq.value); }));
+
+    bindField(rasterColorA, () => updateSelectedLayer((layer) => { layer.params.colorA = rasterColorA.value; }));
+    bindField(rasterColorB, () => updateSelectedLayer((layer) => { layer.params.colorB = rasterColorB.value; }));
+    bindField(rasterBars, () => updateSelectedLayer((layer) => { layer.params.bars = Number(rasterBars.value); }));
+    bindField(rasterSpeed, () => updateSelectedLayer((layer) => { layer.params.speed = Number(rasterSpeed.value); }));
+    bindField(rasterAmp, () => updateSelectedLayer((layer) => { layer.params.amplitude = Number(rasterAmp.value); }));
+
+    bindField(plasmaColorA, () => updateSelectedLayer((layer) => { layer.params.colorA = plasmaColorA.value; }));
+    bindField(plasmaColorB, () => updateSelectedLayer((layer) => { layer.params.colorB = plasmaColorB.value; }));
+    bindField(plasmaScale, () => updateSelectedLayer((layer) => { layer.params.scale = Number(plasmaScale.value); }));
+    bindField(plasmaSpeed, () => updateSelectedLayer((layer) => { layer.params.speed = Number(plasmaSpeed.value); }));
+
+    bindField(starCount, () => updateSelectedLayer((layer) => { layer.params.count = Number(starCount.value); }));
+    bindField(starSpeed, () => updateSelectedLayer((layer) => { layer.params.speed = Number(starSpeed.value); }));
+    bindField(starWarp, () => updateSelectedLayer((layer) => { layer.params.warp = Number(starWarp.value); }));
+
+    bindField(asciiText, () => updateSelectedLayer((layer) => { layer.params.text = asciiText.value; }));
+    bindField(asciiFg, () => updateSelectedLayer((layer) => { layer.params.fg = asciiFg.value; }));
+    bindField(asciiBg, () => updateSelectedLayer((layer) => { layer.params.bg = asciiBg.value; }));
+    bindField(asciiSize, () => updateSelectedLayer((layer) => { layer.params.size = Number(asciiSize.value); }));
+
+    document.getElementById("applyRawButton").addEventListener("click", () => {
+      const layer = selectedLayer();
+      if (!layer) {
+        return;
+      }
+      try {
+        const parsed = JSON.parse(rawJson.value);
+        parsed.id = layer.id;
+        if (parsed.type === "starfield" && (!parsed.params || !parsed.params.count)) {
+          throw new Error("count requis pour le starfield");
+        }
+        if (parsed.type === "starfield") {
+          parsed.params.stars = generateStars(parsed.params.count);
+        }
+        const index = state.layers.findIndex((item) => item.id === layer.id);
+        state.layers[index] = parsed;
+        state.selectedLayerId = parsed.id;
+        refreshUi();
+      } catch (error) {
+        outputTypeLabel.textContent = "Erreur JSON";
+        outputBox.textContent = "JSON invalide : " + error.message;
+      }
+    });
+
+    bindField(musicMode, () => {
+      outputTypeLabel.textContent = "Projet";
+      outputBox.textContent = "Musique réglée sur " + musicMode.value + " — " + musicUrl.value;
+    });
+    bindField(musicUrl, () => {
+      outputTypeLabel.textContent = "Projet";
+      outputBox.textContent = "Source musique : " + musicUrl.value;
+    });
+    bindField(exportMode, () => {
+      outputTypeLabel.textContent = "Projet";
+      outputBox.textContent = "Mode export : " + exportMode.value;
+    });
+    bindField(exportFormat, () => {
+      outputTypeLabel.textContent = "Projet";
+      outputBox.textContent = "Format export : " + exportFormat.value;
+    });
+
+    document.getElementById("generateReadmeButton").addEventListener("click", () => {
+      outputTypeLabel.textContent = "README export source";
+      outputBox.textContent = exportReadme();
+    });
+
+    document.getElementById("generateSourceButton").addEventListener("click", () => {
+      outputTypeLabel.textContent = "Source export";
+      outputBox.textContent = exportSourceText();
+    });
+
+    document.getElementById("copyOutputButton").addEventListener("click", async () => {
+      try {
+        await navigator.clipboard.writeText(outputBox.textContent);
+        outputTypeLabel.textContent = "Sortie copiée";
+      } catch (error) {
+        outputTypeLabel.textContent = "Copie impossible";
+      }
+    });
+
+    document.getElementById("downloadHtmlButton").addEventListener("click", () => {
+      const html = buildExportHtml();
+      outputTypeLabel.textContent = "HTML export";
+      outputBox.textContent = html;
+      downloadFile("demoforge-studio-v2-export.html", html, "text/html;charset=utf-8");
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (event.code === "Space") {
+        event.preventDefault();
+        document.getElementById("playPauseButton").click();
+      } else if (event.key === "Delete") {
+        document.getElementById("deleteLayerButton").click();
+      }
+    });
+
+    let lastFrame = performance.now();
+    function loop(now) {
+      const dt = (now - lastFrame) / 1000;
+      lastFrame = now;
+      if (state.playing) {
+        state.currentTime += dt;
+        if (state.currentTime > state.duration) {
+          state.currentTime = 0;
+        }
+        timelineRange.value = String(state.currentTime);
+      }
+      refreshTimeline();
+      render();
+      requestAnimationFrame(loop);
+    }
+
+    refreshUi();
+    requestAnimationFrame(loop);
+  </script>
+</body>
+</html>

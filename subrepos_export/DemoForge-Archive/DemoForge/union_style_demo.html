@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>THE UNION DEMO — HTML Demo</title>
+<style>
+html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#000}
+canvas{display:block;width:100vw;height:100vh;image-rendering:pixelated}
+</style>
+</head>
+<body>
+<canvas id="screen"></canvas>
+<script>
+const cfg={"logoText":"THE UNION DEMO","subtitle":"HTML RECONSTRUCTION // DEMOFORGE","logoTop":"#ffffff","logoBottom":"#ffcc00","logoSize":"56","logoY":"92","barCount":"16","barSpeed":"18","barAmp":"22","barHeight":"5","barA":"#ff0000","barB":"#ffff00","scrollText":"*** GREETINGS TO THE CAREBEARS * THE UNION * REPLICANTS * AUTOMATION * FOF * ATM * TAM * BLACK SQUADRON * ORION * EQUINOX * FAIRLIGHT * ALL SCENERS *** CODING IS NOT A CRIME ***","scrollSize":"18","scrollSpeed":"24","scrollY":"230","scrollColor":"#00e5ff","stars":"120","scanlines":"on","bgColor":"#000000","glow":"12"};
+const canvas=document.getElementById("screen"),ctx=canvas.getContext("2d",{alpha:false});
+const W=480,H=270,buffer=document.createElement("canvas");buffer.width=W;buffer.height=H;
+const g=buffer.getContext("2d",{alpha:false});let t=0;
+let stars=Array.from({length:Number(cfg.stars)||0},()=>({x:Math.random()*W,y:Math.random()*H,z:.3+Math.random()*1.7,s:.6+Math.random()*1.4}));
+function resize(){const d=Math.min(devicePixelRatio||1,2);canvas.width=innerWidth*d;canvas.height=innerHeight*d;ctx.setTransform(d,0,0,d,0,0)}addEventListener("resize",resize);resize();
+function frame(){draw();blit();t++;requestAnimationFrame(frame)}
+function draw(){g.fillStyle=cfg.bgColor||"#000";g.fillRect(0,0,W,H);drawStars();drawBars();drawLogo();drawSubtitle();drawScroller();if(cfg.scanlines==="on")drawScanlines();g.strokeStyle="rgba(255,255,255,.22)";g.strokeRect(6,6,W-12,H-12)}
+function drawStars(){for(const s of stars){s.x-=s.z*.18;if(s.x<0){s.x=W;s.y=Math.random()*H}g.fillStyle=s.z>1.3?"#fff":s.z>.8?"#aaa":"#555";g.fillRect(s.x,s.y,s.s,s.s)}}
+function drawBars(){const count=Number(cfg.barCount),speed=Number(cfg.barSpeed)/10,amp=Number(cfg.barAmp),h=Number(cfg.barHeight);for(let i=0;i<count;i++){const y=136+i*(h+3)+Math.sin(t*.035*speed+i*.7)*amp,grad=g.createLinearGradient(40,y,W-40,y);grad.addColorStop(0,cfg.barA);grad.addColorStop(.5,cfg.barB);grad.addColorStop(1,cfg.barA);g.fillStyle=grad;g.fillRect(34,y,W-68,h)}}
+function drawLogo(){const size=Number(cfg.logoSize),y=Number(cfg.logoY)+Math.sin(t*.025)*2,glow=Number(cfg.glow);g.save();g.textAlign="center";g.textBaseline="middle";g.font="900 "+size+"px Arial Black, Impact, sans-serif";g.lineWidth=Math.max(6,size*.13);g.strokeStyle="#000";g.strokeText(cfg.logoText,W/2,y);g.shadowBlur=glow;g.shadowColor=cfg.logoBottom;const grad=g.createLinearGradient(0,y-size/2,0,y+size/2);grad.addColorStop(0,cfg.logoTop);grad.addColorStop(.55,cfg.logoBottom);grad.addColorStop(1,"#6b3b00");g.fillStyle=grad;g.fillText(cfg.logoText,W/2,y);g.shadowBlur=0;g.lineWidth=1.5;g.strokeStyle="#fff";g.strokeText(cfg.logoText,W/2,y);g.restore()}
+function drawSubtitle(){g.save();g.textAlign="center";g.textBaseline="middle";g.font="700 13px Arial, sans-serif";g.lineWidth=4;g.strokeStyle="#000";const y=Number(cfg.logoY)+Number(cfg.logoSize)*.62;g.strokeText(cfg.subtitle,W/2,y);g.fillStyle="#e6e6e6";g.fillText(cfg.subtitle,W/2,y);g.restore()}
+function drawScroller(){const text="   "+cfg.scrollText+"   ",size=Number(cfg.scrollSize),y=Number(cfg.scrollY),speed=Number(cfg.scrollSpeed)/10,charW=size*.62,total=text.length*charW,x=W-((t*speed)%(W+total));g.fillStyle="rgba(0,0,0,.78)";g.fillRect(0,y-size-8,W,size+22);g.strokeStyle=cfg.scrollColor;g.lineWidth=1;g.beginPath();g.moveTo(0,y-size-8);g.lineTo(W,y-size-8);g.moveTo(0,y+13);g.lineTo(W,y+13);g.stroke();g.font="900 "+size+"px Arial Black, Impact, sans-serif";g.textAlign="left";g.textBaseline="middle";for(let i=0;i<text.length;i++){const px=x+i*charW,py=y+Math.sin(t*.05+i*.35)*3;g.lineWidth=4;g.strokeStyle="#000";g.strokeText(text[i],px,py);g.fillStyle=cfg.scrollColor;g.fillText(text[i],px,py)}}
+function drawScanlines(){g.fillStyle="rgba(0,0,0,.28)";for(let y=0;y<H;y+=3)g.fillRect(0,y,W,1)}
+function blit(){ctx.imageSmoothingEnabled=false;ctx.fillStyle="#000";ctx.fillRect(0,0,innerWidth,innerHeight);const scale=Math.max(innerWidth/W,innerHeight/H),dw=W*scale,dh=H*scale,dx=(innerWidth-dw)/2,dy=(innerHeight-dh)/2;ctx.drawImage(buffer,dx,dy,dw,dh)}
+frame();
+</script>
+</body>
+</html>

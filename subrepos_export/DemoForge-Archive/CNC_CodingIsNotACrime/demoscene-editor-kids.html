@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mini Demo Maker</title>
+  <style>
+    :root {
+      --bg: #0a1020;
+      --panel: rgba(12, 18, 36, 0.88);
+      --panel-strong: rgba(20, 28, 52, 0.96);
+      --line: rgba(152, 200, 255, 0.18);
+      --text: #eef4ff;
+      --muted: #9db0d7;
+      --accent: #55d6ff;
+      --accent-2: #ffdf5c;
+      --good: #6effa8;
+      --danger: #ff8a8a;
+      --shadow: 0 24px 60px rgba(0, 0, 0, 0.35);
+      --radius: 22px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "Trebuchet MS", "Verdana", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(79, 157, 255, 0.22), transparent 26%),
+        radial-gradient(circle at top right, rgba(255, 208, 89, 0.18), transparent 24%),
+        linear-gradient(180deg, #09101d 0%, #050913 100%);
+    }
+
+    .page {
+      width: min(1280px, calc(100% - 24px));
+      margin: 18px auto 32px;
+      display: grid;
+      grid-template-columns: 360px 1fr;
+      gap: 18px;
+    }
+
+    .panel,
+    .stage-wrap,
+    .notes {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--panel);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(10px);
+    }
+
+    .panel {
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .hero {
+      padding: 18px;
+      border-radius: 18px;
+      background:
+        linear-gradient(135deg, rgba(85, 214, 255, 0.14), rgba(255, 223, 92, 0.14)),
+        rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    h1,
+    h2,
+    h3,
+    p {
+      margin: 0;
+    }
+
+    h1 {
+      font-size: 1.9rem;
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+
+    .hero p,
+    .hint,
+    .source-list,
+    .credit {
+      color: var(--muted);
+    }
+
+    .group {
+      display: grid;
+      gap: 10px;
+    }
+
+    .group-title {
+      font-size: 0.92rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #d9e7ff;
+    }
+
+    .big-buttons,
+    .small-buttons {
+      display: grid;
+      gap: 10px;
+    }
+
+    .big-buttons {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    button,
+    input,
+    select,
+    textarea {
+      font: inherit;
+      border-radius: 16px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      outline: none;
+    }
+
+    button {
+      cursor: pointer;
+      color: var(--text);
+      background: linear-gradient(180deg, rgba(112, 158, 255, 0.25), rgba(53, 90, 170, 0.2));
+      padding: 14px 16px;
+      min-height: 60px;
+      font-size: 1rem;
+      font-weight: 700;
+      transition: transform 140ms ease, border-color 140ms ease, background 140ms ease;
+    }
+
+    button:hover,
+    button:focus-visible {
+      transform: translateY(-1px) scale(1.01);
+      border-color: rgba(255, 255, 255, 0.35);
+    }
+
+    button.active {
+      background: linear-gradient(180deg, rgba(110, 255, 168, 0.28), rgba(33, 125, 72, 0.22));
+      border-color: rgba(110, 255, 168, 0.55);
+    }
+
+    .small-buttons {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .small-buttons button {
+      min-height: 50px;
+      font-size: 0.95rem;
+    }
+
+    label {
+      display: grid;
+      gap: 6px;
+      color: #e7efff;
+      font-weight: 700;
+    }
+
+    input[type="text"],
+    select,
+    textarea {
+      width: 100%;
+      padding: 12px 14px;
+      background: rgba(6, 10, 20, 0.88);
+      color: var(--text);
+    }
+
+    textarea {
+      min-height: 92px;
+      resize: vertical;
+    }
+
+    input[type="range"] {
+      width: 100%;
+      accent-color: var(--accent);
+    }
+
+    .range-row,
+    .readout-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .pill {
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.08);
+      font-size: 0.88rem;
+      color: #f6fbff;
+    }
+
+    .stage-wrap {
+      padding: 18px;
+      display: grid;
+      gap: 14px;
+    }
+
+    .stage-topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .stage-title {
+      display: grid;
+      gap: 4px;
+    }
+
+    .stage-title strong {
+      font-size: 1.1rem;
+    }
+
+    .canvas-shell {
+      position: relative;
+      border-radius: 20px;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.03), transparent),
+        #000;
+      aspect-ratio: 16 / 10;
+      min-height: 320px;
+    }
+
+    canvas {
+      width: 100%;
+      height: 100%;
+      display: block;
+      image-rendering: pixelated;
+    }
+
+    .caption {
+      position: absolute;
+      inset: auto 16px 16px 16px;
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      color: rgba(255, 255, 255, 0.84);
+      font-size: 0.92rem;
+      pointer-events: none;
+    }
+
+    .notes {
+      grid-column: 1 / -1;
+      padding: 18px 20px;
+      display: grid;
+      gap: 12px;
+    }
+
+    .source-list {
+      display: grid;
+      gap: 8px;
+      line-height: 1.45;
+    }
+
+    .source-list a {
+      color: #9ce6ff;
+    }
+
+    .legend {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+    }
+
+    .legend-card {
+      padding: 14px;
+      border-radius: 16px;
+      background: var(--panel-strong);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .legend-card strong {
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    .credit {
+      font-size: 0.92rem;
+      line-height: 1.45;
+    }
+
+    @media (max-width: 980px) {
+      .page {
+        grid-template-columns: 1fr;
+      }
+
+      .legend {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .big-buttons,
+      .small-buttons,
+      .legend {
+        grid-template-columns: 1fr;
+      }
+
+      h1 {
+        font-size: 1.6rem;
+      }
+
+      .page {
+        width: min(100% - 12px, 100%);
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <section class="panel" aria-label="Commandes de l'éditeur">
+      <div class="hero">
+        <h1>Mini Demo Maker</h1>
+        <p>Un mini editeur demoscene HTML tres simple. Clique sur des gros boutons, ecris ton texte, et regarde la magie.</p>
+      </div>
+
+      <div class="group">
+        <div class="group-title">1. Choisis une scene</div>
+        <div class="big-buttons" id="presetButtons">
+          <button data-preset="stars" class="active">Etoiles</button>
+          <button data-preset="plasma">Plasma</button>
+          <button data-preset="rasters">Barres</button>
+          <button data-preset="scroll">Scroller</button>
+          <button data-preset="mix">Mix</button>
+          <button id="randomButton">Surprise</button>
+        </div>
+      </div>
+
+      <div class="group">
+        <div class="group-title">2. Ecris ton message</div>
+        <label for="mainText">Texte geant
+          <input id="mainText" type="text" maxlength="40" value="BONJOUR DEMOSCENE">
+        </label>
+        <label for="scrollText">Texte qui defile
+          <textarea id="scrollText">SALUT LES AMIS - APPUIE SUR SURPRISE - TESTE LES ETOILES - FAIS BRILLER TON ECRAN !</textarea>
+        </label>
+      </div>
+
+      <div class="group">
+        <div class="group-title">3. Choisis les couleurs</div>
+        <label for="paletteSelect">Palette
+          <select id="paletteSelect">
+            <option value="ocean">Ocean retro</option>
+            <option value="sunset">Coucher de soleil</option>
+            <option value="mint">Menthe arcade</option>
+            <option value="candy">Bonbon pop</option>
+          </select>
+        </label>
+      </div>
+
+      <div class="group">
+        <div class="group-title">4. Reglages faciles</div>
+        <label for="speedRange">Vitesse
+          <div class="range-row">
+            <input id="speedRange" type="range" min="1" max="10" value="5">
+            <span class="pill" id="speedValue">5</span>
+          </div>
+        </label>
+        <label for="zoomRange">Zoom
+          <div class="range-row">
+            <input id="zoomRange" type="range" min="1" max="10" value="5">
+            <span class="pill" id="zoomValue">5</span>
+          </div>
+        </label>
+      </div>
+
+      <div class="group">
+        <div class="group-title">5. Actions</div>
+        <div class="small-buttons">
+          <button id="playPauseButton">Pause</button>
+          <button id="saveButton">Image PNG</button>
+          <button id="resetButton">Reset</button>
+        </div>
+        <p class="hint">Astuce: commence avec <strong>Etoiles</strong> ou <strong>Mix</strong>. Ce sont les plus funs.</p>
+      </div>
+    </section>
+
+    <section class="stage-wrap" aria-label="Apercu de la demo">
+      <div class="stage-topbar">
+        <div class="stage-title">
+          <strong>Apercu en direct</strong>
+          <span class="hint">Canvas oldschool, gros texte, scroller, rasters et plasma.</span>
+        </div>
+        <div class="readout-row">
+          <span class="pill" id="modePill">Mode: Etoiles</span>
+          <span class="pill" id="statusPill">Animation: ON</span>
+        </div>
+      </div>
+
+      <div class="canvas-shell">
+        <canvas id="demoCanvas" width="960" height="600"></canvas>
+        <div class="caption">
+          <span>Mini Demo Maker</span>
+          <span>Kid mode</span>
+        </div>
+      </div>
+
+      <div class="legend">
+        <div class="legend-card">
+          <strong>Etoiles</strong>
+          Fond spatial avec mouvement doux.
+        </div>
+        <div class="legend-card">
+          <strong>Plasma</strong>
+          Couleurs qui ondulent comme de la gelatine.
+        </div>
+        <div class="legend-card">
+          <strong>Barres</strong>
+          Rasters horizontaux facon oldschool.
+        </div>
+        <div class="legend-card">
+          <strong>Scroller</strong>
+          Texte qui defile en bas de l'ecran.
+        </div>
+      </div>
+    </section>
+
+    <section class="notes" aria-label="Sources et credits">
+      <h2>Sources d'inspiration</h2>
+      <div class="source-list">
+        <div>Technique generale: <a href="https://codef.santo.fr/" target="_blank" rel="noreferrer">CODEF, Canvas Oldschool Demo Effects Framework</a> pour l'idee de faire des demos oldschool dans le navigateur avec HTML5 Canvas.</div>
+        <div>Tutoriels debutants: <a href="https://namwollem.blogspot.com/p/codef-basics.html" target="_blank" rel="noreferrer">Mellow Man's guide to CODEF</a>, notamment l'approche pas-a-pas, le canvas, les gradients, les rasters, le starfield et le scrolltext.</div>
+        <div>Culture demoscene: <a href="https://democyclopedie.wordpress.com/2017/04/03/differents-types-de-demos/" target="_blank" rel="noreferrer">Democyclopedie - Differents types de demos</a> pour les notions de menu, megademos, intros et scrollers.</div>
+        <div>Liste des effets: <a href="https://democyclopedie.wordpress.com/2015/04/01/liste-des-effets/" target="_blank" rel="noreferrer">Democyclopedie - Liste des effets</a> pour les effets retenus ici: plasma, rasters, menu et scrollers.</div>
+        <div>Liens Perplexity donnes par l'utilisateur: gardes comme pistes editoriales, mais leur contenu n'etait pas lisible directement depuis mon environnement. Les choix ci-dessus sont donc bases sur les sources publiques accessibles et sur une inference prudente a partir des titres.</div>
+      </div>
+      <p class="credit">
+        Cette version reste volontairement hyper simple: pas besoin de coder. Tu cliques, tu ecris, tu joues.
+      </p>
+    </section>
+  </main>
+
+  <script>
+    const canvas = document.getElementById("demoCanvas");
+    const ctx = canvas.getContext("2d");
+
+    const mainTextInput = document.getElementById("mainText");
+    const scrollTextInput = document.getElementById("scrollText");
+    const paletteSelect = document.getElementById("paletteSelect");
+    const speedRange = document.getElementById("speedRange");
+    const zoomRange = document.getElementById("zoomRange");
+    const speedValue = document.getElementById("speedValue");
+    const zoomValue = document.getElementById("zoomValue");
+    const modePill = document.getElementById("modePill");
+    const statusPill = document.getElementById("statusPill");
+    const playPauseButton = document.getElementById("playPauseButton");
+    const saveButton = document.getElementById("saveButton");
+    const resetButton = document.getElementById("resetButton");
+    const randomButton = document.getElementById("randomButton");
+    const presetButtons = [...document.querySelectorAll("[data-preset]")];
+
+    const palettes = {
+      ocean: ["#05131f", "#0d2f67", "#1bc6ff", "#e9fbff", "#7dffcc"],
+      sunset: ["#18061f", "#5f0d51", "#ff6b6b", "#ffc75f", "#fff4c9"],
+      mint: ["#041510", "#0a5d55", "#4dffcf", "#d7fff4", "#8ad8ff"],
+      candy: ["#1b0836", "#6f2bff", "#ff4fa7", "#ffd166", "#fff7e8"]
+    };
+
+    const presetConfig = {
+      stars: { stars: true, plasma: false, rasters: false, scroll: true },
+      plasma: { stars: false, plasma: true, rasters: false, scroll: true },
+      rasters: { stars: false, plasma: false, rasters: true, scroll: true },
+      scroll: { stars: false, plasma: false, rasters: false, scroll: true },
+      mix: { stars: true, plasma: true, rasters: true, scroll: true }
+    };
+
+    const defaultState = {
+      preset: "stars",
+      speed: 5,
+      zoom: 5,
+      palette: "ocean",
+      mainText: "BONJOUR DEMOSCENE",
+      scrollText: "SALUT LES AMIS - APPUIE SUR SURPRISE - TESTE LES ETOILES - FAIS BRILLER TON ECRAN !"
+    };
+
+    const state = { ...defaultState, playing: true };
+
+    const stars = Array.from({ length: 120 }, () => ({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height,
+      z: Math.random() * 1 + 0.2,
+      size: Math.random() * 2 + 0.4
+    }));
+
+    let frame = 0;
+    let scrollerX = canvas.width;
+
+    function clamp(value, min, max) {
+      return Math.max(min, Math.min(max, value));
+    }
+
+    function setPreset(name) {
+      state.preset = name;
+      presetButtons.forEach((button) => {
+        button.classList.toggle("active", button.dataset.preset === name);
+      });
+      modePill.textContent = "Mode: " + labelForPreset(name);
+    }
+
+    function labelForPreset(name) {
+      const labels = {
+        stars: "Etoiles",
+        plasma: "Plasma",
+        rasters: "Barres",
+        scroll: "Scroller",
+        mix: "Mix"
+      };
+      return labels[name] || "Mix";
+    }
+
+    function syncControlsFromState() {
+      mainTextInput.value = state.mainText;
+      scrollTextInput.value = state.scrollText;
+      paletteSelect.value = state.palette;
+      speedRange.value = state.speed;
+      zoomRange.value = state.zoom;
+      speedValue.textContent = String(state.speed);
+      zoomValue.textContent = String(state.zoom);
+      playPauseButton.textContent = state.playing ? "Pause" : "Lecture";
+      statusPill.textContent = "Animation: " + (state.playing ? "ON" : "OFF");
+      setPreset(state.preset);
+    }
+
+    function randomChoice(items) {
+      return items[Math.floor(Math.random() * items.length)];
+    }
+
+    function applyRandomPreset() {
+      const presets = Object.keys(presetConfig);
+      const words = [
+        "SUPER DEMO",
+        "BONJOUR LES COPAINS",
+        "PIXEL PARTY",
+        "ETOILES MAGIC",
+        "MEGA FUN",
+        "HELLO RETRO"
+      ];
+      const scrolls = [
+        "BRAVO TU AS FAIT UNE DEMO - CLIQUE ENCORE - CHANGE LES COULEURS -",
+        "MINI SCROLLER EN ACTION - VIVE LE PIXEL - VIVE LE CANVAS -",
+        "KID MODE ACTIVE - TOUT EST PLUS SIMPLE - ET PLUS LUMINEUX -",
+        "UNE PETITE DEMO PEUT DEJA ETRE TRES COOL -"
+      ];
+
+      state.preset = randomChoice(presets);
+      state.palette = randomChoice(Object.keys(palettes));
+      state.speed = 1 + Math.floor(Math.random() * 10);
+      state.zoom = 1 + Math.floor(Math.random() * 10);
+      state.mainText = randomChoice(words);
+      state.scrollText = randomChoice(scrolls);
+      scrollerX = canvas.width;
+      syncControlsFromState();
+    }
+
+    function resetToDefault() {
+      Object.assign(state, defaultState, { playing: true });
+      scrollerX = canvas.width;
+      syncControlsFromState();
+    }
+
+    function drawBackground(colors) {
+      const gradient = ctx.createLinearGradient(0, 0, 0, canvas.height);
+      gradient.addColorStop(0, colors[0]);
+      gradient.addColorStop(0.5, colors[1]);
+      gradient.addColorStop(1, "#000000");
+      ctx.fillStyle = gradient;
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+    }
+
+    function drawStars(colors, speedScale) {
+      ctx.save();
+      for (const star of stars) {
+        star.x -= star.z * (0.8 + speedScale * 0.35);
+        if (star.x < -12) {
+          star.x = canvas.width + Math.random() * 80;
+          star.y = Math.random() * canvas.height;
+        }
+        ctx.fillStyle = colors[3];
+        ctx.globalAlpha = clamp(0.4 + star.z * 0.8, 0.3, 1);
+        ctx.fillRect(star.x, star.y, star.size + star.z, star.size + star.z);
+      }
+      ctx.restore();
+    }
+
+    function drawRasters(colors, speedScale) {
+      const bandHeight = 22 + state.zoom * 1.6;
+      for (let y = 0; y < canvas.height; y += bandHeight) {
+        const wave = Math.sin((y * 0.025) + frame * 0.025 * speedScale);
+        const alpha = 0.18 + ((wave + 1) * 0.18);
+        ctx.fillStyle = wave > 0 ? colors[2] : colors[4];
+        ctx.globalAlpha = alpha;
+        ctx.fillRect(0, y + Math.sin(frame * 0.03 + y * 0.04) * 8, canvas.width, bandHeight - 3);
+      }
+      ctx.globalAlpha = 1;
+    }
+
+    function drawPlasma(colors, speedScale) {
+      const cell = Math.max(10, 26 - state.zoom);
+      for (let y = 0; y < canvas.height; y += cell) {
+        for (let x = 0; x < canvas.width; x += cell) {
+          const v =
+            Math.sin((x + frame * speedScale * 2.1) * 0.018) +
+            Math.sin((y - frame * speedScale * 1.7) * 0.022) +
+            Math.sin((x + y + frame * speedScale * 1.3) * 0.014);
+
+          if (v < -0.6) ctx.fillStyle = colors[0];
+          else if (v < 0.1) ctx.fillStyle = colors[1];
+          else if (v < 0.8) ctx.fillStyle = colors[2];
+          else ctx.fillStyle = colors[4];
+
+          ctx.globalAlpha = 0.22 + ((v + 3) / 6) * 0.5;
+          ctx.fillRect(x, y, cell + 1, cell + 1);
+        }
+      }
+      ctx.globalAlpha = 1;
+    }
+
+    function drawTitle(colors, speedScale) {
+      const wave = Math.sin(frame * 0.04 * speedScale) * (8 + state.zoom * 1.5);
+      ctx.save();
+      ctx.textAlign = "center";
+      ctx.textBaseline = "middle";
+      ctx.font = `900 ${88 + state.zoom * 4}px Trebuchet MS`;
+      ctx.fillStyle = "rgba(0,0,0,0.35)";
+      ctx.fillText(state.mainText, canvas.width / 2 + 5, canvas.height / 2 + 6 + wave);
+      ctx.fillStyle = colors[4];
+      ctx.shadowColor = colors[2];
+      ctx.shadowBlur = 26;
+      ctx.fillText(state.mainText, canvas.width / 2, canvas.height / 2 + wave);
+      ctx.font = `700 ${22 + state.zoom * 1.2}px Trebuchet MS`;
+      ctx.shadowBlur = 0;
+      ctx.fillStyle = colors[3];
+      ctx.fillText("Mini scene oldschool en HTML", canvas.width / 2, canvas.height / 2 + 80 + wave * 0.4);
+      ctx.restore();
+    }
+
+    function drawScroll(colors, speedScale) {
+      const text = " " + state.scrollText.trim() + " ";
+      ctx.save();
+      ctx.font = `900 ${28 + state.zoom * 1.2}px Verdana`;
+      ctx.textBaseline = "middle";
+      const y = canvas.height - 56 + Math.sin(frame * 0.06 * speedScale) * 8;
+      ctx.fillStyle = "rgba(0,0,0,0.4)";
+      ctx.fillRect(0, canvas.height - 96, canvas.width, 74);
+      ctx.fillStyle = colors[2];
+      ctx.shadowColor = colors[4];
+      ctx.shadowBlur = 18;
+      ctx.fillText(text, scrollerX, y);
+      const textWidth = ctx.measureText(text).width;
+      scrollerX -= 2 + speedScale * 0.9;
+      if (scrollerX < -textWidth - 20) {
+        scrollerX = canvas.width + 10;
+      }
+      ctx.restore();
+    }
+
+    function drawChrome(colors) {
+      ctx.save();
+      ctx.strokeStyle = "rgba(255,255,255,0.12)";
+      ctx.lineWidth = 3;
+      ctx.strokeRect(10, 10, canvas.width - 20, canvas.height - 20);
+      ctx.fillStyle = colors[3];
+      ctx.globalAlpha = 0.14;
+      ctx.fillRect(16, 16, canvas.width - 32, 22);
+      ctx.globalAlpha = 1;
+      ctx.restore();
+    }
+
+    function render() {
+      const colors = palettes[state.palette];
+      const speedScale = Number(state.speed);
+      const config = presetConfig[state.preset] || presetConfig.mix;
+
+      drawBackground(colors);
+      if (config.plasma) drawPlasma(colors, speedScale);
+      if (config.rasters) drawRasters(colors, speedScale);
+      if (config.stars) drawStars(colors, speedScale);
+      drawTitle(colors, speedScale);
+      if (config.scroll) drawScroll(colors, speedScale);
+      drawChrome(colors);
+    }
+
+    function tick() {
+      if (state.playing) {
+        frame += 1;
+      }
+      render();
+      requestAnimationFrame(tick);
+    }
+
+    mainTextInput.addEventListener("input", () => {
+      state.mainText = mainTextInput.value.toUpperCase();
+    });
+
+    scrollTextInput.addEventListener("input", () => {
+      state.scrollText = scrollTextInput.value.toUpperCase();
+      scrollerX = canvas.width;
+    });
+
+    paletteSelect.addEventListener("change", () => {
+      state.palette = paletteSelect.value;
+    });
+
+    speedRange.addEventListener("input", () => {
+      state.speed = Number(speedRange.value);
+      speedValue.textContent = speedRange.value;
+    });
+
+    zoomRange.addEventListener("input", () => {
+      state.zoom = Number(zoomRange.value);
+      zoomValue.textContent = zoomRange.value;
+    });
+
+    presetButtons.forEach((button) => {
+      button.addEventListener("click", () => {
+        setPreset(button.dataset.preset);
+        scrollerX = canvas.width;
+      });
+    });
+
+    playPauseButton.addEventListener("click", () => {
+      state.playing = !state.playing;
+      playPauseButton.textContent = state.playing ? "Pause" : "Lecture";
+      statusPill.textContent = "Animation: " + (state.playing ? "ON" : "OFF");
+    });
+
+    saveButton.addEventListener("click", () => {
+      const link = document.createElement("a");
+      link.href = canvas.toDataURL("image/png");
+      link.download = "mini-demo-maker.png";
+      link.click();
+    });
+
+    resetButton.addEventListener("click", resetToDefault);
+    randomButton.addEventListener("click", applyRandomPreset);
+
+    syncControlsFromState();
+    tick();
+  </script>
+</body>
+</html>

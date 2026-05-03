@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Demoforge Codex - Fullscreen Demo</title>
+  <style>
+    :root {
+      --bg-0: #030712;
+      --bg-1: #071426;
+      --ink: #eef7ff;
+      --muted: #92a9d6;
+      --cyan: #6de8ff;
+      --gold: #ffd66b;
+      --lime: #95ffba;
+      --line: rgba(255, 255, 255, 0.14);
+      --panel: rgba(6, 12, 24, 0.6);
+      --shadow: 0 24px 60px rgba(0, 0, 0, 0.35);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 15% 18%, rgba(109, 232, 255, 0.18), transparent 20%),
+        radial-gradient(circle at 84% 10%, rgba(255, 214, 107, 0.14), transparent 18%),
+        linear-gradient(180deg, var(--bg-1), var(--bg-0));
+      color: var(--ink);
+      font-family: "IBM Plex Mono", "Trebuchet MS", monospace;
+    }
+
+    body {
+      position: relative;
+    }
+
+    canvas {
+      position: fixed;
+      inset: 0;
+      width: 100vw;
+      height: 100vh;
+      display: block;
+      image-rendering: pixelated;
+    }
+
+    .hud {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 20px;
+    }
+
+    .topbar,
+    .footer,
+    .center-card {
+      pointer-events: auto;
+    }
+
+    .topbar,
+    .footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .badge-row,
+    .button-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .badge,
+    .button,
+    .center-card {
+      border: 1px solid var(--line);
+      background: var(--panel);
+      backdrop-filter: blur(10px);
+      box-shadow: var(--shadow);
+    }
+
+    .badge {
+      padding: 10px 14px;
+      border-radius: 999px;
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .button {
+      appearance: none;
+      color: var(--ink);
+      border-radius: 999px;
+      padding: 11px 16px;
+      cursor: pointer;
+      min-height: 42px;
+      font: inherit;
+      transition: transform 120ms ease, border-color 120ms ease, background 120ms ease;
+      background:
+        linear-gradient(180deg, rgba(109, 232, 255, 0.16), rgba(57, 84, 165, 0.18)),
+        var(--panel);
+    }
+
+    .button.alt {
+      background:
+        linear-gradient(180deg, rgba(149, 255, 186, 0.16), rgba(42, 112, 71, 0.18)),
+        var(--panel);
+    }
+
+    .button:hover,
+    .button:focus-visible {
+      transform: translateY(-1px);
+      border-color: rgba(255, 255, 255, 0.3);
+      outline: none;
+    }
+
+    .center {
+      flex: 1;
+      display: grid;
+      place-items: center;
+      padding: 20px 0;
+    }
+
+    .center-card {
+      width: min(760px, calc(100vw - 40px));
+      border-radius: 28px;
+      padding: 26px;
+      text-align: center;
+      background:
+        linear-gradient(135deg, rgba(109, 232, 255, 0.1), rgba(255, 214, 107, 0.08)),
+        rgba(6, 12, 24, 0.48);
+    }
+
+    .eyebrow,
+    .meta {
+      color: var(--muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-size: 12px;
+    }
+
+    h1 {
+      margin: 10px 0 12px;
+      font-size: clamp(32px, 7vw, 82px);
+      line-height: 0.95;
+      letter-spacing: -0.04em;
+      text-transform: uppercase;
+      text-shadow: 0 0 26px rgba(109, 232, 255, 0.18);
+    }
+
+    .lead {
+      max-width: 52ch;
+      margin: 0 auto;
+      font-size: clamp(15px, 2vw, 18px);
+      color: #dfeaff;
+      line-height: 1.6;
+    }
+
+    .meta {
+      margin-top: 16px;
+    }
+
+    .footer {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .footer strong {
+      color: var(--gold);
+      font-weight: 600;
+    }
+
+    @media (max-width: 720px) {
+      .hud {
+        padding: 14px;
+      }
+
+      .center-card {
+        padding: 20px;
+        border-radius: 22px;
+      }
+
+      .topbar,
+      .footer {
+        align-items: stretch;
+      }
+    }
+  </style>
+</head>
+<body>
+  <canvas id="demo" aria-hidden="true"></canvas>
+
+  <div class="hud">
+    <div class="topbar">
+      <div class="badge-row">
+        <div class="badge">Demoforge Codex</div>
+        <div class="badge">HTML autonome</div>
+        <div class="badge">Canvas fullscreen</div>
+      </div>
+      <div class="button-row">
+        <button class="button" id="fullscreenBtn" type="button">Passer en plein écran</button>
+        <button class="button alt" id="pulseBtn" type="button">Changer d'ambiance</button>
+      </div>
+    </div>
+
+    <div class="center">
+      <section class="center-card">
+        <div class="eyebrow">Demo live inspirée de Demoforge</div>
+        <h1>Signal<br>Vector</h1>
+        <p class="lead">
+          Une démo plein écran façon demoscene avec étoiles, plasma, scanlines, texte géant et scroller.
+          Le tout dans un seul fichier HTML, facile à ouvrir, dupliquer et customiser.
+        </p>
+        <div class="meta">Astuce: touche <strong>F</strong> pour le plein écran, <strong>Space</strong> pour changer de palette</div>
+      </section>
+    </div>
+
+    <div class="footer">
+      <div>Effets: <strong>starfield</strong> + <strong>plasma</strong> + <strong>scanlines</strong> + <strong>scroller</strong></div>
+      <div>Fichier: <strong>fullscreen-demo.html</strong></div>
+    </div>
+  </div>
+
+  <script>
+    const canvas = document.getElementById("demo");
+    const ctx = canvas.getContext("2d");
+    const fullscreenBtn = document.getElementById("fullscreenBtn");
+    const pulseBtn = document.getElementById("pulseBtn");
+
+    const palettes = [
+      { glow: "#6de8ff", accent: "#ffd66b", haze: [0, 180, 255] },
+      { glow: "#95ffba", accent: "#ff7bc5", haze: [45, 255, 190] },
+      { glow: "#ffd66b", accent: "#6de8ff", haze: [255, 140, 55] }
+    ];
+
+    let paletteIndex = 0;
+    let width = 0;
+    let height = 0;
+    let dpr = Math.max(1, Math.min(window.devicePixelRatio || 1, 2));
+    let stars = [];
+    let startTime = performance.now();
+
+    function resize() {
+      dpr = Math.max(1, Math.min(window.devicePixelRatio || 1, 2));
+      width = window.innerWidth;
+      height = window.innerHeight;
+      canvas.width = Math.floor(width * dpr);
+      canvas.height = Math.floor(height * dpr);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      stars = Array.from({ length: Math.max(120, Math.floor((width * height) / 12000)) }, createStar);
+    }
+
+    function createStar() {
+      return {
+        x: Math.random() * width,
+        y: Math.random() * height,
+        z: Math.random() * 0.9 + 0.1,
+        size: Math.random() * 2.2 + 0.4
+      };
+    }
+
+    function cyclePalette() {
+      paletteIndex = (paletteIndex + 1) % palettes.length;
+    }
+
+    function drawBackground(t) {
+      const palette = palettes[paletteIndex];
+      const haze = palette.haze;
+      const g = ctx.createLinearGradient(0, 0, 0, height);
+      g.addColorStop(0, "#071426");
+      g.addColorStop(1, "#02050c");
+      ctx.fillStyle = g;
+      ctx.fillRect(0, 0, width, height);
+
+      const pulseA = 0.18 + Math.sin(t * 0.0005) * 0.06;
+      const pulseB = 0.12 + Math.cos(t * 0.0004) * 0.05;
+
+      ctx.fillStyle = `rgba(${haze[0]}, ${haze[1]}, 255, ${pulseA})`;
+      ctx.beginPath();
+      ctx.arc(width * 0.18, height * 0.24, Math.min(width, height) * 0.32, 0, Math.PI * 2);
+      ctx.fill();
+
+      ctx.fillStyle = `rgba(255, 190, 90, ${pulseB})`;
+      ctx.beginPath();
+      ctx.arc(width * 0.84, height * 0.12, Math.min(width, height) * 0.2, 0, Math.PI * 2);
+      ctx.fill();
+    }
+
+    function drawPlasma(t) {
+      const image = ctx.createImageData(width, height);
+      const data = image.data;
+      const stride = 4;
+      const step = Math.max(4, Math.floor(width / 220));
+
+      for (let y = 0; y < height; y += step) {
+        for (let x = 0; x < width; x += step) {
+          const v =
+            Math.sin(x * 0.012 + t * 0.0017) +
+            Math.sin(y * 0.016 + t * 0.0013) +
+            Math.sin((x + y) * 0.01 + t * 0.001) +
+            Math.sin(Math.sqrt(x * x + y * y) * 0.02 - t * 0.0022);
+
+          const n = (v + 4) / 8;
+          const r = Math.floor(20 + n * 60);
+          const g = Math.floor(40 + n * 120);
+          const b = Math.floor(80 + n * 175);
+          const a = Math.floor(34 + n * 40);
+
+          for (let yy = 0; yy < step; yy++) {
+            for (let xx = 0; xx < step; xx++) {
+              const px = x + xx;
+              const py = y + yy;
+              if (px >= width || py >= height) {
+                continue;
+              }
+              const index = (py * width + px) * stride;
+              data[index] = r;
+              data[index + 1] = g;
+              data[index + 2] = b;
+              data[index + 3] = a;
+            }
+          }
+        }
+      }
+
+      ctx.putImageData(image, 0, 0);
+    }
+
+    function drawStars(t) {
+      const palette = palettes[paletteIndex];
+      for (const star of stars) {
+        star.x -= (1.5 + star.z * 4.5) * (width / 1280);
+        if (star.x < -20) {
+          star.x = width + Math.random() * 80;
+          star.y = Math.random() * height;
+          star.z = Math.random() * 0.9 + 0.1;
+        }
+
+        const alpha = 0.2 + star.z * 0.7;
+        ctx.fillStyle = `${palette.glow}${Math.floor(alpha * 255).toString(16).padStart(2, "0")}`;
+        ctx.beginPath();
+        ctx.arc(star.x, star.y, star.size * star.z, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.strokeStyle = `rgba(255,255,255,${0.05 + star.z * 0.12})`;
+        ctx.beginPath();
+        ctx.moveTo(star.x + 2, star.y);
+        ctx.lineTo(star.x + 18 * star.z + Math.sin(t * 0.001 + star.y) * 4, star.y);
+        ctx.stroke();
+      }
+    }
+
+    function drawGrid(t) {
+      ctx.save();
+      ctx.translate(width / 2, height * 0.72);
+
+      for (let i = 0; i < 24; i++) {
+        const y = i * 26;
+        const scale = 1 + i * 0.12;
+        const w = width * scale;
+        ctx.strokeStyle = `rgba(109, 232, 255, ${0.18 - i * 0.006})`;
+        ctx.beginPath();
+        ctx.moveTo(-w / 2, y);
+        ctx.lineTo(w / 2, y);
+        ctx.stroke();
+      }
+
+      for (let i = -15; i <= 15; i++) {
+        ctx.strokeStyle = "rgba(255,255,255,0.06)";
+        ctx.beginPath();
+        ctx.moveTo(i * 60, 0);
+        ctx.lineTo(i * 150, height * 0.42 + Math.sin(t * 0.001 + i) * 10);
+        ctx.stroke();
+      }
+      ctx.restore();
+    }
+
+    function drawTitle(t) {
+      const palette = palettes[paletteIndex];
+      ctx.save();
+      ctx.textAlign = "center";
+      ctx.textBaseline = "middle";
+
+      const wobble = Math.sin(t * 0.0024) * 8;
+      ctx.font = `900 ${Math.max(48, width * 0.11)}px Arial Black, Impact, sans-serif`;
+      ctx.shadowColor = palette.glow;
+      ctx.shadowBlur = 24;
+      ctx.fillStyle = "rgba(255,255,255,0.92)";
+      ctx.fillText("SIGNAL VECTOR", width / 2, height * 0.36 + wobble);
+
+      ctx.shadowBlur = 0;
+      ctx.lineWidth = 2;
+      ctx.strokeStyle = palette.accent;
+      ctx.strokeText("SIGNAL VECTOR", width / 2, height * 0.36 + wobble);
+
+      ctx.font = `700 ${Math.max(14, width * 0.018)}px "IBM Plex Mono", monospace`;
+      ctx.fillStyle = "rgba(238,247,255,0.9)";
+      ctx.fillText("Demoforge fullscreen HTML showcase", width / 2, height * 0.47);
+      ctx.restore();
+    }
+
+    function drawScroller(t) {
+      const message = " DEMOFORGE CODEX  •  FULLSCREEN HTML DEMO  •  STANDALONE FILE  •  CUSTOMISABLE  •  PRESS F FOR FULLSCREEN  •  ";
+      ctx.save();
+      ctx.fillStyle = "rgba(4, 10, 20, 0.72)";
+      ctx.fillRect(0, height - 96, width, 62);
+
+      ctx.font = `700 ${Math.max(18, width * 0.022)}px "IBM Plex Mono", monospace`;
+      ctx.textBaseline = "middle";
+      ctx.fillStyle = palettes[paletteIndex].glow;
+      ctx.shadowColor = palettes[paletteIndex].glow;
+      ctx.shadowBlur = 16;
+
+      const metrics = ctx.measureText(message);
+      const loopWidth = metrics.width + 80;
+      let offset = -((t * 0.12) % loopWidth);
+      while (offset < width + loopWidth) {
+        ctx.fillText(message, offset, height - 64 + Math.sin((t + offset) * 0.01) * 4);
+        offset += loopWidth;
+      }
+      ctx.restore();
+    }
+
+    function drawScanlines(t) {
+      ctx.save();
+      ctx.fillStyle = "rgba(255,255,255,0.035)";
+      for (let y = 0; y < height; y += 4) {
+        ctx.fillRect(0, y, width, 1);
+      }
+
+      const sweep = (t * 0.18) % (height + 180) - 90;
+      const gradient = ctx.createLinearGradient(0, sweep - 60, 0, sweep + 60);
+      gradient.addColorStop(0, "rgba(255,255,255,0)");
+      gradient.addColorStop(0.5, "rgba(255,255,255,0.08)");
+      gradient.addColorStop(1, "rgba(255,255,255,0)");
+      ctx.fillStyle = gradient;
+      ctx.fillRect(0, sweep - 60, width, 120);
+      ctx.restore();
+    }
+
+    function frame(now) {
+      const t = now - startTime;
+      drawBackground(t);
+      drawPlasma(t);
+      drawGrid(t);
+      drawStars(t);
+      drawTitle(t);
+      drawScroller(t);
+      drawScanlines(t);
+      requestAnimationFrame(frame);
+    }
+
+    async function toggleFullscreen() {
+      if (!document.fullscreenElement) {
+        await document.documentElement.requestFullscreen();
+      } else {
+        await document.exitFullscreen();
+      }
+    }
+
+    fullscreenBtn.addEventListener("click", () => {
+      toggleFullscreen().catch(() => {});
+    });
+
+    pulseBtn.addEventListener("click", cyclePalette);
+
+    window.addEventListener("resize", resize);
+    window.addEventListener("keydown", (event) => {
+      if (event.key.toLowerCase() === "f") {
+        toggleFullscreen().catch(() => {});
+      }
+      if (event.code === "Space") {
+        event.preventDefault();
+        cyclePalette();
+      }
+    });
+
+    resize();
+    requestAnimationFrame(frame);
+  </script>
+</body>
+</html>

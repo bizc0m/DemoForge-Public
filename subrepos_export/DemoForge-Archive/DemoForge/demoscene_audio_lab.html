@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DEMOSCENE AUDIO LAB</title>
+<style>
+:root{
+  --bg:#efe9d9;--bg2:#e5ddc8;--ink:#1a1a1a;--soft:#3a3a3a;--line:#1a1a1a;
+  --ok:#236b2e;--warn:#8a5b00;--bad:#8a1f1f;--cyan:#155e63;
+}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;overflow:hidden;background:var(--bg);color:var(--ink);font-family:ui-monospace,"JetBrains Mono","Cascadia Mono",Menlo,Consolas,monospace;text-transform:uppercase;letter-spacing:.06em;font-size:11px}
+button,input,select{font:inherit;text-transform:uppercase;letter-spacing:.06em;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:0;padding:5px 7px}
+button{cursor:pointer}button:hover:not(:disabled){background:var(--ink);color:var(--bg)}button:disabled{opacity:.35;cursor:not-allowed}input[type=file]{display:none}input[type=range]{padding:0;height:18px}canvas{display:block;width:100%;height:100%;background:#f7f1df;border:1px solid var(--line)}
+#app{height:100%;display:grid;grid-template-columns:270px minmax(420px,1fr) 310px;grid-template-rows:34px 1fr 24px}
+#top{grid-column:1/4;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:8px;padding:4px 8px;background:var(--bg2)}
+.logo{font-weight:700}.spacer{flex:1}.tag{border:1px solid var(--line);padding:3px 6px;background:var(--bg)}
+.panel{overflow:auto;padding:8px;border-right:1px solid var(--line)}#right{border-right:0;border-left:1px solid var(--line)}
+.section{border:1px solid var(--line);margin-bottom:8px;background:var(--bg)}.section h2{margin:0;padding:6px 8px;font-size:11px;border-bottom:1px solid var(--line);background:var(--bg2);cursor:pointer}.section .body{padding:7px;display:grid;gap:6px}.section.closed .body{display:none}.section h2:before{content:"▾ ";}.section.closed h2:before{content:"▸ ";}
+.drop{min-height:90px;border:1px dashed var(--line);display:grid;place-items:center;text-align:center;padding:10px;background:#f4eedf}.drop.hot{background:#fff6cf}
+.row{display:flex;gap:5px;align-items:center}.row>*{flex:1}.row .small{flex:0 0 auto}.meta{display:grid;grid-template-columns:95px 1fr;gap:3px 6px}.muted{color:var(--soft)}
+.list{display:grid;gap:4px}.file{border:1px solid var(--line);padding:6px;background:#f8f2e4;cursor:pointer}.file.active{background:var(--ink);color:var(--bg)}.badge{float:right;border:1px solid currentColor;padding:1px 4px;font-size:9px}.native{color:var(--ok)}.tracker{color:var(--warn)}.chiptune{color:var(--cyan)}.unsupported{color:var(--bad)}
+#center{position:relative;padding:8px;display:grid;grid-template-rows:1fr 112px;gap:8px;overflow:hidden}.stage{position:relative;min-height:300px}.hud{position:absolute;left:8px;top:8px;background:var(--bg);border:1px solid var(--line);padding:4px 6px}.playhead{height:18px;border:1px solid var(--line);position:relative;background:#f8f2e4;cursor:pointer}.playbar{position:absolute;left:0;top:0;bottom:0;background:var(--ink);width:0}.playlabel{position:absolute;inset:0;text-align:center;line-height:17px;mix-blend-mode:difference;color:white}
+.meter{height:18px;border:1px solid var(--line);position:relative;background:#f8f2e4}.meter span{position:absolute;left:0;top:0;bottom:0;background:var(--ink);width:0}.meter label{position:absolute;left:5px;top:2px;color:var(--bg);mix-blend-mode:difference}.grid2{display:grid;grid-template-columns:1fr 1fr;gap:5px}.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:5px}.out{height:130px;overflow:auto;white-space:pre-wrap;background:#f8f2e4;border:1px solid var(--line);padding:6px;text-transform:none;letter-spacing:0;font-size:10px}.status{grid-column:1/4;border-top:1px solid var(--line);display:flex;align-items:center;gap:10px;padding:3px 8px;background:var(--bg2)}
+</style>
+</head>
+<body>
+<div id="app">
+  <div id="top"><div class="logo">DEMOSCENE AUDIO LAB</div><div class="tag">V1 / OFFLINE</div><div class="spacer"></div><div id="support" class="tag">WEB AUDIO READY</div></div>
+  <aside id="left" class="panel">
+    <section class="section"><h2>IMPORT</h2><div class="body">
+      <label class="drop" id="drop">DÉPOSER AUDIO ICI<br><span class="muted">MP3 WAV OGG FLAC MOD XM S3M IT SID YM NSF SPC VGM GYM</span></label>
+      <button id="pickBtn">IMPORTER AUDIO</button><input id="fileInput" type="file" multiple accept="audio/*,.mp3,.wav,.ogg,.flac,.mod,.xm,.s3m,.it,.sid,.ym,.nsf,.spc,.vgm,.gym">
+      <div id="fileList" class="list"></div>
+    </div></section>
+    <section class="section"><h2>PLAYER</h2><div class="body">
+      <div class="row"><button id="playBtn" disabled>PLAY</button><button id="pauseBtn" disabled>PAUSE</button><button id="stopBtn" disabled>STOP</button></div>
+      <div class="playhead" id="seek"><div class="playbar" id="playbar"></div><div class="playlabel" id="timeLabel">00:00 / 00:00</div></div>
+      <div class="row"><span class="small">VOLUME</span><input id="vol" type="range" min="0" max="1" step="0.01" value="0.85"></div>
+      <div class="row"><button id="loopBtn">LOOP OFF</button><button id="clearBtn">CLEAR</button></div>
+    </div></section>
+    <section class="section"><h2>FICHIERS SUPPORTÉS</h2><div class="body meta">
+      <b>NATIF</b><span>MP3 WAV OGG FLAC*</span><b>TRACKER</b><span>MOD XM S3M IT</span><b>CHIP</b><span>SID YM NSF SPC VGM GYM</span><b>RÈGLE</b><span>PAS DE FAUSSE LECTURE SANS PARSER</span>
+    </div></section>
+  </aside>
+  <main id="center">
+    <div class="stage"><canvas id="vis" width="1280" height="720"></canvas><div class="hud" id="hud">NO FILE</div></div>
+    <div class="grid2"><canvas id="wave" width="640" height="110"></canvas><canvas id="spec" width="640" height="110"></canvas></div>
+  </main>
+  <aside id="right" class="panel">
+    <section class="section"><h2>ANALYSE AUDIO</h2><div class="body">
+      <div class="meter"><span id="mAmp"></span><label>AMPLITUDE</label></div><div class="meter"><span id="mBass"></span><label>BASS</label></div><div class="meter"><span id="mMid"></span><label>MID</label></div><div class="meter"><span id="mTreb"></span><label>TREBLE</label></div>
+      <div class="meta"><b>AMP</b><span id="vAmp">0.000</span><b>BASS</b><span id="vBass">0.000</span><b>MID</b><span id="vMid">0.000</span><b>TREBLE</b><span id="vTreb">0.000</span></div>
+    </div></section>
+    <section class="section"><h2>TRACKER PANEL</h2><div class="body meta" id="trackerPanel">
+      <b>EXT</b><span>-</span><b>STATUT</b><span>AUCUN TRACKER</span><b>PATTERN</b><span>-</span><b>ROW</b><span>-</span><b>BPM</b><span>-</span><b>SPEED</b><span>-</span><b>CHANNELS</b><span>-</span>
+    </div></section>
+    <section class="section"><h2>VISUALIZER</h2><div class="body">
+      <select id="effect"><option value="pulse">SCALE PULSE</option><option value="bass">BASS BOUNCE</option><option value="treble">TREBLE FLICKER</option><option value="rotate">MID ROTATION</option><option value="tunnel">WAVEFORM TUNNEL</option></select>
+    </div></section>
+    <section class="section"><h2>EXPORT / INTEGRATION</h2><div class="body">
+      <button id="exportAnalysis">EXPORTER JSON ANALYSE</button><button id="exportConfig">EXPORTER CONFIG</button><button id="copyObj">COPIER OBJET JS</button><div id="out" class="out">AUCUNE DONNÉE</div>
+    </div></section>
+  </aside>
+  <div class="status"><span id="status">READY</span><span class="spacer"></span><span>NATIVE = RÉEL / TRACKER+CHIP = INSPECTION SANS PARSER</span></div>
+</div>
+<script>
+'use strict';
+const $=s=>document.querySelector(s); const $$=s=>Array.from(document.querySelectorAll(s));
+const fmt=t=>{if(!isFinite(t)||t<0)t=0;let m=Math.floor(t/60),s=Math.floor(t%60);return String(m).padStart(2,'0')+':'+String(s).padStart(2,'0')};
+const extOf=f=>(f.name.split('.').pop()||'').toLowerCase();
+const state={files:[],active:null,adapter:null,loop:false,analysis:{amplitude:0,bass:0,mid:0,treble:0},config:{effect:'pulse',volume:.85,loop:false},lastExport:null};
+
+class AudioFileRouter{
+ static nativeExt=['mp3','wav','ogg','oga','flac','m4a','aac','webm']; static trackerExt=['mod','xm','s3m','it']; static chipExt=['sid','ym','nsf','spc','vgm','gym'];
+ static detect(file){const e=extOf(file), mime=(file.type||'').toLowerCase(); if(this.nativeExt.includes(e)||mime.startsWith('audio/'))return {type:'native',ext:e,mime}; if(this.trackerExt.includes(e))return {type:'tracker',ext:e,mime}; if(this.chipExt.includes(e))return {type:'chiptune',ext:e,mime}; return {type:'unsupported',ext:e||'none',mime};}
+}
+class AudioAnalyzer{
+ constructor(ctx){this.ctx=ctx;this.analyser=ctx.createAnalyser();this.analyser.fftSize=2048;this.freq=new Uint8Array(this.analyser.frequencyBinCount);this.time=new Uint8Array(this.analyser.fftSize);}
+ connect(node){node.connect(this.analyser);}
+ update(){this.analyser.getByteFrequencyData(this.freq);this.analyser.getByteTimeDomainData(this.time);let sum=0;for(const v of this.time){const x=(v-128)/128;sum+=x*x}const amp=Math.min(1,Math.sqrt(sum/this.time.length)*2.4);const band=(a,b)=>{let n=0,s=0;for(let i=a;i<=b&&i<this.freq.length;i++){s+=this.freq[i]/255;n++}return n?s/n:0};let ny=this.ctx.sampleRate/2, bin=ny/this.freq.length;let idx=hz=>Math.max(0,Math.min(this.freq.length-1,Math.floor(hz/bin)));return {amplitude:amp,bass:band(idx(20),idx(250)),mid:band(idx(250),idx(3000)),treble:band(idx(3000),idx(12000)),freq:this.freq,time:this.time};}
+}
+class NativeAudioAdapter{
+ constructor(){this.ctx=null;this.buffer=null;this.source=null;this.gain=null;this.analyzer=null;this.startedAt=0;this.offset=0;this.playing=false;this.file=null;this.url=null;}
+ canHandle(file){return AudioFileRouter.detect(file).type==='native'}
+ async load(file){this.stop();this.file=file;this.ctx=this.ctx||new (window.AudioContext||window.webkitAudioContext)();const arr=await file.arrayBuffer();this.buffer=await this.ctx.decodeAudioData(arr.slice(0));this.gain=this.ctx.createGain();this.gain.gain.value=state.config.volume;this.analyzer=new AudioAnalyzer(this.ctx);this.analyzer.connect(this.gain);this.gain.connect(this.ctx.destination);return this;}
+ _makeSource(){const s=this.ctx.createBufferSource();s.buffer=this.buffer;s.loop=state.loop;s.connect(this.gain);s.onended=()=>{if(!state.loop){this.playing=false;this.offset=0}};return s;}
+ async play(){if(!this.buffer)return;await this.ctx.resume();if(this.playing)return;this.source=this._makeSource();this.startedAt=this.ctx.currentTime-this.offset;this.source.start(0,this.offset%this.buffer.duration);this.playing=true;}
+ pause(){if(!this.playing)return;this.offset=this.getTime();try{this.source.stop()}catch(e){}this.playing=false;}
+ stop(){if(this.source){try{this.source.stop()}catch(e){}}this.source=null;this.offset=0;this.playing=false;}
+ seek(t){this.offset=Math.max(0,Math.min(this.getDuration(),t));if(this.playing){try{this.source.stop()}catch(e){}this.playing=false;this.play();}}
+ setVolume(v){if(this.gain)this.gain.gain.value=v;}
+ getTime(){if(!this.buffer)return 0;return this.playing?((this.ctx.currentTime-this.startedAt)%this.buffer.duration):this.offset;}
+ getDuration(){return this.buffer?this.buffer.duration:0;}
+ getAmplitude(){return state.analysis.amplitude||0}
+ getBands(){return {bass:state.analysis.bass||0,mid:state.analysis.mid||0,treble:state.analysis.treble||0}}
+ updateAnalysis(){if(!this.analyzer)return {amplitude:0,bass:0,mid:0,treble:0,freq:new Uint8Array(0),time:new Uint8Array(0)};return this.analyzer.update();}
+}
+class TrackerAdapter{
+ constructor(){this.file=null;this.meta=null;}
+ canHandle(file){return AudioFileRouter.detect(file).type==='tracker'}
+ async load(file){this.file=file;const e=extOf(file);this.meta={type:'tracker',name:file.name,extension:e,size:file.size,status:'PARSER REQUIS',pattern:null,row:null,bpm:null,speed:null,channels:null,playable:false}; if(e==='xm'){const head=new Uint8Array(await file.slice(0,336).arrayBuffer()); const txt=new TextDecoder('latin1').decode(head); const name=txt.slice(17,37).replace(/\0/g,'').trim(); this.meta.moduleName=name||null; this.meta.status='XM DÉTECTÉ / PLAYER NON EMBARQUÉ';} return this;}
+ play(){return false} pause(){return false} stop(){return false} getTime(){return 0} getDuration(){return 0} getPattern(){return null} getRow(){return null} getBPM(){return null} getSpeed(){return null} getChannels(){return null} getAmplitude(){return 0} getBands(){return {bass:0,mid:0,treble:0}}
+}
+class ChiptuneAdapter{
+ constructor(){this.file=null;this.meta=null}
+ canHandle(file){return AudioFileRouter.detect(file).type==='chiptune'}
+ async load(file){this.file=file;this.meta={type:'chiptune',name:file.name,extension:extOf(file),size:file.size,status:'PLAYER CHIPTUNE REQUIS',playable:false};return this}
+ play(){return false} pause(){return false} stop(){return false} getTime(){return 0} getDuration(){return 0} getAmplitude(){return 0} getBands(){return {bass:0,mid:0,treble:0}}
+}
+class VisualEngine{
+ constructor(vis,wave,spec){this.c=vis;this.ctx=vis.getContext('2d');this.w=wave;this.wx=wave.getContext('2d');this.s=spec;this.sx=spec.getContext('2d');this.phase=0;}
+ draw(a){const ctx=this.ctx,W=this.c.width,H=this.c.height,t=performance.now()/1000;ctx.fillStyle='#efe9d9';ctx.fillRect(0,0,W,H);ctx.strokeStyle='#1a1a1a';ctx.lineWidth=2;ctx.strokeRect(20,20,W-40,H-40);const amp=a.amplitude||0,b=a.bass||0,m=a.mid||0,tr=a.treble||0;const effect=state.config.effect;ctx.save();ctx.translate(W/2,H/2);let scale=1+amp*.45, y=0, rot=0, flick=1;if(effect==='bass')y=-b*120;if(effect==='rotate')rot=Math.sin(t*2)*m*1.8;if(effect==='treble')flick=.35+tr*.9;if(effect==='tunnel')this._tunnel(ctx,W,H,a.time,amp);ctx.rotate(rot);ctx.scale(effect==='pulse'?scale:1,effect==='pulse'?scale:1);ctx.globalAlpha=flick;ctx.fillStyle='#1a1a1a';ctx.fillRect(-120,-55+y,240,110);ctx.fillStyle='#efe9d9';ctx.font='22px ui-monospace,monospace';ctx.textAlign='center';ctx.fillText('AUDIO',0,-8+y);ctx.font='13px ui-monospace,monospace';ctx.fillText(effect.replace(/_/g,' '),0,22+y);ctx.restore();}
+ _tunnel(ctx,W,H,time,amp){ctx.save();ctx.translate(W/2,H/2);ctx.strokeStyle='#1a1a1a';for(let i=0;i<24;i++){let r=(i*28+(performance.now()/20)%28)*(1+amp*.2);ctx.beginPath();ctx.rect(-r,-r*.55,r*2,r*1.1);ctx.stroke()}ctx.restore();}
+ drawWave(time){const ctx=this.wx,W=this.w.width,H=this.w.height;ctx.fillStyle='#f7f1df';ctx.fillRect(0,0,W,H);ctx.strokeStyle='#1a1a1a';ctx.beginPath();if(time&&time.length){for(let x=0;x<W;x++){let v=time[Math.floor(x/W*time.length)]||128;let y=(v/255)*H;if(x)ctx.lineTo(x,y);else ctx.moveTo(x,y)}}else{ctx.moveTo(0,H/2);ctx.lineTo(W,H/2)}ctx.stroke();ctx.fillText('WAVEFORM',8,14)}
+ drawSpec(freq){const ctx=this.sx,W=this.s.width,H=this.s.height;ctx.fillStyle='#f7f1df';ctx.fillRect(0,0,W,H);ctx.fillStyle='#1a1a1a';let n=64,bw=W/n;for(let i=0;i<n;i++){let v=freq&&freq.length?freq[Math.floor(i/n*freq.length)]/255:0;ctx.fillRect(i*bw,H-v*H,bw-2,v*H)}ctx.fillStyle='#1a1a1a';ctx.fillText('FFT SPECTRE',8,14)}
+}
+class ExportManager{
+ static payload(){const f=state.active,det=f?AudioFileRouter.detect(f):{};let trackerMeta=null;if(state.adapter instanceof TrackerAdapter||state.adapter instanceof ChiptuneAdapter)trackerMeta=state.adapter.meta;return {type:det.type||null,name:f?f.name:null,duration:state.adapter?state.adapter.getDuration():0,time:state.adapter?state.adapter.getTime():0,amplitude:+state.analysis.amplitude.toFixed(4),bands:{bass:+state.analysis.bass.toFixed(4),mid:+state.analysis.mid.toFixed(4),treble:+state.analysis.treble.toFixed(4)},trackerMeta,config:state.config};}
+ static download(name,obj){const blob=new Blob([JSON.stringify(obj,null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},1000)}
+ static async copy(obj){const txt='const demosceneAudio = '+JSON.stringify(obj,null,2)+';';try{await navigator.clipboard.writeText(txt);return true}catch(e){$('#out').textContent=txt;return false}}
+}
+const visual=new VisualEngine($('#vis'),$('#wave'),$('#spec'));
+function setStatus(s){$('#status').textContent=s}
+function renderFiles(){const box=$('#fileList');box.innerHTML='';state.files.forEach((f,i)=>{const d=AudioFileRouter.detect(f);const el=document.createElement('div');el.className='file '+(state.active===f?'active':'');el.innerHTML='<span class="badge '+d.type+'">'+d.type+'</span><b>'+f.name+'</b><br><span class="muted">'+d.ext+' / '+Math.round(f.size/1024)+' KB</span>';el.onclick=()=>selectFile(i);box.appendChild(el)})}
+async function selectFile(i){if(state.adapter)state.adapter.stop();const f=state.files[i];state.active=f;const d=AudioFileRouter.detect(f);let ad;if(d.type==='native')ad=new NativeAudioAdapter();else if(d.type==='tracker')ad=new TrackerAdapter();else if(d.type==='chiptune')ad=new ChiptuneAdapter();else ad=null;state.adapter=ad;if(ad){try{await ad.load(f);setStatus('LOADED '+f.name)}catch(e){setStatus('LOAD ERROR: '+e.message);ad=null;state.adapter=null}} updateButtons();updateTrackerPanel();renderFiles();}
+function updateButtons(){const native=state.adapter instanceof NativeAudioAdapter;$('#playBtn').disabled=!native;$('#pauseBtn').disabled=!native;$('#stopBtn').disabled=!native;}
+function updateTrackerPanel(){const p=$('#trackerPanel');let html='';if(state.adapter instanceof TrackerAdapter){const m=state.adapter.meta;html='<b>EXT</b><span>'+m.extension+'</span><b>STATUT</b><span>'+m.status+'</span><b>PATTERN</b><span>-</span><b>ROW</b><span>-</span><b>BPM</b><span>-</span><b>SPEED</b><span>-</span><b>CHANNELS</b><span>-</span><b>NOM MODULE</b><span>'+(m.moduleName||'-')+'</span>'}else if(state.adapter instanceof ChiptuneAdapter){const m=state.adapter.meta;html='<b>EXT</b><span>'+m.extension+'</span><b>STATUT</b><span>'+m.status+'</span><b>PATTERN</b><span>-</span><b>ROW</b><span>-</span><b>BPM</b><span>-</span><b>SPEED</b><span>-</span><b>CHANNELS</b><span>-</span>'}else{html='<b>EXT</b><span>-</span><b>STATUT</b><span>AUCUN TRACKER</span><b>PATTERN</b><span>-</span><b>ROW</b><span>-</span><b>BPM</b><span>-</span><b>SPEED</b><span>-</span><b>CHANNELS</b><span>-</span>'}p.innerHTML=html;}
+function addFiles(list){for(const f of list)state.files.push(f);renderFiles();if(!state.active&&state.files.length)selectFile(0)}
+function tick(){let analysis={amplitude:0,bass:0,mid:0,treble:0,freq:new Uint8Array(0),time:new Uint8Array(0)};if(state.adapter instanceof NativeAudioAdapter)analysis=state.adapter.updateAnalysis();state.analysis={amplitude:analysis.amplitude,bass:analysis.bass,mid:analysis.mid,treble:analysis.treble};['Amp','Bass','Mid','Treb'].forEach((k,idx)=>{const key=['amplitude','bass','mid','treble'][idx],v=state.analysis[key]||0;$('#m'+k).style.width=(v*100).toFixed(1)+'%';$('#v'+k).textContent=v.toFixed(3)});let dur=state.adapter?state.adapter.getDuration():0,tm=state.adapter?state.adapter.getTime():0;$('#playbar').style.width=dur?(tm/dur*100)+'%':'0%';$('#timeLabel').textContent=fmt(tm)+' / '+fmt(dur);$('#hud').textContent=state.active?AudioFileRouter.detect(state.active).type+' / '+state.active.name:'NO FILE';visual.draw(analysis);visual.drawWave(analysis.time);visual.drawSpec(analysis.freq);requestAnimationFrame(tick)}
+$('#pickBtn').onclick=()=>$('#fileInput').click();$('#fileInput').onchange=e=>addFiles(e.target.files);
+$('#drop').ondragover=e=>{e.preventDefault();$('#drop').classList.add('hot')};$('#drop').ondragleave=()=>$('#drop').classList.remove('hot');$('#drop').ondrop=e=>{e.preventDefault();$('#drop').classList.remove('hot');addFiles(e.dataTransfer.files)};
+document.body.ondragover=e=>e.preventDefault();document.body.ondrop=e=>{e.preventDefault();if(e.dataTransfer.files.length)addFiles(e.dataTransfer.files)};
+$('#playBtn').onclick=()=>state.adapter&&state.adapter.play();$('#pauseBtn').onclick=()=>state.adapter&&state.adapter.pause();$('#stopBtn').onclick=()=>state.adapter&&state.adapter.stop();$('#clearBtn').onclick=()=>{if(state.adapter)state.adapter.stop();state.files=[];state.active=null;state.adapter=null;renderFiles();updateButtons();updateTrackerPanel();setStatus('CLEARED')};
+$('#vol').oninput=e=>{state.config.volume=+e.target.value;if(state.adapter&&state.adapter.setVolume)state.adapter.setVolume(state.config.volume)};$('#loopBtn').onclick=()=>{state.loop=!state.loop;state.config.loop=state.loop;$('#loopBtn').textContent=state.loop?'LOOP ON':'LOOP OFF'};$('#effect').onchange=e=>state.config.effect=e.target.value;
+$('#seek').onclick=e=>{if(!(state.adapter instanceof NativeAudioAdapter))return;const r=e.currentTarget.getBoundingClientRect();state.adapter.seek(((e.clientX-r.left)/r.width)*state.adapter.getDuration())};
+$('#exportAnalysis').onclick=()=>{const p=ExportManager.payload();ExportManager.download('demoscene-audio-analysis.json',p);$('#out').textContent=JSON.stringify(p,null,2)};
+$('#exportConfig').onclick=()=>{ExportManager.download('demoscene-audio-config.json',state.config);$('#out').textContent=JSON.stringify(state.config,null,2)};
+$('#copyObj').onclick=async()=>{const p=ExportManager.payload();const ok=await ExportManager.copy(p);$('#out').textContent=ok?'OBJET JS COPIÉ':$('#out').textContent};
+$$('.section h2').forEach(h=>h.onclick=()=>h.parentElement.classList.toggle('closed'));
+requestAnimationFrame(tick);
+</script>
+</body>
+</html>

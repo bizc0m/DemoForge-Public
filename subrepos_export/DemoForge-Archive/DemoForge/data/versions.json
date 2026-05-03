@@ -1,0 +1,122 @@
+{
+  "project": {
+    "name": "Demoforge Codex",
+    "slug": "demoforge-codex",
+    "latest": "v1.7",
+    "latestPath": "./index.html",
+    "versioningPath": "./versionning.html",
+    "sourcesPath": "./sources.html",
+    "description": "Versionnement statique du studio demoscene HTML avec une racine toujours pointe sur la derniere version publiee."
+  },
+  "versions": [
+    {
+      "id": "v1",
+      "label": "V1",
+      "path": "./versions/v1/",
+      "sourceFile": "./index-CNC-V1.html",
+      "status": "archive",
+      "kind": "snapshot",
+      "notes": "Premier snapshot historique CNC exporte comme archive web."
+    },
+    {
+      "id": "v1.1",
+      "label": "V1.1",
+      "path": "./versions/v1.1/",
+      "sourceFile": "./index-CNC-V1.1.html",
+      "status": "archive",
+      "kind": "snapshot",
+      "notes": "Iteration archivee du studio avec evolution de l'editeur."
+    },
+    {
+      "id": "v1.2",
+      "label": "V1.2",
+      "path": "./versions/v1.2/",
+      "sourceFile": "./index-CNC-V1.2.html",
+      "status": "archive",
+      "kind": "snapshot",
+      "notes": "Version intermediaire conservee pour consultation et comparaison."
+    },
+    {
+      "id": "v1.3",
+      "label": "V1.3",
+      "path": "./versions/v1.3/",
+      "sourceFile": "./index-CNC-V1.3.html",
+      "status": "archive",
+      "kind": "snapshot",
+      "notes": "Version archivee a garder comme repere de progression."
+    },
+    {
+      "id": "v1.4",
+      "label": "V1.4",
+      "path": "./versions/v1.4/",
+      "sourceFile": "./index-CNC-V1.4.html",
+      "status": "archive",
+      "kind": "snapshot",
+      "notes": "Snapshot historique disponible via un dossier de version dedie."
+    },
+    {
+      "id": "v1.5",
+      "label": "V1.5",
+      "path": "./versions/v1.5/",
+      "sourceFile": "./index-CNC-V1.5.html",
+      "status": "archive",
+      "kind": "snapshot",
+      "notes": "Version archivee exposee en lecture directe."
+    },
+    {
+      "id": "v1.6",
+      "label": "V1.6",
+      "path": "./versions/v1.6/",
+      "sourceFile": "./index-CNC-V1.6.html",
+      "status": "archive",
+      "kind": "snapshot",
+      "notes": "Derniere archive numerotee avant la racine active."
+    },
+    {
+      "id": "v1.7",
+      "label": "V1.7",
+      "path": "./versions/v1.7/",
+      "sourceFile": "./index.html",
+      "status": "latest",
+      "kind": "active-root",
+      "notes": "Version active publiee a la racine. Le dossier archive v1.7 renvoie vers cette version."
+    }
+  ],
+  "sources": [
+    {
+      "label": "CODEF",
+      "url": "https://codef.santo.fr/",
+      "type": "framework-reference"
+    },
+    {
+      "label": "Namwollem / Mellow Man - CODEF basics",
+      "url": "https://namwollem.blogspot.com/p/codef-basics.html",
+      "type": "tutorial-reference"
+    },
+    {
+      "label": "Democyclopedie - Liste des effets",
+      "url": "https://democyclopedie.wordpress.com/2015/04/01/liste-des-effets/",
+      "type": "culture-reference"
+    },
+    {
+      "label": "Democyclopedie - Differents types de demos",
+      "url": "https://democyclopedie.wordpress.com/2017/04/03/differents-types-de-demos/",
+      "type": "culture-reference"
+    },
+    {
+      "label": "Pouet.net",
+      "url": "https://www.pouet.net/",
+      "type": "scene-reference"
+    },
+    {
+      "label": "Demoparty.net",
+      "url": "https://www.demoparty.net/",
+      "type": "events-reference"
+    },
+    {
+      "label": "Ministere de la Culture - La demoscene",
+      "url": "https://www.culture.gouv.fr/thematiques/patrimoine-culturel-immateriel/vivre-le-patrimoine-culturel-immateriel/reportages/la-demoscene-une-culture-libre-a-la-croisee-des-arts-et-de-la-technique",
+      "type": "institutional-reference"
+    }
+  ]
+}
