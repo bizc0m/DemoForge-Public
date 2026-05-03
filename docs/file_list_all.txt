@@ -1,0 +1,762 @@
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/.DS_Store
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/.git/COMMIT_EDITMSG
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/.git/HEAD
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/.git/config
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/.git/description
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/.git/hooks/applypatch-msg.sample
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/.git/hooks/commit-msg.sample
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/.git/hooks/fsmonitor-watchman.sample
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/.git/hooks/post-update.sample
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/.git/hooks/pre-applypatch.sample
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/.git/hooks/pre-commit.sample
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/.git/hooks/pre-merge-commit.sample
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/.git/hooks/pre-push.sample
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/.git/hooks/pre-rebase.sample
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/.git/hooks/pre-receive.sample
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/.git/hooks/prepare-commit-msg.sample
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/.git/hooks/push-to-checkout.sample
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/.git/hooks/sendemail-validate.sample
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/.git/hooks/update.sample
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/.git/index
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/.git/info/exclude
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/.git/logs/HEAD
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/.git/logs/refs/heads/main
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/.git/objects/1d/2f6a904ccd9d71ba3746529190e1769e08a5db
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/.git/objects/53/bbf5fa3970de4a3bed86f274a5cbb9a16a2b59
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/.git/objects/98/6ac63848eb521460b90a73fb3b0e2e089ae4ee
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/.git/objects/b7/6fad68167ff6ef422f06fce564a8aaac934426
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/.git/objects/d0/7534f29efd4f0f414cc4f10d0aca08729fc210
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/.git/refs/heads/main
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/.gitignore
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/FILE_LIST_ALL.txt
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/README.md
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/V15.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/.DS_Store
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/.DS_Store
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/.git/HEAD
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/.git/config
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/.git/description
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/.git/hooks/applypatch-msg.sample
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/.git/hooks/commit-msg.sample
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/.git/hooks/fsmonitor-watchman.sample
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/.git/hooks/post-update.sample
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/.git/hooks/pre-applypatch.sample
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/.git/hooks/pre-commit.sample
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/.git/hooks/pre-merge-commit.sample
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/.git/hooks/pre-push.sample
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/.git/hooks/pre-rebase.sample
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/.git/hooks/pre-receive.sample
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/.git/hooks/prepare-commit-msg.sample
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/.git/hooks/push-to-checkout.sample
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/.git/hooks/sendemail-validate.sample
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/.git/hooks/update.sample
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/.git/info/exclude
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/.gitignore
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/.DS_Store
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/.git/COMMIT_EDITMSG
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/.git/FETCH_HEAD
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/.git/HEAD
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/.git/config
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/.git/description
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/.git/hooks/applypatch-msg.sample
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/.git/hooks/commit-msg.sample
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/.git/hooks/fsmonitor-watchman.sample
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/.git/hooks/post-commit
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/.git/hooks/post-update.sample
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/.git/hooks/pre-applypatch.sample
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/.git/hooks/pre-commit.sample
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/.git/hooks/pre-merge-commit.sample
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/.git/hooks/pre-push.sample
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/.git/hooks/pre-rebase.sample
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/.git/hooks/pre-receive.sample
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/.git/hooks/prepare-commit-msg.sample
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/.git/hooks/push-to-checkout.sample
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/.git/hooks/sendemail-validate.sample
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/.git/hooks/update.sample
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/.git/index
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/.git/info/exclude
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/.git/logs/HEAD
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/.git/logs/refs/heads/main
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/.git/logs/refs/remotes/origin/HEAD
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/.git/logs/refs/remotes/origin/main
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/.git/objects/02/3e7aa2df5d95382de9a876a529aa29054bd377
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/.git/objects/04/ba664bde5c8f0297b7fdaa9764c74979e1a601
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/.git/objects/14/838501072f5e53feae53969c65ba43f82cfb34
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/.git/objects/19/6899f4d7acf89765bbc9c4d63d7a028e35449f
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/.git/objects/1c/ed11a2d04eadefd213e4041ef0ede0df591779
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/.git/objects/1f/16c267e35b90784821815113b61dce8c317a67
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/.git/objects/23/4293b8114bd5788fd434707ef7c7186d8c7de6
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/.git/objects/2a/6689036e6b8bf44be6fe6b1fbb4675c37bfcdf
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/.git/objects/32/df398d91a63b97d2d808b69f974b84f8543ab6
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/.git/objects/36/9ff6ca20029a330ac2edf7065f14b962963bac
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/.git/objects/45/cd0cb8fa01143d8dac3d7426a558b8362883d8
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/.git/objects/47/00c60db34c9076c6ce1bfbeb9379b7fa8cd3df
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/.git/objects/47/232a47015957149255573089256ebd0fb8cc8d
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/.git/objects/4a/417b8d74db5488f1ee88d7a8967342141e3c2e
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/.git/objects/54/a66b7d6771a9b33e94a5b7fcfb7a7e64f7eb2f
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/.git/objects/65/ceb07cf7691a51afb3c16c2ec1e0bd34bea1ae
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/.git/objects/67/8083d40b588fe5d2f5105c448b365b9bd87b2d
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/.git/objects/73/a7cdc111257d31b0750ba624b3edb55c9971e9
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/.git/objects/78/b9474e90a0fb624e4c38c158b2ba918003549e
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/.git/objects/7a/51cfdae0fec71c824534c22aafcd29546ba2bc
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/.git/objects/85/fb72c4110e9838986bba71b16b1464b0afbccb
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/.git/objects/8d/b8a77a0091227d0d5a06798c4846293b517134
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/.git/objects/8f/83af9d23b3911df2e4adaf84e04092515020ba
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/.git/objects/92/e79af8ba8e0f76a6d518fb15948dba7a36e87d
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/.git/objects/94/47f7b551f4d74dbb6f0bc7478876f45b281876
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/.git/objects/98/a0dc7de7e7bcf9b826728f4d12dd7a3d2fc391
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/.git/objects/a3/2d73a3b2978b442574f5746031680d22105833
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/.git/objects/c4/5454a5e359057356f119f15b998e8650f7efb3
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/.git/objects/c6/c7607a88d79713ea98e9f19d547995dfad80fc
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/.git/objects/c7/9e64b8416fe3fc0a2ec75930957043e2a6385c
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/.git/objects/c9/028ae928b9ffb498479754e43036441212c623
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/.git/objects/ca/0739afdfe37a0d88749cb6ef85619f9bf94505
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/.git/objects/cc/911656e4766fb9dc615d217825769845129ecd
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/.git/objects/cf/4121f191969647465a28e6e62da6efcdb6754e
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/.git/objects/d5/380b025a5a897475f442cb3212e5d2a1d80db9
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/.git/objects/e2/b11e78aabd061feb906553e52ffd645ee8cc71
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/.git/objects/e6/ae978d3847f9585139ba073a82b609f749fe97
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/.git/objects/ef/a831e33a3084c6f473743511b6c5a5d4ff3d94
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/.git/refs/heads/main
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/.git/refs/remotes/origin/HEAD
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/.git/refs/remotes/origin/main
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/.git/refs/tags/backup-2026-04-16-current-state
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CAHIER_DE_SYNTHESE_DEMOFORGE_V1.md
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CLAUDE_V2_MASTER_PROMPT.md
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CLAUDE_V2_TASKS.md
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CNC-CODEX-upload.zip
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CNC_CodingIsNotACrime-backup-2026-04-16-A/.git/COMMIT_EDITMSG
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CNC_CodingIsNotACrime-backup-2026-04-16-A/.git/FETCH_HEAD
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CNC_CodingIsNotACrime-backup-2026-04-16-A/.git/HEAD
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CNC_CodingIsNotACrime-backup-2026-04-16-A/.git/config
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CNC_CodingIsNotACrime-backup-2026-04-16-A/.git/description
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CNC_CodingIsNotACrime-backup-2026-04-16-A/.git/hooks/applypatch-msg.sample
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CNC_CodingIsNotACrime-backup-2026-04-16-A/.git/hooks/commit-msg.sample
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CNC_CodingIsNotACrime-backup-2026-04-16-A/.git/hooks/fsmonitor-watchman.sample
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CNC_CodingIsNotACrime-backup-2026-04-16-A/.git/hooks/post-commit
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CNC_CodingIsNotACrime-backup-2026-04-16-A/.git/hooks/post-update.sample
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CNC_CodingIsNotACrime-backup-2026-04-16-A/.git/hooks/pre-applypatch.sample
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CNC_CodingIsNotACrime-backup-2026-04-16-A/.git/hooks/pre-commit.sample
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CNC_CodingIsNotACrime-backup-2026-04-16-A/.git/hooks/pre-merge-commit.sample
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CNC_CodingIsNotACrime-backup-2026-04-16-A/.git/hooks/pre-push.sample
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CNC_CodingIsNotACrime-backup-2026-04-16-A/.git/hooks/pre-rebase.sample
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CNC_CodingIsNotACrime-backup-2026-04-16-A/.git/hooks/pre-receive.sample
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CNC_CodingIsNotACrime-backup-2026-04-16-A/.git/hooks/prepare-commit-msg.sample
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CNC_CodingIsNotACrime-backup-2026-04-16-A/.git/hooks/push-to-checkout.sample
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CNC_CodingIsNotACrime-backup-2026-04-16-A/.git/hooks/sendemail-validate.sample
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CNC_CodingIsNotACrime-backup-2026-04-16-A/.git/hooks/update.sample
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CNC_CodingIsNotACrime-backup-2026-04-16-A/.git/index
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CNC_CodingIsNotACrime-backup-2026-04-16-A/.git/info/exclude
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CNC_CodingIsNotACrime-backup-2026-04-16-A/.git/logs/HEAD
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CNC_CodingIsNotACrime-backup-2026-04-16-A/.git/logs/refs/heads/main
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CNC_CodingIsNotACrime-backup-2026-04-16-A/.git/logs/refs/remotes/origin/main
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CNC_CodingIsNotACrime-backup-2026-04-16-A/.git/objects/02/3e7aa2df5d95382de9a876a529aa29054bd377
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CNC_CodingIsNotACrime-backup-2026-04-16-A/.git/objects/04/ba664bde5c8f0297b7fdaa9764c74979e1a601
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CNC_CodingIsNotACrime-backup-2026-04-16-A/.git/objects/14/838501072f5e53feae53969c65ba43f82cfb34
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CNC_CodingIsNotACrime-backup-2026-04-16-A/.git/objects/1c/ed11a2d04eadefd213e4041ef0ede0df591779
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CNC_CodingIsNotACrime-backup-2026-04-16-A/.git/objects/23/4293b8114bd5788fd434707ef7c7186d8c7de6
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CNC_CodingIsNotACrime-backup-2026-04-16-A/.git/objects/2a/6689036e6b8bf44be6fe6b1fbb4675c37bfcdf
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CNC_CodingIsNotACrime-backup-2026-04-16-A/.git/objects/32/df398d91a63b97d2d808b69f974b84f8543ab6
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CNC_CodingIsNotACrime-backup-2026-04-16-A/.git/objects/47/00c60db34c9076c6ce1bfbeb9379b7fa8cd3df
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CNC_CodingIsNotACrime-backup-2026-04-16-A/.git/objects/4a/417b8d74db5488f1ee88d7a8967342141e3c2e
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CNC_CodingIsNotACrime-backup-2026-04-16-A/.git/objects/54/a66b7d6771a9b33e94a5b7fcfb7a7e64f7eb2f
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CNC_CodingIsNotACrime-backup-2026-04-16-A/.git/objects/67/8083d40b588fe5d2f5105c448b365b9bd87b2d
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CNC_CodingIsNotACrime-backup-2026-04-16-A/.git/objects/73/a7cdc111257d31b0750ba624b3edb55c9971e9
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CNC_CodingIsNotACrime-backup-2026-04-16-A/.git/objects/7a/51cfdae0fec71c824534c22aafcd29546ba2bc
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CNC_CodingIsNotACrime-backup-2026-04-16-A/.git/objects/85/fb72c4110e9838986bba71b16b1464b0afbccb
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CNC_CodingIsNotACrime-backup-2026-04-16-A/.git/objects/8f/83af9d23b3911df2e4adaf84e04092515020ba
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CNC_CodingIsNotACrime-backup-2026-04-16-A/.git/objects/92/e79af8ba8e0f76a6d518fb15948dba7a36e87d
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CNC_CodingIsNotACrime-backup-2026-04-16-A/.git/objects/94/47f7b551f4d74dbb6f0bc7478876f45b281876
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CNC_CodingIsNotACrime-backup-2026-04-16-A/.git/objects/c6/c7607a88d79713ea98e9f19d547995dfad80fc
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CNC_CodingIsNotACrime-backup-2026-04-16-A/.git/objects/c7/9e64b8416fe3fc0a2ec75930957043e2a6385c
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CNC_CodingIsNotACrime-backup-2026-04-16-A/.git/objects/c9/028ae928b9ffb498479754e43036441212c623
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CNC_CodingIsNotACrime-backup-2026-04-16-A/.git/objects/ca/0739afdfe37a0d88749cb6ef85619f9bf94505
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CNC_CodingIsNotACrime-backup-2026-04-16-A/.git/objects/cf/4121f191969647465a28e6e62da6efcdb6754e
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CNC_CodingIsNotACrime-backup-2026-04-16-A/.git/objects/d5/380b025a5a897475f442cb3212e5d2a1d80db9
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CNC_CodingIsNotACrime-backup-2026-04-16-A/.git/objects/e2/b11e78aabd061feb906553e52ffd645ee8cc71
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CNC_CodingIsNotACrime-backup-2026-04-16-A/.git/objects/ef/a831e33a3084c6f473743511b6c5a5d4ff3d94
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CNC_CodingIsNotACrime-backup-2026-04-16-A/.git/refs/heads/main
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CNC_CodingIsNotACrime-backup-2026-04-16-A/.git/refs/remotes/origin/main
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CNC_CodingIsNotACrime-backup-2026-04-16-A/.git/refs/tags/backup-2026-04-16-current-state
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CNC_CodingIsNotACrime-backup-2026-04-16-A/README.md
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CNC_CodingIsNotACrime-backup-2026-04-16-A/auto_push.sh
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CNC_CodingIsNotACrime-backup-2026-04-16-A/index.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CNC_CodingIsNotACrime-backup-2026-04-16-B/.git/COMMIT_EDITMSG
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CNC_CodingIsNotACrime-backup-2026-04-16-B/.git/FETCH_HEAD
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CNC_CodingIsNotACrime-backup-2026-04-16-B/.git/HEAD
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CNC_CodingIsNotACrime-backup-2026-04-16-B/.git/config
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CNC_CodingIsNotACrime-backup-2026-04-16-B/.git/description
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CNC_CodingIsNotACrime-backup-2026-04-16-B/.git/hooks/applypatch-msg.sample
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CNC_CodingIsNotACrime-backup-2026-04-16-B/.git/hooks/commit-msg.sample
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CNC_CodingIsNotACrime-backup-2026-04-16-B/.git/hooks/fsmonitor-watchman.sample
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CNC_CodingIsNotACrime-backup-2026-04-16-B/.git/hooks/post-commit
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CNC_CodingIsNotACrime-backup-2026-04-16-B/.git/hooks/post-update.sample
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CNC_CodingIsNotACrime-backup-2026-04-16-B/.git/hooks/pre-applypatch.sample
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CNC_CodingIsNotACrime-backup-2026-04-16-B/.git/hooks/pre-commit.sample
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CNC_CodingIsNotACrime-backup-2026-04-16-B/.git/hooks/pre-merge-commit.sample
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CNC_CodingIsNotACrime-backup-2026-04-16-B/.git/hooks/pre-push.sample
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CNC_CodingIsNotACrime-backup-2026-04-16-B/.git/hooks/pre-rebase.sample
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CNC_CodingIsNotACrime-backup-2026-04-16-B/.git/hooks/pre-receive.sample
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CNC_CodingIsNotACrime-backup-2026-04-16-B/.git/hooks/prepare-commit-msg.sample
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CNC_CodingIsNotACrime-backup-2026-04-16-B/.git/hooks/push-to-checkout.sample
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CNC_CodingIsNotACrime-backup-2026-04-16-B/.git/hooks/sendemail-validate.sample
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CNC_CodingIsNotACrime-backup-2026-04-16-B/.git/hooks/update.sample
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CNC_CodingIsNotACrime-backup-2026-04-16-B/.git/index
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CNC_CodingIsNotACrime-backup-2026-04-16-B/.git/info/exclude
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CNC_CodingIsNotACrime-backup-2026-04-16-B/.git/logs/HEAD
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CNC_CodingIsNotACrime-backup-2026-04-16-B/.git/logs/refs/heads/main
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CNC_CodingIsNotACrime-backup-2026-04-16-B/.git/logs/refs/remotes/origin/main
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CNC_CodingIsNotACrime-backup-2026-04-16-B/.git/objects/02/3e7aa2df5d95382de9a876a529aa29054bd377
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CNC_CodingIsNotACrime-backup-2026-04-16-B/.git/objects/04/ba664bde5c8f0297b7fdaa9764c74979e1a601
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CNC_CodingIsNotACrime-backup-2026-04-16-B/.git/objects/14/838501072f5e53feae53969c65ba43f82cfb34
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CNC_CodingIsNotACrime-backup-2026-04-16-B/.git/objects/1c/ed11a2d04eadefd213e4041ef0ede0df591779
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CNC_CodingIsNotACrime-backup-2026-04-16-B/.git/objects/23/4293b8114bd5788fd434707ef7c7186d8c7de6
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CNC_CodingIsNotACrime-backup-2026-04-16-B/.git/objects/2a/6689036e6b8bf44be6fe6b1fbb4675c37bfcdf
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CNC_CodingIsNotACrime-backup-2026-04-16-B/.git/objects/32/df398d91a63b97d2d808b69f974b84f8543ab6
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CNC_CodingIsNotACrime-backup-2026-04-16-B/.git/objects/47/00c60db34c9076c6ce1bfbeb9379b7fa8cd3df
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CNC_CodingIsNotACrime-backup-2026-04-16-B/.git/objects/4a/417b8d74db5488f1ee88d7a8967342141e3c2e
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CNC_CodingIsNotACrime-backup-2026-04-16-B/.git/objects/54/a66b7d6771a9b33e94a5b7fcfb7a7e64f7eb2f
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CNC_CodingIsNotACrime-backup-2026-04-16-B/.git/objects/67/8083d40b588fe5d2f5105c448b365b9bd87b2d
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CNC_CodingIsNotACrime-backup-2026-04-16-B/.git/objects/73/a7cdc111257d31b0750ba624b3edb55c9971e9
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CNC_CodingIsNotACrime-backup-2026-04-16-B/.git/objects/7a/51cfdae0fec71c824534c22aafcd29546ba2bc
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CNC_CodingIsNotACrime-backup-2026-04-16-B/.git/objects/85/fb72c4110e9838986bba71b16b1464b0afbccb
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CNC_CodingIsNotACrime-backup-2026-04-16-B/.git/objects/8f/83af9d23b3911df2e4adaf84e04092515020ba
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CNC_CodingIsNotACrime-backup-2026-04-16-B/.git/objects/92/e79af8ba8e0f76a6d518fb15948dba7a36e87d
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CNC_CodingIsNotACrime-backup-2026-04-16-B/.git/objects/94/47f7b551f4d74dbb6f0bc7478876f45b281876
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CNC_CodingIsNotACrime-backup-2026-04-16-B/.git/objects/c6/c7607a88d79713ea98e9f19d547995dfad80fc
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CNC_CodingIsNotACrime-backup-2026-04-16-B/.git/objects/c7/9e64b8416fe3fc0a2ec75930957043e2a6385c
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CNC_CodingIsNotACrime-backup-2026-04-16-B/.git/objects/c9/028ae928b9ffb498479754e43036441212c623
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CNC_CodingIsNotACrime-backup-2026-04-16-B/.git/objects/ca/0739afdfe37a0d88749cb6ef85619f9bf94505
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CNC_CodingIsNotACrime-backup-2026-04-16-B/.git/objects/cf/4121f191969647465a28e6e62da6efcdb6754e
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CNC_CodingIsNotACrime-backup-2026-04-16-B/.git/objects/d5/380b025a5a897475f442cb3212e5d2a1d80db9
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CNC_CodingIsNotACrime-backup-2026-04-16-B/.git/objects/e2/b11e78aabd061feb906553e52ffd645ee8cc71
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CNC_CodingIsNotACrime-backup-2026-04-16-B/.git/objects/ef/a831e33a3084c6f473743511b6c5a5d4ff3d94
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CNC_CodingIsNotACrime-backup-2026-04-16-B/.git/refs/heads/main
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CNC_CodingIsNotACrime-backup-2026-04-16-B/.git/refs/remotes/origin/main
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CNC_CodingIsNotACrime-backup-2026-04-16-B/.git/refs/tags/backup-2026-04-16-current-state
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CNC_CodingIsNotACrime-backup-2026-04-16-B/README.md
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CNC_CodingIsNotACrime-backup-2026-04-16-B/auto_push.sh
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CNC_CodingIsNotACrime-backup-2026-04-16-B/index.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CNC_CodingIsNotACrime-backup-2026-04-16-C/.git/COMMIT_EDITMSG
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CNC_CodingIsNotACrime-backup-2026-04-16-C/.git/FETCH_HEAD
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CNC_CodingIsNotACrime-backup-2026-04-16-C/.git/HEAD
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CNC_CodingIsNotACrime-backup-2026-04-16-C/.git/config
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CNC_CodingIsNotACrime-backup-2026-04-16-C/.git/description
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CNC_CodingIsNotACrime-backup-2026-04-16-C/.git/hooks/applypatch-msg.sample
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CNC_CodingIsNotACrime-backup-2026-04-16-C/.git/hooks/commit-msg.sample
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CNC_CodingIsNotACrime-backup-2026-04-16-C/.git/hooks/fsmonitor-watchman.sample
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CNC_CodingIsNotACrime-backup-2026-04-16-C/.git/hooks/post-commit
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CNC_CodingIsNotACrime-backup-2026-04-16-C/.git/hooks/post-update.sample
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CNC_CodingIsNotACrime-backup-2026-04-16-C/.git/hooks/pre-applypatch.sample
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CNC_CodingIsNotACrime-backup-2026-04-16-C/.git/hooks/pre-commit.sample
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CNC_CodingIsNotACrime-backup-2026-04-16-C/.git/hooks/pre-merge-commit.sample
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CNC_CodingIsNotACrime-backup-2026-04-16-C/.git/hooks/pre-push.sample
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CNC_CodingIsNotACrime-backup-2026-04-16-C/.git/hooks/pre-rebase.sample
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CNC_CodingIsNotACrime-backup-2026-04-16-C/.git/hooks/pre-receive.sample
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CNC_CodingIsNotACrime-backup-2026-04-16-C/.git/hooks/prepare-commit-msg.sample
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CNC_CodingIsNotACrime-backup-2026-04-16-C/.git/hooks/push-to-checkout.sample
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CNC_CodingIsNotACrime-backup-2026-04-16-C/.git/hooks/sendemail-validate.sample
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CNC_CodingIsNotACrime-backup-2026-04-16-C/.git/hooks/update.sample
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CNC_CodingIsNotACrime-backup-2026-04-16-C/.git/index
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CNC_CodingIsNotACrime-backup-2026-04-16-C/.git/info/exclude
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CNC_CodingIsNotACrime-backup-2026-04-16-C/.git/logs/HEAD
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CNC_CodingIsNotACrime-backup-2026-04-16-C/.git/logs/refs/heads/main
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CNC_CodingIsNotACrime-backup-2026-04-16-C/.git/logs/refs/remotes/origin/HEAD
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CNC_CodingIsNotACrime-backup-2026-04-16-C/.git/logs/refs/remotes/origin/main
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CNC_CodingIsNotACrime-backup-2026-04-16-C/.git/objects/02/3e7aa2df5d95382de9a876a529aa29054bd377
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CNC_CodingIsNotACrime-backup-2026-04-16-C/.git/objects/04/ba664bde5c8f0297b7fdaa9764c74979e1a601
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CNC_CodingIsNotACrime-backup-2026-04-16-C/.git/objects/14/838501072f5e53feae53969c65ba43f82cfb34
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CNC_CodingIsNotACrime-backup-2026-04-16-C/.git/objects/1c/ed11a2d04eadefd213e4041ef0ede0df591779
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CNC_CodingIsNotACrime-backup-2026-04-16-C/.git/objects/23/4293b8114bd5788fd434707ef7c7186d8c7de6
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CNC_CodingIsNotACrime-backup-2026-04-16-C/.git/objects/2a/6689036e6b8bf44be6fe6b1fbb4675c37bfcdf
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CNC_CodingIsNotACrime-backup-2026-04-16-C/.git/objects/32/df398d91a63b97d2d808b69f974b84f8543ab6
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CNC_CodingIsNotACrime-backup-2026-04-16-C/.git/objects/47/00c60db34c9076c6ce1bfbeb9379b7fa8cd3df
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CNC_CodingIsNotACrime-backup-2026-04-16-C/.git/objects/4a/417b8d74db5488f1ee88d7a8967342141e3c2e
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CNC_CodingIsNotACrime-backup-2026-04-16-C/.git/objects/54/a66b7d6771a9b33e94a5b7fcfb7a7e64f7eb2f
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CNC_CodingIsNotACrime-backup-2026-04-16-C/.git/objects/67/8083d40b588fe5d2f5105c448b365b9bd87b2d
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CNC_CodingIsNotACrime-backup-2026-04-16-C/.git/objects/73/a7cdc111257d31b0750ba624b3edb55c9971e9
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CNC_CodingIsNotACrime-backup-2026-04-16-C/.git/objects/7a/51cfdae0fec71c824534c22aafcd29546ba2bc
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CNC_CodingIsNotACrime-backup-2026-04-16-C/.git/objects/85/fb72c4110e9838986bba71b16b1464b0afbccb
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CNC_CodingIsNotACrime-backup-2026-04-16-C/.git/objects/8f/83af9d23b3911df2e4adaf84e04092515020ba
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CNC_CodingIsNotACrime-backup-2026-04-16-C/.git/objects/92/e79af8ba8e0f76a6d518fb15948dba7a36e87d
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CNC_CodingIsNotACrime-backup-2026-04-16-C/.git/objects/94/47f7b551f4d74dbb6f0bc7478876f45b281876
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CNC_CodingIsNotACrime-backup-2026-04-16-C/.git/objects/c6/c7607a88d79713ea98e9f19d547995dfad80fc
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CNC_CodingIsNotACrime-backup-2026-04-16-C/.git/objects/c7/9e64b8416fe3fc0a2ec75930957043e2a6385c
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CNC_CodingIsNotACrime-backup-2026-04-16-C/.git/objects/c9/028ae928b9ffb498479754e43036441212c623
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CNC_CodingIsNotACrime-backup-2026-04-16-C/.git/objects/ca/0739afdfe37a0d88749cb6ef85619f9bf94505
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CNC_CodingIsNotACrime-backup-2026-04-16-C/.git/objects/cf/4121f191969647465a28e6e62da6efcdb6754e
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CNC_CodingIsNotACrime-backup-2026-04-16-C/.git/objects/d5/380b025a5a897475f442cb3212e5d2a1d80db9
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CNC_CodingIsNotACrime-backup-2026-04-16-C/.git/objects/e2/b11e78aabd061feb906553e52ffd645ee8cc71
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CNC_CodingIsNotACrime-backup-2026-04-16-C/.git/objects/ef/a831e33a3084c6f473743511b6c5a5d4ff3d94
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CNC_CodingIsNotACrime-backup-2026-04-16-C/.git/refs/heads/main
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CNC_CodingIsNotACrime-backup-2026-04-16-C/.git/refs/remotes/origin/HEAD
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CNC_CodingIsNotACrime-backup-2026-04-16-C/.git/refs/remotes/origin/main
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CNC_CodingIsNotACrime-backup-2026-04-16-C/.git/refs/tags/backup-2026-04-16-current-state
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CNC_CodingIsNotACrime-backup-2026-04-16-C/README.md
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CNC_CodingIsNotACrime-backup-2026-04-16-C/auto_push.sh
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CNC_CodingIsNotACrime-backup-2026-04-16-C/index.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CNC_UPLOAD/.DS_Store
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CNC_UPLOAD/CNC-CODEX/CLAUDE_V2_MASTER_PROMPT.md
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CNC_UPLOAD/CNC-CODEX/CLAUDE_V2_TASKS.md
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CNC_UPLOAD/CNC-CODEX/PROGRESSION.md
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CNC_UPLOAD/CNC-CODEX/README.md
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CNC_UPLOAD/CNC-CODEX/V2_BRIEF.md
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CNC_UPLOAD/CNC-CODEX/auto_push.sh
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/CNC_UPLOAD/CNC-CODEX/index.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/DEMOFORGE_DOC.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/DEMOFORGE_MINI.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/DEMOFORGE_STUDIO.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/DEMOFORGE_STUDIO_V2.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/DEMOFORGE_STUDIO_V3.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/Icon
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/PROGRESSION.md
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/PROMPT_MASTER_DEMOFORGE_V1.md
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/README.md
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/V2_BRIEF.md
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/auto_push.sh
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/demoscene-editor-kids.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/index-CNC-V1.1.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/index-CNC-V1.2.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/index-CNC-V1.3.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/index-CNC-V1.4.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/index-CNC-V1.5.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/index-CNC-V1.6.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/index-CNC-V1.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/CNC_CodingIsNotACrime/index.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge-Motion/DEMOFORGE_FULLSCREEN_DEMO.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge-Motion/DEMOFORGE_FULLSCREEN_DEMO_V1.0.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge-Motion/DEMOFORGE_FULLSCREEN_DEMO_V1.1.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge-Motion/README.md
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge-Motion/demoforge_motion_studio.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge-Motion/demoforge_phone_dancer.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge-Motion/demoforge_phone_dancer_backup_before_restart.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge-Motion/index.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge-Motion/js/config.js
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge-Motion/js/core.js
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge-Motion/js/export.js
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge-Motion/js/modules.js
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge-Motion/js/timeline.js
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge-Motion/modules/effects.json
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge-Motion/state_of_the_art_key_visuals.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/!demoforge_full_layer_editor_v3_dragdrop.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/!demoforge_mvp.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/#MOTION/!!! demoforge_motion_studio_v2_exports_config.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/#MOTION/#FINAL_MOTION.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/#MOTION/demoforge_export_music (3).html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/#MOTION/demoforge_fullscreen_animated.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/#MOTION/demoforge_fullscreen_lite.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/#MOTION/demoforge_lite_fullscreen.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/#MOTION/demoforge_motion_compact (1).html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/#MOTION/demoforge_motion_compact (2).html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/#MOTION/demoforge_motion_compact (3).html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/#MOTION/demoforge_motion_compact.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/#MOTION/demoforge_motion_studio.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/#MOTION/demoforge_motion_studio_pure.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/#MOTION/demoforge_motion_studio_pure_animated_exports.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/#MOTION/demoforge_motion_studio_pure_animated_exports_dnd_fixed.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/#MOTION/demoforge_optimized_fullscreen.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/#MOTION/demoforge_retro_demo_editor.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/#MOTION/demoforge_snapshot.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/.DS_Store
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/1-demoforge_motion_studio.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/CAHIER_DE_SYNTHESE_DEMOFORGE_V1.md
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/CLAUDE_V2_MASTER_PROMPT.md
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/CLAUDE_V2_TASKS.md
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/CNC Coding Is Not A Crime -Clean - Base.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/DEMOFORGE-ARCHITECTURE-GLOBAL-EN-V1.0.pdf
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/DEMOFORGE-ARCHITECTURE-GLOBALE-V1.0.pdf
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/DEMOFORGE-ARCHITECTURE-GLOBALE-V1.1.pdf
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/DEMOFORGE-BIBLE-V1.0 (1).pdf
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/DEMOFORGE-BIBLE-V1.0.pdf
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/DEMOFORGE_DOC.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/DEMOFORGE_MINI.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/DEMOFORGE_STUDIO.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/DEMOFORGE_STUDIO_V2.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/DEMOFORGE_STUDIO_V3.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/DemoForge V6 — Editor-Emergent.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/DemoForge V6 — Editor-Emergent_files/saved_resource.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/DemoForge V6 — Editor-Emergent_files/v8c78df7c7c0f484497ecbca7046644da1771523124516
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/DemoForge_V6_Motion_Studio_from_uploaded.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/EMERGENT- VERSION.zip
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/EMERGENT- VERSION/.DS_Store
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/EMERGENT- VERSION/Emergent _ Fullstack App.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/EMERGENT- VERSION/Emergent _ Fullstack App_files/array.js
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/EMERGENT- VERSION/Emergent _ Fullstack App_files/bundle.js
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/EMERGENT- VERSION/Emergent _ Fullstack App_files/config.js
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/EMERGENT- VERSION/Emergent _ Fullstack App_files/css2
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/EMERGENT- VERSION/Emergent _ Fullstack App_files/dead-clicks-autocapture.js
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/EMERGENT- VERSION/Emergent _ Fullstack App_files/emergent-main.js
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/EMERGENT- VERSION/Emergent _ Fullstack App_files/posthog-recorder.js
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/EMERGENT- VERSION/Emergent _ Fullstack App_files/surveys.js
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/EMERGENT- VERSION/Emergent _ Fullstack App_files/v8c78df7c7c0f484497ecbca7046644da1771523124516
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/EMERGENT- VERSION/Emergent _ Fullstack App_files/web-vitals.js
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/Emergent _ Fullstack App-DemoforgV9_files 2/array.js
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/Emergent _ Fullstack App-DemoforgV9_files 2/bundle.js
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/Emergent _ Fullstack App-DemoforgV9_files 2/config.js
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/Emergent _ Fullstack App-DemoforgV9_files 2/css2
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/Emergent _ Fullstack App-DemoforgV9_files 2/dead-clicks-autocapture.js
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/Emergent _ Fullstack App-DemoforgV9_files 2/demoforge_v9.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/Emergent _ Fullstack App-DemoforgV9_files 2/emergent-main.js
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/Emergent _ Fullstack App-DemoforgV9_files 2/posthog-recorder.js
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/Emergent _ Fullstack App-DemoforgV9_files 2/saved_resource(1).html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/Emergent _ Fullstack App-DemoforgV9_files 2/saved_resource.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/Emergent _ Fullstack App-DemoforgV9_files 2/surveys.js
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/Emergent _ Fullstack App-DemoforgV9_files 2/v8c78df7c7c0f484497ecbca7046644da1771523124516
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/Emergent _ Fullstack App-DemoforgV9_files 2/web-vitals.js
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/Emergent _ Fullstack App-DemoforgV9_files.zip
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/Emergent _ Fullstack App-DemoforgV9_files/array.js
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/Emergent _ Fullstack App-DemoforgV9_files/bundle.js
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/Emergent _ Fullstack App-DemoforgV9_files/config.js
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/Emergent _ Fullstack App-DemoforgV9_files/css2
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/Emergent _ Fullstack App-DemoforgV9_files/dead-clicks-autocapture.js
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/Emergent _ Fullstack App-DemoforgV9_files/demoforge_v9.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/Emergent _ Fullstack App-DemoforgV9_files/emergent-main.js
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/Emergent _ Fullstack App-DemoforgV9_files/posthog-recorder.js
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/Emergent _ Fullstack App-DemoforgV9_files/saved_resource(1).html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/Emergent _ Fullstack App-DemoforgV9_files/saved_resource.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/Emergent _ Fullstack App-DemoforgV9_files/surveys.js
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/Emergent _ Fullstack App-DemoforgV9_files/v8c78df7c7c0f484497ecbca7046644da1771523124516
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/Emergent _ Fullstack App-DemoforgV9_files/web-vitals.js
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/Emergent _ Fullstack App_files 2/array.js
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/Emergent _ Fullstack App_files 2/bundle.js
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/Emergent _ Fullstack App_files 2/config.js
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/Emergent _ Fullstack App_files 2/css2
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/Emergent _ Fullstack App_files 2/dead-clicks-autocapture.js
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/Emergent _ Fullstack App_files 2/demoforge_v9.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/Emergent _ Fullstack App_files 2/emergent-main.js
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/Emergent _ Fullstack App_files 2/posthog-recorder.js
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/Emergent _ Fullstack App_files 2/surveys.js
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/Emergent _ Fullstack App_files 2/v8c78df7c7c0f484497ecbca7046644da1771523124516
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/Emergent _ Fullstack App_files 2/web-vitals.js
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/Emergent _ Fullstack App_files.zip
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/Emergent _ Fullstack App_files/array.js
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/Emergent _ Fullstack App_files/bundle.js
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/Emergent _ Fullstack App_files/config.js
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/Emergent _ Fullstack App_files/css2
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/Emergent _ Fullstack App_files/dead-clicks-autocapture.js
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/Emergent _ Fullstack App_files/demoforge_v9.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/Emergent _ Fullstack App_files/emergent-main.js
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/Emergent _ Fullstack App_files/posthog-recorder.js
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/Emergent _ Fullstack App_files/surveys.js
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/Emergent _ Fullstack App_files/v8c78df7c7c0f484497ecbca7046644da1771523124516
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/Emergent _ Fullstack App_files/web-vitals.js
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/Hello World.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/Hello World_files/css2
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/Module 1.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/NO-demoforge_unique_clean.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/PROGRESSION.md
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/PROMPT_MASTER_DEMOFORGE_V1.md
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/Pour chaque sujet , modules, effets, elements , co (1).md
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/Pour chaque sujet , modules, effets, elements , co (2).md
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/Pour chaque sujet , modules, effets, elements , co.md
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/README.md
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/Résumer la page actuelle.md
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/Set_de_depart.set (1).json
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/Set_de_depart.set.json
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/Snork_Intro_Union.sndh
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/SzContext.dmg
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/The Union Demo (1).html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/The Union Demo.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/The Union Demo.png
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/Unio-Demo.vgm
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/V15.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/V2_BRIEF.md
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/_Emergent _ Fullstack App-DemoforgV9.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/_Emergent _ Fullstack App-DemoforgV9_files/array.js
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/_Emergent _ Fullstack App-DemoforgV9_files/bundle.js
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/_Emergent _ Fullstack App-DemoforgV9_files/config.js
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/_Emergent _ Fullstack App-DemoforgV9_files/css2
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/_Emergent _ Fullstack App-DemoforgV9_files/dead-clicks-autocapture.js
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/_Emergent _ Fullstack App-DemoforgV9_files/demoforge_v9.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/_Emergent _ Fullstack App-DemoforgV9_files/emergent-main.js
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/_Emergent _ Fullstack App-DemoforgV9_files/posthog-recorder.js
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/_Emergent _ Fullstack App-DemoforgV9_files/saved_resource(1).html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/_Emergent _ Fullstack App-DemoforgV9_files/saved_resource.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/_Emergent _ Fullstack App-DemoforgV9_files/surveys.js
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/_Emergent _ Fullstack App-DemoforgV9_files/v8c78df7c7c0f484497ecbca7046644da1771523124516
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/_Emergent _ Fullstack App-DemoforgV9_files/web-vitals.js
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/_Emergent _ Fullstack App.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/_Emergent _ Fullstack App_files/array.js
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/_Emergent _ Fullstack App_files/bundle.js
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/_Emergent _ Fullstack App_files/config.js
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/_Emergent _ Fullstack App_files/css2
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/_Emergent _ Fullstack App_files/dead-clicks-autocapture.js
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/_Emergent _ Fullstack App_files/demoforge_v9.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/_Emergent _ Fullstack App_files/emergent-main.js
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/_Emergent _ Fullstack App_files/posthog-recorder.js
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/_Emergent _ Fullstack App_files/surveys.js
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/_Emergent _ Fullstack App_files/v8c78df7c7c0f484497ecbca7046644da1771523124516
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/_Emergent _ Fullstack App_files/web-vitals.js
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/auto_push.sh
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/data/versions.json
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/demoforge-2030-V1 (1).html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/demoforge-2030-V1.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/demoforge-motion-studio-single-dance-steps.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/demoforge_7.60_edu_0.6.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/demoforge_7.60_edu_0.8.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/demoforge_7.80.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/demoforge_8.00_stable.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/demoforge_8.20.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/demoforge_8.40.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/demoforge_8.60.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/demoforge_V1.0.0_Razor1911.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/demoforge_V5.74_stable_fx_icons.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/demoforge_V5.76_CMOS_Cosmos_12_templates.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/demoforge_V5.78_i18n_chapter_json_profile.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/demoforge_V5.80_scroll_pro_chain_exports.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/demoforge_V5.82_BASE_DEMO_STABLE.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/demoforge_V5.84_BASE_PROLOCK_EXPORT_FIXED.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/demoforge_V5.86_MAX_active.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/demoforge_V5.86_Pro_Easter_Egg.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/demoforge_V5.86_Pro_Easter_Egg_auto_serial.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/demoforge_V5.86_Pro_Easter_Egg_levels.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/demoforge_V5.87_MAX_active.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/demoforge_V5.88_FIXED.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/demoforge_V5.89_MAX_READY.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/demoforge_V5.91_CALQUES_COMPACT_ZX_BROWSER.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/demoforge_V5.92_LAYERS_UNDO_FONTS.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/demoforge_V5.93_LAYERS_FIXED_FONT_LOADER.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/demoforge_V5.94_REINTEGRATED.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/demoforge_V5.95_MEDIA_IMPORT_FIXED.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/demoforge_clean_direct.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/demoforge_editor_layers_music_export_fixed.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/demoforge_editor_music_export.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/demoforge_edu_audio_timeline.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/demoforge_edu_base.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/demoforge_edu_v0.2.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/demoforge_edu_v0.4.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/demoforge_export_1776355940035.zip
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/demoforge_export_1776355940035/CREDITS.json
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/demoforge_export_1776355940035/README.txt
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/demoforge_export_1776355940035/index.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/demoforge_export_1776356208918.zip
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/demoforge_export_music (1).html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/demoforge_export_music.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/demoforge_full_layer_editor.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/demoforge_full_layer_editor_v2.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/demoforge_full_layer_editor_v4_multilang_assets.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/demoforge_full_layer_editor_v5_fixed.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/demoforge_full_layer_editor_v6_links_emoji.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/demoforge_full_layer_editor_v7_repaired_links.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/demoforge_full_layer_editor_v8_ui_presets.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/demoforge_motion_studio_v0_9.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/demoforge_motion_studio_v10_00_core.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/demoforge_motion_studio_v1_3_fx_presets.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/demoforge_motion_studio_v1_4_audio_fonts_integrated.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/demoforge_motion_studio_v1_5_fonts_integrated.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/demoforge_motion_studio_v1_6_left_demos_restored.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/demoforge_motion_studio_v1_7_repaired.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/demoforge_motion_studio_v1_full_emergent_clean.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/demoforge_motion_studio_v1_merged.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/demoforge_motion_studio_v8_90.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/demoforge_motion_studio_v9_10.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/demoforge_motion_studio_v9_30.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/demoforge_motion_studio_v9_50.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/demoforge_motion_studio_v9_70.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/demoforge_music_demo (1).html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/demoforge_music_demo.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/demoforge_phone_dancer.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/demoforge_purist_mode.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/demoforge_union_style_editor.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/demoforge_union_style_editor_music.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/demoforge_v10_rebuild.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/demoforge_v10_step1.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/demoforge_v6_demo (1).html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/demoforge_v6_demo.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/demoforge_v9.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/demoforge_v9_merged_v10fx.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/demoforge_vgm_nd_ui_player.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/demomaker (1).html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/demomaker (2).html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/demomaker-V1.1.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/demomaker-V2.0 (1).html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/demomaker-V2.0.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/demomaker_export_1776623126861.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/demoscene_audio_lab.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/fullscreen-demo.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/hello-world.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/hextales_v4.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/index-CNC-V1.1.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/index-CNC-V1.2.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/index-CNC-V1.3.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/index-CNC-V1.4.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/index-CNC-V1.5.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/index-CNC-V1.6.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/index-CNC-V1.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/index-demoforge-V1.1.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/index.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/je veux que des truc ultra leger pas de mp3.pdf
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/nd-ui.vgm
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/refait moi une synthèse profonde en mode ameliorat (1).md
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/sources.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/state_of_the_art_key_visuals.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/state_of_the_art_refs/state_of_the_art_00.png
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/state_of_the_art_refs/state_of_the_art_02.png
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/state_of_the_art_refs/state_of_the_art_03.png
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/state_of_the_art_refs/state_of_the_art_05.png
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/state_of_the_art_refs/state_of_the_art_1.png
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/state_of_the_art_refs/state_of_the_art_2.png
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/union_style_demo (1).html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/union_style_demo.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/versionning.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/versions/.DS_Store
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/versions/v1.1/index.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/versions/v1.2/index.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/versions/v1.3/index.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/versions/v1.4/index.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/versions/v1.5/index.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/versions/v1.6/index.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/versions/v1.7/index.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/versions/v1/index.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/vosp2.zip
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/🎬 MEGA PROMPT CLAUDE — Dashboard Demoscene Generat (1).md
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/DemoForge/🎬 MEGA PROMPT CLAUDE — Dashboard Demoscene Generat.md
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/README.md
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/.DS_Store
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/._DemoForge
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/#MOTION/._!!! demoforge_motion_studio_v2_exports_config.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/#MOTION/._#FINAL_MOTION.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/#MOTION/._demoforge_export_music (3).html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/#MOTION/._demoforge_fullscreen_animated.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/#MOTION/._demoforge_fullscreen_lite.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/#MOTION/._demoforge_lite_fullscreen.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/#MOTION/._demoforge_motion_compact (1).html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/#MOTION/._demoforge_motion_compact (2).html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/#MOTION/._demoforge_motion_compact (3).html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/#MOTION/._demoforge_motion_compact.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/#MOTION/._demoforge_motion_studio.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/#MOTION/._demoforge_motion_studio_pure.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/#MOTION/._demoforge_motion_studio_pure_animated_exports.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/#MOTION/._demoforge_motion_studio_pure_animated_exports_dnd_fixed.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/#MOTION/._demoforge_optimized_fullscreen.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/#MOTION/._demoforge_retro_demo_editor.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/#MOTION/._demoforge_snapshot.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/.DS_Store
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/._!demoforge_full_layer_editor_v3_dragdrop.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/._!demoforge_mvp.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/._.DS_Store
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/._1-demoforge_motion_studio.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/._CNC Coding Is Not A Crime -Clean - Base.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/._DEMOFORGE-ARCHITECTURE-GLOBAL-EN-V1.0.pdf
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/._DEMOFORGE-ARCHITECTURE-GLOBALE-V1.0.pdf
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/._DEMOFORGE-ARCHITECTURE-GLOBALE-V1.1.pdf
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/._DEMOFORGE-BIBLE-V1.0 (1).pdf
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/._DEMOFORGE-BIBLE-V1.0.pdf
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/._DemoForge V6 — Editor-Emergent.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/._DemoForge V6 — Editor-Emergent_files
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/._DemoForge_V6_Motion_Studio_from_uploaded.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/._Hello World.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/._Hello World_files
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/._Module 1.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/._NO-demoforge_unique_clean.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/._Pour chaque sujet , modules, effets, elements , co (1).md
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/._Pour chaque sujet , modules, effets, elements , co (2).md
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/._Pour chaque sujet , modules, effets, elements , co.md
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/._Résumer la page actuelle.md
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/._Set_de_depart.set (1).json
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/._Set_de_depart.set.json
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/._SzContext.dmg
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/._The Union Demo (1).html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/._The Union Demo.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/._The Union Demo.png
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/._demoforge-2030-V1 (1).html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/._demoforge-2030-V1.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/._demoforge-motion-studio-single-dance-steps.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/._demoforge_7.60_edu_0.6.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/._demoforge_7.60_edu_0.8.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/._demoforge_7.80.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/._demoforge_8.00_stable.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/._demoforge_8.20.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/._demoforge_8.40.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/._demoforge_8.60.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/._demoforge_V1.0.0_Razor1911.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/._demoforge_V5.74_stable_fx_icons.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/._demoforge_V5.76_CMOS_Cosmos_12_templates.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/._demoforge_V5.78_i18n_chapter_json_profile.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/._demoforge_V5.80_scroll_pro_chain_exports.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/._demoforge_V5.82_BASE_DEMO_STABLE.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/._demoforge_V5.84_BASE_PROLOCK_EXPORT_FIXED.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/._demoforge_V5.86_MAX_active.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/._demoforge_V5.86_Pro_Easter_Egg.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/._demoforge_V5.86_Pro_Easter_Egg_auto_serial.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/._demoforge_V5.86_Pro_Easter_Egg_levels.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/._demoforge_V5.87_MAX_active.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/._demoforge_V5.88_FIXED.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/._demoforge_V5.89_MAX_READY.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/._demoforge_V5.91_CALQUES_COMPACT_ZX_BROWSER.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/._demoforge_V5.92_LAYERS_UNDO_FONTS.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/._demoforge_V5.93_LAYERS_FIXED_FONT_LOADER.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/._demoforge_V5.94_REINTEGRATED.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/._demoforge_V5.95_MEDIA_IMPORT_FIXED.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/._demoforge_clean_direct.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/._demoforge_editor_layers_music_export_fixed.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/._demoforge_editor_music_export.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/._demoforge_edu_audio_timeline.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/._demoforge_edu_base.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/._demoforge_edu_v0.2.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/._demoforge_edu_v0.4.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/._demoforge_export_1776355940035
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/._demoforge_export_1776355940035.zip
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/._demoforge_export_1776356208918.zip
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/._demoforge_export_music (1).html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/._demoforge_export_music.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/._demoforge_full_layer_editor.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/._demoforge_full_layer_editor_v2.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/._demoforge_full_layer_editor_v4_multilang_assets.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/._demoforge_full_layer_editor_v5_fixed.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/._demoforge_full_layer_editor_v6_links_emoji.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/._demoforge_full_layer_editor_v7_repaired_links.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/._demoforge_full_layer_editor_v8_ui_presets.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/._demoforge_music_demo (1).html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/._demoforge_music_demo.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/._demoforge_phone_dancer.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/._demoforge_purist_mode.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/._demoforge_union_style_editor.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/._demoforge_union_style_editor_music.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/._demoforge_v6_demo (1).html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/._demoforge_v6_demo.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/._demoforge_vgm_nd_ui_player.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/._demomaker (1).html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/._demomaker (2).html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/._demomaker-V1.1.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/._demomaker-V2.0 (1).html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/._demomaker-V2.0.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/._demomaker_export_1776623126861.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/._hello-world.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/._index-demoforge-V1.1.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/._index.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/._nd-ui.vgm
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/._refait moi une synthèse profonde en mode ameliorat (1).md
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/._state_of_the_art_key_visuals.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/._state_of_the_art_refs
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/._union_style_demo (1).html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/._union_style_demo.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/._vosp2.zip
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/._🎬 MEGA PROMPT CLAUDE — Dashboard Demoscene Generat (1).md
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/._🎬 MEGA PROMPT CLAUDE — Dashboard Demoscene Generat.md
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/DemoForge V6 — Editor-Emergent_files/._saved_resource.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/DemoForge V6 — Editor-Emergent_files/._v8c78df7c7c0f484497ecbca7046644da1771523124516
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/EMERGENT- VERSION/.DS_Store
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/EMERGENT- VERSION/._.DS_Store
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/EMERGENT- VERSION/._Emergent _ Fullstack App.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/EMERGENT- VERSION/._Emergent _ Fullstack App_files
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/EMERGENT- VERSION/Emergent _ Fullstack App_files/._array.js
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/EMERGENT- VERSION/Emergent _ Fullstack App_files/._bundle.js
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/EMERGENT- VERSION/Emergent _ Fullstack App_files/._config.js
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/EMERGENT- VERSION/Emergent _ Fullstack App_files/._css2
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/EMERGENT- VERSION/Emergent _ Fullstack App_files/._dead-clicks-autocapture.js
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/EMERGENT- VERSION/Emergent _ Fullstack App_files/._emergent-main.js
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/EMERGENT- VERSION/Emergent _ Fullstack App_files/._posthog-recorder.js
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/EMERGENT- VERSION/Emergent _ Fullstack App_files/._surveys.js
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/EMERGENT- VERSION/Emergent _ Fullstack App_files/._v8c78df7c7c0f484497ecbca7046644da1771523124516
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/EMERGENT- VERSION/Emergent _ Fullstack App_files/._web-vitals.js
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/Hello World_files/._css2
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/demoforge_export_1776355940035/._CREDITS.json
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/demoforge_export_1776355940035/._README.txt
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/demoforge_export_1776355940035/._index.html
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/state_of_the_art_refs/._state_of_the_art_00.png
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/state_of_the_art_refs/._state_of_the_art_02.png
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/state_of_the_art_refs/._state_of_the_art_03.png
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/state_of_the_art_refs/._state_of_the_art_05.png
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/state_of_the_art_refs/._state_of_the_art_1.png
+/Users/JOB/Documents/TEST CODEX/_URGENCE_Alppha/Demoforge-Public/subrepos/DemoForge-Archive/__MACOSX/DemoForge/state_of_the_art_refs/._state_of_the_art_2.png

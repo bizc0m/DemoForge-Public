@@ -1,0 +1,1045 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 1 - Mega Demo Sync Tool</title>
+<style>
+*{box-sizing:border-box}
+:root{
+  --bg:#060606;
+  --panel:#111;
+  --panel-2:#181818;
+  --line:#2a2a2a;
+  --text:#f3f3f3;
+  --muted:#9b9b9b;
+  --accent:#d8ff62;
+  --cyan:#8ffaff;
+  --danger:#ff7171;
+}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--text);font-family:Arial,sans-serif}
+body{padding:18px}
+.app{max-width:1500px;margin:0 auto;display:grid;grid-template-columns:360px minmax(0,1fr) 340px;gap:16px}
+.panel{
+  background:linear-gradient(180deg,var(--panel),var(--panel-2));
+  border:1px solid var(--line);
+  border-radius:16px;
+  padding:16px;
+  min-width:0;
+}
+h1,h2,h3,p{margin:0}
+h1{font-size:29px}
+h2{font-size:14px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);margin-bottom:10px}
+h3{font-size:13px;color:var(--cyan);margin-bottom:8px}
+.sub{margin-top:8px;color:var(--muted);line-height:1.45}
+.stack{display:grid;gap:14px}
+.field{display:grid;gap:6px}
+label{font-size:12px;color:var(--accent);font-weight:700;letter-spacing:.06em;text-transform:uppercase}
+input,select,button,textarea{
+  width:100%;
+  background:#0b0b0b;
+  color:var(--text);
+  border:1px solid var(--line);
+  border-radius:10px;
+  padding:11px 12px;
+  font:inherit;
+}
+input[type="range"]{padding:0}
+button{cursor:pointer;transition:.18s ease}
+button:hover{background:#1d1d1d;border-color:#3d3d3d}
+button.primary{background:var(--accent);border-color:var(--accent);color:#050505;font-weight:700}
+button.ghost{background:transparent}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.button-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.stat{
+  background:#0a0a0a;
+  border:1px solid var(--line);
+  border-radius:12px;
+  padding:12px;
+}
+.stat strong{display:block;font-size:22px;margin-bottom:3px}
+.stat span{font-size:12px;color:var(--muted)}
+.player{
+  display:grid;
+  gap:14px;
+}
+.stage{
+  position:relative;
+  background:#000;
+  border:1px solid var(--line);
+  border-radius:18px;
+  overflow:hidden;
+  aspect-ratio:4/3;
+}
+#demoCanvas{
+  width:100%;
+  height:100%;
+  display:block;
+  background:#000;
+}
+.overlay{
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  padding:14px;
+  font-size:12px;
+  color:rgba(255,255,255,.82);
+}
+.overlay .tag{
+  background:rgba(0,0,0,.42);
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:999px;
+  padding:7px 10px;
+  backdrop-filter:blur(8px);
+}
+.timelineWrap,
+.outbox,
+.refbox{
+  background:#0a0a0a;
+  border:1px solid var(--line);
+  border-radius:14px;
+  padding:12px;
+}
+#timelineCanvas,#energyCanvas{
+  width:100%;
+  display:block;
+  background:#070707;
+  border-radius:10px;
+}
+.hint{font-size:12px;color:var(--muted);line-height:1.45}
+.events{
+  display:grid;
+  gap:8px;
+  max-height:280px;
+  overflow:auto;
+}
+.event{
+  border:1px solid var(--line);
+  border-radius:10px;
+  padding:10px;
+  background:#0d0d0d;
+}
+.event strong{display:block;font-size:13px;margin-bottom:4px}
+.event span{display:block;font-size:12px;color:var(--muted);line-height:1.35}
+.refs{
+  display:grid;
+  grid-template-columns:1fr 1fr 1fr;
+  gap:8px;
+}
+.refs img{width:100%;display:block;border-radius:8px;border:1px solid var(--line);background:#000}
+pre{
+  margin:0;
+  white-space:pre-wrap;
+  word-break:break-word;
+  font-size:12px;
+  line-height:1.5;
+  font-family:ui-monospace,SFMono-Regular,Menlo,monospace;
+}
+.mini{font-size:11px;color:var(--muted)}
+.danger{color:var(--danger)}
+audio,video{display:none}
+@media (max-width:1300px){
+  .app{grid-template-columns:360px 1fr}
+  .side-right{grid-column:1/-1}
+}
+@media (max-width:860px){
+  .app{grid-template-columns:1fr}
+  .grid-2,.button-row,.stats,.refs{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<main class="app">
+  <section class="panel">
+    <h1>Module 1</h1>
+    <p class="sub">MVP local pour mega demo synchronisée: tu charges un morceau et une vidéo, le module analyse l’audio, détecte des beats, construit une timeline, puis rend une version silhouette stylisée synchronisée sur la musique.</p>
+
+    <div class="stack" style="margin-top:16px">
+      <div class="field">
+        <label for="audioFile">Audio</label>
+        <input id="audioFile" type="file" accept="audio/*">
+      </div>
+      <div class="field">
+        <label for="videoFile">Vidéo source</label>
+        <input id="videoFile" type="file" accept="video/*">
+      </div>
+
+      <div class="grid-2">
+        <div class="field">
+          <label for="styleMode">Style</label>
+          <select id="styleMode">
+            <option value="state02">State Of The Art / Frame 02</option>
+            <option value="state03">State Of The Art / Frame 03</option>
+            <option value="hybrid">State Of The Art / Hybrid</option>
+            <option value="silhouette">Silhouette brute</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="sceneMode">Scène</label>
+          <select id="sceneMode">
+            <option value="auto">Auto</option>
+            <option value="pose">Pose focus</option>
+            <option value="pulse">Pulse focus</option>
+            <option value="cut">Cut focus</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="grid-2">
+        <div class="field">
+          <label for="threshold">Seuil silhouette</label>
+          <input id="threshold" type="range" min="20" max="240" value="118">
+        </div>
+        <div class="field">
+          <label for="contrast">Contraste</label>
+          <input id="contrast" type="range" min="40" max="240" value="146">
+        </div>
+      </div>
+
+      <div class="grid-2">
+        <div class="field">
+          <label for="glow">Glow beat</label>
+          <input id="glow" type="range" min="0" max="200" value="92">
+        </div>
+        <div class="field">
+          <label for="beatSensitivity">Sensibilité beat</label>
+          <input id="beatSensitivity" type="range" min="50" max="200" value="115">
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="notes">Notes scène</label>
+        <textarea id="notes" rows="4" placeholder="Ex: garder la silhouette centrée, cuts sur snare, pose plus lisible sur le drop..."></textarea>
+      </div>
+
+      <div class="button-row">
+        <button class="primary" id="analyzeBtn" type="button">Analyser</button>
+        <button id="playBtn" type="button">Play / Pause</button>
+      </div>
+      <div class="button-row">
+        <button class="ghost" id="rebuildBtn" type="button">Rebuild timeline</button>
+        <button class="ghost" id="exportBtn" type="button">Export JSON</button>
+      </div>
+
+      <div class="stats">
+        <div class="stat"><strong id="bpmValue">--</strong><span>BPM estimé</span></div>
+        <div class="stat"><strong id="beatsValue">--</strong><span>Beats détectés</span></div>
+        <div class="stat"><strong id="scenesValue">--</strong><span>Scènes auto</span></div>
+        <div class="stat"><strong id="durationValue">--</strong><span>Durée</span></div>
+      </div>
+
+      <div class="refbox">
+        <h2>Références</h2>
+        <div class="refs">
+          <img src="./state_of_the_art_refs/state_of_the_art_2.png" alt="Frame 2">
+          <img src="./state_of_the_art_refs/state_of_the_art_02.png" alt="Frame 02">
+          <img src="./state_of_the_art_refs/state_of_the_art_03.png" alt="Frame 03">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="panel">
+    <div class="player">
+      <div class="stage">
+        <canvas id="demoCanvas" width="960" height="720"></canvas>
+        <div class="overlay">
+          <div class="tag" id="sceneLabel">Scene: idle</div>
+          <div class="tag" id="timeLabel">00:00.00</div>
+        </div>
+      </div>
+
+      <div class="timelineWrap">
+        <h2>Timeline</h2>
+        <canvas id="timelineCanvas" width="900" height="140"></canvas>
+        <p class="hint" style="margin-top:10px">La barre du haut représente l’énergie musicale. Les traits verticaux sont les beats détectés. Les blocs colorés sont les scènes automatiques. Le curseur blanc suit la lecture.</p>
+      </div>
+
+      <div class="timelineWrap">
+        <h2>Énergie</h2>
+        <canvas id="energyCanvas" width="900" height="100"></canvas>
+      </div>
+    </div>
+  </section>
+
+  <section class="panel side-right">
+    <div class="stack">
+      <div class="outbox">
+        <h2>Événements</h2>
+        <div class="events" id="eventsList"></div>
+      </div>
+
+      <div class="outbox">
+        <h2>Prompt Technique</h2>
+        <pre id="promptBox"></pre>
+      </div>
+
+      <div class="outbox">
+        <h2>Code DemoForge</h2>
+        <div class="button-row" style="margin-bottom:10px">
+          <button id="copyCodeBtn" type="button">Copier code</button>
+          <button id="copyClipBtn" type="button">Copier clip</button>
+        </div>
+        <pre id="codeBox"></pre>
+      </div>
+
+      <div class="outbox">
+        <h2>JSON Preview</h2>
+        <pre id="jsonPreview"></pre>
+      </div>
+
+      <p class="mini">Ce MVP fait une segmentation <strong>artistique</strong>, pas un détourage IA parfait. Il marche mieux avec caméra fixe, sujet bien contrasté et fond simple. Pour du rendu production, ce module sert de base d’orchestration et de preview.</p>
+    </div>
+  </section>
+</main>
+
+<audio id="audioEl" controls preload="auto"></audio>
+<video id="videoEl" playsinline muted loop preload="auto"></video>
+
+<script>
+const audioEl = document.getElementById("audioEl");
+const videoEl = document.getElementById("videoEl");
+const canvas = document.getElementById("demoCanvas");
+const ctx = canvas.getContext("2d", { willReadFrequently: true });
+const timelineCanvas = document.getElementById("timelineCanvas");
+const timelineCtx = timelineCanvas.getContext("2d");
+const energyCanvas = document.getElementById("energyCanvas");
+const energyCtx = energyCanvas.getContext("2d");
+const sceneLabel = document.getElementById("sceneLabel");
+const timeLabel = document.getElementById("timeLabel");
+const eventsList = document.getElementById("eventsList");
+const promptBox = document.getElementById("promptBox");
+const jsonPreview = document.getElementById("jsonPreview");
+const codeBox = document.getElementById("codeBox");
+
+const off = document.createElement("canvas");
+const offCtx = off.getContext("2d", { willReadFrequently: true });
+
+let audioContext;
+let animationFrame = 0;
+let lastBeatAt = -10;
+
+const state = {
+  energy: [],
+  beats: [],
+  scenes: [],
+  bpm: 0,
+  duration: 0,
+  audioReady: false,
+  videoReady: false,
+  playing: false,
+  lastAnalysisConfig: null
+};
+
+const els = {
+  audioFile: document.getElementById("audioFile"),
+  videoFile: document.getElementById("videoFile"),
+  styleMode: document.getElementById("styleMode"),
+  sceneMode: document.getElementById("sceneMode"),
+  threshold: document.getElementById("threshold"),
+  contrast: document.getElementById("contrast"),
+  glow: document.getElementById("glow"),
+  beatSensitivity: document.getElementById("beatSensitivity"),
+  notes: document.getElementById("notes"),
+  analyzeBtn: document.getElementById("analyzeBtn"),
+  playBtn: document.getElementById("playBtn"),
+  rebuildBtn: document.getElementById("rebuildBtn"),
+  exportBtn: document.getElementById("exportBtn"),
+  copyCodeBtn: document.getElementById("copyCodeBtn"),
+  copyClipBtn: document.getElementById("copyClipBtn"),
+  bpmValue: document.getElementById("bpmValue"),
+  beatsValue: document.getElementById("beatsValue"),
+  scenesValue: document.getElementById("scenesValue"),
+  durationValue: document.getElementById("durationValue")
+};
+
+function formatTime(sec){
+  if (!Number.isFinite(sec)) return "--";
+  const m = Math.floor(sec / 60);
+  const s = sec % 60;
+  return `${String(m).padStart(2,"0")}:${s.toFixed(2).padStart(5,"0")}`;
+}
+
+function currentConfig(){
+  return {
+    styleMode: els.styleMode.value,
+    sceneMode: els.sceneMode.value,
+    threshold: +els.threshold.value,
+    contrast: +els.contrast.value,
+    glow: +els.glow.value,
+    beatSensitivity: +els.beatSensitivity.value,
+    notes: els.notes.value.trim()
+  };
+}
+
+function getSceneAt(time){
+  return state.scenes.find(scene => time >= scene.start && time < scene.end) || null;
+}
+
+function getBeatPulse(time){
+  if (!state.beats.length) return 0;
+  const nearest = state.beats.reduce((acc, beat) => {
+    const d = Math.abs(beat.time - time);
+    return d < acc.distance ? { time: beat.time, distance: d } : acc;
+  }, { time: 0, distance: Infinity });
+  const diff = Math.abs(time - nearest.time);
+  return Math.max(0, 1 - diff / 0.17);
+}
+
+function getEnergyAt(time){
+  if (!state.energy.length || !state.duration) return 0;
+  const index = Math.max(0, Math.min(state.energy.length - 1, Math.floor(time / state.duration * state.energy.length)));
+  return state.energy[index]?.value || 0;
+}
+
+function getStyleColors(style){
+  if (style === "state03") {
+    return { bgTop:"#f2f1e8", bgBottom:"#eceadc", halo:"#eeff65", halo2:"#f8ffb4" };
+  }
+  if (style === "hybrid") {
+    return { bgTop:"#f3f3eb", bgBottom:"#eeede3", halo:"#ecff5b", halo2:"#f0ffa0" };
+  }
+  if (style === "silhouette") {
+    return { bgTop:"#d7d7d7", bgBottom:"#cfcfcf", halo:"#f2f2f2", halo2:"#ffffff" };
+  }
+  return { bgTop:"#f3f4ea", bgBottom:"#efefe4", halo:"#efff68", halo2:"#f5ffb4" };
+}
+
+function updateStats(){
+  els.bpmValue.textContent = state.bpm ? Math.round(state.bpm) : "--";
+  els.beatsValue.textContent = state.beats.length ? String(state.beats.length) : "--";
+  els.scenesValue.textContent = state.scenes.length ? String(state.scenes.length) : "--";
+  els.durationValue.textContent = state.duration ? `${state.duration.toFixed(1)}s` : "--";
+}
+
+async function decodeAudio(file){
+  if (!audioContext) audioContext = new (window.AudioContext || window.webkitAudioContext)();
+  const arrayBuffer = await file.arrayBuffer();
+  return await audioContext.decodeAudioData(arrayBuffer.slice(0));
+}
+
+function analyseBuffer(buffer){
+  const cfg = currentConfig();
+  const channelData = buffer.numberOfChannels > 1
+    ? mixChannels(buffer)
+    : buffer.getChannelData(0);
+
+  const windowSize = 1024;
+  const hop = 512;
+  const energies = [];
+
+  for (let i = 0; i < channelData.length - windowSize; i += hop) {
+    let sum = 0;
+    for (let j = 0; j < windowSize; j++) {
+      const sample = channelData[i + j];
+      sum += sample * sample;
+    }
+    const rms = Math.sqrt(sum / windowSize);
+    energies.push({ time: i / buffer.sampleRate, value: rms });
+  }
+
+  normalizeEnergy(energies);
+  const beats = detectBeats(energies, cfg.beatSensitivity / 100);
+  const bpm = estimateBpm(beats);
+  const scenes = buildScenes(energies, beats, buffer.duration, cfg.sceneMode);
+
+  state.energy = energies;
+  state.beats = beats;
+  state.bpm = bpm;
+  state.duration = buffer.duration;
+  state.scenes = scenes;
+  state.lastAnalysisConfig = cfg;
+}
+
+function mixChannels(buffer){
+  const length = buffer.length;
+  const output = new Float32Array(length);
+  for (let c = 0; c < buffer.numberOfChannels; c++) {
+    const data = buffer.getChannelData(c);
+    for (let i = 0; i < length; i++) output[i] += data[i] / buffer.numberOfChannels;
+  }
+  return output;
+}
+
+function normalizeEnergy(items){
+  let max = 0;
+  items.forEach(item => { if (item.value > max) max = item.value; });
+  if (!max) return;
+  items.forEach(item => { item.value /= max; });
+}
+
+function detectBeats(energies, sensitivity){
+  const beats = [];
+  const window = 8;
+  let lastBeat = -999;
+  for (let i = window; i < energies.length - window; i++) {
+    const current = energies[i].value;
+    let localAvg = 0;
+    for (let j = i - window; j < i; j++) localAvg += energies[j].value;
+    localAvg /= window;
+    const threshold = localAvg * (1.18 / sensitivity) + 0.08;
+    const isPeak = current > energies[i - 1].value && current > energies[i + 1].value;
+    if (isPeak && current > threshold && energies[i].time - lastBeat > 0.21) {
+      beats.push({ time: energies[i].time, energy: current });
+      lastBeat = energies[i].time;
+    }
+  }
+  return beats;
+}
+
+function estimateBpm(beats){
+  if (beats.length < 4) return 0;
+  const intervals = [];
+  for (let i = 1; i < beats.length; i++) {
+    const dt = beats[i].time - beats[i - 1].time;
+    if (dt > 0.2 && dt < 1.5) intervals.push(dt);
+  }
+  if (!intervals.length) return 0;
+  const average = intervals.reduce((a, b) => a + b, 0) / intervals.length;
+  let bpm = 60 / average;
+  while (bpm < 70) bpm *= 2;
+  while (bpm > 170) bpm /= 2;
+  return bpm;
+}
+
+function buildScenes(energies, beats, duration, mode){
+  const scenes = [];
+  if (!duration || !energies.length) return scenes;
+
+  const segments = mode === "cut" ? 10 : mode === "pulse" ? 7 : mode === "pose" ? 5 : 6;
+  const segmentDuration = duration / segments;
+  const labels = mode === "cut"
+    ? ["intro","cut","accent","cut","build","cut","drop","cut","release","outro"]
+    : mode === "pulse"
+      ? ["intro","pulse","groove","pulse","drop","pulse","outro"]
+      : mode === "pose"
+        ? ["intro","pose","body","pose","outro"]
+        : ["intro","build","groove","drop","break","outro"];
+
+  for (let i = 0; i < segments; i++) {
+    const start = i * segmentDuration;
+    const end = i === segments - 1 ? duration : (i + 1) * segmentDuration;
+    const sectionEnergy = energies.filter(item => item.time >= start && item.time < end);
+    const avgEnergy = sectionEnergy.length ? sectionEnergy.reduce((sum, item) => sum + item.value, 0) / sectionEnergy.length : 0;
+    const beatCount = beats.filter(beat => beat.time >= start && beat.time < end).length;
+    scenes.push({
+      id: i + 1,
+      label: labels[i] || `scene-${i + 1}`,
+      start,
+      end,
+      avgEnergy: +avgEnergy.toFixed(3),
+      beatCount
+    });
+  }
+  return scenes;
+}
+
+function renderEvents(){
+  eventsList.innerHTML = "";
+  if (!state.scenes.length) {
+    eventsList.innerHTML = `<div class="event"><strong>En attente</strong><span>Charge un audio puis clique sur Analyser.</span></div>`;
+    return;
+  }
+  state.scenes.forEach(scene => {
+    const el = document.createElement("div");
+    el.className = "event";
+    el.innerHTML = `<strong>${scene.label.toUpperCase()} · ${formatTime(scene.start)} -> ${formatTime(scene.end)}</strong>
+      <span>Énergie moyenne: ${scene.avgEnergy.toFixed(2)} · Beats: ${scene.beatCount}</span>`;
+    eventsList.appendChild(el);
+  });
+}
+
+function drawTimeline(currentTime = 0){
+  const w = timelineCanvas.width;
+  const h = timelineCanvas.height;
+  timelineCtx.clearRect(0,0,w,h);
+  timelineCtx.fillStyle = "#070707";
+  timelineCtx.fillRect(0,0,w,h);
+  if (!state.duration) return;
+
+  const pad = 18;
+  const plotW = w - pad * 2;
+  const plotH = h - pad * 2;
+
+  state.scenes.forEach((scene, i) => {
+    const x = pad + (scene.start / state.duration) * plotW;
+    const width = ((scene.end - scene.start) / state.duration) * plotW;
+    const hue = 70 + i * 22;
+    timelineCtx.fillStyle = `hsla(${hue}, 80%, 60%, 0.16)`;
+    timelineCtx.fillRect(x, pad, width, plotH);
+    timelineCtx.fillStyle = `hsla(${hue}, 90%, 70%, 0.95)`;
+    timelineCtx.fillText(scene.label, x + 6, pad + 14);
+  });
+
+  timelineCtx.beginPath();
+  timelineCtx.strokeStyle = "rgba(216,255,98,.95)";
+  timelineCtx.lineWidth = 2;
+  state.energy.forEach((item, index) => {
+    const x = pad + (item.time / state.duration) * plotW;
+    const y = pad + plotH - item.value * (plotH - 20);
+    if (index === 0) timelineCtx.moveTo(x, y);
+    else timelineCtx.lineTo(x, y);
+  });
+  timelineCtx.stroke();
+
+  timelineCtx.strokeStyle = "rgba(143,250,255,.45)";
+  timelineCtx.lineWidth = 1;
+  state.beats.forEach(beat => {
+    const x = pad + (beat.time / state.duration) * plotW;
+    timelineCtx.beginPath();
+    timelineCtx.moveTo(x, pad);
+    timelineCtx.lineTo(x, pad + plotH);
+    timelineCtx.stroke();
+  });
+
+  const cursorX = pad + (currentTime / state.duration) * plotW;
+  timelineCtx.strokeStyle = "#fff";
+  timelineCtx.lineWidth = 2;
+  timelineCtx.beginPath();
+  timelineCtx.moveTo(cursorX, pad);
+  timelineCtx.lineTo(cursorX, pad + plotH);
+  timelineCtx.stroke();
+}
+
+function drawEnergy(currentTime = 0){
+  const w = energyCanvas.width;
+  const h = energyCanvas.height;
+  energyCtx.clearRect(0,0,w,h);
+  energyCtx.fillStyle = "#070707";
+  energyCtx.fillRect(0,0,w,h);
+  if (!state.duration) return;
+
+  const pad = 12;
+  const plotW = w - pad * 2;
+  const plotH = h - pad * 2;
+  const step = Math.max(1, Math.floor(state.energy.length / plotW));
+
+  for (let x = 0; x < plotW; x++) {
+    const index = Math.min(state.energy.length - 1, x * step);
+    const value = state.energy[index]?.value || 0;
+    const barHeight = value * plotH;
+    energyCtx.fillStyle = `rgba(216,255,98,${0.2 + value * 0.8})`;
+    energyCtx.fillRect(pad + x, pad + plotH - barHeight, 1, barHeight);
+  }
+
+  const pulse = getBeatPulse(currentTime);
+  energyCtx.fillStyle = `rgba(143,250,255,${0.2 + pulse * 0.7})`;
+  energyCtx.fillRect(0, 0, w, 4 + pulse * 8);
+}
+
+function renderPrompt(){
+  const cfg = currentConfig();
+  const prompt = [
+    "Transform the source dance video into a music-synchronized mega demo silhouette sequence.",
+    "",
+    "Style target:",
+    `- ${cfg.styleMode}`,
+    "- black silhouette or near-black silhouette",
+    "- pale bright background",
+    "- yellow-green halo responsive to the beat",
+    "- high readability of the body pose",
+    "- minimal scenery, demoscene composition",
+    "",
+    "Music sync:",
+    `- estimated BPM ${state.bpm ? Math.round(state.bpm) : "unknown"}`,
+    `- ${state.beats.length} detected beat events`,
+    `- scene mode ${cfg.sceneMode}`,
+    "- pulse glow on kick",
+    "- stronger cuts on scene changes",
+    "- preserve choreography from the uploaded video",
+    "",
+    "Notes:",
+    `- ${cfg.notes || "no extra note"}`,
+    "",
+    "Goal:",
+    "- produce a loopable mega demo sequence driven by the music structure"
+  ].join("\n");
+  promptBox.textContent = prompt;
+}
+
+function buildDemoForgeCode(){
+  const cfg = currentConfig();
+  const effectKey =
+    cfg.styleMode === "state03" ? "StateArtSilhouette03" :
+    cfg.styleMode === "hybrid" ? "StateArtSilhouetteHybrid" :
+    cfg.styleMode === "silhouette" ? "SilhouetteBeatVideo" :
+    "StateArtSilhouette02";
+
+  const timelineScenes = state.scenes.map((scene, index) => ({
+    id: scene.id,
+    label: scene.label,
+    startMs: Math.round(scene.start * 1000),
+    endMs: Math.round(scene.end * 1000),
+    avgEnergy: scene.avgEnergy,
+    beatCount: scene.beatCount,
+    paletteBias: index % 2 ? "warm" : "cool"
+  }));
+
+  const defaultParams = {
+    threshold: cfg.threshold,
+    contrast: +(cfg.contrast / 100).toFixed(2),
+    glow: cfg.glow,
+    beatSensitivity: +(cfg.beatSensitivity / 100).toFixed(2),
+    sceneMode: cfg.sceneMode,
+    videoFit: "contain",
+    notes: cfg.notes || "",
+    scenes: timelineScenes
+  };
+
+  const firstScene = timelineScenes[0] || { label: "intro", startMs: 0, endMs: 8000 };
+
+  const clipPreset = {
+    effect: effectKey,
+    startMs: firstScene.startMs,
+    durationMs: Math.max(3000, firstScene.endMs - firstScene.startMs),
+    track: 0,
+    params: defaultParams
+  };
+
+  return `// DemoForge MVP compatible effect
+// Drop this class near the other effects in demoforge_mvp.html
+class ${effectKey} extends BaseEffect {
+  static key = "${effectKey}";
+  static displayName = "${effectKey}";
+  static defaultParams = ${JSON.stringify(defaultParams, null, 2)};
+  static paramsByLevel = {
+    LAME: ["threshold", "glow"],
+    NOOB: ["threshold", "contrast", "glow"],
+    L33T: ["threshold", "contrast", "glow", "beatSensitivity", "sceneMode"],
+    ROXOR: ["threshold", "contrast", "glow", "beatSensitivity", "sceneMode", "videoFit", "notes"]
+  };
+  static attribution = {
+    name: "${effectKey.toLowerCase()}",
+    display_name: "${effectKey}",
+    origin_year: 2026,
+    origin_hardware: "DemoForge MVP / HTML5 Canvas",
+    origin_group: "DemoForge",
+    origin_coder: "Codex + user source footage",
+    first_prod: "Module 1 generated prototype",
+    reference_url: "local://module-1",
+    technique: "Beat-synchronised silhouette video abstraction for mega demo scenes.",
+    difficulty: 3,
+    era: "GEN_VIDEO_SYNC",
+    tags: ["silhouette", "video", "beat", "demo", "sync"]
+  };
+  init(engine) {
+    this.engine = engine;
+    this.video = this.params.sourceVideo || null;
+    this.sceneIndex = 0;
+  }
+  update(deltaSeconds, beatState) {
+    this.pulse = beatState.pulse || 0;
+    const playhead = this.engine.playheadMs;
+    const scenes = this.params.scenes || [];
+    const current = scenes.findIndex(scene => playhead >= scene.startMs && playhead < scene.endMs);
+    this.sceneIndex = current >= 0 ? current : 0;
+  }
+  render(ctx, time, beatState) {
+    const w = this.engine.surface.width;
+    const h = this.engine.surface.height;
+    const scene = (this.params.scenes || [])[this.sceneIndex] || null;
+    const glowBoost = this.params.glow * (0.25 + (beatState.pulse || 0) * 0.75);
+
+    const bg = ctx.createLinearGradient(0, 0, 0, h);
+    bg.addColorStop(0, "${cfg.styleMode === "state03" ? "#f2f1e8" : cfg.styleMode === "silhouette" ? "#d7d7d7" : "#f3f4ea"}");
+    bg.addColorStop(1, "${cfg.styleMode === "state03" ? "#eceadc" : cfg.styleMode === "silhouette" ? "#cfcfcf" : "#efefe4"}");
+    ctx.fillStyle = bg;
+    ctx.fillRect(0, 0, w, h);
+
+    const halo = ctx.createRadialGradient(w * 0.68, h * 0.62, 10, w * 0.68, h * 0.62, 40 + glowBoost);
+    halo.addColorStop(0, "rgba(239,255,104,0.55)");
+    halo.addColorStop(0.3, "rgba(245,255,180,0.22)");
+    halo.addColorStop(1, "rgba(255,255,255,0)");
+    ctx.fillStyle = halo;
+    ctx.fillRect(0, 0, w, h);
+
+    if (this.video && this.video.readyState >= 2) {
+      const temp = document.createElement("canvas");
+      temp.width = Math.max(1, this.video.videoWidth >> 1);
+      temp.height = Math.max(1, this.video.videoHeight >> 1);
+      const tctx = temp.getContext("2d", { willReadFrequently: true });
+      tctx.drawImage(this.video, 0, 0, temp.width, temp.height);
+      const frame = tctx.getImageData(0, 0, temp.width, temp.height);
+      const data = frame.data;
+      for (let i = 0; i < data.length; i += 4) {
+        const lum = data[i] * 0.299 + data[i + 1] * 0.587 + data[i + 2] * 0.114;
+        const adj = Math.min(255, Math.max(0, (lum - 128) * this.params.contrast + 128));
+        if (adj < this.params.threshold) {
+          data[i] = 8; data[i + 1] = 8; data[i + 2] = 8; data[i + 3] = 255;
+        } else {
+          data[i + 3] = 0;
+        }
+      }
+      tctx.putImageData(frame, 0, 0);
+      ctx.drawImage(temp, 0, 0, w, h);
+    } else {
+      ctx.fillStyle = "#090909";
+      ctx.beginPath();
+      ctx.ellipse(w * 0.5, h * 0.56, w * 0.11, h * 0.22, 0.1, 0, Math.PI * 2);
+      ctx.fill();
+    }
+
+    if (scene) {
+      ctx.fillStyle = "rgba(0,0,0,0.1)";
+      ctx.fillRect(0, h - 16, w, 16);
+    }
+  }
+}
+
+// DemoForge clip preset generated by Module 1
+const module1ClipPreset = ${JSON.stringify(clipPreset, null, 2)};
+
+// Optional registration example:
+// EFFECT_REGISTRY.set(${effectKey}.key, ${effectKey});
+// engine.timeline.add(module1ClipPreset.effect, module1ClipPreset.startMs, module1ClipPreset.durationMs, module1ClipPreset.params, module1ClipPreset.track);
+`;
+}
+
+function exportState(){
+  const payload = {
+    config: currentConfig(),
+    bpm: state.bpm,
+    duration: state.duration,
+    beats: state.beats,
+    scenes: state.scenes
+  };
+  const blob = new Blob([JSON.stringify(payload, null, 2)], { type: "application/json" });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = "module-1-timeline.json";
+  link.click();
+  setTimeout(() => URL.revokeObjectURL(url), 0);
+}
+
+function renderCode(){
+  codeBox.textContent = buildDemoForgeCode();
+}
+
+async function runAnalysis(){
+  const audioFile = els.audioFile.files[0];
+  if (!audioFile) {
+    alert("Charge d'abord un morceau audio.");
+    return;
+  }
+  els.analyzeBtn.disabled = true;
+  els.analyzeBtn.textContent = "Analyse...";
+  try {
+    const buffer = await decodeAudio(audioFile);
+    analyseBuffer(buffer);
+    updateStats();
+    renderEvents();
+    renderPrompt();
+    renderCode();
+    jsonPreview.textContent = JSON.stringify({
+      bpm: state.bpm ? Math.round(state.bpm) : 0,
+      duration: +state.duration.toFixed(2),
+      scenes: state.scenes.slice(0, 6),
+      beatsPreview: state.beats.slice(0, 12)
+    }, null, 2);
+    drawTimeline(0);
+    drawEnergy(0);
+  } finally {
+    els.analyzeBtn.disabled = false;
+    els.analyzeBtn.textContent = "Analyser";
+  }
+}
+
+function loadMedia(){
+  const audioFile = els.audioFile.files[0];
+  const videoFile = els.videoFile.files[0];
+  if (audioFile) {
+    audioEl.src = URL.createObjectURL(audioFile);
+    state.audioReady = true;
+  }
+  if (videoFile) {
+    videoEl.src = URL.createObjectURL(videoFile);
+    state.videoReady = true;
+  }
+}
+
+function syncPlayback(){
+  if (state.audioReady) {
+    if (audioContext?.state === "suspended") audioContext.resume();
+    if (audioEl.paused) audioEl.play();
+  }
+  if (state.videoReady && videoEl.paused) videoEl.play();
+  state.playing = true;
+}
+
+function pausePlayback(){
+  audioEl.pause();
+  videoEl.pause();
+  state.playing = false;
+}
+
+function drawBackground(currentTime, pulse, energy){
+  const colors = getStyleColors(els.styleMode.value);
+  const grad = ctx.createLinearGradient(0, 0, 0, canvas.height);
+  grad.addColorStop(0, colors.bgTop);
+  grad.addColorStop(1, colors.bgBottom);
+  ctx.fillStyle = grad;
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+  const haloRadius = 100 + pulse * (+els.glow.value * 2.2) + energy * 120;
+  const halo = ctx.createRadialGradient(
+    canvas.width * 0.68, canvas.height * 0.62, 10,
+    canvas.width * 0.68, canvas.height * 0.62, haloRadius
+  );
+  halo.addColorStop(0, colors.halo);
+  halo.addColorStop(0.35, colors.halo2);
+  halo.addColorStop(1, "rgba(255,255,255,0)");
+  ctx.fillStyle = halo;
+  ctx.globalAlpha = 0.25 + pulse * 0.3 + energy * 0.15;
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  ctx.globalAlpha = 1;
+
+  if (els.styleMode.value !== "silhouette") {
+    ctx.fillStyle = "rgba(255,255,255,0.04)";
+    for (let y = 0; y < canvas.height; y += 4) ctx.fillRect(0, y, canvas.width, 1);
+  }
+}
+
+function drawStylizedVideo(currentTime, pulse, energy){
+  if (!state.videoReady || videoEl.readyState < 2) return;
+
+  const srcW = videoEl.videoWidth || 640;
+  const srcH = videoEl.videoHeight || 480;
+  const drawScale = Math.min(canvas.width / srcW, canvas.height / srcH);
+  const drawW = srcW * drawScale;
+  const drawH = srcH * drawScale;
+  const dx = (canvas.width - drawW) / 2;
+  const dy = (canvas.height - drawH) / 2;
+
+  off.width = Math.max(1, Math.floor(srcW / 2));
+  off.height = Math.max(1, Math.floor(srcH / 2));
+  offCtx.drawImage(videoEl, 0, 0, off.width, off.height);
+  const image = offCtx.getImageData(0, 0, off.width, off.height);
+  const data = image.data;
+  const threshold = +els.threshold.value;
+  const contrast = +els.contrast.value / 100;
+
+  for (let i = 0; i < data.length; i += 4) {
+    const lum = data[i] * 0.299 + data[i + 1] * 0.587 + data[i + 2] * 0.114;
+    const adjusted = Math.min(255, Math.max(0, (lum - 128) * contrast + 128));
+    if (adjusted < threshold) {
+      data[i] = 8;
+      data[i + 1] = 8;
+      data[i + 2] = 8;
+      data[i + 3] = 255;
+    } else {
+      data[i] = 255;
+      data[i + 1] = 255;
+      data[i + 2] = 255;
+      data[i + 3] = 0;
+    }
+  }
+  offCtx.putImageData(image, 0, 0);
+
+  ctx.save();
+  if (els.styleMode.value !== "silhouette") {
+    ctx.shadowBlur = 20 + pulse * 30;
+    ctx.shadowColor = "rgba(0,0,0,0.28)";
+  }
+  ctx.drawImage(off, dx, dy, drawW, drawH);
+  ctx.restore();
+
+  if (pulse > 0.2) {
+    ctx.fillStyle = `rgba(255,255,255,${pulse * 0.06})`;
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+  }
+
+  if (energy > 0.72) {
+    ctx.strokeStyle = `rgba(0,0,0,${0.12 + pulse * 0.18})`;
+    ctx.lineWidth = 2;
+    ctx.strokeRect(10, 10, canvas.width - 20, canvas.height - 20);
+  }
+}
+
+function renderFrame(){
+  const time = Math.max(audioEl.currentTime || 0, videoEl.currentTime || 0);
+  const pulse = getBeatPulse(time);
+  const energy = getEnergyAt(time);
+  const scene = getSceneAt(time);
+
+  drawBackground(time, pulse, energy);
+  drawStylizedVideo(time, pulse, energy);
+
+  sceneLabel.textContent = `Scene: ${scene ? scene.label : "idle"}`;
+  timeLabel.textContent = formatTime(time);
+  drawTimeline(time);
+  drawEnergy(time);
+
+  if (pulse > 0.9 && time - lastBeatAt > 0.18) lastBeatAt = time;
+  animationFrame = requestAnimationFrame(renderFrame);
+}
+
+function startRenderLoop(){
+  cancelAnimationFrame(animationFrame);
+  animationFrame = requestAnimationFrame(renderFrame);
+}
+
+els.audioFile.addEventListener("change", loadMedia);
+els.videoFile.addEventListener("change", loadMedia);
+els.analyzeBtn.addEventListener("click", runAnalysis);
+els.rebuildBtn.addEventListener("click", () => {
+  if (!state.energy.length) return;
+  state.scenes = buildScenes(state.energy, state.beats, state.duration, currentConfig().sceneMode);
+  renderEvents();
+  renderPrompt();
+  jsonPreview.textContent = JSON.stringify({
+    bpm: state.bpm ? Math.round(state.bpm) : 0,
+    duration: +state.duration.toFixed(2),
+    scenes: state.scenes
+  }, null, 2);
+  drawTimeline(audioEl.currentTime || 0);
+  renderCode();
+});
+els.playBtn.addEventListener("click", () => {
+  if (!state.playing) syncPlayback();
+  else pausePlayback();
+});
+els.exportBtn.addEventListener("click", exportState);
+
+audioEl.addEventListener("play", () => { state.playing = true; });
+audioEl.addEventListener("pause", () => { if (videoEl.paused) state.playing = false; });
+audioEl.addEventListener("ended", pausePlayback);
+videoEl.addEventListener("ended", () => {
+  if (!audioEl.loop) pausePlayback();
+});
+
+["styleMode","sceneMode","threshold","contrast","glow","beatSensitivity","notes"].forEach(id => {
+  els[id].addEventListener("input", () => {
+    renderPrompt();
+    renderCode();
+    drawTimeline(audioEl.currentTime || 0);
+  });
+  els[id].addEventListener("change", () => {
+    renderPrompt();
+    renderCode();
+    drawTimeline(audioEl.currentTime || 0);
+  });
+});
+
+els.copyCodeBtn.addEventListener("click", async () => {
+  await navigator.clipboard.writeText(codeBox.textContent);
+});
+
+els.copyClipBtn.addEventListener("click", async () => {
+  const match = codeBox.textContent.match(/const module1ClipPreset = ([\s\S]*?);\n\n\/\/ Optional registration example:/);
+  await navigator.clipboard.writeText(match ? match[1] : "");
+});
+
+renderEvents();
+renderPrompt();
+renderCode();
+drawTimeline(0);
+drawEnergy(0);
+startRenderLoop();
+</script>
+</body>
+</html>

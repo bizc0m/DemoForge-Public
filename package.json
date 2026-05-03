@@ -1,0 +1,12 @@
+{
+  "name": "demoforge-github-ready",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "screenshots": "node scripts/generate-thumbnails.mjs"
+  },
+  "devDependencies": {
+    "playwright": "^1.44.0"
+  }
+}

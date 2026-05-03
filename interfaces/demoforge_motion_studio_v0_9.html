@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>DEMOFORGE MOTION STUDIO — VERSION V0.9</title>
+<style>
+:root {
+--bg: #efe9d9;
+--bg-2: #e5ddc8;
+--ink: #1a1a1a;
+--ink-soft: #3a3a3a;
+--line: #1a1a1a;
+}
+*{box-sizing:border-box}
+html,body{margin:0;width:100%;height:100%;overflow:hidden;background:var(--bg);color:var(--ink);font-family:ui-monospace,"JetBrains Mono","Cascadia Mono",Menlo,Consolas,monospace;text-transform:uppercase;letter-spacing:.06em;font-size:11px}
+button,input,select,textarea{font:inherit;text-transform:uppercase;letter-spacing:.06em;background:var(--bg);color:var(--ink);border:1px solid var(--line);border-radius:0;padding:5px}
+button{cursor:pointer}
+button:active{background:var(--ink);color:var(--bg)}
+input[type=range]{padding:0;height:18px}
+input[type=file]{width:100%;font-size:10px}
+.app{display:grid;grid-template-rows:36px 1fr;height:100vh}
+.top{display:flex;align-items:center;border-bottom:1px solid var(--line);background:var(--bg-2);padding:0 8px;gap:10px}
+.top select{height:24px}
+.title{font-weight:700}
+.main{display:grid;grid-template-columns:250px 1fr 330px;min-height:0}
+.panel{border-right:1px solid var(--line);min-height:0;overflow:auto;background:var(--bg)}
+.panel.right{border-left:1px solid var(--line);border-right:0}
+.section{border-bottom:1px solid var(--line);padding:8px}
+.section h2{font-size:11px;margin:0 0 8px 0}
+.row{display:flex;gap:5px;align-items:center;margin:5px 0}
+.row>*{flex:1}
+.stack{display:flex;flex-direction:column;gap:5px}
+.list{display:flex;flex-direction:column;gap:4px}
+.item{border:1px solid var(--line);padding:6px;cursor:pointer;background:var(--bg)}
+.item.active{background:var(--ink);color:var(--bg)}
+.small{font-size:10px;color:var(--ink-soft)}
+.center{display:grid;grid-template-rows:1fr 38px;min-width:0;min-height:0;background:var(--bg-2)}
+.stage-wrap{display:flex;align-items:center;justify-content:center;min-height:0;padding:12px}
+.stage{position:relative;width:min(72vw,900px);aspect-ratio:16/9;background:#f8f1df;border:1px solid var(--line);overflow:hidden}
+.stage.fullscreen{width:100vw;height:100vh;aspect-ratio:auto;background:#f8f1df}
+.layer-el{position:absolute;left:50%;top:50%;transform-origin:center center;white-space:pre;display:flex;align-items:center;justify-content:center;border:0}
+.shape{width:180px;height:90px;background:var(--ink)}
+.media{max-width:100%;max-height:100%;object-fit:cover}
+.controls{border-top:1px solid var(--line);display:flex;align-items:center;gap:6px;padding:6px;background:var(--bg)}
+.controls button{height:26px}
+.meter{height:14px;border:1px solid var(--line);position:relative;background:var(--bg)}
+.meter div{height:100%;width:0;background:var(--ink)}
+.timeline{height:124px;border:1px solid var(--line);position:relative;background:var(--bg);user-select:none;overflow:hidden}
+.timebar{height:18px;border-bottom:1px solid var(--line);position:relative}
+.tick{position:absolute;top:0;height:18px;border-left:1px solid var(--line);font-size:9px;padding-left:2px}
+.track{position:absolute;left:0;right:0;top:18px;bottom:0}
+.playhead{position:absolute;top:0;bottom:0;width:1px;background:var(--ink);pointer-events:none;z-index:5}
+.seg{position:absolute;height:24px;border:1px solid var(--line);background:var(--bg-2);top:14px;cursor:grab;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.seg.sel{background:var(--ink);color:var(--bg)}
+.handle{position:absolute;top:0;width:7px;height:100%;background:var(--bg);border-left:1px solid var(--line);border-right:1px solid var(--line)}
+.handle.l{left:0;cursor:w-resize}
+.handle.r{right:0;cursor:e-resize}
+.wave{height:46px;border:1px solid var(--line);display:flex;align-items:end;gap:1px;padding:2px;background:var(--bg)}
+.wave span{display:block;flex:1;min-width:2px;background:var(--ink);height:2px}
+label{display:block;margin:4px 0 2px}
+textarea{width:100%;min-height:44px;resize:vertical}
+.kv{display:grid;grid-template-columns:92px 1fr;gap:4px;align-items:center;margin:4px 0}
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="top">
+    <select id="lang"><option>🇬🇧 EN</option><option>🇫🇷 FR</option><option>🇪🇸 ES</option><option>🇩🇪 DE</option><option>🇯🇵 JP</option></select>
+    <div class="title">DEMOFORGE V0.9</div>
+  </div>
+  <div class="main">
+    <aside class="panel">
+      <div class="section">
+        <h2>effects</h2>
+        <div id="effects" class="list"></div>
+      </div>
+      <div class="section">
+        <h2>layers</h2>
+        <div class="row"><button id="addText">add text</button><button id="addShape">add shape</button></div>
+        <div class="row"><button id="delLayer">delete</button><button id="upLayer">up</button><button id="downLayer">down</button></div>
+        <div id="layers" class="list"></div>
+        <label>opacity</label><input id="layerOpacity" type="range" min="0" max="1" step=".01" value="1">
+        <label>text</label><textarea id="layerText"></textarea>
+      </div>
+    </aside>
+
+    <main class="center">
+      <div class="stage-wrap"><div id="stage" class="stage"></div></div>
+      <div class="controls">
+        <button id="play">play</button>
+        <button id="pause">pause</button>
+        <button id="full">fullscreen preview</button>
+        <div class="meter"><div id="ampMeter"></div></div>
+        <span id="timeRead">0.00s</span>
+      </div>
+    </main>
+
+    <aside class="panel right">
+      <div class="section">
+        <h2>assets</h2>
+        <input id="assetFile" type="file" accept="image/*,video/*" multiple>
+        <div id="assets" class="list"></div>
+        <button id="assignAsset">assign selected asset</button>
+      </div>
+      <div class="section">
+        <h2>audio</h2>
+        <input id="audioFile" type="file" accept="audio/*">
+        <audio id="audio" controls style="width:100%;height:28px"></audio>
+        <div id="wave" class="wave"></div>
+        <div class="row"><button id="audioScale">audio scale</button><button id="audioBounce">bounce</button><button id="audioDance">dance</button></div>
+      </div>
+      <div class="section">
+        <h2>timeline</h2>
+        <div class="row"><button id="addSeg">create segment</button><button id="delSeg">delete segment</button></div>
+        <div class="row"><button id="segUp">segment up</button><button id="segDown">segment down</button></div>
+        <div class="kv"><span>duration</span><input id="duration" type="number" min="1" max="120" step="1" value="8"></div>
+        <div id="timeline" class="timeline"><div id="timebar" class="timebar"></div><div id="track" class="track"></div><div id="playhead" class="playhead"></div></div>
+      </div>
+      <div class="section">
+        <h2>effect / expression</h2>
+        <div class="kv"><span>effect</span><select id="effectSelect"></select></div>
+        <div class="kv"><span>formula</span><input id="formula" placeholder="scale = 1 + audio * 0.5"></div>
+        <button id="saveFormula">save formula</button>
+        <div class="small">vars: time, audio. targets: x,y,scale,rotation,opacity.</div>
+      </div>
+      <div class="section">
+        <h2>export</h2>
+        <button id="exportFull">export fullscreen only</button>
+      </div>
+    </aside>
+  </div>
+</div>
+<script>
+(()=> {
+const $=id=>document.getElementById(id);
+const effects=["(TXT) TYPEWRITER","(TXT) FADE","(TXT) SLIDE","(TXT) SCALE","FADE IN / OUT","POSITION (X/Y)","SCALE","ROTATION","OPACITY"];
+let layers=[],selectedLayer=null,assets=[],selectedAsset=null,segments=[],selectedSeg=null,playing=false,startPerf=0,baseTime=0,virtualTime=0,amp=0,audioCtx=null,analyser=null,srcNode=null,freq=null;
+const stage=$("stage"),track=$("track"),timebar=$("timebar"),playhead=$("playhead");
+function uid(){return Math.random().toString(36).slice(2,9)}
+function currentLayer(){return layers.find(l=>l.id===selectedLayer)}
+function addLayer(type){
+  const l={id:uid(),type,text:type==="text"?"DEMOFORGE":"",opacity:1,x:0,y:0,scale:1,rotation:0,effects:[],formulas:{},asset:null};
+  layers.push(l);selectedLayer=l.id;renderAll()
+}
+function delLayer(){layers=layers.filter(l=>l.id!==selectedLayer);selectedLayer=layers[0]?.id||null;renderAll()}
+function moveLayer(d){let i=layers.findIndex(l=>l.id===selectedLayer);let j=i+d;if(i<0||j<0||j>=layers.length)return;[layers[i],layers[j]]=[layers[j],layers[i]];renderAll()}
+function applyEffect(name){let l=currentLayer();if(!l)return;if(!l.effects.includes(name))l.effects.push(name);$("effectSelect").value=name;renderAll()}
+function makeLayerEl(l,ctx){
+  let e=document.createElement("div"); e.className="layer-el"; e.dataset.id=l.id;
+  if(l.asset){
+    const a=assets.find(x=>x.id===l.asset);
+    if(a&&a.kind==="image"){let im=document.createElement("img");im.src=a.url;im.className="media";e.appendChild(im)}
+    if(a&&a.kind==="video"){let v=document.createElement("video");v.src=a.url;v.className="media";v.muted=true;v.loop=true;v.autoplay=true;if(playing)v.play();e.appendChild(v)}
+  } else if(l.type==="shape"){let s=document.createElement("div");s.className="shape";e.appendChild(s)}
+  else {e.textContent=textByEffect(l,ctx)}
+  e.style.opacity=String(valueFor(l,"opacity",ctx,l.opacity));
+  let x=valueFor(l,"x",ctx,l.x), y=valueFor(l,"y",ctx,l.y), sc=valueFor(l,"scale",ctx,l.scale), rot=valueFor(l,"rotation",ctx,l.rotation);
+  e.style.transform=`translate(calc(-50% + ${x}px),calc(-50% + ${y}px)) scale(${sc}) rotate(${rot}deg)`;
+  if(l.effects.includes("(TXT) FADE")||l.effects.includes("FADE IN / OUT")) e.style.opacity=String(Math.min(e.style.opacity, fadePulse(ctx.local)));
+  if(l.effects.includes("(TXT) SLIDE")||l.effects.includes("POSITION (X/Y)")) e.style.transform+=` translateX(${Math.sin(ctx.local*3)*40}px)`;
+  if(l.effects.includes("(TXT) SCALE")||l.effects.includes("SCALE")) e.style.transform+=` scale(${1+Math.sin(ctx.local*4)*.15})`;
+  if(l.effects.includes("ROTATION")) e.style.transform+=` rotate(${ctx.local*60}deg)`;
+  if(l.effects.includes("OPACITY")) e.style.opacity=String(Math.min(Number(e.style.opacity),.35+.65*fadePulse(ctx.local)));
+  e.onclick=()=>{selectedLayer=l.id;renderAll()};
+  return e;
+}
+function textByEffect(l,ctx){
+  if(!l.effects.includes("(TXT) TYPEWRITER"))return l.text||"TEXT";
+  const s=l.text||"TEXT"; return s.slice(0,Math.max(1,Math.floor((ctx.local%2)/2*s.length)+1));
+}
+function fadePulse(t){let p=(t%2)/2;return p<.5?p*2:(1-p)*2}
+function valueFor(l,k,ctx,base){
+  let f=l.formulas[k]; if(!f)return base;
+  try{return Number(Function("time","audio","base","return ("+f+")")(ctx.time,ctx.audio,base))}
+  catch(e){return base}
+}
+function renderStage(){
+  stage.innerHTML="";
+  let seq=orderedSegments(), seg=segmentAt(virtualTime), local=seg?virtualTime-seg.offset:virtualTime;
+  layers.forEach(l=>stage.appendChild(makeLayerEl(l,{time:virtualTime,local,audio:amp,seg})));
+  $("timeRead").textContent=virtualTime.toFixed(2)+"s";
+  $("ampMeter").style.width=(amp*100).toFixed(0)+"%";
+  playhead.style.left=(timelineX(virtualTime)+"px");
+}
+function orderedSegments(){
+  let arr=[...segments].sort((a,b)=>a.order-b.order), off=0;
+  return arr.map(s=>{let o={...s,offset:off};off+=s.end-s.start;return o})
+}
+function segmentAt(t){
+  let os=orderedSegments();return os.find(s=>t>=s.offset&&t<=s.offset+s.end-s.start)||os[os.length-1]
+}
+function totalDuration(){return orderedSegments().reduce((a,s)=>a+s.end-s.start,0)||Number($("duration").value)||8}
+function timelineX(t){return Math.max(0,Math.min(track.clientWidth,(t/totalDuration())*track.clientWidth))}
+function renderLayers(){
+  $("layers").innerHTML="";
+  layers.slice().reverse().forEach(l=>{
+    let d=document.createElement("div");d.className="item"+(l.id===selectedLayer?" active":"");d.textContent=(l.type+" "+l.id+" "+Math.round(l.opacity*100)+"%");d.onclick=()=>{selectedLayer=l.id;renderAll()};$("layers").appendChild(d)
+  });
+  let l=currentLayer();$("layerOpacity").value=l?l.opacity:1;$("layerText").value=l?l.text:"";
+}
+function renderEffects(){
+  $("effects").innerHTML="";$("effectSelect").innerHTML="";
+  effects.forEach(e=>{let d=document.createElement("div");d.className="item";d.textContent=e;d.onclick=()=>applyEffect(e);$("effects").appendChild(d);let o=document.createElement("option");o.textContent=e;$("effectSelect").appendChild(o)})
+}
+function renderTimeline(){
+  timebar.innerHTML="";track.querySelectorAll(".seg").forEach(n=>n.remove());
+  const dur=totalDuration(), w=track.clientWidth||300;
+  for(let i=0;i<=dur;i++){let t=document.createElement("div");t.className="tick";t.style.left=(i/dur*w)+"px";t.textContent=i+"s";timebar.appendChild(t)}
+  let ordered=orderedSegments();
+  ordered.forEach(s=>{
+    let left=(s.offset/dur*w), width=((s.end-s.start)/dur*w);
+    let el=document.createElement("div");el.className="seg"+(s.id===selectedSeg?" sel":"");el.style.left=left+"px";el.style.width=Math.max(24,width)+"px";el.style.top=(14+(s.order%3)*28)+"px";el.textContent=s.order;
+    let hl=document.createElement("div");hl.className="handle l";let hr=document.createElement("div");hr.className="handle r";el.appendChild(hl);el.appendChild(hr);
+    bindSeg(el,hl,hr,s);track.appendChild(el);
+  });
+}
+function bindSeg(el,hl,hr,s){
+  el.onmousedown=e=>{selectedSeg=s.id;let mode=e.target===hl?"l":e.target===hr?"r":"m";let sx=e.clientX, orig={...s};document.onmousemove=ev=>dragSeg(ev,mode,s,orig,sx);document.onmouseup=()=>{document.onmousemove=null;document.onmouseup=null;renderAll()};renderAll()};
+}
+function dragSeg(e,mode,s,orig,sx){
+  let dx=(e.clientX-sx)/(track.clientWidth||300)*totalDuration();
+  if(mode==="m"){let len=orig.end-orig.start;s.start=Math.max(0,orig.start+dx);s.end=s.start+len}
+  if(mode==="l")s.start=Math.max(0,Math.min(orig.end-.2,orig.start+dx));
+  if(mode==="r")s.end=Math.max(orig.start+.2,orig.end+dx);
+  renderTimeline();
+}
+function addSegment(){let n=segments.length+1;segments.push({id:uid(),start:0,end:Math.min(2,Number($("duration").value)),order:n});selectedSeg=segments.at(-1).id;renderAll()}
+function moveSeg(d){let s=segments.find(x=>x.id===selectedSeg);if(!s)return;let o=s.order+d;if(o<1||o>segments.length)return;let other=segments.find(x=>x.order===o);if(other)other.order=s.order;s.order=o;renderAll()}
+function deleteSeg(){segments=segments.filter(s=>s.id!==selectedSeg);segments.sort((a,b)=>a.order-b.order).forEach((s,i)=>s.order=i+1);selectedSeg=segments[0]?.id||null;renderAll()}
+function renderAssets(){
+  $("assets").innerHTML="";assets.forEach(a=>{let d=document.createElement("div");d.className="item"+(a.id===selectedAsset?" active":"");d.textContent=a.name;d.onclick=()=>{selectedAsset=a.id;renderAssets()};$("assets").appendChild(d)})
+}
+function setupAudio(){
+  const au=$("audio"); if(!audioCtx)audioCtx=new (window.AudioContext||window.webkitAudioContext)();
+  if(!srcNode){srcNode=audioCtx.createMediaElementSource(au);analyser=audioCtx.createAnalyser();analyser.fftSize=256;srcNode.connect(analyser);analyser.connect(audioCtx.destination);freq=new Uint8Array(analyser.frequencyBinCount)}
+}
+function updateAmp(){
+  if(analyser){analyser.getByteFrequencyData(freq);let sum=0;for(let v of freq)sum+=v;amp=Math.min(1,(sum/freq.length)/160)}
+  else amp*=.92;
+}
+function drawWave(){
+  const w=$("wave");w.innerHTML="";for(let i=0;i<64;i++){let s=document.createElement("span");s.style.height=(2+Math.abs(Math.sin(i*.55))*38)+"px";w.appendChild(s)}
+}
+function tick(ts){
+  if(playing){virtualTime=(baseTime+(ts-startPerf)/1000)%totalDuration();updateAmp();renderStage();requestAnimationFrame(tick)}
+}
+function play(){playing=true;startPerf=performance.now();setupAudio();audioCtx.resume();$("audio").play().catch(()=>{});requestAnimationFrame(tick)}
+function pause(){playing=false;baseTime=virtualTime;$("audio").pause()}
+function renderAll(){renderLayers();renderTimeline();renderAssets();renderStage()}
+$("addText").onclick=()=>addLayer("text");$("addShape").onclick=()=>addLayer("shape");$("delLayer").onclick=delLayer;$("upLayer").onclick=()=>moveLayer(1);$("downLayer").onclick=()=>moveLayer(-1);
+$("layerOpacity").oninput=e=>{let l=currentLayer();if(l){l.opacity=Number(e.target.value);renderStage()}};
+$("layerText").oninput=e=>{let l=currentLayer();if(l){l.text=e.target.value;renderStage()}};
+$("play").onclick=play;$("pause").onclick=pause;$("full").onclick=()=>stage.requestFullscreen();
+$("addSeg").onclick=addSegment;$("delSeg").onclick=deleteSeg;$("segUp").onclick=()=>moveSeg(-1);$("segDown").onclick=()=>moveSeg(1);$("duration").onchange=renderAll;
+$("assetFile").onchange=e=>{[...e.target.files].forEach(f=>assets.push({id:uid(),name:f.name,url:URL.createObjectURL(f),kind:f.type.startsWith("video")?"video":"image"}));selectedAsset=assets.at(-1)?.id;renderAll()};
+$("assignAsset").onclick=()=>{let l=currentLayer();if(l&&selectedAsset){l.asset=selectedAsset;renderAll()}};
+$("audioFile").onchange=e=>{let f=e.target.files[0];if(!f)return;$("audio").src=URL.createObjectURL(f);drawWave();setupAudio()};
+$("audioScale").onclick=()=>{let l=currentLayer();if(l){l.formulas.scale="base + audio * 0.8";$("formula").value="scale = base + audio * 0.8";renderStage()}};
+$("audioBounce").onclick=()=>{let l=currentLayer();if(l){l.formulas.y="-audio * 120";$("formula").value="y = -audio * 120";renderStage()}};
+$("audioDance").onclick=()=>{let l=currentLayer();if(l){l.formulas.x="Math.sin(time*8)*audio*90";l.formulas.rotation="Math.sin(time*5)*audio*25";$("formula").value="x = Math.sin(time*8)*audio*90";renderStage()}};
+$("saveFormula").onclick=()=>{let l=currentLayer();if(!l)return;let v=$("formula").value.trim(), m=v.match(/^(x|y|scale|rotation|opacity)\s*=\s*(.+)$/i);if(m){l.formulas[m[1].toLowerCase()]=m[2];renderStage()}};
+$("exportFull").onclick=()=>{stage.requestFullscreen().then(()=>{baseTime=0;virtualTime=0;play()})};
+window.onresize=renderTimeline;
+renderEffects();addLayer("text");addLayer("shape");addSegment();drawWave();renderAll();
+})();
+</script>
+</body>
+</html>

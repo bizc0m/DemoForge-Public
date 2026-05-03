@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Demoforge Codex - Sources</title>
+  <style>
+    :root {
+      --bg: #08111e;
+      --bg-2: #03070d;
+      --panel: rgba(11, 20, 35, 0.92);
+      --line: rgba(136, 192, 255, 0.18);
+      --text: #eff6ff;
+      --muted: #9fb5d8;
+      --accent: #68dbff;
+      --radius: 22px;
+      --shadow: 0 24px 48px rgba(0, 0, 0, 0.28);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--text);
+      font: 16px/1.55 "IBM Plex Mono", "Trebuchet MS", sans-serif;
+      background:
+        radial-gradient(circle at 12% 18%, rgba(104, 219, 255, 0.16), transparent 24%),
+        linear-gradient(180deg, var(--bg), var(--bg-2));
+    }
+
+    .wrap {
+      width: min(1100px, calc(100% - 28px));
+      margin: 24px auto 48px;
+      display: grid;
+      gap: 18px;
+    }
+
+    .panel {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 22px;
+    }
+
+    .nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .nav a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 38px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      text-decoration: none;
+      color: var(--text);
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+    }
+
+    .nav a:hover {
+      border-color: rgba(255, 255, 255, 0.3);
+      background: rgba(24, 42, 72, 0.8);
+    }
+
+    .grid {
+      display: grid;
+      gap: 12px;
+    }
+
+    .source {
+      padding: 16px;
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .muted { color: var(--muted); }
+
+    a { color: var(--accent); }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <section class="panel">
+      <h1>Sources et credits</h1>
+      <p class="muted">Cette page regroupe les references culturelles, techniques et editoriales mises en avant dans le projet. Elle sert de point d'entree public pour les credits sur Vercel.</p>
+      <div class="nav">
+        <a href="./index.html">Derniere version</a>
+        <a href="./versionning.html">Versionning</a>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>References demoscene et web</h2>
+      <div id="sources-grid" class="grid"></div>
+    </section>
+
+    <section class="panel">
+      <h2>Fichiers projet utiles</h2>
+      <div class="grid">
+        <div class="source">
+          <strong>Versionning public</strong>
+          <p class="muted">[versionning.html] conserve l'historique des snapshots et l'acces a chaque dossier de version.</p>
+        </div>
+        <div class="source">
+          <strong>Registre machine-readable</strong>
+          <p class="muted"><code>data/versions.json</code> centralise la derniere version, les archives et les liens de consultation.</p>
+        </div>
+        <div class="source">
+          <strong>Racine active</strong>
+          <p class="muted"><code>index.html</code> reste la version de reference a ouvrir en public.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const sourcesGrid = document.getElementById("sources-grid");
+
+    fetch("./data/versions.json")
+      .then((response) => response.json())
+      .then((data) => {
+        sourcesGrid.innerHTML = data.sources.map((item) => `
+          <article class="source">
+            <strong>${item.label}</strong>
+            <p class="muted">Type: ${item.type}</p>
+            <a href="${item.url}" target="_blank" rel="noreferrer">${item.url}</a>
+          </article>
+        `).join("");
+      })
+      .catch(() => {
+        sourcesGrid.innerHTML = "<article class=\"source\">Impossible de charger <code>data/versions.json</code>.</article>";
+      });
+  </script>
+</body>
+</html>

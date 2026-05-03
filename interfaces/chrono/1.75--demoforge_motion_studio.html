@@ -1,0 +1,2477 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DemoForge Motion Studio</title>
+<style>
+:root{
+  --paper:#f4f0df;
+  --ink:#050505;
+  --olive:#c9d27a;
+  --olive-soft:rgba(201,210,122,.28);
+  --panel:#111111;
+  --panel-soft:rgba(17,17,17,.8);
+  --line:rgba(255,255,255,.1);
+  --muted:rgba(255,255,255,.68);
+  --accent:#d8e884;
+  --danger:#ff7f66;
+  --shadow:0 18px 50px rgba(0,0,0,.32);
+}
+
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%;background:
+  radial-gradient(circle at top left, rgba(216,232,132,.16), transparent 28%),
+  linear-gradient(180deg, #1b1b18 0%, #0f100f 100%);
+color:#faf8f0;font-family:"Trebuchet MS","Avenir Next",sans-serif}
+
+body{padding:24px}
+
+body.dragging{
+  outline:3px dashed var(--accent);
+  outline-offset:-10px;
+}
+
+.app{
+  width:min(1480px,100%);
+  margin:0 auto;
+  display:grid;
+  grid-template-columns:minmax(340px,430px) minmax(420px,1fr);
+  gap:22px;
+  align-items:start;
+}
+
+.panel{
+  background:var(--panel-soft);
+  border:1px solid var(--line);
+  border-radius:28px;
+  box-shadow:var(--shadow);
+  backdrop-filter:blur(18px);
+}
+
+.sidebar{
+  padding:22px;
+  display:grid;
+  gap:18px;
+}
+
+.hint,
+.hint,
+.status,
+label span,
+.stat p{
+  color:var(--muted);
+}
+
+.grid{
+  display:grid;
+  gap:12px;
+}
+
+.two{
+  grid-template-columns:repeat(2,minmax(0,1fr));
+}
+
+.three{
+  grid-template-columns:repeat(3,minmax(0,1fr));
+}
+
+.card{
+  padding:16px;
+  border-radius:20px;
+  border:1px solid var(--line);
+  background:rgba(255,255,255,.03);
+}
+
+.dropzone{
+  padding:18px;
+  border-radius:18px;
+  border:1.5px dashed rgba(216,232,132,.38);
+  background:
+    radial-gradient(circle at top right, rgba(216,232,132,.12), transparent 36%),
+    rgba(255,255,255,.025);
+  text-align:center;
+  transition:border-color .2s ease, background .2s ease, transform .2s ease;
+}
+
+.dropzone strong{
+  display:block;
+  margin-bottom:6px;
+  font-size:15px;
+  color:#fffdf4;
+}
+
+.dropzone p{
+  margin:0;
+  font-size:13px;
+  line-height:1.5;
+  color:var(--muted);
+}
+
+.dropzone.active{
+  border-color:var(--accent);
+  background:
+    radial-gradient(circle at top right, rgba(216,232,132,.2), transparent 40%),
+    rgba(216,232,132,.08);
+  transform:translateY(-1px);
+}
+
+.section-title{
+  margin:0 0 12px;
+  font-size:14px;
+  text-transform:uppercase;
+  letter-spacing:.16em;
+  color:var(--accent);
+}
+
+label{
+  display:grid;
+  gap:8px;
+  font-size:13px;
+  font-weight:700;
+}
+
+label span{
+  font-weight:500;
+  font-size:12px;
+}
+
+input[type="text"],
+input[type="url"],
+input[type="number"],
+input[type="range"],
+select,
+textarea,
+button{
+  width:100%;
+}
+
+input[type="text"],
+input[type="url"],
+input[type="number"],
+select,
+textarea{
+  border:1px solid rgba(255,255,255,.12);
+  background:rgba(0,0,0,.28);
+  color:#fffdf8;
+  border-radius:14px;
+  padding:12px 14px;
+  font:inherit;
+}
+
+textarea{
+  min-height:84px;
+  resize:vertical;
+}
+
+input[type="range"]{
+  accent-color:var(--accent);
+}
+
+button{
+  border:0;
+  border-radius:16px;
+  padding:12px 16px;
+  font:inherit;
+  font-weight:800;
+  cursor:pointer;
+  transition:transform .2s ease, opacity .2s ease, background .2s ease;
+}
+
+button:hover{transform:translateY(-1px)}
+button:disabled{opacity:.45;cursor:not-allowed;transform:none}
+
+.primary{
+  background:var(--accent);
+  color:#111;
+}
+
+.secondary{
+  background:rgba(255,255,255,.08);
+  color:#faf8f0;
+}
+
+.ghost{
+  background:rgba(0,0,0,.26);
+  color:#faf8f0;
+  border:1px solid rgba(255,255,255,.1);
+}
+
+.danger{
+  background:rgba(255,127,102,.18);
+  color:#ffd8cf;
+}
+
+.controls{
+  display:grid;
+  gap:10px;
+}
+
+.status{
+  font-size:13px;
+  line-height:1.5;
+}
+
+.status strong{color:#fff}
+
+.stage{
+  padding:22px;
+  display:grid;
+  gap:16px;
+}
+
+.stage-head{
+  display:flex;
+  justify-content:space-between;
+  gap:16px;
+  align-items:flex-start;
+}
+
+.stage-head h2{
+  margin:0 0 6px;
+  font-size:28px;
+}
+
+.pill{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:10px 14px;
+  border-radius:999px;
+  background:rgba(255,255,255,.06);
+  border:1px solid rgba(255,255,255,.08);
+  font-size:13px;
+  color:var(--muted);
+}
+
+.pill.warn{
+  color:#fff1c7;
+  background:rgba(239,191,98,.12);
+  border-color:rgba(239,191,98,.24);
+}
+
+.canvas-wrap{
+  position:relative;
+  width:100%;
+  aspect-ratio:4 / 3;
+  border-radius:28px;
+  overflow:hidden;
+  border:1px solid rgba(255,255,255,.1);
+  background:#e9e2c8;
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.06), 0 24px 60px rgba(0,0,0,.26);
+}
+
+.preview-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:16px;
+  align-items:start;
+}
+
+.preview-panel{
+  display:grid;
+  gap:10px;
+}
+
+.preview-label{
+  font-size:12px;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  color:var(--accent);
+}
+
+.top-controls{
+  display:grid;
+  gap:12px;
+  padding:18px;
+  border-radius:22px;
+  background:rgba(255,255,255,.04);
+  border:1px solid rgba(255,255,255,.08);
+}
+
+canvas{
+  display:block;
+  width:100%;
+  height:100%;
+}
+
+.timeline-card{
+  display:grid;
+  gap:14px;
+  padding:18px;
+  border-radius:22px;
+  background:rgba(255,255,255,.04);
+  border:1px solid rgba(255,255,255,.08);
+}
+
+.source-preview{
+  width:100%;
+  aspect-ratio:16 / 9;
+  border-radius:20px;
+  overflow:hidden;
+  background:#050505;
+  border:1px solid rgba(255,255,255,.08);
+}
+
+.source-preview video{
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  display:block;
+  background:#050505;
+}
+
+.timeline-meta{
+  display:flex;
+  justify-content:space-between;
+  gap:14px;
+  flex-wrap:wrap;
+  font-size:13px;
+  color:var(--muted);
+}
+
+.timeline-row{
+  display:grid;
+  gap:8px;
+}
+
+.timecode-grid{
+  display:grid;
+  grid-template-columns:1.2fr 1fr 1fr;
+  gap:12px;
+}
+
+.timecode-box{
+  display:grid;
+  gap:8px;
+}
+
+.timecode-actions{
+  display:flex;
+  gap:8px;
+}
+
+.timecode-input{
+  font-family:"SFMono-Regular","Consolas","Menlo",monospace;
+  letter-spacing:.04em;
+}
+
+.mini-btn{
+  padding:10px 12px;
+  border-radius:12px;
+  font-size:12px;
+}
+
+.timeline-row label{
+  font-size:12px;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  color:var(--accent);
+}
+
+.timeline-row input[type="range"]{
+  width:100%;
+}
+
+.youtube-preview{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  border:0;
+  display:none;
+  background:#000;
+}
+
+.youtube-fallback{
+  position:absolute;
+  inset:0;
+  display:none;
+  place-items:center;
+  padding:24px;
+  background:
+    linear-gradient(180deg, rgba(5,5,5,.58), rgba(5,5,5,.76)),
+    radial-gradient(circle at center, rgba(216,232,132,.14), transparent 44%);
+  color:#fffdf6;
+  text-align:center;
+}
+
+.youtube-fallback-card{
+  width:min(560px,100%);
+  padding:24px;
+  border-radius:24px;
+  background:rgba(0,0,0,.42);
+  border:1px solid rgba(255,255,255,.1);
+  box-shadow:0 18px 44px rgba(0,0,0,.28);
+}
+
+.youtube-thumb{
+  width:100%;
+  aspect-ratio:16 / 9;
+  object-fit:cover;
+  display:block;
+  margin:0 0 16px;
+  border-radius:18px;
+  background:#0a0a0a;
+  border:1px solid rgba(255,255,255,.08);
+}
+
+.youtube-fallback-card strong{
+  display:block;
+  margin-bottom:10px;
+  font-size:22px;
+}
+
+.youtube-fallback-card p{
+  margin:0 0 16px;
+  color:rgba(255,255,255,.76);
+  line-height:1.5;
+}
+
+.youtube-actions{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  justify-content:center;
+}
+
+.youtube-actions a{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-width:180px;
+  padding:12px 16px;
+  border-radius:14px;
+  text-decoration:none;
+  font-weight:800;
+}
+
+.youtube-actions .watch-link{
+  background:var(--accent);
+  color:#111;
+}
+
+.youtube-actions .embed-link{
+  background:rgba(255,255,255,.08);
+  color:#faf8f0;
+  border:1px solid rgba(255,255,255,.12);
+}
+
+.stats{
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:12px;
+}
+
+.stat{
+  padding:16px;
+  border-radius:18px;
+  background:rgba(255,255,255,.04);
+  border:1px solid rgba(255,255,255,.08);
+}
+
+.stat strong{
+  display:block;
+  font-size:26px;
+  margin-bottom:4px;
+}
+
+.stat p{
+  margin:0;
+  font-size:12px;
+  line-height:1.4;
+}
+
+.footer-note{
+  padding:14px 16px;
+  border-radius:18px;
+  background:rgba(216,232,132,.08);
+  border:1px solid rgba(216,232,132,.16);
+  color:#f2f0df;
+  font-size:13px;
+  line-height:1.55;
+}
+
+.debug-grid{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:14px;
+}
+
+.debug-card{
+  padding:14px;
+  border-radius:18px;
+  background:rgba(255,255,255,.04);
+  border:1px solid rgba(255,255,255,.08);
+  display:grid;
+  gap:10px;
+}
+
+.debug-card canvas{
+  width:100%;
+  aspect-ratio:4 / 3;
+  border-radius:14px;
+  background:#050505;
+  border:1px solid rgba(255,255,255,.08);
+}
+
+.hidden{
+  display:none !important;
+}
+
+@media (max-width:1080px){
+  .app{grid-template-columns:1fr}
+  .stats{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .preview-grid{grid-template-columns:1fr}
+}
+
+@media (max-width:640px){
+  body{padding:14px}
+  .sidebar,.stage{padding:16px}
+  .two,.three,.stats,.debug-grid{grid-template-columns:1fr}
+  .timecode-grid{grid-template-columns:1fr}
+  .stage-head{flex-direction:column}
+}
+</style>
+</head>
+<body>
+<main class="app">
+  <aside class="panel sidebar">
+    <section class="card">
+      <h2 class="section-title">Source</h2>
+      <div class="grid">
+        <div id="dropZone" class="dropzone">
+          <strong>Glisse-depose ici</strong>
+          <p>Depose une video, un GIF, ou une URL YouTube. Le collage d'URL dans cette zone est aussi accepte.</p>
+        </div>
+        <label>
+          Fichier local video ou GIF
+          <input id="fileInput" type="file" accept="video/*,image/gif">
+          <span>Ideal pour le rendu et l'export. Camera fixe recommandee.</span>
+        </label>
+        <label>
+          URL YouTube
+          <input id="youtubeInput" type="url" placeholder="https://www.youtube.com/watch?v=...">
+          <span>Le lien est accepte pour previsualisation. Le traitement image complet reste limite aux sources locales dans une page 100% autonome.</span>
+        </label>
+      </div>
+      <div class="controls">
+        <button id="loadYoutubeBtn" class="secondary" type="button">Charger la preview YouTube</button>
+        <button id="clearSourceBtn" class="ghost" type="button">Reinitialiser la source</button>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2 class="section-title">Style</h2>
+      <div class="grid two">
+        <label>
+          Effet
+          <select id="presetSelect"></select>
+          <span>Effet de base du rendu.</span>
+        </label>
+        <label>
+          Variante
+          <select id="variantSelect"></select>
+          <span>12 presets de variante pour chaque effet.</span>
+        </label>
+      </div>
+      <div class="grid two">
+        <label>
+          Raster
+          <select id="rasterSelect"></select>
+          <span>Overlay retro selectionnable pour chaque preset.</span>
+        </label>
+        <label>
+          Palette
+          <select id="paletteSelect">
+            <option value="state">Off-white / halo olive</option>
+            <option value="green">Matrix pale green</option>
+            <option value="mono">Black / warm paper</option>
+            <option value="amber">Amber monitor</option>
+            <option value="ice">Icy demoscene</option>
+          </select>
+          <span>Le preset peut changer cette palette automatiquement.</span>
+        </label>
+        <label>
+          Export natif
+          <select id="exportSelect">
+            <option value="webm" selected>WebM VP9 clip</option>
+            <option value="webm-vp8">WebM VP8 clip</option>
+            <option value="png">PNG frame</option>
+            <option value="html">HTML snapshot</option>
+            <option value="svg">SVG snapshot</option>
+          </select>
+          <span>WebM, PNG, HTML, et SVG quand c'est possible pour le rendu courant.</span>
+        </label>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2 class="section-title">Caracteres</h2>
+      <div class="grid">
+        <label>
+          Jeu de caracteres personnalise
+          <textarea id="charSetInput" placeholder="@#%*+=-:. MATRIX 0101 DEMO"></textarea>
+          <span>Utilise pour ASCII Art et Matrix Rain. Tu peux mettre tes propres lettres, chiffres ou mots.</span>
+        </label>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2 class="section-title">Moteur</h2>
+      <div class="grid two">
+        <label>
+          Sensibilite mouvement
+          <input id="motionThreshold" type="range" min="6" max="90" value="26">
+          <span>Plus bas = plus de mouvement capture.</span>
+        </label>
+        <label>
+          Taille des elements
+          <input id="elementSizeRange" type="range" min="1" max="24" value="8">
+          <span>Controle la taille des blocs, caracteres, lignes et trames.</span>
+        </label>
+        <label>
+          Simplification
+          <input id="simplifyRange" type="range" min="2" max="12" value="5">
+          <span>Augmente la taille des blocs et l'effet retro.</span>
+        </label>
+        <label>
+          Contrast
+          <input id="contrastRange" type="range" min="70" max="220" value="138">
+          <span>Renforce la lisibilite de la silhouette.</span>
+        </label>
+        <label>
+          Intensite halo
+          <input id="haloRange" type="range" min="0" max="100" value="58">
+          <span>Le coeur du fond reste stable et minimal.</span>
+        </label>
+      </div>
+      <div class="controls">
+        <button id="captureBgBtn" class="secondary" type="button">Recalibrer le fond fixe</button>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2 class="section-title">Etat</h2>
+      <div id="statusBox" class="status"><strong>En attente.</strong> Charge une video, un GIF ou une URL YouTube.</div>
+    </section>
+
+    <section class="card">
+      <h2 class="section-title">Debug</h2>
+      <div class="grid">
+        <label>
+          Afficher les vues techniques
+          <input id="debugToggle" type="checkbox">
+          <span>Affiche source brute, masque et rendu final pour verifier rapidement le pipeline.</span>
+        </label>
+      </div>
+    </section>
+  </aside>
+
+  <section class="panel stage">
+    <div class="stage-head">
+      <div>
+        <h2>Preview 4:3</h2>
+        <div class="hint">Centre, fond stable, halo doux, silhouettes lisibles. Les modes ASCII, Pixel et Matrix restent disponibles sans casser l'esprit retro.</div>
+      </div>
+      <div class="grid" style="gap:10px;justify-items:end">
+        <div class="pill" id="enginePill">Preset: Silhouette Demoscene</div>
+        <div class="pill warn hidden" id="youtubePill">YouTube: preview only</div>
+      </div>
+    </div>
+
+    <div class="top-controls">
+      <div class="grid three">
+        <button id="playBtn" class="primary" type="button">Lecture</button>
+        <button id="pauseBtn" class="secondary" type="button">Pause</button>
+        <button id="recordBtn" class="ghost" type="button">Exporter</button>
+      </div>
+      <div class="grid two">
+        <label>
+          Duree d'export en secondes
+          <input id="recordSeconds" type="number" min="2" max="60" step="1" value="8">
+          <span>Utilise surtout pour GIF ou si la plage est vide.</span>
+        </label>
+        <div class="controls">
+          <button id="downloadBtn" class="secondary" type="button" disabled>Telecharger le dernier export</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="preview-grid">
+      <div class="preview-panel">
+        <div class="preview-label">Source</div>
+        <div class="source-preview">
+          <video id="sourceVideo" playsinline muted loop crossorigin="anonymous"></video>
+        </div>
+      </div>
+      <div class="preview-panel">
+        <div class="preview-label">Rendu</div>
+        <div class="canvas-wrap">
+          <canvas id="renderCanvas" width="960" height="720"></canvas>
+          <iframe id="youtubePreview" class="youtube-preview" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen title="Preview YouTube"></iframe>
+          <div id="youtubeFallback" class="youtube-fallback">
+            <div class="youtube-fallback-card">
+              <img id="youtubeThumb" class="youtube-thumb" alt="Miniature YouTube">
+              <strong>Source YouTube detectee</strong>
+              <p>Dans cette page locale, la source YouTube est geree en mode compatible: miniature + ouverture directe. L'embed video dans l'IAB n'est pas assez fiable pour en dependre.</p>
+              <div class="youtube-actions">
+                <a id="youtubeWatchLink" class="watch-link" href="#" target="_blank" rel="noopener noreferrer">Ouvrir la video</a>
+                <a id="youtubeEmbedLink" class="embed-link" href="#" target="_blank" rel="noopener noreferrer">Ouvrir l'embed</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="stats">
+      <div class="stat">
+        <strong id="statSource">None</strong>
+        <p>Source active</p>
+      </div>
+      <div class="stat">
+        <strong id="statMode">Motion Mask</strong>
+        <p>Methode de rendu</p>
+      </div>
+      <div class="stat">
+        <strong id="statExport">WebM</strong>
+        <p>Export autonome recommande</p>
+      </div>
+      <div class="stat">
+        <strong id="statRaster">Scanlines</strong>
+        <p>Raster actif</p>
+      </div>
+    </div>
+
+    <div class="timeline-card">
+      <div class="timeline-meta">
+        <div>Lecture courante: <strong id="currentTimeLabel">00:00.00</strong></div>
+        <div>Duree totale: <strong id="durationTimeLabel">00:00.00</strong></div>
+        <div>Duree plage: <strong id="selectionTimeLabel">00.00s</strong></div>
+        <div><strong id="timelineReadout">00:00.00 / 00:00.00</strong></div>
+      </div>
+      <div class="timecode-grid">
+        <div class="timecode-box">
+          <label for="totalTimecode">Total</label>
+          <input id="totalTimecode" class="timecode-input" type="text" value="00:00.00" readonly>
+        </div>
+        <div class="timecode-box">
+          <label for="trimStartInput">In</label>
+          <input id="trimStartInput" class="timecode-input" type="text" value="00:00.00">
+          <div class="timecode-actions">
+            <button id="setInBtn" class="secondary mini-btn" type="button">Prendre la tete</button>
+          </div>
+        </div>
+        <div class="timecode-box">
+          <label for="trimEndInput">Out</label>
+          <input id="trimEndInput" class="timecode-input" type="text" value="00:00.00">
+          <div class="timecode-actions">
+            <button id="setOutBtn" class="secondary mini-btn" type="button">Prendre la tete</button>
+          </div>
+        </div>
+      </div>
+      <div class="timeline-row">
+        <label for="timelineRange">Playhead</label>
+        <input id="timelineRange" type="range" min="0" max="1000" value="0" step="1">
+      </div>
+      <div class="grid two">
+        <div class="timeline-row">
+          <label for="trimStartRange">In</label>
+          <input id="trimStartRange" type="range" min="0" max="1000" value="0" step="1">
+        </div>
+        <div class="timeline-row">
+          <label for="trimEndRange">Out</label>
+          <input id="trimEndRange" type="range" min="0" max="1000" value="1000" step="1">
+        </div>
+      </div>
+      <div class="timeline-meta">
+        <div>In: <strong id="trimStartLabel">00:00.00</strong></div>
+        <div>Out: <strong id="trimEndLabel">00:00.00</strong></div>
+        <div>Plage: <strong id="trimDurationLabel">0.00s</strong></div>
+      </div>
+    </div>
+
+    <div class="footer-note">
+      Cette page fonctionne sans backend. Pour une source locale, elle utilise un fond fixe capture sur la premiere image pour isoler le danseur par difference de mouvement. Pour une URL YouTube, la page affiche une preview integree, mais le rendu pixel par pixel reste volontairement limite par les regles de securite navigateur sur les videos tierces.
+    </div>
+
+    <div id="debugPanel" class="debug-grid hidden">
+      <div class="debug-card">
+        <div class="preview-label">Source brute</div>
+        <canvas id="debugSourceCanvas" width="320" height="240"></canvas>
+      </div>
+      <div class="debug-card">
+        <div class="preview-label">Mask</div>
+        <canvas id="debugMaskCanvas" width="320" height="240"></canvas>
+      </div>
+      <div class="debug-card">
+        <div class="preview-label">Rendu final</div>
+        <canvas id="debugFinalCanvas" width="320" height="240"></canvas>
+      </div>
+    </div>
+  </section>
+</main>
+
+<img id="sourceGif" class="hidden" alt="">
+<canvas id="workCanvas" class="hidden" width="240" height="180"></canvas>
+<canvas id="maskCanvas" class="hidden" width="240" height="180"></canvas>
+
+<script>
+const presets = [
+  { id:"silhouette", name:"Silhouette Demoscene", mode:"silhouette", raster:"scanlines", palette:"state", pixel:4, chars:"@#%*+=-:. " },
+  { id:"ascii", name:"ASCII Art", mode:"ascii", raster:"dot-grid", palette:"mono", pixel:8, chars:"@#%*+=-:. " },
+  { id:"pixel", name:"Pixel Art", mode:"pixel", raster:"coarse-pixels", palette:"state", pixel:10, chars:"01" },
+  { id:"matrix", name:"Matrix Rain", mode:"matrix", raster:"vertical-lines", palette:"green", pixel:10, chars:"MATRIX01" },
+  { id:"outline", name:"Outline Only", mode:"outline", raster:"horizontal-lines", palette:"mono", pixel:4, chars:"+-." },
+  { id:"shadow", name:"Shadow Dance", mode:"shadow", raster:"none", palette:"state", pixel:4, chars:"@# " },
+  { id:"rotoscope", name:"Rotoscope Retro", mode:"rotoscope", raster:"scanlines", palette:"state", pixel:5, chars:"@#%*+=-:. " },
+  { id:"contrast", name:"Black And White Contrast", mode:"contrast", raster:"checker", palette:"mono", pixel:4, chars:"# " },
+  { id:"duotone", name:"Duotone Retro", mode:"duotone", raster:"diagonal-lines", palette:"amber", pixel:5, chars:"01" },
+  { id:"vector", name:"Vector Minimal", mode:"vector", raster:"none", palette:"state", pixel:3, chars:"@# " },
+  { id:"ink", name:"Ink Cutout", mode:"ink", raster:"halftone-dots", palette:"mono", pixel:5, chars:"@#% " },
+  { id:"crt", name:"CRT Vintage", mode:"crt", raster:"crt-grid", palette:"ice", pixel:5, chars:"@#%*+=-:. " },
+  { id:"poster", name:"Posterized Graphic", mode:"poster", raster:"dot-grid", palette:"amber", pixel:7, chars:"@#%+= " },
+  { id:"ghost", name:"Ghost Trail", mode:"ghost", raster:"horizontal-lines", palette:"ice", pixel:6, chars:"<>- " },
+  { id:"amiga", name:"Amiga Art Sequence", mode:"amiga", raster:"scanlines", palette:"state", pixel:6, chars:"DEMO01" }
+];
+
+const variants = Array.from({ length: 12 }, (_, index) => ({
+  id: `v${index + 1}`,
+  name: [
+    "Clean Cut",
+    "Soft Halo",
+    "Brut Contrast",
+    "Warm Paper",
+    "Ice Grid",
+    "Green Drift",
+    "Dot Bloom",
+    "Chunky Blocks",
+    "Bare Bones",
+    "Hard Signal",
+    "Night Terminal",
+    "Classic Demo"
+  ][index],
+  simplifyOffset: [0, 1, 2, -1, 3, 0, 1, 2, -2, 4, 0, 1][index],
+  contrast: [128, 138, 150, 120, 170, 145, 160, 180, 110, 190, 135, 155][index],
+  halo: [40, 58, 70, 30, 78, 62, 55, 85, 22, 92, 48, 66][index],
+  raster: [null, "scanlines", "horizontal-lines", "dot-grid", "crt-grid", "diagonal-lines", "halftone-dots", "coarse-pixels", "none", "checker", "vertical-lines", "scanlines"][index],
+  palette: [null, "state", "mono", "amber", "ice", "green", "state", "amber", "mono", "ice", "green", "state"][index]
+}));
+
+const rasters = [
+  { id:"none", name:"None" },
+  { id:"horizontal-lines", name:"Horizontal Lines" },
+  { id:"vertical-lines", name:"Vertical Lines" },
+  { id:"scanlines", name:"Scanlines" },
+  { id:"crt-grid", name:"CRT Grid" },
+  { id:"dot-grid", name:"Dot Grid" },
+  { id:"checker", name:"Checker" },
+  { id:"diagonal-lines", name:"Diagonal Lines" },
+  { id:"halftone-dots", name:"Halftone Dots" },
+  { id:"coarse-pixels", name:"Coarse Pixels" }
+];
+
+const paletteDefs = {
+  state: { bg:"#f4f0df", glow:"#ccd47a", glow2:"rgba(208,219,112,.30)", ink:"#050505", accent:"#dce88f" },
+  green: { bg:"#e7f3df", glow:"#72c667", glow2:"rgba(86,184,96,.34)", ink:"#081106", accent:"#69cf78" },
+  mono: { bg:"#f5f2e8", glow:"#bfb7a4", glow2:"rgba(160,152,138,.26)", ink:"#080808", accent:"#b9b09d" },
+  amber: { bg:"#f4e3bd", glow:"#eba74a", glow2:"rgba(239,150,58,.30)", ink:"#120d06", accent:"#ffbf60" },
+  ice: { bg:"#e8f5f5", glow:"#87d8d1", glow2:"rgba(73,198,190,.28)", ink:"#071012", accent:"#8feeee" }
+};
+
+const renderCanvas = document.getElementById("renderCanvas");
+const renderCtx = renderCanvas.getContext("2d");
+const workCanvas = document.getElementById("workCanvas");
+const workCtx = workCanvas.getContext("2d", { willReadFrequently:true });
+const maskCanvas = document.getElementById("maskCanvas");
+const maskCtx = maskCanvas.getContext("2d", { willReadFrequently:true });
+const layerCanvas = document.createElement("canvas");
+layerCanvas.width = renderCanvas.width;
+layerCanvas.height = renderCanvas.height;
+const layerCtx = layerCanvas.getContext("2d");
+const video = document.getElementById("sourceVideo");
+const gif = document.getElementById("sourceGif");
+const youtubePreview = document.getElementById("youtubePreview");
+const youtubeFallback = document.getElementById("youtubeFallback");
+const youtubeThumb = document.getElementById("youtubeThumb");
+const youtubeWatchLink = document.getElementById("youtubeWatchLink");
+const youtubeEmbedLink = document.getElementById("youtubeEmbedLink");
+
+const fileInput = document.getElementById("fileInput");
+const youtubeInput = document.getElementById("youtubeInput");
+const loadYoutubeBtn = document.getElementById("loadYoutubeBtn");
+const clearSourceBtn = document.getElementById("clearSourceBtn");
+const dropZone = document.getElementById("dropZone");
+const presetSelect = document.getElementById("presetSelect");
+const variantSelect = document.getElementById("variantSelect");
+const rasterSelect = document.getElementById("rasterSelect");
+const paletteSelect = document.getElementById("paletteSelect");
+const exportSelect = document.getElementById("exportSelect");
+const charSetInput = document.getElementById("charSetInput");
+const motionThreshold = document.getElementById("motionThreshold");
+const elementSizeRange = document.getElementById("elementSizeRange");
+const simplifyRange = document.getElementById("simplifyRange");
+const contrastRange = document.getElementById("contrastRange");
+const haloRange = document.getElementById("haloRange");
+const captureBgBtn = document.getElementById("captureBgBtn");
+const playBtn = document.getElementById("playBtn");
+const pauseBtn = document.getElementById("pauseBtn");
+const recordBtn = document.getElementById("recordBtn");
+const recordSeconds = document.getElementById("recordSeconds");
+const downloadBtn = document.getElementById("downloadBtn");
+const statusBox = document.getElementById("statusBox");
+const enginePill = document.getElementById("enginePill");
+const youtubePill = document.getElementById("youtubePill");
+const statSource = document.getElementById("statSource");
+const statMode = document.getElementById("statMode");
+const statExport = document.getElementById("statExport");
+const statRaster = document.getElementById("statRaster");
+const timelineRange = document.getElementById("timelineRange");
+const trimStartRange = document.getElementById("trimStartRange");
+const trimEndRange = document.getElementById("trimEndRange");
+const timelineReadout = document.getElementById("timelineReadout");
+const trimStartLabel = document.getElementById("trimStartLabel");
+const trimEndLabel = document.getElementById("trimEndLabel");
+const trimDurationLabel = document.getElementById("trimDurationLabel");
+const totalTimecode = document.getElementById("totalTimecode");
+const trimStartInput = document.getElementById("trimStartInput");
+const trimEndInput = document.getElementById("trimEndInput");
+const setInBtn = document.getElementById("setInBtn");
+const setOutBtn = document.getElementById("setOutBtn");
+const currentTimeLabel = document.getElementById("currentTimeLabel");
+const durationTimeLabel = document.getElementById("durationTimeLabel");
+const selectionTimeLabel = document.getElementById("selectionTimeLabel");
+const debugToggle = document.getElementById("debugToggle");
+const debugPanel = document.getElementById("debugPanel");
+const debugSourceCanvas = document.getElementById("debugSourceCanvas");
+const debugMaskCanvas = document.getElementById("debugMaskCanvas");
+const debugFinalCanvas = document.getElementById("debugFinalCanvas");
+const debugSourceCtx = debugSourceCanvas.getContext("2d");
+const debugMaskCtx = debugMaskCanvas.getContext("2d");
+const debugFinalCtx = debugFinalCanvas.getContext("2d");
+
+let sourceType = "none";
+let currentSource = null;
+let sourceUrl = "";
+let backgroundFrame = null;
+let lastMask = null;
+let currentFrameImageData = null;
+let lastMaskCoverage = 0;
+let downloadBlob = null;
+let downloadName = "demoforge-export.webm";
+let recorder = null;
+let recordChunks = [];
+let matrixDrops = [];
+let animationFrame = 0;
+let ghostFrames = [];
+let youtubeFallbackTimer = null;
+let timelineDuration = 0;
+let trimStart = 0;
+let trimEnd = 0;
+let isScrubbing = false;
+let suppressTimecodeSync = false;
+let exportWatchTimer = 0;
+
+function normalizeYouTubeInput(value){
+  const trimmed = (value || "").trim();
+  if(!trimmed) return "";
+  if(/^https?:\/\//i.test(trimmed)) return trimmed;
+  if(/^[a-zA-Z0-9_-]{11}$/.test(trimmed)) return `https://youtu.be/${trimmed}`;
+  if(/^(youtube\.com|www\.youtube\.com|m\.youtube\.com|youtu\.be)\//i.test(trimmed)){
+    return `https://${trimmed}`;
+  }
+  return trimmed;
+}
+
+function extractYouTubeCandidate(value){
+  const text = (value || "").trim();
+  if(!text) return "";
+  const urlMatch = text.match(/https?:\/\/[^\s"'<>]+/i);
+  if(urlMatch) return urlMatch[0];
+  const hostMatch = text.match(/(?:youtube\.com|youtu\.be)\/[^\s"'<>]+/i);
+  if(hostMatch) return `https://${hostMatch[0]}`;
+  const idMatch = text.match(/\b[a-zA-Z0-9_-]{11}\b/);
+  return idMatch ? idMatch[0] : text;
+}
+
+function showYouTubeFallback(show){
+  youtubeFallback.style.display = show ? "grid" : "none";
+}
+
+function setStatus(title, detail){
+  statusBox.innerHTML = `<strong>${title}</strong> ${detail}`;
+}
+
+function sanitizeFileStem(value){
+  return (value || "demoforge")
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "")
+    .slice(0, 48) || "demoforge";
+}
+
+function formatTime(seconds){
+  if(!Number.isFinite(seconds)) return "00:00.00";
+  const mins = Math.floor(seconds / 60);
+  const secs = Math.floor(seconds % 60);
+  const hundredths = Math.floor((seconds % 1) * 100);
+  return `${String(mins).padStart(2, "0")}:${String(secs).padStart(2, "0")}.${String(hundredths).padStart(2, "0")}`;
+}
+
+function getElementSize(multiplier = 1, minimum = 1){
+  return Math.max(minimum, Number(elementSizeRange.value) * multiplier);
+}
+
+function parseTimecode(value){
+  const raw = (value || "").trim();
+  if(!raw) return null;
+  const normalized = raw.replace(",", ".").replace(/\s+/g, "");
+  if(/^\d+(\.\d+)?$/.test(normalized)){
+    return Number(normalized);
+  }
+  const parts = normalized.split(":");
+  if(parts.length === 2){
+    const mins = Number(parts[0]);
+    const secs = Number(parts[1]);
+    if(Number.isFinite(mins) && Number.isFinite(secs)) return mins * 60 + secs;
+  }
+  if(parts.length === 3){
+    const hours = Number(parts[0]);
+    const mins = Number(parts[1]);
+    const secs = Number(parts[2]);
+    if(Number.isFinite(hours) && Number.isFinite(mins) && Number.isFinite(secs)) return hours * 3600 + mins * 60 + secs;
+  }
+  return null;
+}
+
+function syncRangeLimits(duration){
+  timelineDuration = Number.isFinite(duration) && duration > 0 ? duration : 0;
+  const max = 1000;
+  timelineRange.max = String(max);
+  trimStartRange.max = String(max);
+  trimEndRange.max = String(max);
+  if(!timelineDuration){
+    timelineRange.value = "0";
+    trimStartRange.value = "0";
+    trimEndRange.value = String(max);
+    trimStart = 0;
+    trimEnd = 0;
+    updateTimelineUI();
+    return;
+  }
+  trimStart = 0;
+  trimEnd = timelineDuration;
+  timelineRange.value = "0";
+  trimStartRange.value = "0";
+  trimEndRange.value = String(max);
+  updateTimelineUI();
+}
+
+function rangeValueToTime(value){
+  if(!timelineDuration) return 0;
+  return (Number(value) / 1000) * timelineDuration;
+}
+
+function timeToRangeValue(time){
+  if(!timelineDuration) return 0;
+  return Math.max(0, Math.min(1000, Math.round((time / timelineDuration) * 1000)));
+}
+
+function updateTimelineUI(){
+  const current = sourceType === "video" && Number.isFinite(video.currentTime) ? video.currentTime : 0;
+  timelineReadout.textContent = `${formatTime(current)} / ${formatTime(timelineDuration)}`;
+  trimStartLabel.textContent = formatTime(trimStart);
+  trimEndLabel.textContent = formatTime(trimEnd);
+  trimDurationLabel.textContent = `${Math.max(0, trimEnd - trimStart).toFixed(2)}s`;
+  currentTimeLabel.textContent = formatTime(current);
+  durationTimeLabel.textContent = formatTime(timelineDuration);
+  selectionTimeLabel.textContent = `${Math.max(0, trimEnd - trimStart).toFixed(2)}s`;
+  if(!suppressTimecodeSync){
+    totalTimecode.value = formatTime(timelineDuration);
+    trimStartInput.value = formatTime(trimStart);
+    trimEndInput.value = formatTime(trimEnd);
+  }
+  if(sourceType === "video" && !isScrubbing){
+    timelineRange.value = String(timeToRangeValue(current));
+  }
+}
+
+function clampTrimRanges(changed){
+  if(!timelineDuration){
+    trimStart = 0;
+    trimEnd = 0;
+    updateTimelineUI();
+    return;
+  }
+  let nextStart = rangeValueToTime(trimStartRange.value);
+  let nextEnd = rangeValueToTime(trimEndRange.value);
+  if(changed === "start" && nextStart > nextEnd - 0.04){
+    nextStart = Math.max(0, nextEnd - 0.04);
+    trimStartRange.value = String(timeToRangeValue(nextStart));
+  }
+  if(changed === "end" && nextEnd < nextStart + 0.04){
+    nextEnd = Math.min(timelineDuration, nextStart + 0.04);
+    trimEndRange.value = String(timeToRangeValue(nextEnd));
+  }
+  trimStart = nextStart;
+  trimEnd = nextEnd;
+  if(sourceType === "video"){
+    if(video.currentTime < trimStart || video.currentTime > trimEnd){
+      video.currentTime = trimStart;
+    }
+  }
+  updateTimelineUI();
+}
+
+function applyTimecodeInputs(changed){
+  if(!timelineDuration) return;
+  let nextStart = parseTimecode(trimStartInput.value);
+  let nextEnd = parseTimecode(trimEndInput.value);
+  if(nextStart === null) nextStart = trimStart;
+  if(nextEnd === null) nextEnd = trimEnd;
+  nextStart = Math.max(0, Math.min(timelineDuration, nextStart));
+  nextEnd = Math.max(0, Math.min(timelineDuration, nextEnd));
+  if(changed === "start" && nextStart > nextEnd - 0.04){
+    nextStart = Math.max(0, nextEnd - 0.04);
+  }
+  if(changed === "end" && nextEnd < nextStart + 0.04){
+    nextEnd = Math.min(timelineDuration, nextStart + 0.04);
+  }
+  trimStart = nextStart;
+  trimEnd = nextEnd;
+  trimStartRange.value = String(timeToRangeValue(trimStart));
+  trimEndRange.value = String(timeToRangeValue(trimEnd));
+  if(sourceType === "video" && (video.currentTime < trimStart || video.currentTime > trimEnd)){
+    video.currentTime = trimStart;
+  }
+  updateTimelineUI();
+}
+
+function updateExportUI(){
+  const format = exportSelect.value;
+  recordBtn.textContent =
+    format === "svg" ? "Exporter SVG" :
+    format === "html" ? "Exporter HTML" :
+    format === "png" ? "Exporter PNG" :
+    format === "webm-vp8" ? "Exporter WebM VP8" :
+    "Exporter WebM VP9";
+  recordSeconds.disabled = format === "png" || format === "html" || format === "svg";
+  statExport.textContent =
+    format === "svg" ? "SVG snapshot" :
+    format === "html" ? "HTML snapshot" :
+    format === "png" ? "PNG frame" :
+    format === "webm-vp8" ? "WebM VP8" :
+    "WebM VP9";
+}
+
+function setTrimFromPlayhead(kind){
+  if(sourceType !== "video" || !timelineDuration) return;
+  const current = Math.max(0, Math.min(timelineDuration, video.currentTime || 0));
+  if(kind === "in"){
+    trimStart = Math.min(current, Math.max(0, trimEnd - 0.04));
+    trimStartRange.value = String(timeToRangeValue(trimStart));
+  }else{
+    trimEnd = Math.max(current, Math.min(timelineDuration, trimStart + 0.04));
+    trimEndRange.value = String(timeToRangeValue(trimEnd));
+  }
+  updateTimelineUI();
+}
+
+function setDropzoneActive(active){
+  dropZone.classList.toggle("active", active);
+}
+
+function handleDroppedText(text){
+  const value = extractYouTubeCandidate(text);
+  if(!value) return false;
+  if(parseYouTubeId(value)){
+    youtubeInput.value = normalizeYouTubeInput(value);
+    loadYouTube();
+    return true;
+  }
+  return false;
+}
+
+function handleDroppedDataTransfer(dataTransfer){
+  if(!dataTransfer) return false;
+  const files = Array.from(dataTransfer.files || []);
+  const pickedFile = files.find((file) => file.type.startsWith("video/") || file.type === "image/gif");
+  if(pickedFile){
+    loadLocalFile(pickedFile);
+    return true;
+  }
+  const text = dataTransfer.getData("text/uri-list") || dataTransfer.getData("text/plain") || "";
+  return handleDroppedText(text);
+}
+
+function populateSelects(){
+  presets.forEach((preset) => {
+    const option = document.createElement("option");
+    option.value = preset.id;
+    option.textContent = preset.name;
+    presetSelect.appendChild(option);
+  });
+
+  rasters.forEach((raster) => {
+    const option = document.createElement("option");
+    option.value = raster.id;
+    option.textContent = raster.name;
+    rasterSelect.appendChild(option);
+  });
+
+  variants.forEach((variant) => {
+    const option = document.createElement("option");
+    option.value = variant.id;
+    option.textContent = variant.name;
+    variantSelect.appendChild(option);
+  });
+
+  presetSelect.value = "silhouette";
+  variantSelect.value = "v1";
+  rasterSelect.value = "scanlines";
+  charSetInput.value = "@#%*+=-:. MATRIX01";
+}
+
+function getPreset(){
+  return presets.find((preset) => preset.id === presetSelect.value) || presets[0];
+}
+
+function getVariant(){
+  return variants.find((variant) => variant.id === variantSelect.value) || variants[0];
+}
+
+function getPalette(){
+  return paletteDefs[paletteSelect.value] || paletteDefs.state;
+}
+
+function updateStats(){
+  const preset = getPreset();
+  const variant = getVariant();
+  enginePill.textContent = `${preset.name} / ${variant.name}`;
+  statMode.textContent = preset.name;
+  statRaster.textContent = (rasters.find((item) => item.id === rasterSelect.value) || rasters[0]).name;
+  statSource.textContent =
+    sourceType === "video" ? "Video locale" :
+    sourceType === "gif" ? "GIF local" :
+    sourceType === "youtube" ? "YouTube URL" :
+    "None";
+  youtubePill.classList.toggle("hidden", sourceType !== "youtube");
+  const localReady = sourceType === "video" || sourceType === "gif";
+  playBtn.disabled = !localReady;
+  pauseBtn.disabled = !localReady;
+  captureBgBtn.disabled = !localReady;
+  recordBtn.disabled = !localReady;
+  timelineRange.disabled = !localReady || sourceType !== "video";
+  trimStartRange.disabled = !localReady || sourceType !== "video";
+  trimEndRange.disabled = !localReady || sourceType !== "video";
+  updateExportUI();
+  updateTimelineUI();
+}
+
+function updateDebugUI(){
+  debugPanel.classList.toggle("hidden", !debugToggle.checked);
+}
+
+function applyVariant(){
+  const preset = getPreset();
+  const variant = getVariant();
+  if(variant.raster) rasterSelect.value = variant.raster;
+  if(variant.palette) paletteSelect.value = variant.palette;
+  simplifyRange.value = String(Math.max(2, Math.min(12, preset.pixel + variant.simplifyOffset)));
+  elementSizeRange.value = String(Math.max(1, Math.min(24, preset.pixel + 2 + variant.simplifyOffset * 2)));
+  contrastRange.value = String(variant.contrast);
+  haloRange.value = String(variant.halo);
+  if(!charSetInput.value.trim()){
+    charSetInput.value = preset.chars;
+  }
+  updateStats();
+}
+
+function parseYouTubeId(url){
+  if(!url) return "";
+  const normalized = normalizeYouTubeInput(url);
+  if(/^[a-zA-Z0-9_-]{11}$/.test(normalized)){
+    return normalized;
+  }
+  try{
+    const parsed = new URL(normalized);
+    const host = parsed.hostname.replace(/^www\./, "");
+    if(host === "youtu.be"){
+      return parsed.pathname.replace(/\//g, "").slice(0, 11);
+    }
+    if(host === "youtube.com" || host === "m.youtube.com" || host === "music.youtube.com" || host === "youtube-nocookie.com"){
+      const fromQuery = parsed.searchParams.get("v") || parsed.searchParams.get("vi");
+      if(fromQuery && /^[a-zA-Z0-9_-]{11}$/.test(fromQuery)) return fromQuery;
+      const parts = parsed.pathname.split("/").filter(Boolean);
+      const knownPrefix = ["embed", "shorts", "live", "v"];
+      if(parts.length >= 2 && knownPrefix.includes(parts[0]) && /^[a-zA-Z0-9_-]{11}$/.test(parts[1])){
+        return parts[1];
+      }
+    }
+  }catch{
+    const match = normalized.match(/([a-zA-Z0-9_-]{11})/);
+    if(match) return match[1];
+  }
+  return "";
+}
+
+function resetLocalSource(){
+  if(exportWatchTimer){
+    clearInterval(exportWatchTimer);
+    exportWatchTimer = 0;
+  }
+  if(sourceUrl){
+    URL.revokeObjectURL(sourceUrl);
+    sourceUrl = "";
+  }
+  video.pause();
+  video.removeAttribute("src");
+  gif.removeAttribute("src");
+  currentSource = null;
+  backgroundFrame = null;
+  lastMask = null;
+  ghostFrames = [];
+  syncRangeLimits(0);
+}
+
+function clearSource(){
+  resetLocalSource();
+  sourceType = "none";
+  showYouTubeFallback(false);
+  clearTimeout(youtubeFallbackTimer);
+  youtubePreview.src = "";
+  youtubePreview.style.display = "none";
+  renderCanvas.style.display = "block";
+  fileInput.value = "";
+  youtubeInput.value = "";
+  updateStats();
+  setStatus("Source reinitialisee.", "Charge une video locale, un GIF ou une URL YouTube.");
+}
+
+function applyPreset(preset){
+  rasterSelect.value = preset.raster;
+  paletteSelect.value = preset.palette;
+  simplifyRange.value = preset.pixel;
+  if(!charSetInput.value.trim()){
+    charSetInput.value = preset.chars;
+  }
+  applyVariant();
+}
+
+function ensureBackgroundCapture(){
+  if(sourceType !== "video" && sourceType !== "gif"){
+    setStatus("Capture impossible.", "Le fond fixe ne s'applique qu'aux sources locales.");
+    return;
+  }
+  drawSourceFrame();
+  const imageData = workCtx.getImageData(0, 0, workCanvas.width, workCanvas.height);
+  backgroundFrame = new Uint8ClampedArray(imageData.data);
+  setStatus("Fond capture.", "La detection de mouvement est recalee sur l'image actuelle.");
+}
+
+function mimeForExport(){
+  if(typeof MediaRecorder === "undefined") return "";
+  const wantsVp8 = exportSelect.value === "webm-vp8";
+  const preferred = wantsVp8 ? "video/webm;codecs=vp8" : "video/webm;codecs=vp9";
+  if(MediaRecorder.isTypeSupported(preferred)) return preferred;
+  if(MediaRecorder.isTypeSupported("video/webm;codecs=vp8")) return "video/webm;codecs=vp8";
+  if(MediaRecorder.isTypeSupported("video/webm")) return "video/webm";
+  return "";
+}
+
+function loadLocalFile(file){
+  resetLocalSource();
+  sourceUrl = URL.createObjectURL(file);
+  showYouTubeFallback(false);
+  clearTimeout(youtubeFallbackTimer);
+  youtubePreview.src = "";
+  youtubePreview.style.display = "none";
+  renderCanvas.style.display = "block";
+
+  if(file.type.startsWith("video/")){
+    sourceType = "video";
+    currentSource = video;
+    video.src = sourceUrl;
+    video.onloadeddata = () => {
+      syncRangeLimits(video.duration || 0);
+      video.currentTime = 0;
+      video.play().catch(() => {});
+      setTimeout(ensureBackgroundCapture, 120);
+      updateStats();
+      setStatus("Video chargee.", "La lecture, la timeline et la plage In/Out sont actives.");
+    };
+  }else if(file.type === "image/gif"){
+    sourceType = "gif";
+    currentSource = gif;
+    gif.src = sourceUrl;
+    gif.onload = () => {
+      syncRangeLimits(0);
+      setTimeout(ensureBackgroundCapture, 120);
+      updateStats();
+      setStatus("GIF charge.", "Le rendu temps reel est actif sur l'animation GIF.");
+    };
+  }else{
+    sourceType = "none";
+    setStatus("Format non pris en charge.", "Utilise une video ou un GIF.");
+  }
+  updateStats();
+}
+
+function loadYouTube(){
+  resetLocalSource();
+  const normalized = normalizeYouTubeInput(extractYouTubeCandidate(youtubeInput.value));
+  youtubeInput.value = normalized;
+  const id = parseYouTubeId(normalized);
+  if(!id){
+    setStatus("URL invalide.", "Colle une URL YouTube standard, youtu.be, shorts, embed, ou directement un ID video.");
+    return;
+  }
+  const watchUrl = `https://www.youtube.com/watch?v=${id}`;
+  const embedUrl = `https://www.youtube-nocookie.com/embed/${id}?rel=0&modestbranding=1&playsinline=1`;
+  const thumbUrl = `https://i.ytimg.com/vi/${id}/hqdefault.jpg`;
+  sourceType = "youtube";
+  clearTimeout(youtubeFallbackTimer);
+  showYouTubeFallback(true);
+  youtubeWatchLink.href = watchUrl;
+  youtubeEmbedLink.href = embedUrl;
+  youtubeThumb.src = thumbUrl;
+  youtubeThumb.alt = `Miniature YouTube ${id}`;
+  youtubePreview.src = "";
+  youtubePreview.style.display = "none";
+  renderCanvas.style.display = "none";
+  currentSource = null;
+  updateStats();
+  setStatus("Source YouTube chargee.", "Le lien est reconnu et affiche en mode compatible. Utilise les boutons pour ouvrir la video ou l'embed.");
+}
+
+function drawCover(ctx, source, sw, sh, dw, dh){
+  const srcRatio = sw / sh;
+  const dstRatio = dw / dh;
+  let sx = 0;
+  let sy = 0;
+  let sWidth = sw;
+  let sHeight = sh;
+
+  if(srcRatio > dstRatio){
+    sWidth = sh * dstRatio;
+    sx = (sw - sWidth) * 0.5;
+  }else{
+    sHeight = sw / dstRatio;
+    sy = (sh - sHeight) * 0.5;
+  }
+  ctx.drawImage(source, sx, sy, sWidth, sHeight, 0, 0, dw, dh);
+}
+
+function drawSourceFrame(){
+  workCtx.clearRect(0, 0, workCanvas.width, workCanvas.height);
+  if(sourceType === "video" && video.videoWidth){
+    drawCover(workCtx, video, video.videoWidth, video.videoHeight, workCanvas.width, workCanvas.height);
+  }else if(sourceType === "gif" && gif.naturalWidth){
+    drawCover(workCtx, gif, gif.naturalWidth, gif.naturalHeight, workCanvas.width, workCanvas.height);
+  }
+}
+
+function buildMask(){
+  if(sourceType !== "video" && sourceType !== "gif"){
+    return null;
+  }
+
+  drawSourceFrame();
+  const imageData = workCtx.getImageData(0, 0, workCanvas.width, workCanvas.height);
+  currentFrameImageData = imageData;
+  const data = imageData.data;
+  const threshold = Number(motionThreshold.value);
+  const contrast = Number(contrastRange.value) / 100;
+  const output = maskCtx.createImageData(workCanvas.width, workCanvas.height);
+  const out = output.data;
+  let sumLum = 0;
+
+  for(let i = 0; i < data.length; i += 4){
+    const r = data[i];
+    const g = data[i + 1];
+    const b = data[i + 2];
+    const lum = (r * 0.299 + g * 0.587 + b * 0.114);
+    sumLum += lum;
+    const bgDiff = backgroundFrame
+      ? Math.abs(r - backgroundFrame[i]) + Math.abs(g - backgroundFrame[i + 1]) + Math.abs(b - backgroundFrame[i + 2])
+      : Math.abs(128 - lum) * 1.8;
+    const motionValue = bgDiff / 3;
+    const contrastValue = Math.abs(lum - 128) * contrast;
+    const active = (motionValue + contrastValue * 0.45) > threshold;
+    const v = active ? 255 : 0;
+    out[i] = v;
+    out[i + 1] = v;
+    out[i + 2] = v;
+    out[i + 3] = 255;
+  }
+
+  // Smooth a little to avoid broken anatomy.
+  const smoothed = maskCtx.createImageData(workCanvas.width, workCanvas.height);
+  const sData = smoothed.data;
+  let activeCount = 0;
+  for(let y = 1; y < workCanvas.height - 1; y++){
+    for(let x = 1; x < workCanvas.width - 1; x++){
+      let sum = 0;
+      for(let ky = -1; ky <= 1; ky++){
+        for(let kx = -1; kx <= 1; kx++){
+          const idx = ((y + ky) * workCanvas.width + (x + kx)) * 4;
+          sum += out[idx];
+        }
+      }
+      const idx = (y * workCanvas.width + x) * 4;
+      const value = sum > 4 * 255 ? 255 : 0;
+      if(value) activeCount++;
+      sData[idx] = value;
+      sData[idx + 1] = value;
+      sData[idx + 2] = value;
+      sData[idx + 3] = 255;
+    }
+  }
+
+  const pixelCount = workCanvas.width * workCanvas.height;
+  let coverage = activeCount / pixelCount;
+
+  // Fallback when motion segmentation is too weak: use luma distance from frame average.
+  if(coverage < 0.008){
+    const averageLum = sumLum / pixelCount;
+    activeCount = 0;
+    for(let i = 0; i < data.length; i += 4){
+      const lum = (data[i] * 0.299 + data[i + 1] * 0.587 + data[i + 2] * 0.114);
+      const deviation = Math.abs(lum - averageLum);
+      const darkerThanAverage = lum < averageLum - 8;
+      const value = (deviation > 18 && darkerThanAverage) || deviation > 36 ? 255 : 0;
+      if(value) activeCount++;
+      sData[i] = value;
+      sData[i + 1] = value;
+      sData[i + 2] = value;
+      sData[i + 3] = 255;
+    }
+    coverage = activeCount / pixelCount;
+  }
+
+  maskCtx.putImageData(smoothed, 0, 0);
+  lastMask = smoothed;
+  lastMaskCoverage = coverage;
+  return smoothed;
+}
+
+function backgroundFill(ctx, palette){
+  const w = renderCanvas.width;
+  const h = renderCanvas.height;
+  ctx.clearRect(0, 0, w, h);
+  ctx.fillStyle = palette.bg;
+  ctx.fillRect(0, 0, w, h);
+
+  const halo = Number(haloRange.value) / 100;
+  const gradient = ctx.createRadialGradient(w * 0.5, h * 0.42, 30, w * 0.5, h * 0.42, w * 0.34);
+  gradient.addColorStop(0, `rgba(212, 224, 121, ${0.16 + halo * 0.22})`);
+  gradient.addColorStop(0.42, palette.glow2);
+  gradient.addColorStop(1, "rgba(255,255,255,0)");
+  ctx.fillStyle = gradient;
+  ctx.fillRect(0, 0, w, h);
+
+  ctx.fillStyle = "rgba(0,0,0,.02)";
+  ctx.fillRect(0, h * 0.79, w, h * 0.21);
+}
+
+function drawMaskScaled(mode, palette){
+  if(!lastMask) return;
+  const scale = Math.max(2, Math.round((Number(simplifyRange.value) + getElementSize(0.35, 1)) / 2));
+  const tinyW = Math.max(16, Math.floor(renderCanvas.width / (scale * 3)));
+  const tinyH = Math.max(12, Math.floor(renderCanvas.height / (scale * 3)));
+  const tiny = document.createElement("canvas");
+  tiny.width = tinyW;
+  tiny.height = tinyH;
+  const tctx = tiny.getContext("2d");
+  tctx.imageSmoothingEnabled = false;
+  tctx.drawImage(maskCanvas, 0, 0, tinyW, tinyH);
+
+  layerCtx.clearRect(0, 0, layerCanvas.width, layerCanvas.height);
+  layerCtx.save();
+  layerCtx.imageSmoothingEnabled = false;
+  if(mode === "ghost"){
+    ghostFrames.push(tiny);
+    ghostFrames = ghostFrames.slice(-5);
+    ghostFrames.forEach((frame, index) => {
+      layerCtx.globalAlpha = 0.18 + index * 0.12;
+      layerCtx.drawImage(frame, 0, 0, renderCanvas.width, renderCanvas.height);
+    });
+  }else{
+    layerCtx.globalAlpha = 1;
+    layerCtx.drawImage(tiny, 0, 0, renderCanvas.width, renderCanvas.height);
+  }
+  layerCtx.globalCompositeOperation = "source-in";
+  layerCtx.fillStyle = palette.ink;
+  layerCtx.fillRect(0, 0, layerCanvas.width, layerCanvas.height);
+  layerCtx.restore();
+  renderCtx.drawImage(layerCanvas, 0, 0);
+
+  if(mode === "shadow"){
+    renderCtx.fillStyle = palette.ink;
+    renderCtx.globalAlpha = 0.16;
+    renderCtx.fillRect(0, renderCanvas.height * 0.82, renderCanvas.width, renderCanvas.height * 0.18);
+    renderCtx.globalAlpha = 1;
+  }
+}
+
+function drawSilhouette(palette){
+  drawMaskScaled("silhouette", palette);
+}
+
+function drawPosterized(palette, levels){
+  if(!currentFrameImageData) drawSourceFrame();
+  const scale = Math.max(10, Math.floor(Number(simplifyRange.value) * 2 + getElementSize(2.6, 4)));
+  const tinyW = Math.max(32, Math.floor(renderCanvas.width / scale));
+  const tinyH = Math.max(24, Math.floor(renderCanvas.height / scale));
+  const tiny = document.createElement("canvas");
+  tiny.width = tinyW;
+  tiny.height = tinyH;
+  const tctx = tiny.getContext("2d", { willReadFrequently:true });
+  tctx.drawImage(workCanvas, 0, 0, tinyW, tinyH);
+  const imageData = tctx.getImageData(0, 0, tinyW, tinyH);
+  const data = imageData.data;
+  for(let i = 0; i < data.length; i += 4){
+    const lum = (data[i] * 0.299 + data[i + 1] * 0.587 + data[i + 2] * 0.114);
+    const bucket = Math.floor((lum / 255) * (levels - 1)) / (levels - 1 || 1);
+    const shade = Math.round(bucket * 255);
+    data[i] = shade;
+    data[i + 1] = shade;
+    data[i + 2] = shade;
+  }
+  tctx.putImageData(imageData, 0, 0);
+  renderCtx.save();
+  renderCtx.globalAlpha = .36;
+  renderCtx.imageSmoothingEnabled = false;
+  renderCtx.drawImage(tiny, 0, 0, renderCanvas.width, renderCanvas.height);
+  renderCtx.restore();
+  renderCtx.fillStyle = palette.ink;
+  drawMaskScaled("silhouette", palette);
+}
+
+function drawAscii(palette){
+  const chars = (charSetInput.value.trim() || getPreset().chars || "@#%*+=-:. ").split("");
+  const block = Math.max(6, Math.round(getElementSize(1.1, 4)));
+  const image = (currentFrameImageData || workCtx.getImageData(0, 0, workCanvas.width, workCanvas.height)).data;
+  const useMask = lastMask && lastMaskCoverage > 0.008;
+  renderCtx.fillStyle = palette.ink;
+  renderCtx.textAlign = "center";
+  renderCtx.textBaseline = "middle";
+  renderCtx.font = `${block * 3.3}px monospace`;
+
+  for(let y = 0; y < workCanvas.height; y += block){
+    for(let x = 0; x < workCanvas.width; x += block){
+      const idx = (y * workCanvas.width + x) * 4;
+      const maskActive = useMask ? lastMask.data[idx] > 0 : true;
+      if(!maskActive) continue;
+      const lum = (image[idx] * 0.299 + image[idx + 1] * 0.587 + image[idx + 2] * 0.114);
+      const charIndex = Math.max(0, Math.min(chars.length - 1, Math.floor((255 - lum) / 256 * chars.length)));
+      const char = chars[charIndex] || chars[0];
+      const px = x / workCanvas.width * renderCanvas.width;
+      const py = y / workCanvas.height * renderCanvas.height;
+      renderCtx.fillText(char, px, py);
+    }
+  }
+}
+
+function ensureMatrixDrops(columns){
+  if(matrixDrops.length === columns) return;
+  matrixDrops = Array.from({ length: columns }, () => Math.floor(Math.random() * 18));
+}
+
+function drawMatrix(palette, frameCount){
+  const chars = (charSetInput.value.trim() || getPreset().chars || "MATRIX01").split("");
+  const fontSize = Math.max(12, Math.round(getElementSize(2.2, 8)));
+  const columns = Math.floor(renderCanvas.width / fontSize);
+  ensureMatrixDrops(columns);
+  const useMask = lastMask && lastMaskCoverage > 0.008;
+
+  renderCtx.fillStyle = "rgba(238,244,223,.08)";
+  renderCtx.fillRect(0, 0, renderCanvas.width, renderCanvas.height);
+  renderCtx.font = `${fontSize}px monospace`;
+  renderCtx.textAlign = "center";
+  renderCtx.textBaseline = "top";
+
+  for(let i = 0; i < columns; i++){
+    const x = i * fontSize + fontSize * 0.5;
+    const y = matrixDrops[i] * fontSize;
+    const maskX = Math.floor((x / renderCanvas.width) * workCanvas.width);
+    const maskY = Math.floor((y / renderCanvas.height) * workCanvas.height);
+    const idx = (maskY * workCanvas.width + maskX) * 4;
+    const inside = useMask ? (lastMask.data[idx] > 0) : (i > columns * 0.28 && i < columns * 0.72);
+    const char = chars[(frameCount + i) % chars.length] || "0";
+    renderCtx.fillStyle = inside ? palette.ink : "rgba(31,92,42,.46)";
+    renderCtx.fillText(char, x, y % (renderCanvas.height + fontSize));
+    if(y > renderCanvas.height + Math.random() * 80){
+      matrixDrops[i] = 0;
+    }else{
+      matrixDrops[i] += 0.55 + Math.random() * 0.9;
+    }
+  }
+}
+
+function drawOutline(palette){
+  if(!lastMask) return;
+  const image = lastMask.data;
+  const outline = maskCtx.createImageData(workCanvas.width, workCanvas.height);
+  const out = outline.data;
+  for(let y = 1; y < workCanvas.height - 1; y++){
+    for(let x = 1; x < workCanvas.width - 1; x++){
+      const idx = (y * workCanvas.width + x) * 4;
+      const center = image[idx];
+      const right = image[idx + 4];
+      const down = image[idx + workCanvas.width * 4];
+      const edge = center !== right || center !== down;
+      const v = edge ? 255 : 0;
+      out[idx] = v;
+      out[idx + 1] = v;
+      out[idx + 2] = v;
+      out[idx + 3] = 255;
+    }
+  }
+  maskCtx.putImageData(outline, 0, 0);
+  if(lastMaskCoverage < 0.008){
+    drawPosterized(palette, 2);
+  }
+  drawMaskScaled("outline", palette);
+}
+
+function drawVector(palette){
+  drawMaskScaled("silhouette", palette);
+  renderCtx.save();
+  renderCtx.globalAlpha = 0.1;
+  renderCtx.strokeStyle = palette.ink;
+  const step = Math.max(8, Math.round(getElementSize(1.2, 6)));
+  for(let y = 0; y < renderCanvas.height; y += step){
+    renderCtx.beginPath();
+    renderCtx.moveTo(0, y);
+    renderCtx.lineTo(renderCanvas.width, y);
+    renderCtx.stroke();
+  }
+  const cols = Math.max(5, Math.floor(renderCanvas.width / Math.max(40, getElementSize(8, 28))));
+  const band = renderCanvas.width / cols;
+  renderCtx.globalAlpha = 0.18;
+  for(let i = 0; i < cols; i++){
+    const x = i * band;
+    const mid = renderCanvas.height * (0.32 + ((i % 3) * 0.08));
+    renderCtx.beginPath();
+    renderCtx.moveTo(x, renderCanvas.height);
+    renderCtx.lineTo(x + band * 0.45, mid);
+    renderCtx.lineTo(x + band, renderCanvas.height);
+    renderCtx.closePath();
+    renderCtx.stroke();
+  }
+  renderCtx.restore();
+}
+
+function drawGhost(palette){
+  drawMaskScaled("ghost", palette);
+}
+
+function drawAmiga(palette){
+  drawPosterized(palette, 3);
+  renderCtx.save();
+  renderCtx.globalAlpha = 0.92;
+  renderCtx.strokeStyle = "rgba(0,0,0,.08)";
+  const step = Math.max(4, Math.round(getElementSize(0.6, 3)));
+  for(let y = 0; y < renderCanvas.height; y += step){
+    renderCtx.beginPath();
+    renderCtx.moveTo(0, y);
+    renderCtx.lineTo(renderCanvas.width, y);
+    renderCtx.stroke();
+  }
+  renderCtx.globalAlpha = 0.24;
+  renderCtx.fillStyle = palette.accent;
+  const block = Math.max(18, Math.round(getElementSize(3.4, 14)));
+  for(let y = 0; y < renderCanvas.height; y += block){
+    for(let x = 0; x < renderCanvas.width; x += block){
+      if(((x / block) + (y / block)) % 3 === 0){
+        renderCtx.fillRect(x, y, block, block);
+      }
+    }
+  }
+  renderCtx.restore();
+}
+
+function drawPixel(palette){
+  renderCtx.save();
+  renderCtx.imageSmoothingEnabled = false;
+  drawPosterized(palette, 2);
+  renderCtx.globalAlpha = 0.22;
+  renderCtx.fillStyle = palette.accent;
+  const size = Math.max(12, Math.round(getElementSize(3.2, 10)));
+  for(let y = 0; y < renderCanvas.height; y += size){
+    for(let x = 0; x < renderCanvas.width; x += size){
+      if(((x / size) + (y / size)) % 2 === 0){
+        renderCtx.fillRect(x, y, size, size);
+      }
+    }
+  }
+  renderCtx.restore();
+}
+
+function drawContrastFx(palette){
+  renderCtx.save();
+  drawPosterized(palette, 2);
+  renderCtx.globalAlpha = 0.2;
+  renderCtx.fillStyle = palette.ink;
+  renderCtx.fillRect(0, 0, renderCanvas.width, renderCanvas.height);
+  renderCtx.globalCompositeOperation = "screen";
+  renderCtx.globalAlpha = 0.18;
+  renderCtx.fillStyle = "#ffffff";
+  renderCtx.fillRect(0, 0, renderCanvas.width, renderCanvas.height * 0.52);
+  renderCtx.restore();
+}
+
+function drawCrtFx(palette){
+  drawPosterized(palette, 4);
+  renderCtx.save();
+  renderCtx.globalAlpha = 0.18;
+  renderCtx.fillStyle = palette.accent;
+  renderCtx.fillRect(0, 0, renderCanvas.width, renderCanvas.height);
+  renderCtx.globalAlpha = 0.12;
+  const stripe = Math.max(2, Math.round(getElementSize(0.28, 2)));
+  for(let x = 0; x < renderCanvas.width; x += stripe){
+    renderCtx.fillStyle = x % 9 === 0 ? "rgba(255,0,0,.12)" : x % 9 === 3 ? "rgba(0,255,180,.12)" : "rgba(0,120,255,.10)";
+    renderCtx.fillRect(x, 0, 1, renderCanvas.height);
+  }
+  renderCtx.restore();
+}
+
+function drawDuotoneFx(palette){
+  drawPosterized(palette, 3);
+  renderCtx.save();
+  renderCtx.globalCompositeOperation = "multiply";
+  renderCtx.fillStyle = palette.accent;
+  renderCtx.fillRect(0, 0, renderCanvas.width, renderCanvas.height);
+  renderCtx.globalCompositeOperation = "screen";
+  renderCtx.globalAlpha = 0.14;
+  renderCtx.fillStyle = "#ffffff";
+  renderCtx.fillRect(0, 0, renderCanvas.width, renderCanvas.height);
+  renderCtx.restore();
+}
+
+function drawPosterFx(palette){
+  drawPosterized(palette, 4);
+  renderCtx.save();
+  renderCtx.globalAlpha = 0.2;
+  renderCtx.fillStyle = palette.accent;
+  const step = Math.max(10, Math.round(getElementSize(2.2, 8)));
+  for(let y = 0; y < renderCanvas.height; y += step){
+    renderCtx.fillRect(0, y, renderCanvas.width, 2);
+  }
+  renderCtx.restore();
+}
+
+function drawShadowDance(palette){
+  if(!lastMask) return;
+  renderCtx.save();
+  renderCtx.globalAlpha = 0.2;
+  layerCtx.clearRect(0, 0, layerCanvas.width, layerCanvas.height);
+  layerCtx.globalCompositeOperation = "source-over";
+  layerCtx.drawImage(maskCanvas, 0, 0, renderCanvas.width, renderCanvas.height);
+  layerCtx.globalCompositeOperation = "source-in";
+  layerCtx.fillStyle = palette.accent;
+  layerCtx.fillRect(0, 0, layerCanvas.width, layerCanvas.height);
+  layerCtx.globalCompositeOperation = "source-over";
+  renderCtx.drawImage(layerCanvas, -getElementSize(2.8, 10), getElementSize(1.2, 4));
+  renderCtx.drawImage(layerCanvas, getElementSize(2.8, 10), getElementSize(1.8, 6));
+  renderCtx.restore();
+  drawMaskScaled("silhouette", palette);
+  renderCtx.save();
+  renderCtx.globalAlpha = 0.16;
+  renderCtx.fillStyle = palette.ink;
+  renderCtx.beginPath();
+  renderCtx.ellipse(renderCanvas.width * 0.5, renderCanvas.height * 0.9, renderCanvas.width * 0.22, renderCanvas.height * 0.04, 0, 0, Math.PI * 2);
+  renderCtx.fill();
+  renderCtx.restore();
+}
+
+function drawRotoscopeRetro(palette){
+  drawPosterized(palette, 5);
+  renderCtx.save();
+  renderCtx.globalAlpha = 0.75;
+  drawOutline(palette);
+  renderCtx.globalAlpha = 1;
+  renderCtx.strokeStyle = palette.accent;
+  renderCtx.lineWidth = Math.max(2, getElementSize(0.18, 2));
+  const bands = 6;
+  for(let i = 1; i < bands; i++){
+    const y = (renderCanvas.height / bands) * i;
+    renderCtx.beginPath();
+    renderCtx.moveTo(0, y);
+    renderCtx.lineTo(renderCanvas.width, y);
+    renderCtx.stroke();
+  }
+  renderCtx.restore();
+}
+
+function drawInkCutout(palette){
+  drawSilhouette(palette);
+  renderCtx.save();
+  renderCtx.globalAlpha = 0.2;
+  renderCtx.fillStyle = palette.accent;
+  const radius = Math.max(2, getElementSize(0.22, 2));
+  const step = Math.max(8, Math.round(getElementSize(1.8, 6)));
+  for(let y = 0; y < renderCanvas.height; y += step){
+    for(let x = 0; x < renderCanvas.width; x += step){
+      if(((x + y) / step) % 2 !== 0) continue;
+      renderCtx.beginPath();
+      renderCtx.arc(x, y, radius, 0, Math.PI * 2);
+      renderCtx.fill();
+    }
+  }
+  renderCtx.restore();
+}
+
+function buildSvgMarkup(){
+  if(!lastMask) return "";
+  const palette = getPalette();
+  const scale = Math.max(4, Math.round(Number(simplifyRange.value) + getElementSize(0.8, 2)));
+  const tinyW = Math.max(32, Math.floor(renderCanvas.width / scale));
+  const tinyH = Math.max(24, Math.floor(renderCanvas.height / scale));
+  const tiny = document.createElement("canvas");
+  tiny.width = tinyW;
+  tiny.height = tinyH;
+  const tctx = tiny.getContext("2d");
+  tctx.imageSmoothingEnabled = false;
+  tctx.drawImage(maskCanvas, 0, 0, tinyW, tinyH);
+  const data = tctx.getImageData(0, 0, tinyW, tinyH).data;
+  const cellW = renderCanvas.width / tinyW;
+  const cellH = renderCanvas.height / tinyH;
+  const rects = [];
+  for(let y = 0; y < tinyH; y++){
+    for(let x = 0; x < tinyW; x++){
+      const idx = (y * tinyW + x) * 4;
+      if(data[idx] > 0){
+        rects.push(`<rect x="${(x * cellW).toFixed(2)}" y="${(y * cellH).toFixed(2)}" width="${Math.ceil(cellW)}" height="${Math.ceil(cellH)}" fill="${palette.ink}"/>`);
+      }
+    }
+  }
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${renderCanvas.width} ${renderCanvas.height}" width="${renderCanvas.width}" height="${renderCanvas.height}"><rect width="100%" height="100%" fill="${palette.bg}"/><g>${rects.join("")}</g></svg>`;
+}
+
+function exportSvgSnapshot(){
+  renderFrame(0);
+  const svg = buildSvgMarkup();
+  if(!svg){
+    setStatus("Export impossible.", "Le SVG n'est pas disponible pour cette frame.");
+    return;
+  }
+  downloadBlob = new Blob([svg], { type: "image/svg+xml;charset=utf-8" });
+  downloadName = `${sanitizeFileStem(getPreset().id)}-${Date.now()}.svg`;
+  downloadBtn.disabled = false;
+  downloadBlobNow();
+  setStatus("SVG exporte.", "Le snapshot vectoriel courant a ete telecharge.");
+}
+
+function exportHtmlSnapshot(){
+  renderFrame(0);
+  const png = renderCanvas.toDataURL("image/png");
+  const html = `<!DOCTYPE html><html lang="fr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>DemoForge Snapshot</title><style>html,body{margin:0;height:100%;display:grid;place-items:center;background:#111}img{max-width:100vw;max-height:100vh;object-fit:contain}</style></head><body><img alt="DemoForge snapshot" src="${png}"></body></html>`;
+  downloadBlob = new Blob([html], { type: "text/html;charset=utf-8" });
+  downloadName = `${sanitizeFileStem(getPreset().id)}-${Date.now()}.html`;
+  downloadBtn.disabled = false;
+  downloadBlobNow();
+  setStatus("HTML exporte.", "Le snapshot HTML autonome a ete telecharge.");
+}
+
+function drawRaster(type, palette){
+  const w = renderCanvas.width;
+  const h = renderCanvas.height;
+  const unit = Math.max(2, Math.round(getElementSize(0.9, 2)));
+  renderCtx.save();
+  renderCtx.globalAlpha = 0.24;
+  renderCtx.strokeStyle = palette.accent;
+  renderCtx.fillStyle = palette.accent;
+  renderCtx.lineWidth = 1;
+
+  if(type === "horizontal-lines" || type === "scanlines"){
+    const step = type === "scanlines" ? Math.max(2, unit) : Math.max(4, unit * 2);
+    for(let y = 0; y < h; y += step){
+      renderCtx.beginPath();
+      renderCtx.moveTo(0, y);
+      renderCtx.lineTo(w, y);
+      renderCtx.stroke();
+    }
+  }else if(type === "vertical-lines"){
+    for(let x = 0; x < w; x += Math.max(6, unit * 2)){
+      renderCtx.beginPath();
+      renderCtx.moveTo(x, 0);
+      renderCtx.lineTo(x, h);
+      renderCtx.stroke();
+    }
+  }else if(type === "crt-grid"){
+    for(let x = 0; x < w; x += Math.max(8, unit * 2)){
+      renderCtx.beginPath();
+      renderCtx.moveTo(x, 0);
+      renderCtx.lineTo(x, h);
+      renderCtx.stroke();
+    }
+    for(let y = 0; y < h; y += Math.max(4, unit)){
+      renderCtx.beginPath();
+      renderCtx.moveTo(0, y);
+      renderCtx.lineTo(w, y);
+      renderCtx.stroke();
+    }
+  }else if(type === "dot-grid" || type === "halftone-dots"){
+    const step = type === "halftone-dots" ? Math.max(8, unit * 3) : Math.max(10, unit * 4);
+    const radius = type === "halftone-dots" ? Math.max(1.2, unit * 0.45) : Math.max(1, unit * 0.28);
+    for(let y = 0; y < h; y += step){
+      for(let x = 0; x < w; x += step){
+        renderCtx.beginPath();
+        renderCtx.arc(x, y, radius, 0, Math.PI * 2);
+        renderCtx.fill();
+      }
+    }
+  }else if(type === "checker"){
+    const size = Math.max(10, unit * 4);
+    for(let y = 0; y < h; y += size){
+      for(let x = 0; x < w; x += size){
+        if(((x + y) / size) % 2 === 0){
+          renderCtx.fillRect(x, y, size, size);
+        }
+      }
+    }
+  }else if(type === "diagonal-lines"){
+    for(let x = -h; x < w; x += Math.max(8, unit * 3)){
+      renderCtx.beginPath();
+      renderCtx.moveTo(x, 0);
+      renderCtx.lineTo(x + h, h);
+      renderCtx.stroke();
+    }
+  }else if(type === "coarse-pixels"){
+    const size = Math.max(10, Math.round(getElementSize(2.8, 8)));
+    for(let y = 0; y < h; y += size){
+      for(let x = 0; x < w; x += size){
+        if((x / size + y / size) % 2 === 0){
+          renderCtx.fillRect(x, y, size, size);
+        }
+      }
+    }
+  }
+  renderCtx.restore();
+}
+
+function renderDebugViews(){
+  if(!debugToggle.checked){
+    return;
+  }
+
+  debugSourceCtx.clearRect(0, 0, debugSourceCanvas.width, debugSourceCanvas.height);
+  debugMaskCtx.clearRect(0, 0, debugMaskCanvas.width, debugMaskCanvas.height);
+  debugFinalCtx.clearRect(0, 0, debugFinalCanvas.width, debugFinalCanvas.height);
+
+  if(sourceType === "video" || sourceType === "gif"){
+    debugSourceCtx.imageSmoothingEnabled = false;
+    debugMaskCtx.imageSmoothingEnabled = false;
+    debugFinalCtx.imageSmoothingEnabled = false;
+    debugSourceCtx.drawImage(workCanvas, 0, 0, debugSourceCanvas.width, debugSourceCanvas.height);
+    if(lastMask){
+      debugMaskCtx.drawImage(maskCanvas, 0, 0, debugMaskCanvas.width, debugMaskCanvas.height);
+    }
+    debugFinalCtx.drawImage(renderCanvas, 0, 0, debugFinalCanvas.width, debugFinalCanvas.height);
+    return;
+  }
+
+  [debugSourceCtx, debugMaskCtx, debugFinalCtx].forEach((ctx) => {
+    ctx.fillStyle = "#111";
+    ctx.fillRect(0, 0, debugSourceCanvas.width, debugSourceCanvas.height);
+    ctx.fillStyle = "rgba(255,255,255,.75)";
+    ctx.font = "14px monospace";
+    ctx.textAlign = "center";
+    ctx.fillText("No local source", debugSourceCanvas.width * 0.5, debugSourceCanvas.height * 0.5);
+  });
+}
+
+function renderFrame(frameCount){
+  const preset = getPreset();
+  const palette = getPalette();
+  backgroundFill(renderCtx, palette);
+
+  if(sourceType === "video" || sourceType === "gif"){
+    buildMask();
+    renderCtx.fillStyle = palette.ink;
+
+    switch(preset.mode){
+      case "ascii":
+        drawAscii(palette);
+        break;
+      case "pixel":
+        drawPixel(palette);
+        break;
+      case "matrix":
+        drawMatrix(palette, frameCount);
+        break;
+      case "outline":
+        drawOutline(palette);
+        break;
+      case "shadow":
+        drawShadowDance(palette);
+        break;
+      case "rotoscope":
+        drawRotoscopeRetro(palette);
+        break;
+      case "contrast":
+        drawContrastFx(palette);
+        break;
+      case "duotone":
+        drawDuotoneFx(palette);
+        break;
+      case "vector":
+        drawVector(palette);
+        break;
+      case "ink":
+        drawInkCutout(palette);
+        break;
+      case "crt":
+        drawCrtFx(palette);
+        break;
+      case "poster":
+        drawPosterFx(palette);
+        break;
+      case "ghost":
+        drawGhost(palette);
+        break;
+      case "amiga":
+        drawAmiga(palette);
+        break;
+      case "silhouette":
+      default:
+        drawSilhouette(palette);
+        break;
+    }
+  }else{
+    renderCtx.fillStyle = "rgba(0,0,0,.74)";
+    renderCtx.textAlign = "center";
+    renderCtx.font = "700 28px monospace";
+    renderCtx.fillText("LOAD A LOCAL VIDEO OR GIF", renderCanvas.width * 0.5, renderCanvas.height * 0.48);
+    renderCtx.font = "400 16px monospace";
+    renderCtx.fillText("YouTube URLs are accepted for preview but not pixel render/export in pure browser mode.", renderCanvas.width * 0.5, renderCanvas.height * 0.55);
+  }
+
+  drawRaster(rasterSelect.value, palette);
+  renderDebugViews();
+}
+
+function loop(frameCount = 0){
+  if(sourceType === "video" && timelineDuration){
+    if(video.currentTime >= Math.max(trimStart, trimEnd - 0.02)){
+      video.currentTime = trimStart;
+      if(!video.paused){
+        video.play().catch(() => {});
+      }
+    }
+  }
+  renderFrame(frameCount);
+  updateTimelineUI();
+  animationFrame = requestAnimationFrame(() => loop(frameCount + 1));
+}
+
+function playSource(){
+  if(sourceType === "video"){
+    if(video.currentTime < trimStart || video.currentTime > trimEnd){
+      video.currentTime = trimStart;
+    }
+    video.play().catch(() => {});
+  }
+  setStatus("Lecture.", "Le rendu live continue sur le canvas.");
+}
+
+function pauseSource(){
+  if(sourceType === "video"){
+    video.pause();
+  }
+  setStatus("Pause.", "La source locale est en pause.");
+}
+
+function downloadBlobNow(){
+  if(!downloadBlob) return;
+  const url = URL.createObjectURL(downloadBlob);
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = downloadName;
+  link.click();
+  setTimeout(() => URL.revokeObjectURL(url), 1500);
+}
+
+function recordExport(){
+  if(sourceType !== "video" && sourceType !== "gif"){
+    setStatus("Export impossible.", "Charge une source locale pour exporter le rendu.");
+    return;
+  }
+  recordBtn.disabled = true;
+  if(exportSelect.value === "html"){
+    recordBtn.disabled = false;
+    exportHtmlSnapshot();
+    return;
+  }
+  if(exportSelect.value === "svg"){
+    recordBtn.disabled = false;
+    exportSvgSnapshot();
+    return;
+  }
+  if(exportSelect.value === "png"){
+    renderFrame(0);
+    renderCanvas.toBlob((blob) => {
+      recordBtn.disabled = false;
+      if(!blob){
+        setStatus("Export impossible.", "Le PNG n'a pas pu etre genere.");
+        return;
+      }
+      downloadBlob = blob;
+      downloadName = `demoforge-${presetSelect.value}-${Date.now()}.png`;
+      downloadBtn.disabled = false;
+      downloadBlobNow();
+      setStatus("PNG exporte.", "Le frame courant du rendu a ete telecharge.");
+    }, "image/png");
+    return;
+  }
+  if(recorder && recorder.state === "recording"){
+    recordBtn.disabled = false;
+    return;
+  }
+  if(typeof renderCanvas.captureStream !== "function"){
+    recordBtn.disabled = false;
+    setStatus("Export impossible.", "Ce navigateur ne supporte pas captureStream sur le canvas.");
+    return;
+  }
+
+  const stream = renderCanvas.captureStream(18);
+  const mimeType = mimeForExport();
+  if(!mimeType){
+    recordBtn.disabled = false;
+    setStatus("Export impossible.", "Ce navigateur integre ne supporte pas MediaRecorder pour WebM ici.");
+    return;
+  }
+  recordChunks = [];
+  try{
+    recorder = new MediaRecorder(stream, { mimeType, videoBitsPerSecond: 1400000 });
+  }catch(error){
+    recordBtn.disabled = false;
+    setStatus("Export impossible.", `Creation MediaRecorder echouee: ${error.message || error}`);
+    return;
+  }
+
+  recorder.ondataavailable = (event) => {
+    if(event.data.size > 0){
+      recordChunks.push(event.data);
+    }
+  };
+
+  recorder.onstop = () => {
+    if(exportWatchTimer){
+      clearInterval(exportWatchTimer);
+      exportWatchTimer = 0;
+    }
+    recordBtn.disabled = false;
+    downloadBlob = new Blob(recordChunks, { type: mimeType });
+    downloadName = `demoforge-${presetSelect.value}.${mimeType.includes("webm") ? "webm" : "bin"}`;
+    downloadBtn.disabled = false;
+    downloadBlobNow();
+    setStatus("Export termine.", `Le clip ${downloadName} a ete telecharge sur la plage ${formatTime(trimStart)} -> ${formatTime(trimEnd)}.`);
+  };
+  recorder.onerror = (event) => {
+    if(exportWatchTimer){
+      clearInterval(exportWatchTimer);
+      exportWatchTimer = 0;
+    }
+    recordBtn.disabled = false;
+    const message = event?.error?.message || "Erreur inconnue pendant l'export.";
+    setStatus("Export echoue.", message);
+  };
+
+  const localVideo = sourceType === "video";
+  const originalTime = localVideo ? video.currentTime : 0;
+  const wasPaused = localVideo ? video.paused : true;
+  if(localVideo){
+    video.pause();
+    video.currentTime = trimStart;
+  }
+  recorder.start();
+  const clipSeconds = localVideo ? Math.max(0.05, trimEnd - trimStart) : Number(recordSeconds.value);
+  if(localVideo){
+    video.play().catch(() => {});
+    exportWatchTimer = setInterval(() => {
+      if(!recorder || recorder.state !== "recording"){
+        clearInterval(exportWatchTimer);
+        exportWatchTimer = 0;
+        return;
+      }
+      if(video.currentTime >= Math.max(trimStart, trimEnd - 0.02)){
+        recorder.stop();
+      }
+    }, 30);
+  }
+  setStatus("Export en cours.", `Capture ${clipSeconds.toFixed(2)}s en ${mimeType}.`);
+  setTimeout(() => {
+    if(recorder && recorder.state === "recording"){
+      recorder.stop();
+    }
+    if(localVideo){
+      video.pause();
+      video.currentTime = wasPaused ? trimStart : originalTime;
+      if(!wasPaused){
+        video.play().catch(() => {});
+      }
+    }
+  }, clipSeconds * 1000);
+}
+
+fileInput.addEventListener("change", (event) => {
+  const [file] = event.target.files || [];
+  if(file) loadLocalFile(file);
+});
+
+["dragenter", "dragover"].forEach((eventName) => {
+  dropZone.addEventListener(eventName, (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+    setDropzoneActive(true);
+  });
+});
+
+["dragleave", "dragend"].forEach((eventName) => {
+  dropZone.addEventListener(eventName, (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+    setDropzoneActive(false);
+  });
+});
+
+dropZone.addEventListener("drop", (event) => {
+  event.preventDefault();
+  event.stopPropagation();
+  setDropzoneActive(false);
+  const handled = handleDroppedDataTransfer(event.dataTransfer);
+  if(!handled){
+    setStatus("Drop non pris en charge.", "Depose une video, un GIF, ou une URL YouTube valide.");
+  }
+});
+
+dropZone.addEventListener("paste", (event) => {
+  const text = event.clipboardData?.getData("text/plain") || "";
+  if(handleDroppedText(text)){
+    event.preventDefault();
+  }
+});
+
+loadYoutubeBtn.addEventListener("click", loadYouTube);
+youtubeInput.addEventListener("keydown", (event) => {
+  if(event.key === "Enter"){
+    event.preventDefault();
+    loadYouTube();
+  }
+});
+clearSourceBtn.addEventListener("click", clearSource);
+captureBgBtn.addEventListener("click", ensureBackgroundCapture);
+playBtn.addEventListener("click", playSource);
+pauseBtn.addEventListener("click", pauseSource);
+recordBtn.addEventListener("click", recordExport);
+downloadBtn.addEventListener("click", downloadBlobNow);
+timelineRange.addEventListener("input", () => {
+  if(sourceType !== "video" || !timelineDuration) return;
+  isScrubbing = true;
+  video.currentTime = rangeValueToTime(timelineRange.value);
+  updateTimelineUI();
+});
+timelineRange.addEventListener("change", () => {
+  if(sourceType !== "video" || !timelineDuration) return;
+  isScrubbing = false;
+  video.currentTime = rangeValueToTime(timelineRange.value);
+  updateTimelineUI();
+});
+trimStartRange.addEventListener("input", () => clampTrimRanges("start"));
+trimEndRange.addEventListener("input", () => clampTrimRanges("end"));
+trimStartInput.addEventListener("change", () => applyTimecodeInputs("start"));
+trimEndInput.addEventListener("change", () => applyTimecodeInputs("end"));
+setInBtn.addEventListener("click", () => setTrimFromPlayhead("in"));
+setOutBtn.addEventListener("click", () => setTrimFromPlayhead("out"));
+video.addEventListener("loadedmetadata", () => {
+  syncRangeLimits(video.duration || 0);
+  updateTimelineUI();
+});
+video.addEventListener("timeupdate", () => {
+  if(!isScrubbing){
+    updateTimelineUI();
+  }
+});
+youtubePreview.addEventListener("load", () => {
+  clearTimeout(youtubeFallbackTimer);
+  showYouTubeFallback(false);
+  if(sourceType === "youtube"){
+    setStatus("Preview YouTube chargee.", "Le lien fonctionne dans cette session. Le rendu pixel et l'export restent reserves aux sources locales.");
+  }
+});
+youtubeThumb.addEventListener("error", () => {
+  if(sourceType === "youtube" && youtubeThumb.src.includes("/hqdefault.jpg")){
+    youtubeThumb.src = youtubeThumb.src.replace("/hqdefault.jpg", "/mqdefault.jpg");
+    return;
+  }
+  youtubeThumb.style.display = "none";
+});
+youtubeThumb.addEventListener("load", () => {
+  youtubeThumb.style.display = "block";
+});
+
+[rasterSelect, paletteSelect, exportSelect, motionThreshold, elementSizeRange, simplifyRange, contrastRange, haloRange].forEach((element) => {
+  element.addEventListener("input", updateStats);
+  element.addEventListener("change", updateStats);
+});
+
+presetSelect.addEventListener("change", () => {
+  applyPreset(getPreset());
+  setStatus("Effet mis a jour.", "L'effet et sa variante ont ete ajustes.");
+});
+variantSelect.addEventListener("change", () => {
+  applyVariant();
+  setStatus("Variante mise a jour.", "La variante courante a ete appliquee.");
+});
+debugToggle.addEventListener("change", updateDebugUI);
+
+[trimStartInput, trimEndInput].forEach((input) => {
+  input.addEventListener("focus", () => {
+    suppressTimecodeSync = true;
+  });
+  input.addEventListener("blur", () => {
+    suppressTimecodeSync = false;
+    updateTimelineUI();
+  });
+});
+
+populateSelects();
+applyPreset(getPreset());
+updateStats();
+updateDebugUI();
+loop();
+
+function handleGlobalDropEvent(event){
+  event.preventDefault();
+  event.stopPropagation();
+  setDropzoneActive(false);
+  document.body.classList.remove("dragging");
+  const handled = handleDroppedDataTransfer(event.dataTransfer);
+  if(!handled){
+    setStatus("Drop non pris en charge.", "Depose une video, un GIF, ou une URL YouTube valide.");
+  }
+}
+
+["dragenter", "dragover"].forEach((eventName) => {
+  document.addEventListener(eventName, (event) => {
+    event.preventDefault();
+    document.body.classList.add("dragging");
+    setDropzoneActive(true);
+  });
+});
+
+["dragleave", "dragend"].forEach((eventName) => {
+  document.addEventListener(eventName, () => {
+    document.body.classList.remove("dragging");
+    setDropzoneActive(false);
+  });
+});
+
+document.addEventListener("drop", handleGlobalDropEvent);
+</script>
+</body>
+</html>

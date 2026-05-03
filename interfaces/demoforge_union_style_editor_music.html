@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>DemoForge — Union Style HTML Editor</title>
+<style>
+  :root {
+    --bg: #050505;
+    --panel: #111;
+    --panel2: #181818;
+    --line: #333;
+    --text: #f2f2f2;
+    --muted: #aaa;
+    --accent: #ffcc00;
+    --cyan: #00e5ff;
+    --danger: #ff4b6e;
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body {
+    margin: 0;
+    width: 100%;
+    min-height: 100%;
+    background: var(--bg);
+    color: var(--text);
+    font-family: Arial, Helvetica, sans-serif;
+  }
+
+  body {
+    display: grid;
+    grid-template-columns: minmax(360px, 430px) 1fr;
+    height: 100vh;
+    overflow: hidden;
+  }
+
+  aside {
+    height: 100vh;
+    overflow: auto;
+    background: linear-gradient(180deg, #111, #070707);
+    border-right: 1px solid var(--line);
+    padding: 16px;
+  }
+
+  main {
+    position: relative;
+    height: 100vh;
+    overflow: hidden;
+    background: #000;
+  }
+
+  h1 {
+    margin: 0 0 4px;
+    font-size: 24px;
+    letter-spacing: .04em;
+  }
+
+  .sub {
+    color: var(--muted);
+    font-size: 13px;
+    margin-bottom: 18px;
+    line-height: 1.4;
+  }
+
+  .section {
+    border: 1px solid var(--line);
+    background: var(--panel);
+    margin-bottom: 12px;
+    padding: 12px;
+  }
+
+  .section h2 {
+    margin: 0 0 10px;
+    font-size: 14px;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+
+  label {
+    display: grid;
+    gap: 5px;
+    margin-bottom: 10px;
+    font-size: 12px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: .05em;
+  }
+
+  input, select, textarea, button {
+    font: inherit;
+  }
+
+  input, select, textarea {
+    width: 100%;
+    padding: 9px;
+    border: 1px solid var(--line);
+    background: #050505;
+    color: var(--text);
+    outline: none;
+  }
+
+  input[type="color"] {
+    height: 38px;
+    padding: 3px;
+  }
+
+  textarea {
+    min-height: 82px;
+    resize: vertical;
+    line-height: 1.35;
+  }
+
+  .row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  .row3 {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 10px;
+  }
+
+  button {
+    border: 1px solid var(--line);
+    background: #1b1b1b;
+    color: var(--text);
+    padding: 10px 12px;
+    cursor: pointer;
+    width: 100%;
+  }
+
+  button:hover {
+    border-color: var(--cyan);
+    color: white;
+  }
+
+  button.primary {
+    background: linear-gradient(90deg, #603800, #ffc400);
+    color: #000;
+    border-color: #ffcc00;
+    font-weight: 800;
+  }
+
+  button.danger {
+    color: #ffd5dc;
+    border-color: #7a1b2d;
+  }
+
+  .actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+
+  canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+    image-rendering: pixelated;
+  }
+
+  .badge {
+    position: absolute;
+    left: 16px;
+    top: 14px;
+    background: rgba(0,0,0,.72);
+    border: 1px solid rgba(255,255,255,.18);
+    padding: 7px 9px;
+    color: #ddd;
+    font: 12px/1.2 monospace;
+    pointer-events: none;
+  }
+
+  .hint {
+    color: var(--muted);
+    font-size: 12px;
+    line-height: 1.45;
+  }
+
+  .code {
+    height: 220px;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    font-size: 11px;
+    white-space: pre;
+  }
+
+  @media (max-width: 900px) {
+    body {
+      grid-template-columns: 1fr;
+      height: auto;
+      overflow: auto;
+    }
+    aside {
+      height: auto;
+      border-right: 0;
+      border-bottom: 1px solid var(--line);
+    }
+    main {
+      height: 60vh;
+      min-height: 420px;
+    }
+  }
+</style>
+</head>
+<body>
+<aside>
+  <h1>DemoForge Union Editor</h1>
+  <div class="sub">
+    Éditeur HTML inspiré des intros Atari ST : logo central, rasters, full-screen fake, scroller.
+    Objectif : lisible, modifiable, exportable.
+  </div>
+
+  <div class="section">
+    <h2>Logo</h2>
+    <label>Texte principal
+      <input id="logoText" value="THE UNION DEMO">
+    </label>
+    <label>Sous-titre
+      <input id="subtitle" value="HTML RECONSTRUCTION // DEMOFORGE">
+    </label>
+    <div class="row">
+      <label>Couleur haut
+        <input id="logoTop" type="color" value="#ffffff">
+      </label>
+      <label>Couleur bas
+        <input id="logoBottom" type="color" value="#ffcc00">
+      </label>
+    </div>
+    <div class="row">
+      <label>Taille logo
+        <input id="logoSize" type="range" min="24" max="96" value="56">
+      </label>
+      <label>Position Y
+        <input id="logoY" type="range" min="40" max="170" value="92">
+      </label>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Raster / Copper bars</h2>
+    <div class="row">
+      <label>Nombre
+        <input id="barCount" type="range" min="0" max="32" value="16">
+      </label>
+      <label>Vitesse
+        <input id="barSpeed" type="range" min="0" max="50" value="18">
+      </label>
+    </div>
+    <div class="row">
+      <label>Amplitude
+        <input id="barAmp" type="range" min="0" max="60" value="22">
+      </label>
+      <label>Épaisseur
+        <input id="barHeight" type="range" min="2" max="16" value="5">
+      </label>
+    </div>
+    <div class="row">
+      <label>Couleur 1
+        <input id="barA" type="color" value="#ff0000">
+      </label>
+      <label>Couleur 2
+        <input id="barB" type="color" value="#ffff00">
+      </label>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Scroller</h2>
+    <label>Texte
+      <textarea id="scrollText">*** GREETINGS TO THE CAREBEARS * THE UNION * REPLICANTS * AUTOMATION * FOF * ATM * TAM * BLACK SQUADRON * ORION * EQUINOX * FAIRLIGHT * ALL SCENERS *** CODING IS NOT A CRIME ***</textarea>
+    </label>
+    <div class="row">
+      <label>Taille
+        <input id="scrollSize" type="range" min="10" max="34" value="18">
+      </label>
+      <label>Vitesse
+        <input id="scrollSpeed" type="range" min="1" max="80" value="24">
+      </label>
+    </div>
+    <div class="row">
+      <label>Position Y
+        <input id="scrollY" type="range" min="160" max="260" value="230">
+      </label>
+      <label>Couleur
+        <input id="scrollColor" type="color" value="#00e5ff">
+      </label>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Ambiance</h2>
+    <div class="row">
+      <label>Étoiles
+        <input id="stars" type="range" min="0" max="500" value="120">
+      </label>
+      <label>Scanlines
+        <select id="scanlines">
+          <option value="on" selected>on</option>
+          <option value="off">off</option>
+        </select>
+      </label>
+    </div>
+    <div class="row">
+      <label>Fond
+        <input id="bgColor" type="color" value="#000000">
+      </label>
+      <label>Glow
+        <input id="glow" type="range" min="0" max="40" value="12">
+      </label>
+    </div>
+    <div class="row">
+      <button id="toggleMusic" class="primary">Activer musique</button>
+      <label>Volume
+        <input id="musicVolume" type="range" min="0" max="100" value="22">
+      </label>
+    </div>
+    <p class="hint">Le son doit être déclenché par clic : restriction normale des navigateurs modernes.</p>
+  </div>
+
+  <div class="section">
+    <h2>Export</h2>
+    <div class="actions">
+      <button class="primary" id="downloadHtml">Télécharger .html</button>
+      <button id="copyHtml">Copier HTML</button>
+      <button id="saveLocal">Sauver local</button>
+      <button class="danger" id="reset">Reset</button>
+    </div>
+    <p class="hint">
+      Le bouton export génère une version autonome sans panneau d’édition : juste la démo.
+    </p>
+    <textarea id="sourcePreview" class="code" spellcheck="false"></textarea>
+  </div>
+</aside>
+
+<main>
+  <canvas id="screen"></canvas>
+  <div class="badge">LIVE EDIT · UNION STYLE · HTML CANVAS</div>
+</main>
+
+<script>
+(() => {
+  "use strict";
+
+  const STORE = "demoforge-union-style-editor-v1";
+
+  const canvas = document.getElementById("screen");
+  const ctx = canvas.getContext("2d", { alpha: false });
+
+  const W = 480;
+  const H = 270;
+  const buffer = document.createElement("canvas");
+  buffer.width = W;
+  buffer.height = H;
+  const g = buffer.getContext("2d", { alpha: false });
+
+  let t = 0;
+  let stars = makeStars(500);
+
+  let audioCtx = null;
+  let masterGain = null;
+  let musicTimer = null;
+  let musicOn = false;
+  let step = 0;
+
+  const controls = [
+    "logoText", "subtitle", "logoTop", "logoBottom", "logoSize", "logoY",
+    "barCount", "barSpeed", "barAmp", "barHeight", "barA", "barB",
+    "scrollText", "scrollSize", "scrollSpeed", "scrollY", "scrollColor",
+    "stars", "scanlines", "bgColor", "glow", "musicVolume"
+  ];
+
+  const $ = id => document.getElementById(id);
+
+  function values() {
+    const o = {};
+    for (const id of controls) o[id] = $(id).value;
+    return o;
+  }
+
+  function applyValues(o) {
+    if (!o) return;
+    for (const id of controls) if (o[id] !== undefined) $(id).value = o[id];
+  }
+
+  function makeStars(n) {
+    return Array.from({ length: n }, () => ({
+      x: Math.random() * W,
+      y: Math.random() * H,
+      z: .3 + Math.random() * 1.7,
+      s: .6 + Math.random() * 1.4
+    }));
+  }
+
+  function saveLocal() {
+    localStorage.setItem(STORE, JSON.stringify(values()));
+  }
+
+  function loadLocal() {
+    try { applyValues(JSON.parse(localStorage.getItem(STORE))); }
+    catch {}
+  }
+
+  function resize() {
+    const dpr = Math.min(devicePixelRatio || 1, 2);
+    canvas.width = Math.floor(canvas.clientWidth * dpr);
+    canvas.height = Math.floor(canvas.clientHeight * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+
+  addEventListener("resize", resize);
+  resize();
+  loadLocal();
+
+  controls.forEach(id => {
+    $(id).addEventListener("input", () => {
+      if (id === "stars") stars = makeStars(Number($("stars").value));
+      updatePreview();
+      saveLocal();
+    });
+  });
+
+  $("saveLocal").onclick = saveLocal;
+  $("reset").onclick = () => {
+    localStorage.removeItem(STORE);
+    location.reload();
+  };
+
+  $("toggleMusic").onclick = () => {
+    if (!musicOn) startMusic();
+    else stopMusic();
+  };
+
+  $("musicVolume").addEventListener("input", () => {
+    if (masterGain) masterGain.gain.value = Number($("musicVolume").value) / 100;
+  });
+
+  $("downloadHtml").onclick = () => {
+    const html = buildStandalone(values());
+    download("union_style_demo.html", html, "text/html");
+  };
+
+  $("copyHtml").onclick = async () => {
+    const html = buildStandalone(values());
+    await navigator.clipboard.writeText(html);
+    $("copyHtml").textContent = "Copié";
+    setTimeout(() => $("copyHtml").textContent = "Copier HTML", 900);
+  };
+
+  function drawDemo(cfg, target, targetCtx, time) {
+    const bg = cfg.bgColor || "#000";
+    targetCtx.fillStyle = bg;
+    targetCtx.fillRect(0, 0, W, H);
+
+    drawStars(targetCtx, cfg, time);
+    drawBars(targetCtx, cfg, time);
+    drawLogo(targetCtx, cfg, time);
+    drawSubtitle(targetCtx, cfg);
+    drawScroller(targetCtx, cfg, time);
+    if (cfg.scanlines === "on") drawScanlines(targetCtx);
+    drawFrame(targetCtx);
+  }
+
+  function drawStars(c, cfg, time) {
+    const count = Math.min(stars.length, Number(cfg.stars) || 0);
+    for (let i = 0; i < count; i++) {
+      const s = stars[i];
+      s.x -= s.z * .18;
+      if (s.x < 0) {
+        s.x = W;
+        s.y = Math.random() * H;
+      }
+      c.fillStyle = s.z > 1.3 ? "#fff" : s.z > .8 ? "#aaa" : "#555";
+      c.fillRect(s.x, s.y, s.s, s.s);
+    }
+  }
+
+  function drawBars(c, cfg, time) {
+    const count = Number(cfg.barCount);
+    const speed = Number(cfg.barSpeed) / 10;
+    const amp = Number(cfg.barAmp);
+    const h = Number(cfg.barHeight);
+
+    for (let i = 0; i < count; i++) {
+      const y = 136 + i * (h + 3) + Math.sin(time * .035 * speed + i * .7) * amp;
+      const grad = c.createLinearGradient(40, y, W - 40, y);
+      grad.addColorStop(0, cfg.barA);
+      grad.addColorStop(.5, cfg.barB);
+      grad.addColorStop(1, cfg.barA);
+      c.fillStyle = grad;
+      c.fillRect(34, y, W - 68, h);
+    }
+  }
+
+  function drawLogo(c, cfg, time) {
+    const size = Number(cfg.logoSize);
+    const y = Number(cfg.logoY) + Math.sin(time * .025) * 2;
+    const glow = Number(cfg.glow);
+
+    c.save();
+    c.textAlign = "center";
+    c.textBaseline = "middle";
+    c.font = "900 " + size + "px Arial Black, Impact, sans-serif";
+
+    c.lineWidth = Math.max(6, size * .13);
+    c.strokeStyle = "#000";
+    c.strokeText(cfg.logoText, W / 2, y);
+
+    c.shadowBlur = glow;
+    c.shadowColor = cfg.logoBottom;
+
+    const grad = c.createLinearGradient(0, y - size / 2, 0, y + size / 2);
+    grad.addColorStop(0, cfg.logoTop);
+    grad.addColorStop(.55, cfg.logoBottom);
+    grad.addColorStop(1, "#6b3b00");
+
+    c.fillStyle = grad;
+    c.fillText(cfg.logoText, W / 2, y);
+
+    c.shadowBlur = 0;
+    c.lineWidth = 1.5;
+    c.strokeStyle = "#fff";
+    c.strokeText(cfg.logoText, W / 2, y);
+    c.restore();
+  }
+
+  function drawSubtitle(c, cfg) {
+    c.save();
+    c.textAlign = "center";
+    c.textBaseline = "middle";
+    c.font = "700 13px Arial, sans-serif";
+    c.lineWidth = 4;
+    c.strokeStyle = "#000";
+    c.strokeText(cfg.subtitle, W / 2, Number(cfg.logoY) + Number(cfg.logoSize) * .62);
+    c.fillStyle = "#e6e6e6";
+    c.fillText(cfg.subtitle, W / 2, Number(cfg.logoY) + Number(cfg.logoSize) * .62);
+    c.restore();
+  }
+
+  function drawScroller(c, cfg, time) {
+    const text = "   " + cfg.scrollText + "   ";
+    const size = Number(cfg.scrollSize);
+    const y = Number(cfg.scrollY);
+    const speed = Number(cfg.scrollSpeed) / 10;
+    const charW = size * .62;
+    const total = text.length * charW;
+    const x = W - ((time * speed) % (W + total));
+
+    c.fillStyle = "rgba(0,0,0,.78)";
+    c.fillRect(0, y - size - 8, W, size + 22);
+
+    c.strokeStyle = cfg.scrollColor;
+    c.lineWidth = 1;
+    c.beginPath();
+    c.moveTo(0, y - size - 8);
+    c.lineTo(W, y - size - 8);
+    c.moveTo(0, y + 13);
+    c.lineTo(W, y + 13);
+    c.stroke();
+
+    c.font = "900 " + size + "px Arial Black, Impact, sans-serif";
+    c.textAlign = "left";
+    c.textBaseline = "middle";
+
+    for (let i = 0; i < text.length; i++) {
+      const px = x + i * charW;
+      const py = y + Math.sin(time * .05 + i * .35) * 3;
+      c.lineWidth = 4;
+      c.strokeStyle = "#000";
+      c.strokeText(text[i], px, py);
+      c.fillStyle = cfg.scrollColor;
+      c.fillText(text[i], px, py);
+    }
+  }
+
+  function drawScanlines(c) {
+    c.fillStyle = "rgba(0,0,0,.28)";
+    for (let y = 0; y < H; y += 3) c.fillRect(0, y, W, 1);
+  }
+
+  function drawFrame(c) {
+    c.strokeStyle = "rgba(255,255,255,.22)";
+    c.strokeRect(6, 6, W - 12, H - 12);
+  }
+
+  function render() {
+    const cfg = values();
+    drawDemo(cfg, buffer, g, t);
+
+    ctx.imageSmoothingEnabled = false;
+    ctx.fillStyle = "#000";
+    ctx.fillRect(0, 0, canvas.clientWidth, canvas.clientHeight);
+
+    const scale = Math.min(canvas.clientWidth / W, canvas.clientHeight / H) * .96;
+    const dw = W * scale;
+    const dh = H * scale;
+    const dx = (canvas.clientWidth - dw) / 2;
+    const dy = (canvas.clientHeight - dh) / 2;
+
+    ctx.drawImage(buffer, dx, dy, dw, dh);
+
+    t++;
+    requestAnimationFrame(render);
+  }
+
+  function updatePreview() {
+    $("sourcePreview").value = buildStandalone(values()).slice(0, 12000);
+  }
+
+  function download(name, text, type) {
+    const blob = new Blob([text], { type });
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = name;
+    a.click();
+    URL.revokeObjectURL(a.href);
+  }
+
+
+  function startMusic() {
+    audioCtx = audioCtx || new (window.AudioContext || window.webkitAudioContext)();
+    if (audioCtx.state === "suspended") audioCtx.resume();
+
+    if (!masterGain) {
+      masterGain = audioCtx.createGain();
+      masterGain.connect(audioCtx.destination);
+    }
+    masterGain.gain.value = Number($("musicVolume").value) / 100;
+
+    musicOn = true;
+    $("toggleMusic").textContent = "Couper musique";
+
+    const tempo = 132;
+    const stepMs = (60 / tempo / 2) * 1000;
+
+    clearInterval(musicTimer);
+    musicTimer = setInterval(playStep, stepMs);
+    playStep();
+  }
+
+  function stopMusic() {
+    musicOn = false;
+    $("toggleMusic").textContent = "Activer musique";
+    clearInterval(musicTimer);
+    musicTimer = null;
+  }
+
+  function playStep() {
+    if (!audioCtx || !musicOn) return;
+
+    const now = audioCtx.currentTime;
+    const bass = [55,55,82.41,55,73.42,55,98,92.5, 55,65.41,82.41,55,73.42,55,110,98];
+    const lead = [440,523.25,659.25,587.33,523.25,440,392,329.63, 392,440,523.25,659.25,587.33,523.25,440,392];
+
+    const i = step % bass.length;
+
+    note(bass[i], now, 0.11, "square", 0.46);
+    if (step % 2 === 0) note(lead[i], now + 0.025, 0.09, "triangle", 0.22);
+    if (step % 4 === 2) noise(now, 0.035, 0.16);
+    if (step % 8 === 0) note(110, now, 0.18, "sawtooth", 0.18);
+
+    step++;
+  }
+
+  function note(freq, when, len, type, vol) {
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+
+    osc.type = type;
+    osc.frequency.setValueAtTime(freq, when);
+
+    gain.gain.setValueAtTime(0.0001, when);
+    gain.gain.exponentialRampToValueAtTime(vol, when + 0.01);
+    gain.gain.exponentialRampToValueAtTime(0.0001, when + len);
+
+    osc.connect(gain);
+    gain.connect(masterGain);
+    osc.start(when);
+    osc.stop(when + len + 0.03);
+  }
+
+  function noise(when, len, vol) {
+    const size = audioCtx.sampleRate * len;
+    const buffer = audioCtx.createBuffer(1, size, audioCtx.sampleRate);
+    const data = buffer.getChannelData(0);
+
+    for (let i = 0; i < size; i++) data[i] = Math.random() * 2 - 1;
+
+    const src = audioCtx.createBufferSource();
+    const gain = audioCtx.createGain();
+    const filter = audioCtx.createBiquadFilter();
+
+    filter.type = "highpass";
+    filter.frequency.value = 6000;
+
+    gain.gain.setValueAtTime(vol, when);
+    gain.gain.exponentialRampToValueAtTime(0.0001, when + len);
+
+    src.buffer = buffer;
+    src.connect(filter);
+    filter.connect(gain);
+    gain.connect(masterGain);
+    src.start(when);
+    src.stop(when + len);
+  }
+
+  function buildStandalone(cfg) {
+    const data = JSON.stringify(cfg).replace(/</g, "\\u003c");
+    return `<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>${escapeHtml(cfg.logoText)} — HTML Demo</title>
+<style>
+html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#000}
+canvas{display:block;width:100vw;height:100vh;image-rendering:pixelated}
+</style>
+</head>
+<body>
+<canvas id="screen"></canvas>
+<button id="music" style="position:fixed;left:16px;top:16px;z-index:2;background:#000;color:#ffcc00;border:1px solid #ffcc00;padding:10px 12px;font:bold 12px Arial;cursor:pointer">MUSIC ON</button>
+<script>
+const cfg=${data};
+const canvas=document.getElementById("screen"),ctx=canvas.getContext("2d",{alpha:false});
+const W=480,H=270,buffer=document.createElement("canvas");buffer.width=W;buffer.height=H;
+const g=buffer.getContext("2d",{alpha:false});let t=0;
+let stars=Array.from({length:Number(cfg.stars)||0},()=>({x:Math.random()*W,y:Math.random()*H,z:.3+Math.random()*1.7,s:.6+Math.random()*1.4}));
+function resize(){const d=Math.min(devicePixelRatio||1,2);canvas.width=innerWidth*d;canvas.height=innerHeight*d;ctx.setTransform(d,0,0,d,0,0)}addEventListener("resize",resize);resize();
+function frame(){draw();blit();t++;requestAnimationFrame(frame)}
+function draw(){g.fillStyle=cfg.bgColor||"#000";g.fillRect(0,0,W,H);drawStars();drawBars();drawLogo();drawSubtitle();drawScroller();if(cfg.scanlines==="on")drawScanlines();g.strokeStyle="rgba(255,255,255,.22)";g.strokeRect(6,6,W-12,H-12)}
+function drawStars(){for(const s of stars){s.x-=s.z*.18;if(s.x<0){s.x=W;s.y=Math.random()*H}g.fillStyle=s.z>1.3?"#fff":s.z>.8?"#aaa":"#555";g.fillRect(s.x,s.y,s.s,s.s)}}
+function drawBars(){const count=Number(cfg.barCount),speed=Number(cfg.barSpeed)/10,amp=Number(cfg.barAmp),h=Number(cfg.barHeight);for(let i=0;i<count;i++){const y=136+i*(h+3)+Math.sin(t*.035*speed+i*.7)*amp,grad=g.createLinearGradient(40,y,W-40,y);grad.addColorStop(0,cfg.barA);grad.addColorStop(.5,cfg.barB);grad.addColorStop(1,cfg.barA);g.fillStyle=grad;g.fillRect(34,y,W-68,h)}}
+function drawLogo(){const size=Number(cfg.logoSize),y=Number(cfg.logoY)+Math.sin(t*.025)*2,glow=Number(cfg.glow);g.save();g.textAlign="center";g.textBaseline="middle";g.font="900 "+size+"px Arial Black, Impact, sans-serif";g.lineWidth=Math.max(6,size*.13);g.strokeStyle="#000";g.strokeText(cfg.logoText,W/2,y);g.shadowBlur=glow;g.shadowColor=cfg.logoBottom;const grad=g.createLinearGradient(0,y-size/2,0,y+size/2);grad.addColorStop(0,cfg.logoTop);grad.addColorStop(.55,cfg.logoBottom);grad.addColorStop(1,"#6b3b00");g.fillStyle=grad;g.fillText(cfg.logoText,W/2,y);g.shadowBlur=0;g.lineWidth=1.5;g.strokeStyle="#fff";g.strokeText(cfg.logoText,W/2,y);g.restore()}
+function drawSubtitle(){g.save();g.textAlign="center";g.textBaseline="middle";g.font="700 13px Arial, sans-serif";g.lineWidth=4;g.strokeStyle="#000";const y=Number(cfg.logoY)+Number(cfg.logoSize)*.62;g.strokeText(cfg.subtitle,W/2,y);g.fillStyle="#e6e6e6";g.fillText(cfg.subtitle,W/2,y);g.restore()}
+function drawScroller(){const text="   "+cfg.scrollText+"   ",size=Number(cfg.scrollSize),y=Number(cfg.scrollY),speed=Number(cfg.scrollSpeed)/10,charW=size*.62,total=text.length*charW,x=W-((t*speed)%(W+total));g.fillStyle="rgba(0,0,0,.78)";g.fillRect(0,y-size-8,W,size+22);g.strokeStyle=cfg.scrollColor;g.lineWidth=1;g.beginPath();g.moveTo(0,y-size-8);g.lineTo(W,y-size-8);g.moveTo(0,y+13);g.lineTo(W,y+13);g.stroke();g.font="900 "+size+"px Arial Black, Impact, sans-serif";g.textAlign="left";g.textBaseline="middle";for(let i=0;i<text.length;i++){const px=x+i*charW,py=y+Math.sin(t*.05+i*.35)*3;g.lineWidth=4;g.strokeStyle="#000";g.strokeText(text[i],px,py);g.fillStyle=cfg.scrollColor;g.fillText(text[i],px,py)}}
+function drawScanlines(){g.fillStyle="rgba(0,0,0,.28)";for(let y=0;y<H;y+=3)g.fillRect(0,y,W,1)}
+function blit(){ctx.imageSmoothingEnabled=false;ctx.fillStyle="#000";ctx.fillRect(0,0,innerWidth,innerHeight);const scale=Math.max(innerWidth/W,innerHeight/H),dw=W*scale,dh=H*scale,dx=(innerWidth-dw)/2,dy=(innerHeight-dh)/2;ctx.drawImage(buffer,dx,dy,dw,dh)}
+
+let audioCtx=null, masterGain=null, timer=null, musicOn=false, step=0;
+document.getElementById("music").onclick=()=>{musicOn?stopMusic():startMusic()};
+function startMusic(){audioCtx=audioCtx||new (window.AudioContext||window.webkitAudioContext)();if(audioCtx.state==="suspended")audioCtx.resume();if(!masterGain){masterGain=audioCtx.createGain();masterGain.connect(audioCtx.destination)}masterGain.gain.value=(Number(cfg.musicVolume)||22)/100;musicOn=true;document.getElementById("music").textContent="MUSIC OFF";clearInterval(timer);timer=setInterval(playStep,(60/132/2)*1000);playStep()}
+function stopMusic(){musicOn=false;document.getElementById("music").textContent="MUSIC ON";clearInterval(timer);timer=null}
+function playStep(){if(!audioCtx||!musicOn)return;const now=audioCtx.currentTime,bass=[55,55,82.41,55,73.42,55,98,92.5,55,65.41,82.41,55,73.42,55,110,98],lead=[440,523.25,659.25,587.33,523.25,440,392,329.63,392,440,523.25,659.25,587.33,523.25,440,392],i=step%bass.length;note(bass[i],now,.11,"square",.46);if(step%2===0)note(lead[i],now+.025,.09,"triangle",.22);if(step%4===2)noise(now,.035,.16);if(step%8===0)note(110,now,.18,"sawtooth",.18);step++}
+function note(freq,when,len,type,vol){const osc=audioCtx.createOscillator(),gain=audioCtx.createGain();osc.type=type;osc.frequency.setValueAtTime(freq,when);gain.gain.setValueAtTime(.0001,when);gain.gain.exponentialRampToValueAtTime(vol,when+.01);gain.gain.exponentialRampToValueAtTime(.0001,when+len);osc.connect(gain);gain.connect(masterGain);osc.start(when);osc.stop(when+len+.03)}
+function noise(when,len,vol){const size=audioCtx.sampleRate*len,buf=audioCtx.createBuffer(1,size,audioCtx.sampleRate),data=buf.getChannelData(0);for(let i=0;i<size;i++)data[i]=Math.random()*2-1;const src=audioCtx.createBufferSource(),gain=audioCtx.createGain(),filter=audioCtx.createBiquadFilter();filter.type="highpass";filter.frequency.value=6000;gain.gain.setValueAtTime(vol,when);gain.gain.exponentialRampToValueAtTime(.0001,when+len);src.buffer=buf;src.connect(filter);filter.connect(gain);gain.connect(masterGain);src.start(when);src.stop(when+len)}
+
+frame();
+<\/script>
+</body>
+</html>`;
+  }
+
+  function escapeHtml(s) {
+    return String(s).replace(/[&<>'"]/g, c => ({ "&":"&amp;", "<":"&lt;", ">":"&gt;", "'":"&#039;", '"':"&quot;" }[c]));
+  }
+
+  updatePreview();
+  render();
+})();
+</script>
+</body>
+</html>

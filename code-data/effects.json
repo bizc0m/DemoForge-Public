@@ -1,0 +1,52 @@
+{
+  "presets": [
+    { "id": "silhouette", "name": "Silhouette Demoscene", "mode": "silhouette", "raster": "scanlines", "palette": "state", "pixel": 4, "chars": "@#%*+=-:. " },
+    { "id": "ascii", "name": "ASCII Art", "mode": "ascii", "raster": "dot-grid", "palette": "mono", "pixel": 8, "chars": "@#%*+=-:. " },
+    { "id": "pixel", "name": "Pixel Art", "mode": "pixel", "raster": "coarse-pixels", "palette": "state", "pixel": 10, "chars": "01" },
+    { "id": "matrix", "name": "Matrix Rain", "mode": "matrix", "raster": "vertical-lines", "palette": "green", "pixel": 10, "chars": "MATRIX01" },
+    { "id": "outline", "name": "Outline Only", "mode": "outline", "raster": "horizontal-lines", "palette": "mono", "pixel": 4, "chars": "+-." },
+    { "id": "shadow", "name": "Shadow Dance", "mode": "shadow", "raster": "none", "palette": "state", "pixel": 4, "chars": "@# " },
+    { "id": "rotoscope", "name": "Rotoscope Retro", "mode": "rotoscope", "raster": "scanlines", "palette": "state", "pixel": 5, "chars": "@#%*+=-:. " },
+    { "id": "contrast", "name": "Black And White Contrast", "mode": "contrast", "raster": "checker", "palette": "mono", "pixel": 4, "chars": "# " },
+    { "id": "duotone", "name": "Duotone Retro", "mode": "duotone", "raster": "diagonal-lines", "palette": "amber", "pixel": 5, "chars": "01" },
+    { "id": "vector", "name": "Vector Minimal", "mode": "vector", "raster": "none", "palette": "state", "pixel": 3, "chars": "@# " },
+    { "id": "ink", "name": "Ink Cutout", "mode": "ink", "raster": "halftone-dots", "palette": "mono", "pixel": 5, "chars": "@#% " },
+    { "id": "crt", "name": "CRT Vintage", "mode": "crt", "raster": "crt-grid", "palette": "ice", "pixel": 5, "chars": "@#%*+=-:. " },
+    { "id": "poster", "name": "Posterized Graphic", "mode": "poster", "raster": "dot-grid", "palette": "amber", "pixel": 7, "chars": "@#%+= " },
+    { "id": "ghost", "name": "Ghost Trail", "mode": "ghost", "raster": "horizontal-lines", "palette": "ice", "pixel": 6, "chars": "<>- " },
+    { "id": "amiga", "name": "Amiga Art Sequence", "mode": "amiga", "raster": "scanlines", "palette": "state", "pixel": 6, "chars": "DEMO01" }
+  ],
+  "variants": [
+    { "id": "v1", "name": "Clean Cut", "simplifyOffset": 0, "contrast": 128, "halo": 40, "raster": null, "palette": null },
+    { "id": "v2", "name": "Soft Halo", "simplifyOffset": 1, "contrast": 138, "halo": 58, "raster": "scanlines", "palette": "state" },
+    { "id": "v3", "name": "Brut Contrast", "simplifyOffset": 2, "contrast": 150, "halo": 70, "raster": "horizontal-lines", "palette": "mono" },
+    { "id": "v4", "name": "Warm Paper", "simplifyOffset": -1, "contrast": 120, "halo": 30, "raster": "dot-grid", "palette": "amber" },
+    { "id": "v5", "name": "Ice Grid", "simplifyOffset": 3, "contrast": 170, "halo": 78, "raster": "crt-grid", "palette": "ice" },
+    { "id": "v6", "name": "Green Drift", "simplifyOffset": 0, "contrast": 145, "halo": 62, "raster": "diagonal-lines", "palette": "green" },
+    { "id": "v7", "name": "Dot Bloom", "simplifyOffset": 1, "contrast": 160, "halo": 55, "raster": "halftone-dots", "palette": "state" },
+    { "id": "v8", "name": "Chunky Blocks", "simplifyOffset": 2, "contrast": 180, "halo": 85, "raster": "coarse-pixels", "palette": "amber" },
+    { "id": "v9", "name": "Bare Bones", "simplifyOffset": -2, "contrast": 110, "halo": 22, "raster": "none", "palette": "mono" },
+    { "id": "v10", "name": "Hard Signal", "simplifyOffset": 4, "contrast": 190, "halo": 92, "raster": "checker", "palette": "ice" },
+    { "id": "v11", "name": "Night Terminal", "simplifyOffset": 0, "contrast": 135, "halo": 48, "raster": "vertical-lines", "palette": "green" },
+    { "id": "v12", "name": "Classic Demo", "simplifyOffset": 1, "contrast": 155, "halo": 66, "raster": "scanlines", "palette": "state" }
+  ],
+  "rasters": [
+    { "id": "none", "name": "None" },
+    { "id": "horizontal-lines", "name": "Horizontal Lines" },
+    { "id": "vertical-lines", "name": "Vertical Lines" },
+    { "id": "scanlines", "name": "Scanlines" },
+    { "id": "crt-grid", "name": "CRT Grid" },
+    { "id": "dot-grid", "name": "Dot Grid" },
+    { "id": "checker", "name": "Checker" },
+    { "id": "diagonal-lines", "name": "Diagonal Lines" },
+    { "id": "halftone-dots", "name": "Halftone Dots" },
+    { "id": "coarse-pixels", "name": "Coarse Pixels" }
+  ],
+  "palettes": {
+    "state": { "bg": "#f4f0df", "glow": "#ccd47a", "glow2": "rgba(208,219,112,.30)", "ink": "#050505", "accent": "#dce88f" },
+    "green": { "bg": "#e7f3df", "glow": "#72c667", "glow2": "rgba(86,184,96,.34)", "ink": "#081106", "accent": "#69cf78" },
+    "mono": { "bg": "#f5f2e8", "glow": "#bfb7a4", "glow2": "rgba(160,152,138,.26)", "ink": "#080808", "accent": "#b9b09d" },
+    "amber": { "bg": "#f4e3bd", "glow": "#eba74a", "glow2": "rgba(239,150,58,.30)", "ink": "#120d06", "accent": "#ffbf60" },
+    "ice": { "bg": "#e8f5f5", "glow": "#87d8d1", "glow2": "rgba(73,198,190,.28)", "ink": "#071012", "accent": "#8feeee" }
+  }
+}

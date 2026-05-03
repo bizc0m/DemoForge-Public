@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Demoforge Unique Clean</title>
+<style>
+:root{--bg:#050505;--panel:#111;--line:#3a3a3a;--ink:#f5f5f5;--muted:#aaa;--accent:#d8d86a;--danger:#ff6b55}
+*{box-sizing:border-box}
+html,body{margin:0;width:100%;height:100%;background:var(--bg);color:var(--ink);font-family:ui-monospace,Menlo,Consolas,monospace;overflow:hidden}
+canvas{position:fixed;inset:0;width:100vw;height:100vh;background:#000}
+#top{position:fixed;top:0;left:0;right:0;z-index:10;display:flex;flex-wrap:wrap;gap:8px;align-items:center;padding:8px;background:rgba(17,17,17,.92);border-bottom:1px solid var(--line);backdrop-filter:blur(8px)}
+button,input[type=file]{font:12px ui-monospace,Menlo,Consolas,monospace;color:var(--ink)}
+button{background:#000;border:1px solid var(--line);padding:7px 10px;cursor:pointer;text-transform:uppercase;letter-spacing:.08em}
+button:hover{border-color:var(--accent);color:var(--accent)}
+button.primary{background:var(--ink);color:#000;border-color:var(--ink)}
+button.primary:hover{background:var(--accent);border-color:var(--accent);color:#000}
+#status{margin-left:auto;color:var(--muted);font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:40vw}
+#timeline{position:fixed;left:0;right:0;bottom:0;z-index:10;background:rgba(17,17,17,.94);border-top:1px solid var(--line);padding:14px 18px 12px}
+#bar{position:relative;height:28px;background:#292929;border:1px solid var(--line);cursor:pointer;user-select:none}
+#range{position:absolute;top:0;bottom:0;background:rgba(216,216,106,.28);pointer-events:none}
+#playhead{position:absolute;top:-4px;bottom:-4px;width:2px;background:var(--ink);pointer-events:none}
+.handle{position:absolute;top:-7px;width:16px;height:42px;margin-left:-8px;background:var(--accent);border:1px solid #000;cursor:ew-resize;display:flex;align-items:flex-end;justify-content:center;color:#000;font-size:9px;font-weight:bold;padding-bottom:2px}
+.handle.out{background:#fff}
+#meta{display:flex;justify-content:space-between;gap:12px;margin-top:8px;color:var(--muted);font-size:12px;font-variant-numeric:tabular-nums}
+#drop{position:fixed;inset:0;z-index:100;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,.72);border:3px dashed var(--accent);font-size:24px;letter-spacing:.2em;text-transform:uppercase}
+#drop.show{display:flex}
+.hidden{display:none!important}
+@media(max-width:720px){#status{order:9;max-width:100%;width:100%;margin-left:0}button{padding:6px 8px;font-size:11px}#timeline{padding:10px}#meta{font-size:10px}}
+</style>
+</head>
+<body>
+<canvas id="canvas"></canvas>
+<div id="drop">Dépose vidéo / GIF</div>
+<div id="top">
+  <input id="file" type="file" accept="video/*,image/gif">
+  <button id="play" class="primary">Lecture</button>
+  <button id="pause">Pause</button>
+  <button id="export-html">Export HTML</button>
+  <button id="export-png">PNG</button>
+  <button id="export-config">Export config</button>
+  <label><input id="import-config" type="file" accept="application/json,.json" class="hidden"><button id="import-btn" type="button">Import config</button></label>
+  <button id="reset">Reset</button>
+  <span id="status">Prêt. Charge une vidéo locale ou un GIF.</span>
+</div>
+<div id="timeline">
+  <div id="bar">
+    <div id="range"></div>
+    <div id="playhead"></div>
+    <div id="hin" class="handle">IN</div>
+    <div id="hout" class="handle out">OUT</div>
+  </div>
+  <div id="meta">
+    <span>IN <b id="tin">00:00:00.000</b></span>
+    <span>HEAD <b id="thead">00:00:00.000</b></span>
+    <span>OUT <b id="tout">00:00:00.000</b></span>
+    <span>DURÉE <b id="tdur">00:00:00.000</b></span>
+  </div>
+</div>
+<script>
+(()=>{'use strict';
+const $=id=>document.getElementById(id);
+const canvas=$('canvas'),ctx=canvas.getContext('2d');
+const file=$('file'),status=$('status'),bar=$('bar'),range=$('range'),playhead=$('playhead'),hin=$('hin'),hout=$('hout');
+const tin=$('tin'),tout=$('tout'),thead=$('thead'),tdur=$('tdur'),drop=$('drop');
+const video=document.createElement('video');
+video.muted=true; video.playsInline=true; video.crossOrigin='anonymous';
+let sourceType='none', sourceName='', gifImg=null, gifStart=performance.now();
+let state={inSec:0,outSec:0,totalSec:0,fit:'cover',bg:'#000000'};
+let dragging=null, draggingRange=false, dragRangeOffset=0, raf=0;
+function setStatus(s){status.textContent=s}
+function pad(n,w=2){return String(n).padStart(w,'0')}
+function fmt(t){if(!isFinite(t)||t<0)t=0;const h=Math.floor(t/3600),m=Math.floor(t%3600/60),s=Math.floor(t%60),ms=Math.floor((t%1)*1000);return `${pad(h)}:${pad(m)}:${pad(s)}.${pad(ms,3)}`}
+function clamp(x,a,b){return Math.max(a,Math.min(b,x))}
+function resize(){const dpr=window.devicePixelRatio||1,w=innerWidth,h=innerHeight;canvas.width=Math.round(w*dpr);canvas.height=Math.round(h*dpr);canvas.style.width=w+'px';canvas.style.height=h+'px';ctx.setTransform(dpr,0,0,dpr,0,0)}
+addEventListener('resize',resize);resize();
+function drawContainCover(img,w,h,mode='cover'){const iw=img.videoWidth||img.naturalWidth||w,ih=img.videoHeight||img.naturalHeight||h;if(!iw||!ih)return;const s=mode==='contain'?Math.min(w/iw,h/ih):Math.max(w/iw,h/ih);const dw=iw*s,dh=ih*s;ctx.drawImage(img,(w-dw)/2,(h-dh)/2,dw,dh)}
+function render(){const w=innerWidth,h=innerHeight;ctx.fillStyle=state.bg;ctx.fillRect(0,0,w,h);try{if(sourceType==='video'&&video.readyState>=2)drawContainCover(video,w,h,state.fit);else if(sourceType==='gif'&&gifImg&&gifImg.complete)drawContainCover(gifImg,w,h,state.fit);else drawIdle(w,h)}catch(e){drawIdle(w,h)}updateHead();raf=requestAnimationFrame(render)}
+function drawIdle(w,h){ctx.fillStyle='#111';ctx.fillRect(0,0,w,h);ctx.fillStyle='#eee';ctx.font='16px ui-monospace,monospace';ctx.textAlign='center';ctx.fillText('DEMFORGE · DROP VIDEO OR GIF',w/2,h/2)}
+function updateHead(){let cur=0;if(sourceType==='video')cur=video.currentTime||0;else if(sourceType==='gif')cur=((performance.now()-gifStart)/1000)%Math.max(1,state.totalSec);if(sourceType==='video'&&state.outSec>state.inSec&&cur>=state.outSec){video.currentTime=state.inSec;video.play().catch(()=>{})}thead.textContent=fmt(cur);const p=state.totalSec?clamp(cur/state.totalSec,0,1):0;playhead.style.left=(p*100)+'%'}
+function updateTimeline(){const d=state.totalSec||1;const a=clamp(state.inSec/d,0,1),b=clamp(state.outSec/d,0,1);hin.style.left=(a*100)+'%';hout.style.left=(b*100)+'%';range.style.left=(a*100)+'%';range.style.width=((b-a)*100)+'%';tin.textContent=fmt(state.inSec);tout.textContent=fmt(state.outSec);tdur.textContent=fmt(Math.max(0,state.outSec-state.inSec))}
+function loadVideo(f){reset(false);sourceType='video';sourceName=f.name;video.src=URL.createObjectURL(f);video.onloadedmetadata=()=>{state.totalSec=video.duration||0;state.inSec=0;state.outSec=state.totalSec;updateTimeline();video.currentTime=0;video.play().catch(()=>{});setStatus('Vidéo chargée : '+sourceName)}}
+function loadGif(f){reset(false);sourceType='gif';sourceName=f.name;gifImg=new Image();gifImg.src=URL.createObjectURL(f);gifStart=performance.now();state.totalSec=5;state.inSec=0;state.outSec=5;updateTimeline();setStatus('GIF chargé : '+sourceName+' · durée nominale 5s')}
+function handleFile(f){if(!f)return;if(f.type.startsWith('video/'))loadVideo(f);else if(f.type==='image/gif'||/\.gif$/i.test(f.name))loadGif(f);else setStatus('Format non supporté : '+(f.type||f.name))}
+file.onchange=e=>handleFile(e.target.files[0]);
+function reset(full=true){video.pause();video.removeAttribute('src');video.load();gifImg=null;sourceType='none';sourceName='';state.inSec=0;state.outSec=0;state.totalSec=0;updateTimeline();if(full)setStatus('Réinitialisé.')}
+$('reset').onclick=()=>reset(true);
+$('play').onclick=()=>{if(sourceType==='video'){if(video.currentTime<state.inSec||video.currentTime>=state.outSec)video.currentTime=state.inSec;video.play().catch(()=>{})}else setStatus('Charge une vidéo locale pour la lecture bornée.')};
+$('pause').onclick=()=>{if(sourceType==='video')video.pause()};
+function pointerToSec(e){const r=bar.getBoundingClientRect();const p=clamp((e.clientX-r.left)/r.width,0,1);return p*(state.totalSec||1)}
+bar.addEventListener('pointerdown',e=>{if(!state.totalSec)return;const target=e.target;if(target===hin)dragging='in';else if(target===hout)dragging='out';else if(target===range){draggingRange=true;dragRangeOffset=pointerToSec(e)-state.inSec}else{const t=pointerToSec(e);if(sourceType==='video')video.currentTime=t}bar.setPointerCapture(e.pointerId);e.preventDefault()});
+bar.addEventListener('pointermove',e=>{if(!state.totalSec)return;let t=pointerToSec(e);const minGap=Math.min(.1,state.totalSec/100);if(dragging==='in'){state.inSec=clamp(t,0,state.outSec-minGap);if(sourceType==='video'&&video.currentTime<state.inSec)video.currentTime=state.inSec;updateTimeline()}else if(dragging==='out'){state.outSec=clamp(t,state.inSec+minGap,state.totalSec);updateTimeline()}else if(draggingRange){const len=state.outSec-state.inSec;let start=clamp(t-dragRangeOffset,0,state.totalSec-len);state.inSec=start;state.outSec=start+len;updateTimeline()}});
+bar.addEventListener('pointerup',e=>{dragging=null;draggingRange=false;try{bar.releasePointerCapture(e.pointerId)}catch(_){}});
+function download(content,name,type='text/plain'){const blob=content instanceof Blob?content:new Blob([content],{type});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},200)}
+$('export-png').onclick=()=>canvas.toBlob(b=>b&&download(b,'demoforge_frame.png','image/png'),'image/png');
+$('export-html').onclick=()=>{let data;try{data=canvas.toDataURL('image/webp',.88)}catch(e){setStatus('Export impossible : canvas bloqué. Utilise une vidéo locale.');return}const html='<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Demoforge Export</title><style>html,body{margin:0;width:100%;height:100%;background:#000;overflow:hidden}img{position:fixed;inset:0;width:100vw;height:100vh;object-fit:cover}</style></head><body><img src="'+data+'" alt="Demoforge export"></body></html>';download(html,'demoforge_export_fullscreen.html','text/html');setStatus('Export HTML fullscreen généré.')};
+$('export-config').onclick=()=>{const config={version:1,sourceName,state};download(JSON.stringify(config,null,2),'demoforge_config.json','application/json')};
+$('import-btn').onclick=()=>$('import-config').click();
+$('import-config').onchange=e=>{const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{const cfg=JSON.parse(r.result);if(cfg.state){state={...state,...cfg.state};updateTimeline();setStatus('Config importée.')}}catch(err){setStatus('Config invalide : '+err.message)}};r.readAsText(f)};
+let depth=0;addEventListener('dragenter',e=>{e.preventDefault();depth++;drop.classList.add('show')});addEventListener('dragover',e=>e.preventDefault());addEventListener('dragleave',e=>{e.preventDefault();depth=Math.max(0,depth-1);if(!depth)drop.classList.remove('show')});addEventListener('drop',e=>{e.preventDefault();depth=0;drop.classList.remove('show');handleFile(e.dataTransfer.files&&e.dataTransfer.files[0])});
+updateTimeline();render();
+})();
+</script>
+</body>
+</html>

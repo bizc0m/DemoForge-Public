@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>DEMOFORGE // PURIST MODE</title>
+<style>
+  html, body {
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background: #000;
+    cursor: crosshair;
+  }
+
+  canvas {
+    display: block;
+    width: 100vw;
+    height: 100vh;
+    image-rendering: pixelated;
+  }
+
+  #boot {
+    position: fixed;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    background:
+      radial-gradient(circle at center, rgba(36, 255, 220, .12), transparent 35%),
+      linear-gradient(#02030a, #000);
+    color: #a7fff6;
+    font: 16px/1.6 ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    text-align: center;
+    letter-spacing: .08em;
+    z-index: 2;
+    text-shadow: 0 0 14px #00ffe1;
+  }
+
+  #boot button {
+    margin-top: 22px;
+    padding: 12px 18px;
+    background: #050a16;
+    color: #eaffff;
+    border: 1px solid #00ffe1;
+    border-radius: 0;
+    font: inherit;
+    cursor: pointer;
+    box-shadow: 0 0 18px rgba(0,255,225,.35), inset 0 0 18px rgba(0,255,225,.08);
+  }
+
+  #boot button:hover {
+    background: #061928;
+  }
+
+  #crt {
+    pointer-events: none;
+    position: fixed;
+    inset: 0;
+    z-index: 1;
+    background:
+      repeating-linear-gradient(
+        to bottom,
+        rgba(255,255,255,.045) 0px,
+        rgba(255,255,255,.045) 1px,
+        transparent 2px,
+        transparent 4px
+      );
+    mix-blend-mode: overlay;
+    opacity: .36;
+  }
+
+  #crt::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at center, transparent 55%, rgba(0,0,0,.55));
+  }
+</style>
+</head>
+<body>
+<canvas id="screen"></canvas>
+<div id="crt"></div>
+
+<div id="boot">
+  <div>
+    <div>DEMOFORGE PRESENTS</div>
+    <div style="font-size:38px;margin:14px 0;color:#fff;text-shadow:0 0 24px #ff4fd8,0 0 38px #00eaff;">PURIST MODE</div>
+    <div>NO LIBRARY · NO IMAGE · NO SERVER · JUST CANVAS</div>
+    <button id="start">CLICK TO START THE INTRO</button>
+  </div>
+</div>
+
+<script>
+(() => {
+  "use strict";
+
+  const canvas = document.getElementById("screen");
+  const ctx = canvas.getContext("2d", { alpha: false });
+  const W = 320;
+  const H = 180;
+  const off = document.createElement("canvas");
+  off.width = W;
+  off.height = H;
+  const g = off.getContext("2d", { alpha: false });
+
+  let DPR = 1;
+  let t = 0;
+  let started = false;
+  let audioCtx = null;
+  let master = null;
+
+  const palette = [
+    "#060014", "#16002e", "#28005a", "#3b0086", "#5a00bd", "#821cff",
+    "#00d8ff", "#00ffd5", "#caff00", "#fff200", "#ff8a00", "#ff2d75"
+  ];
+
+  const greetings = "  *** DEMOFORGE // CNC_CODINGISNOTACRIME *** GREETINGS TO REPLICANTS * AUTOMATION * FOF * ATM * TAM * BLACK SQUADRON * ORION * EQUINOX * FAIRLIGHT * POUET * DEMOZOO * ALL OLD AND NEW SCENERS *** KEEP THE CULTURE ALIVE ***  ";
+  const manifesto = [
+    "CODE IS MATERIAL",
+    "CONSTRAINT IS FREEDOM",
+    "THE MACHINE IS A STAGE",
+    "THE SCENE NEVER DIED"
+  ];
+
+  const stars = Array.from({ length: 420 }, (_, i) => ({
+    x: Math.random() * 2 - 1,
+    y: Math.random() * 2 - 1,
+    z: Math.random() * 1 + .05,
+    p: Math.random() * 6.28
+  }));
+
+  const particles = Array.from({ length: 90 }, (_, i) => ({
+    a: i / 90 * Math.PI * 2,
+    r: 10 + Math.random() * 80,
+    s: .3 + Math.random() * .9
+  }));
+
+  function resize() {
+    DPR = Math.min(devicePixelRatio || 1, 2);
+    canvas.width = Math.floor(innerWidth * DPR);
+    canvas.height = Math.floor(innerHeight * DPR);
+    ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+  }
+
+  addEventListener("resize", resize);
+  resize();
+
+  function startAudio() {
+    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    master = audioCtx.createGain();
+    master.gain.value = 0.08;
+    master.connect(audioCtx.destination);
+
+    const tempo = 136;
+    const beat = 60 / tempo;
+    const bassNotes = [55,55,82.41,55,73.42,55,98,92.5];
+    const leadNotes = [440,523.25,659.25,587.33,523.25,440,392,329.63];
+
+    function beep(freq, when, len, type, vol) {
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      osc.type = type;
+      osc.frequency.setValueAtTime(freq, when);
+      gain.gain.setValueAtTime(0.0001, when);
+      gain.gain.exponentialRampToValueAtTime(vol, when + 0.012);
+      gain.gain.exponentialRampToValueAtTime(0.0001, when + len);
+      osc.connect(gain);
+      gain.connect(master);
+      osc.start(when);
+      osc.stop(when + len + .02);
+    }
+
+    let bar = 0;
+    setInterval(() => {
+      const now = audioCtx.currentTime + .04;
+      for (let i = 0; i < 8; i++) {
+        const when = now + i * beat / 2;
+        beep(bassNotes[(bar * 8 + i) % bassNotes.length], when, .13, "square", .34);
+        if (i % 2 === 0) beep(leadNotes[(bar + i) % leadNotes.length], when + .03, .11, "triangle", .17);
+        if (i % 4 === 2) beep(880 + Math.random() * 500, when, .035, "sawtooth", .07);
+      }
+      bar++;
+    }, beat * 4 * 1000);
+  }
+
+  document.getElementById("start").onclick = () => {
+    started = true;
+    document.getElementById("boot").style.display = "none";
+    startAudio();
+  };
+
+  function clear() {
+    const grad = g.createLinearGradient(0, 0, 0, H);
+    grad.addColorStop(0, "#02020a");
+    grad.addColorStop(.48, "#080018");
+    grad.addColorStop(1, "#00040b");
+    g.fillStyle = grad;
+    g.fillRect(0, 0, W, H);
+  }
+
+  function drawStarfield() {
+    const cx = W / 2;
+    const cy = H / 2;
+    for (const s of stars) {
+      s.z -= 0.010 + Math.sin(t * .001) * .003;
+      if (s.z <= .03) {
+        s.x = Math.random() * 2 - 1;
+        s.y = Math.random() * 2 - 1;
+        s.z = 1;
+      }
+      const k = 95 / s.z;
+      const x = cx + s.x * k;
+      const y = cy + s.y * k;
+      if (x < 0 || x >= W || y < 0 || y >= H) continue;
+      const b = Math.max(0, 1 - s.z);
+      g.fillStyle = b > .72 ? "#ffffff" : b > .4 ? "#80fff7" : "#7866ff";
+      g.fillRect(x, y, b * 2.4 + .5, b * 2.4 + .5);
+    }
+  }
+
+  function drawPlasma() {
+    const img = g.getImageData(0, 0, W, H);
+    const data = img.data;
+    for (let y = 0; y < H; y += 2) {
+      for (let x = 0; x < W; x += 2) {
+        const v =
+          Math.sin(x * .075 + t * .025) +
+          Math.sin(y * .065 + t * .018) +
+          Math.sin((x + y) * .045 + t * .015) +
+          Math.sin(Math.sqrt((x - 160) ** 2 + (y - 90) ** 2) * .055 - t * .028);
+        const n = Math.floor((v + 4) / 8 * (palette.length - 1));
+        const c = hex(palette[n]);
+        for (let yy = 0; yy < 2; yy++) for (let xx = 0; xx < 2; xx++) {
+          const i = ((y + yy) * W + x + xx) * 4;
+          data[i] = data[i] * .62 + c[0] * .38;
+          data[i+1] = data[i+1] * .62 + c[1] * .38;
+          data[i+2] = data[i+2] * .62 + c[2] * .38;
+          data[i+3] = 255;
+        }
+      }
+    }
+    g.putImageData(img, 0, 0);
+  }
+
+  function drawRasterBars() {
+    for (let i = 0; i < 22; i++) {
+      const y = 20 + i * 7 + Math.sin(t * .035 + i * .55) * 14;
+      const h = 4 + Math.sin(i + t * .02) * 1.5;
+      const x = 18 + Math.sin(t * .025 + i * .8) * 22;
+      const w = W - 36;
+      const grad = g.createLinearGradient(x, y, x + w, y);
+      grad.addColorStop(0, "#ff2d75");
+      grad.addColorStop(.18, "#ff8a00");
+      grad.addColorStop(.38, "#fff200");
+      grad.addColorStop(.60, "#00ffd5");
+      grad.addColorStop(.82, "#5a00bd");
+      grad.addColorStop(1, "#ff2d75");
+      g.fillStyle = grad;
+      g.fillRect(x, y, w, h);
+    }
+  }
+
+  function drawGrid() {
+    const horizon = 118 + Math.sin(t * .015) * 4;
+    g.strokeStyle = "rgba(0,216,255,.45)";
+    g.lineWidth = 1;
+
+    for (let i = 0; i < 20; i++) {
+      const y = horizon + (i * i) * .42;
+      g.beginPath();
+      g.moveTo(0, y);
+      g.lineTo(W, y);
+      g.stroke();
+    }
+
+    for (let i = -12; i <= 12; i++) {
+      const x = W / 2 + i * 10;
+      g.beginPath();
+      g.moveTo(W / 2, horizon);
+      g.lineTo(x * 2 - W / 2, H);
+      g.stroke();
+    }
+  }
+
+  function drawWireOrb() {
+    const cx = W / 2;
+    const cy = 82 + Math.sin(t * .018) * 8;
+    const r = 34;
+    g.strokeStyle = "rgba(255,255,255,.72)";
+    g.lineWidth = 1;
+
+    for (let i = 0; i < 10; i++) {
+      g.beginPath();
+      for (let a = 0; a <= Math.PI * 2 + .01; a += .1) {
+        const rr = Math.sin(a + t * .018 + i) * r * .28 + r * .68;
+        const x = cx + Math.cos(a) * rr;
+        const y = cy + Math.sin(a) * rr * .45 + Math.sin(i + t * .02) * 3;
+        if (a === 0) g.moveTo(x, y);
+        else g.lineTo(x, y);
+      }
+      g.stroke();
+    }
+
+    for (const p of particles) {
+      const a = p.a + t * .01 * p.s;
+      const x = cx + Math.cos(a) * p.r;
+      const y = cy + Math.sin(a) * p.r * .45;
+      g.fillStyle = p.s > .7 ? "#00ffd5" : "#ff4fd8";
+      g.fillRect(x, y, 1.2, 1.2);
+    }
+  }
+
+  function drawMountains() {
+    for (let layer = 0; layer < 3; layer++) {
+      const base = 123 + layer * 10;
+      g.beginPath();
+      g.moveTo(0, H);
+      for (let x = 0; x <= W; x += 4) {
+        const y = base
+          - Math.abs(Math.sin(x * .025 + layer * 2 + t * .006) * (20 - layer * 3))
+          - Math.abs(Math.sin(x * .061 + layer + t * .004) * 10);
+        g.lineTo(x, y);
+      }
+      g.lineTo(W, H);
+      g.closePath();
+      g.fillStyle = ["#12002a", "#180052", "#09072d"][layer];
+      g.fill();
+      g.strokeStyle = ["#ff2d75", "#8b5cff", "#00d8ff"][layer];
+      g.stroke();
+    }
+  }
+
+  function drawLogo() {
+    const phase = Math.sin(t * .018);
+    const y = 52 + phase * 3;
+    g.textAlign = "center";
+    g.textBaseline = "middle";
+
+    g.font = "900 28px monospace";
+    for (let i = 0; i < 7; i++) {
+      g.fillStyle = palette[4 + i];
+      g.fillText("DEMOFORGE", W / 2 + Math.sin(t * .02 + i) * 2, y + i * 2);
+    }
+
+    g.strokeStyle = "#fff";
+    g.lineWidth = 1;
+    g.strokeText("DEMOFORGE", W / 2, y);
+
+    g.font = "bold 8px monospace";
+    g.fillStyle = "#d9ffff";
+    const line = manifesto[Math.floor(t / 160) % manifesto.length];
+    g.fillText(line, W / 2, y + 36);
+  }
+
+  function drawCopperList() {
+    g.font = "bold 7px monospace";
+    g.textAlign = "left";
+    for (let i = 0; i < 8; i++) {
+      const yy = 8 + i * 8;
+      g.fillStyle = palette[(i + Math.floor(t / 6)) % palette.length];
+      g.fillText("0x" + (4096 + i * 256 + Math.floor(t) % 255).toString(16).toUpperCase() + "  MOVE.W  #$0" + i + "0,$DFF180", 8, yy);
+    }
+  }
+
+  function drawScroller() {
+    const y = 164 + Math.sin(t * .04) * 3;
+    g.font = "bold 10px monospace";
+    g.textBaseline = "middle";
+    g.textAlign = "left";
+
+    const textWidth = greetings.length * 6.2;
+    const x = W - ((t * 1.25) % (W + textWidth));
+
+    for (let i = 0; i < greetings.length; i++) {
+      const ch = greetings[i];
+      const px = x + i * 6.2;
+      const py = y + Math.sin(t * .07 + i * .45) * 7;
+      g.fillStyle = palette[(i + Math.floor(t / 4)) % palette.length];
+      g.fillText(ch, px, py);
+    }
+
+    g.fillStyle = "rgba(0,0,0,.75)";
+    g.fillRect(0, 170, W, 10);
+    g.fillStyle = "#00ffd5";
+    g.font = "bold 6px monospace";
+    g.textAlign = "center";
+    g.fillText("HTML SINGLE FILE · 320x180 INTERNAL · OLD SCHOOL FAKE MACHINE · NO EXCUSES", W / 2, 176);
+  }
+
+  function drawGlitch() {
+    if (Math.random() > .035) return;
+    for (let i = 0; i < 5; i++) {
+      const y = Math.random() * H | 0;
+      const h = 2 + Math.random() * 8 | 0;
+      const dx = (Math.random() * 18 - 9) | 0;
+      g.drawImage(off, 0, y, W, h, dx, y, W, h);
+    }
+  }
+
+  function postProcess() {
+    // tiny chromatic punch
+    ctx.clearRect(0, 0, innerWidth, innerHeight);
+    const scale = Math.max(innerWidth / W, innerHeight / H);
+    const dw = W * scale;
+    const dh = H * scale;
+    const x = (innerWidth - dw) / 2;
+    const y = (innerHeight - dh) / 2;
+
+    ctx.imageSmoothingEnabled = false;
+    ctx.globalAlpha = 1;
+    ctx.drawImage(off, x, y, dw, dh);
+
+    ctx.globalCompositeOperation = "screen";
+    ctx.globalAlpha = .12;
+    ctx.drawImage(off, x + 2, y, dw, dh);
+    ctx.globalAlpha = .10;
+    ctx.drawImage(off, x - 2, y, dw, dh);
+    ctx.globalCompositeOperation = "source-over";
+    ctx.globalAlpha = 1;
+  }
+
+  function frame() {
+    clear();
+    drawStarfield();
+    if (started) {
+      drawPlasma();
+      drawGrid();
+      drawMountains();
+      drawRasterBars();
+      drawWireOrb();
+      drawLogo();
+      drawCopperList();
+      drawScroller();
+      drawGlitch();
+      t += 1;
+    } else {
+      drawStarfield();
+      g.fillStyle = "#8ff";
+      g.font = "bold 12px monospace";
+      g.textAlign = "center";
+      g.fillText("WAITING FOR START SIGNAL", W / 2, H / 2);
+      t += .35;
+    }
+    postProcess();
+    requestAnimationFrame(frame);
+  }
+
+  function hex(h) {
+    const n = parseInt(h.slice(1), 16);
+    return [(n >> 16) & 255, (n >> 8) & 255, n & 255];
+  }
+
+  frame();
+})();
+</script>
+</body>
+</html>

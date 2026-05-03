@@ -1,0 +1,1465 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>DemoForge MVP</title>
+  <style>
+    :root {
+      --bg: #0b0d13;
+      --panel: #131826;
+      --panel-2: #1a2131;
+      --line: #293248;
+      --text: #dde6ff;
+      --muted: #8fa1c7;
+      --accent: #58f7a7;
+      --accent-2: #5ec8ff;
+      --danger: #ff5c7a;
+      --warn: #ffcc66;
+      --shadow: 0 10px 30px rgba(0,0,0,.35);
+      --radius: 12px;
+    }
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body {
+      margin: 0;
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+      background: linear-gradient(180deg, #0a0c12, #0f1320);
+      color: var(--text);
+      overflow: hidden;
+    }
+    button, input, select, textarea {
+      font: inherit;
+      color: inherit;
+    }
+    .app {
+      height: 100%;
+      display: grid;
+      grid-template-columns: 280px 1fr 340px;
+      grid-template-rows: 68px 1fr 230px;
+      grid-template-areas:
+        "library toolbar inspector"
+        "library preview inspector"
+        "library timeline inspector";
+      gap: 10px;
+      padding: 10px;
+    }
+    .panel {
+      background: linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,.00)), var(--panel);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      min-height: 0;
+      min-width: 0;
+    }
+    .library { grid-area: library; display: grid; grid-template-rows: auto 1fr auto; }
+    .toolbar { grid-area: toolbar; display: flex; align-items: center; justify-content: space-between; padding: 10px 14px; }
+    .preview { grid-area: preview; position: relative; display: grid; grid-template-rows: 1fr auto; overflow: hidden; }
+    .timeline { grid-area: timeline; display: grid; grid-template-rows: auto 1fr; min-height: 0; }
+    .inspector { grid-area: inspector; position: relative; overflow: hidden; }
+    .panel-title {
+      font-size: 12px;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      color: var(--muted);
+      padding: 14px 16px 8px;
+    }
+    .toolbar-group { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+    .chip, .btn {
+      border: 1px solid var(--line);
+      background: var(--panel-2);
+      color: var(--text);
+      border-radius: 10px;
+      padding: 8px 12px;
+      cursor: pointer;
+      transition: .15s transform, .15s border-color, .15s background;
+    }
+    .btn:hover, .chip:hover { border-color: #42608f; }
+    .btn:active, .chip:active { transform: translateY(1px); }
+    .btn.primary { background: linear-gradient(180deg, #153a2a, #112f23); border-color: #2d8f64; color: #dffff1; }
+    .btn.warn { background: linear-gradient(180deg, #392915, #2e2212); border-color: #a3742b; color: #ffe5ba; }
+    .chip.active { background: linear-gradient(180deg, #17304a, #11253b); border-color: #4a8bd1; color: #dfefff; }
+    .brand {
+      font-weight: 800;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .brand-badge {
+      width: 30px;
+      height: 30px;
+      display: grid;
+      place-items: center;
+      border-radius: 8px;
+      background: linear-gradient(135deg, #4af2a3, #52b8ff);
+      color: #071018;
+      font-weight: 900;
+    }
+    .library-scroll, .inspector-scroll, .timeline-scroll { overflow: auto; min-height: 0; }
+    .effect-list, .asset-list {
+      padding: 0 10px 12px;
+      display: grid;
+      gap: 8px;
+    }
+    .effect-card {
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.02);
+      border-radius: 12px;
+      padding: 12px;
+      cursor: grab;
+      user-select: none;
+    }
+    .effect-card:active { cursor: grabbing; }
+    .effect-card:hover { border-color: #45638f; background: rgba(255,255,255,.03); }
+    .effect-top { display: flex; justify-content: space-between; gap: 8px; align-items: center; }
+    .effect-name { font-weight: 700; }
+    .effect-meta { font-size: 12px; color: var(--muted); margin-top: 6px; line-height: 1.35; }
+    .badge {
+      padding: 3px 8px;
+      border-radius: 999px;
+      font-size: 11px;
+      color: #dcecff;
+      background: #172437;
+      border: 1px solid #2c496b;
+      white-space: nowrap;
+    }
+    .preview-stage {
+      position: relative;
+      display: grid;
+      place-items: center;
+      padding: 12px;
+      min-height: 0;
+    }
+    .preview-frame {
+      position: relative;
+      width: min(100%, calc((100vh - 360px) * 1.25));
+      aspect-ratio: 320 / 256;
+      background: #02050d;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 0 0 1px rgba(255,255,255,.03) inset, 0 30px 60px rgba(0,0,0,.35);
+    }
+    canvas {
+      width: 100%;
+      height: 100%;
+      display: block;
+      image-rendering: pixelated;
+      background: #000;
+    }
+    .preview-overlay {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background: linear-gradient(180deg, rgba(255,255,255,.04), transparent 18%, transparent 82%, rgba(255,255,255,.04));
+    }
+    .statusbar {
+      border-top: 1px solid var(--line);
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+      align-items: center;
+      padding: 10px 14px;
+      color: var(--muted);
+      font-size: 13px;
+      flex-wrap: wrap;
+    }
+    .timeline-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 13px;
+    }
+    .timeline-board {
+      min-height: 0;
+      display: grid;
+      grid-template-rows: auto auto 1fr;
+      padding: 10px;
+      gap: 10px;
+    }
+    .time-ruler {
+      position: relative;
+      height: 26px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: rgba(255,255,255,.02);
+      overflow: hidden;
+    }
+    .ruler-tick {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 1px;
+      background: rgba(255,255,255,.07);
+    }
+    .ruler-label {
+      position: absolute;
+      top: 4px;
+      left: 4px;
+      font-size: 11px;
+      color: var(--muted);
+    }
+    .playhead {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: var(--danger);
+      box-shadow: 0 0 10px rgba(255,92,122,.4);
+    }
+    .timeline-dropzone {
+      border: 1px dashed #365278;
+      border-radius: 12px;
+      min-height: 60px;
+      display: grid;
+      place-items: center;
+      color: var(--muted);
+      background: rgba(255,255,255,.02);
+    }
+    .timeline-track {
+      position: relative;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: rgba(255,255,255,.02);
+      min-height: 84px;
+      overflow: hidden;
+    }
+    .clip {
+      position: absolute;
+      top: 14px;
+      height: 54px;
+      border-radius: 10px;
+      border: 1px solid #356394;
+      background: linear-gradient(180deg, rgba(89,187,255,.25), rgba(56,121,178,.18));
+      color: #ecf7ff;
+      padding: 8px 10px;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      overflow: hidden;
+    }
+    .clip.active { outline: 2px solid var(--accent); }
+    .clip-title { font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .clip-sub { font-size: 12px; color: #c8ddff; }
+    .resize-handle {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 10px;
+      height: 100%;
+      cursor: ew-resize;
+      background: linear-gradient(180deg, rgba(255,255,255,.15), rgba(255,255,255,.03));
+    }
+    .section { padding: 12px 16px 16px; border-top: 1px solid rgba(255,255,255,.04); }
+    .section:first-of-type { border-top: 0; }
+    .selection-empty {
+      padding: 18px 16px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+    .kv {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 8px;
+      align-items: center;
+      padding: 10px 0;
+      border-bottom: 1px solid rgba(255,255,255,.05);
+    }
+    .kv:last-child { border-bottom: 0; }
+    .kv label { font-size: 13px; }
+    .kv small { display: block; color: var(--muted); margin-top: 3px; }
+    .field { width: 100%; }
+    input[type="range"] { width: 160px; }
+    input[type="color"] {
+      width: 48px;
+      height: 34px;
+      padding: 2px;
+      background: transparent;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+    }
+    input[type="text"], textarea, select {
+      width: 100%;
+      background: var(--panel-2);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 8px 10px;
+      color: var(--text);
+    }
+    textarea { min-height: 78px; resize: vertical; }
+    .inspector-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+    .attrib-panel {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, #121a28, #0f1521);
+      border-left: 1px solid var(--line);
+      transform: translateX(102%);
+      transition: transform .25s ease;
+      display: grid;
+      grid-template-rows: auto 1fr;
+      z-index: 3;
+    }
+    .attrib-panel.open { transform: translateX(0); }
+    .attrib-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--line);
+    }
+    .attrib-body {
+      overflow: auto;
+      padding: 14px;
+      line-height: 1.55;
+    }
+    .attrib-body h3 { margin: 18px 0 8px; font-size: 14px; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); }
+    .attrib-grid { display: grid; gap: 10px; }
+    .attrib-item {
+      padding: 12px;
+      border: 1px solid rgba(255,255,255,.06);
+      background: rgba(255,255,255,.02);
+      border-radius: 10px;
+    }
+    .attrib-item strong { display: block; margin-bottom: 4px; }
+    .footer-note {
+      padding: 12px 16px 16px;
+      border-top: 1px solid rgba(255,255,255,.05);
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.5;
+    }
+    .asset-item {
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: rgba(255,255,255,.02);
+      padding: 10px;
+    }
+    .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+    .kbd {
+      display: inline-block;
+      min-width: 24px;
+      padding: 2px 6px;
+      border-radius: 6px;
+      border: 1px solid #3b4e73;
+      background: #172234;
+      color: #dbeaff;
+      text-align: center;
+      font-size: 12px;
+    }
+    @media (max-width: 1100px) {
+      body { overflow: auto; }
+      .app {
+        min-height: 100vh;
+        height: auto;
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto minmax(360px, 1fr) auto auto;
+        grid-template-areas:
+          "toolbar"
+          "library"
+          "preview"
+          "timeline"
+          "inspector";
+      }
+      .preview-frame { width: 100%; max-width: 760px; }
+      .inspector { min-height: 520px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <aside class="panel library">
+      <div>
+        <div class="panel-title">Library</div>
+        <div class="effect-list" id="effectList"></div>
+      </div>
+      <div class="library-scroll">
+        <div class="panel-title">Fonts</div>
+        <div class="asset-list">
+          <div class="asset-item"><strong>Amiga Topaz</strong><div class="effect-meta">Bitmap feel simulé en monospace rasterisé</div></div>
+          <div class="asset-item"><strong>IBM VGA</strong><div class="effect-meta">Fallback rétro pour textes et NFO</div></div>
+          <div class="asset-item"><strong>Scene Mono</strong><div class="effect-meta">Affichage pixelisé sans dépendance externe</div></div>
+        </div>
+        <div class="panel-title">Audio</div>
+        <div class="asset-list">
+          <div class="asset-item"><strong>Audio sync</strong><div class="effect-meta">MVP sans tracker embarqué. Beat interne simulé à 125 BPM.</div></div>
+        </div>
+      </div>
+      <div class="footer-note">
+        Drag & drop un effet vers la timeline. Raccourcis : <span class="kbd">Espace</span> play/pause, <span class="kbd">Ctrl</span>+<span class="kbd">E</span> export JSON, <span class="kbd">Esc</span> désélection.
+      </div>
+    </aside>
+
+    <header class="panel toolbar">
+      <div class="brand">
+        <div class="brand-badge">D</div>
+        <div>DemoForge <span style="color:var(--muted);font-weight:600">MVP</span></div>
+      </div>
+      <div class="toolbar-group" id="levelButtons"></div>
+      <div class="toolbar-group">
+        <button class="btn" id="playBtn">▶ Play</button>
+        <button class="btn" id="pauseBtn">⏸ Pause</button>
+        <button class="btn" id="stopBtn">⏹ Stop</button>
+        <button class="btn primary" id="presetBtn">Preset Cracktro</button>
+        <button class="btn warn" id="exportBtn">Export JSON</button>
+      </div>
+    </header>
+
+    <main class="panel preview">
+      <div class="preview-stage">
+        <div class="preview-frame" id="previewFrame">
+          <canvas id="previewCanvas" width="320" height="256"></canvas>
+          <div class="preview-overlay"></div>
+        </div>
+      </div>
+      <div class="statusbar">
+        <div id="statusLeft">No clip selected</div>
+        <div id="statusCenter">320×256 · pixel perfect · 60fps visé</div>
+        <div id="statusRight">00:00.0 / 00:12.0</div>
+      </div>
+    </main>
+
+    <section class="panel timeline">
+      <div class="timeline-head">
+        <div>Timeline — double-click pour déplacer la tête de lecture</div>
+        <div class="mono" id="timelineInfo">0 clips · BPM 125</div>
+      </div>
+      <div class="timeline-scroll">
+        <div class="timeline-board">
+          <div class="time-ruler" id="timeRuler"></div>
+          <div class="timeline-dropzone" id="timelineDropzone">Dépose un effet ici pour créer un clip</div>
+          <div class="timeline-track" id="timelineTrack"></div>
+        </div>
+      </div>
+    </section>
+
+    <aside class="panel inspector">
+      <div class="panel-title">Inspector</div>
+      <div class="inspector-scroll" id="inspectorRoot"></div>
+      <div class="attrib-panel" id="attribPanel">
+        <div class="attrib-head">
+          <strong>Attribution</strong>
+          <button class="btn" id="closeAttribBtn">← Retour</button>
+        </div>
+        <div class="attrib-body" id="attribBody"></div>
+      </div>
+    </aside>
+  </div>
+
+  <script>
+    const LEVELS = ["LAME", "NOOB", "L33T", "ROXOR"];
+    const BPM = 125;
+    const DURATION_MS = 12000;
+    const PIXELS_PER_MS = 0.06;
+    const DPR = Math.max(1, Math.floor(window.devicePixelRatio || 1));
+
+    const clamp = (v, min, max) => Math.max(min, Math.min(max, v));
+    const lerp = (a, b, t) => a + (b - a) * t;
+    const pad = n => String(n).padStart(2, "0");
+    const fmtTime = ms => {
+      const total = Math.max(0, Math.floor(ms / 100));
+      const secs = Math.floor(total / 10);
+      return `${pad(Math.floor(secs / 60))}:${pad(secs % 60)}.${total % 10}`;
+    };
+    const uid = () => Math.random().toString(36).slice(2, 10);
+
+    class PixelCanvas {
+      constructor(canvas, logicalWidth, logicalHeight) {
+        this.canvas = canvas;
+        this.ctx = canvas.getContext("2d", { alpha: false });
+        this.logicalWidth = logicalWidth;
+        this.logicalHeight = logicalHeight;
+        this.resize();
+      }
+      resize() {
+        this.canvas.width = this.logicalWidth * DPR;
+        this.canvas.height = this.logicalHeight * DPR;
+        this.ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+        this.setNearest();
+      }
+      setNearest() {
+        this.ctx.imageSmoothingEnabled = false;
+      }
+      beginFrame(bg = "#000") {
+        this.setNearest();
+        this.ctx.save();
+        this.ctx.imageSmoothingEnabled = false;
+        this.ctx.globalCompositeOperation = "source-over";
+        this.ctx.globalAlpha = 1;
+        this.ctx.fillStyle = bg;
+        this.ctx.fillRect(0, 0, this.logicalWidth, this.logicalHeight);
+      }
+      endFrame() {
+        this.ctx.restore();
+        this.setNearest();
+      }
+    }
+
+    class BaseEffect {
+      constructor(params = {}) {
+        this.params = JSON.parse(JSON.stringify(this.constructor.defaultParams));
+        Object.assign(this.params, params);
+      }
+      init(engine) { this.engine = engine; }
+      update() {}
+      render() {}
+      destroy() {}
+      serialize() {
+        return { effect: this.constructor.key, params: JSON.parse(JSON.stringify(this.params)) };
+      }
+      static visibleParams(level) {
+        const map = this.paramsByLevel || {};
+        return map[level] || [];
+      }
+    }
+
+    class CopperBars extends BaseEffect {
+      static key = "CopperBars";
+      static displayName = "Copper Bars";
+      static defaultParams = {
+        barCount: 8,
+        barHeight: 18,
+        speed: 1.2,
+        amplitude: 52,
+        frequency: 1.0,
+        beatSync: true,
+        blendMode: "screen",
+        palette: ["#ff6699", "#ffaa33", "#ffee55", "#55ffbb", "#55aaff", "#aa66ff"]
+      };
+      static paramsByLevel = {
+        LAME: ["barCount"],
+        NOOB: ["barCount", "speed", "amplitude", "beatSync"],
+        L33T: ["barCount", "barHeight", "speed", "amplitude", "frequency", "beatSync", "blendMode"],
+        ROXOR: ["barCount", "barHeight", "speed", "amplitude", "frequency", "beatSync", "blendMode"]
+      };
+      static attribution = {
+        name: "copper_bars",
+        display_name: "Copper Bars",
+        origin_year: 1985,
+        origin_hardware: "Amiga OCS — Copper coprocessor",
+        origin_group: "Bamiga Sector One",
+        origin_coder: "—",
+        first_prod: "Destroyer cracktro, 1987",
+        reference_url: "eab.abime.net/showthread.php?t=44895",
+        technique: "Changement de registres couleur synchronisé avec le balayage écran, ici simulé en software avec dégradés par sous-bandes.",
+        difficulty: 2,
+        era: "GEN1_CRACKTRO",
+        tags: ["amiga", "copper", "raster", "bars"]
+      };
+      render(ctx, time, beatInfo) {
+        ctx.save();
+        ctx.imageSmoothingEnabled = false;
+        ctx.globalCompositeOperation = this.params.blendMode === "normal" ? "source-over" : this.params.blendMode;
+        const { barCount, barHeight, speed, amplitude, frequency, palette } = this.params;
+        const bounce = this.params.beatSync ? beatInfo.pulse * 18 : 0;
+        for (let i = 0; i < barCount; i++) {
+          const phase = i * 0.52;
+          const y = Math.floor(128 + Math.sin(time * speed + phase) * (amplitude + bounce) + i * (barHeight * 0.7) - (barCount * barHeight * 0.35));
+          const colorA = palette[i % palette.length];
+          const colorB = palette[(i + 1) % palette.length];
+          for (let s = 0; s < 16; s++) {
+            const sy = y + Math.floor((s / 16) * barHeight);
+            const t = s / 15;
+            ctx.fillStyle = blendHex(colorA, colorB, t);
+            ctx.fillRect(0, sy, 320, 2);
+          }
+        }
+        ctx.restore();
+        ctx.imageSmoothingEnabled = false;
+      }
+    }
+
+    class SinusScroller extends BaseEffect {
+      static key = "SinusScroller";
+      static displayName = "Sinus Scroller";
+      static defaultParams = {
+        text: "* WELCOME TO DEMOFORGE MVP * GREETINGS TO ALL SCENERS * ",
+        fontColor: "#66ffcc",
+        scrollSpeed: 2,
+        waveAmplitude: 18,
+        waveFrequency: 0.14,
+        waveSpeed: 4.0,
+        yPosition: 206,
+        paletteCycling: true,
+        cycleSpeed: 60,
+        charSpacing: 1,
+        shadow: true
+      };
+      static paramsByLevel = {
+        LAME: ["text"],
+        NOOB: ["text", "fontColor", "scrollSpeed", "waveAmplitude"],
+        L33T: ["text", "fontColor", "scrollSpeed", "waveAmplitude", "waveFrequency", "waveSpeed", "yPosition", "paletteCycling", "cycleSpeed", "charSpacing", "shadow"],
+        ROXOR: ["text", "fontColor", "scrollSpeed", "waveAmplitude", "waveFrequency", "waveSpeed", "yPosition", "paletteCycling", "cycleSpeed", "charSpacing", "shadow"]
+      };
+      static attribution = {
+        name: "sinus_scroller",
+        display_name: "Sinus Scroller",
+        origin_year: 1987,
+        origin_hardware: "Amiga OCS — Blitter",
+        origin_group: "Skid Row",
+        origin_coder: "Yragael",
+        first_prod: "Skid Row cracktro series, early 1990s",
+        reference_url: "stashofcode.fr/coder-une-cracktro-sur-amiga-1",
+        technique: "Défilement horizontal avec modulation verticale sinusoidale, rendu ici par caractères rasterisés et coordonnées entières.",
+        difficulty: 2,
+        era: "GEN2_MEGADEMO",
+        tags: ["amiga", "scrolltext", "sinus", "bitmap"]
+      };
+      render(ctx, time) {
+        ctx.save();
+        ctx.imageSmoothingEnabled = false;
+        ctx.font = "bold 12px monospace";
+        ctx.textBaseline = "top";
+        const text = this.params.text;
+        const charW = 8 + this.params.charSpacing;
+        const totalW = text.length * charW;
+        const baseOffset = Math.floor((time * 60 * this.params.scrollSpeed) % totalW);
+        for (let i = 0; i < text.length; i++) {
+          const ch = text[i];
+          let x = 320 - baseOffset + i * charW;
+          while (x < -charW) x += totalW;
+          while (x > 320 + charW) x -= totalW;
+          x = Math.floor(x);
+          const y = Math.floor(this.params.yPosition + Math.sin(i * this.params.waveFrequency + time * this.params.waveSpeed) * this.params.waveAmplitude);
+          let color = this.params.fontColor;
+          if (this.params.paletteCycling) {
+            const hue = ((i * 10) + time * this.params.cycleSpeed) % 360;
+            color = `hsl(${Math.floor(hue)} 95% 68%)`;
+          }
+          if (this.params.shadow) {
+            ctx.fillStyle = "rgba(0,0,0,.65)";
+            ctx.fillText(ch, Math.floor(x + 1), Math.floor(y + 1));
+          }
+          ctx.fillStyle = color;
+          ctx.fillText(ch, x, y);
+        }
+        ctx.restore();
+        ctx.imageSmoothingEnabled = false;
+      }
+    }
+
+    class Starfield3D extends BaseEffect {
+      static key = "Starfield3D";
+      static displayName = "Starfield 3D";
+      static defaultParams = {
+        starCount: 160,
+        speed: 4.5,
+        fieldOfView: 280,
+        starColor: "depth",
+        maxSize: 3,
+        warpMode: false,
+        warpLength: 14
+      };
+      static paramsByLevel = {
+        LAME: ["warpMode"],
+        NOOB: ["starCount", "speed", "warpMode", "maxSize"],
+        L33T: ["starCount", "speed", "fieldOfView", "starColor", "maxSize", "warpMode", "warpLength"],
+        ROXOR: ["starCount", "speed", "fieldOfView", "starColor", "maxSize", "warpMode", "warpLength"]
+      };
+      static attribution = {
+        name: "starfield_3d",
+        display_name: "Starfield 3D",
+        origin_year: 1987,
+        origin_hardware: "Amiga OCS / C64",
+        origin_group: "UNIT A",
+        origin_coder: "—",
+        first_prod: "F/A-18 Interceptor cracktro lineage, late 1980s",
+        reference_url: "Historical routine folklore",
+        technique: "Projection perspective simple x/z et y/z avec recyclage des étoiles hors-plan.",
+        difficulty: 1,
+        era: "GEN1_CRACKTRO",
+        tags: ["stars", "3d", "warp", "cracktro"]
+      };
+      init(engine) {
+        super.init(engine);
+        this.buildStars();
+      }
+      buildStars() {
+        const count = this.params.starCount;
+        this.stars = Array.from({ length: count }, () => this.spawn());
+      }
+      spawn() {
+        return {
+          x: (Math.random() * 2 - 1) * 180,
+          y: (Math.random() * 2 - 1) * 140,
+          z: 80 + Math.random() * 920,
+          pz: 0
+        };
+      }
+      update() {
+        if (!this.stars || this.stars.length !== this.params.starCount) this.buildStars();
+      }
+      render(ctx) {
+        ctx.save();
+        ctx.imageSmoothingEnabled = false;
+        const cx = 160;
+        const cy = 128;
+        const fov = this.params.fieldOfView;
+        for (const s of this.stars) {
+          s.pz = s.z;
+          s.z -= this.params.speed;
+          if (s.z < 1) Object.assign(s, this.spawn());
+          const sx = Math.floor((s.x / s.z) * fov + cx);
+          const sy = Math.floor((s.y / s.z) * fov + cy);
+          const px = Math.floor((s.x / s.pz) * fov + cx);
+          const py = Math.floor((s.y / s.pz) * fov + cy);
+          if (sx < -8 || sx >= 328 || sy < -8 || sy >= 264) {
+            Object.assign(s, this.spawn());
+            continue;
+          }
+          const proximity = 1 - s.z / 1000;
+          const size = Math.max(1, Math.floor(this.params.maxSize * proximity + 1));
+          ctx.fillStyle = this.params.starColor === "depth"
+            ? `rgba(255,255,255,${clamp(0.2 + proximity, 0.2, 1)})`
+            : this.params.starColor;
+          if (this.params.warpMode) {
+            ctx.strokeStyle = ctx.fillStyle;
+            ctx.beginPath();
+            ctx.moveTo(px, py);
+            ctx.lineTo(Math.floor(sx + (sx - px) * this.params.warpLength * 0.05), Math.floor(sy + (sy - py) * this.params.warpLength * 0.05));
+            ctx.stroke();
+          } else {
+            ctx.fillRect(sx, sy, size, size);
+          }
+        }
+        ctx.restore();
+        ctx.imageSmoothingEnabled = false;
+      }
+    }
+
+    class VideoSilhouetteSync extends BaseEffect {
+      static key = "VideoSilhouetteSync";
+      static displayName = "Video Silhouette Sync";
+      static defaultParams = {
+        threshold: 122,
+        contrast: 1.45,
+        glow: 86,
+        pulseBoost: 18,
+        fit: "contain",
+        tintMode: "state02",
+        videoUrl: "",
+        xOffset: 0,
+        yOffset: 0,
+        scale: 1
+      };
+      static paramsByLevel = {
+        LAME: ["threshold", "glow"],
+        NOOB: ["threshold", "contrast", "glow", "pulseBoost"],
+        L33T: ["threshold", "contrast", "glow", "pulseBoost", "fit", "tintMode", "xOffset", "yOffset", "scale"],
+        ROXOR: ["threshold", "contrast", "glow", "pulseBoost", "fit", "tintMode", "videoUrl", "xOffset", "yOffset", "scale"]
+      };
+      static attribution = {
+        name: "video_silhouette_sync",
+        display_name: "Video Silhouette Sync",
+        origin_year: 2026,
+        origin_hardware: "HTML5 Canvas / DemoForge MVP",
+        origin_group: "DemoForge",
+        origin_coder: "Codex",
+        first_prod: "Module 1 sync prototype",
+        reference_url: "local://demoforge/module1",
+        technique: "Abstraction vidéo par seuillage + halo sync sur beat pour scène de mega demo.",
+        difficulty: 3,
+        era: "GEN_VIDEO_SYNC",
+        tags: ["video", "silhouette", "beat", "sync", "canvas"]
+      };
+      init(engine) {
+        super.init(engine);
+        if (!this.video) {
+          this.video = document.createElement("video");
+          this.video.muted = true;
+          this.video.loop = true;
+          this.video.playsInline = true;
+          this.video.crossOrigin = "anonymous";
+          if (this.params.videoUrl) this.video.src = this.params.videoUrl;
+        }
+        if (!this.buffer) {
+          this.buffer = document.createElement("canvas");
+          this.bctx = this.buffer.getContext("2d", { willReadFrequently: true });
+        }
+      }
+      render(ctx, time, beatInfo) {
+        const W = 320;
+        const H = 256;
+        const pulse = beatInfo.pulse || 0;
+        const colors = this.params.tintMode === "state03"
+          ? ["#f2f1e8", "#eceadc", "rgba(238,255,101,.55)", "rgba(248,255,180,.18)"]
+          : ["#f3f4ea", "#efefe4", "rgba(239,255,104,.58)", "rgba(245,255,180,.2)"];
+
+        const bg = ctx.createLinearGradient(0, 0, 0, H);
+        bg.addColorStop(0, colors[0]);
+        bg.addColorStop(1, colors[1]);
+        ctx.fillStyle = bg;
+        ctx.fillRect(0, 0, W, H);
+
+        const halo = ctx.createRadialGradient(W * 0.68, H * 0.62, 8, W * 0.68, H * 0.62, 36 + this.params.glow + pulse * this.params.pulseBoost);
+        halo.addColorStop(0, colors[2]);
+        halo.addColorStop(0.38, colors[3]);
+        halo.addColorStop(1, "rgba(255,255,255,0)");
+        ctx.fillStyle = halo;
+        ctx.fillRect(0, 0, W, H);
+
+        if (this.video && this.video.readyState >= 2) {
+          if (this.video.paused) {
+            try { this.video.currentTime = time % (this.video.duration || 1); } catch(_) {}
+            this.video.play().catch(() => {});
+          }
+
+          const vw = this.video.videoWidth || 320;
+          const vh = this.video.videoHeight || 256;
+          this.buffer.width = Math.max(1, vw >> 1);
+          this.buffer.height = Math.max(1, vh >> 1);
+          this.bctx.drawImage(this.video, 0, 0, this.buffer.width, this.buffer.height);
+
+          const img = this.bctx.getImageData(0, 0, this.buffer.width, this.buffer.height);
+          const data = img.data;
+          for (let i = 0; i < data.length; i += 4) {
+            const lum = data[i] * 0.299 + data[i + 1] * 0.587 + data[i + 2] * 0.114;
+            const adj = Math.min(255, Math.max(0, (lum - 128) * this.params.contrast + 128));
+            if (adj < this.params.threshold) {
+              data[i] = 8; data[i + 1] = 8; data[i + 2] = 8; data[i + 3] = 255;
+            } else {
+              data[i + 3] = 0;
+            }
+          }
+          this.bctx.putImageData(img, 0, 0);
+
+          const scale = this.params.scale || 1;
+          const drawW = this.params.fit === "cover" ? W : Math.min(W, this.buffer.width * scale);
+          const drawH = this.params.fit === "cover" ? H : Math.min(H, this.buffer.height * scale);
+          const dx = Math.floor((W - drawW) / 2 + this.params.xOffset);
+          const dy = Math.floor((H - drawH) / 2 + this.params.yOffset);
+          ctx.drawImage(this.buffer, dx, dy, drawW, drawH);
+        } else {
+          ctx.fillStyle = "#090909";
+          ctx.beginPath();
+          ctx.ellipse(160, 150, 34 + pulse * 2, 66 + pulse * 4, 0, 0, Math.PI * 2);
+          ctx.fill();
+        }
+
+        if (pulse > 0.1) {
+          ctx.fillStyle = `rgba(255,255,255,${pulse * 0.05})`;
+          ctx.fillRect(0, 0, W, H);
+        }
+      }
+    }
+
+    const EffectRegistry = {
+      [CopperBars.key]: CopperBars,
+      [SinusScroller.key]: SinusScroller,
+      [Starfield3D.key]: Starfield3D,
+      [VideoSilhouetteSync.key]: VideoSilhouetteSync
+    };
+
+    function blendHex(a, b, t) {
+      const pa = parseInt(a.slice(1), 16);
+      const pb = parseInt(b.slice(1), 16);
+      const ar = (pa >> 16) & 255, ag = (pa >> 8) & 255, ab = pa & 255;
+      const br = (pb >> 16) & 255, bg = (pb >> 8) & 255, bb = pb & 255;
+      const r = Math.floor(lerp(ar, br, t));
+      const g = Math.floor(lerp(ag, bg, t));
+      const bl = Math.floor(lerp(ab, bb, t));
+      return `rgb(${r}, ${g}, ${bl})`;
+    }
+
+    class TimelineModel {
+      constructor() {
+        this.clips = [];
+      }
+      add(effectKey, startMs = 0, durationMs = 3000) {
+        const Ctor = EffectRegistry[effectKey];
+        const clip = {
+          id: uid(),
+          effectKey,
+          label: Ctor.displayName,
+          startMs,
+          durationMs,
+          effect: new Ctor()
+        };
+        this.clips.push(clip);
+        this.sort();
+        return clip;
+      }
+      sort() {
+        this.clips.sort((a, b) => a.startMs - b.startMs);
+      }
+      remove(id) {
+        this.clips = this.clips.filter(c => c.id !== id);
+      }
+      getActive(timeMs) {
+        return this.clips.filter(c => timeMs >= c.startMs && timeMs < c.startMs + c.durationMs);
+      }
+      serialize() {
+        return this.clips.map(c => ({
+          id: c.id,
+          effect: c.effectKey,
+          start_ms: c.startMs,
+          duration_ms: c.durationMs,
+          params: c.effect.serialize().params,
+          attribution: EffectRegistry[c.effectKey].attribution
+        }));
+      }
+    }
+
+    class Engine {
+      constructor(canvas) {
+        this.surface = new PixelCanvas(canvas, 320, 256);
+        this.timeline = new TimelineModel();
+        this.isPlaying = false;
+        this.playheadMs = 0;
+        this.lastTs = 0;
+        this.level = "NOOB";
+        this.background = "#000018";
+        this.beatState = { pulse: 0, beat: false, bpm: BPM, row: 0, order: 0 };
+      }
+      init() {
+        this.lastTs = performance.now();
+        this.raf = requestAnimationFrame(this.loop.bind(this));
+      }
+      loop(ts) {
+        const dt = Math.min(100, ts - this.lastTs);
+        this.lastTs = ts;
+        if (this.isPlaying) {
+          this.playheadMs += dt;
+          if (this.playheadMs >= DURATION_MS) this.playheadMs = 0;
+        }
+        const beatDuration = 60000 / BPM;
+        const beatPos = (this.playheadMs % beatDuration) / beatDuration;
+        this.beatState.beat = beatPos < 0.12;
+        this.beatState.pulse = Math.max(0, 1 - beatPos / 0.22);
+        this.beatState.row = Math.floor((this.playheadMs / beatDuration) * 4) % 64;
+        this.beatState.order = Math.floor(this.playheadMs / (beatDuration * 64));
+        this.render(dt / 1000);
+        this.raf = requestAnimationFrame(this.loop.bind(this));
+      }
+      render(deltaSeconds) {
+        this.surface.beginFrame(this.background);
+        const ctx = this.surface.ctx;
+        const time = this.playheadMs / 1000;
+        const active = this.timeline.getActive(this.playheadMs);
+        for (const clip of active) {
+          clip.effect.init(this);
+          clip.effect.update(deltaSeconds, this.beatState);
+          clip.effect.render(ctx, time, this.beatState);
+          ctx.imageSmoothingEnabled = false;
+        }
+        this.drawHud(ctx);
+        this.surface.endFrame();
+      }
+      drawHud(ctx) {
+        ctx.save();
+        ctx.imageSmoothingEnabled = false;
+        ctx.fillStyle = "rgba(255,255,255,.08)";
+        ctx.fillRect(0, 0, 320, 10);
+        ctx.fillStyle = "rgba(255,255,255,.04)";
+        for (let y = 0; y < 256; y += 3) ctx.fillRect(0, y, 320, 1);
+        ctx.fillStyle = "#9eb8ff";
+        ctx.font = "10px monospace";
+        ctx.textBaseline = "top";
+        ctx.fillText(`LEVEL ${this.level}  BPM ${BPM}  ROW ${this.beatState.row}`, 6, 2);
+        ctx.restore();
+        ctx.imageSmoothingEnabled = false;
+      }
+      play() { this.isPlaying = true; }
+      pause() { this.isPlaying = false; }
+      stop() { this.isPlaying = false; this.playheadMs = 0; }
+      setPlayhead(ms) { this.playheadMs = clamp(ms, 0, DURATION_MS); }
+      exportProject() {
+        return {
+          production: {
+            title: "DemoForge MVP Project",
+            created_with: "DemoForge MVP",
+            created_at: new Date().toISOString(),
+            duration_ms: DURATION_MS,
+            level: this.level,
+            background: this.background
+          },
+          timeline: this.timeline.serialize()
+        };
+      }
+    }
+
+    const appState = {
+      engine: null,
+      selectedClipId: null,
+      draggingClipId: null,
+      resizingClipId: null,
+      dragOriginX: 0,
+      dragStartMs: 0,
+      resizeStartMs: 0,
+      showAttrib: false
+    };
+
+    const effectList = document.getElementById("effectList");
+    const levelButtons = document.getElementById("levelButtons");
+    const previewCanvas = document.getElementById("previewCanvas");
+    const timeRuler = document.getElementById("timeRuler");
+    const timelineTrack = document.getElementById("timelineTrack");
+    const timelineDropzone = document.getElementById("timelineDropzone");
+    const inspectorRoot = document.getElementById("inspectorRoot");
+    const attribPanel = document.getElementById("attribPanel");
+    const attribBody = document.getElementById("attribBody");
+    const statusLeft = document.getElementById("statusLeft");
+    const statusRight = document.getElementById("statusRight");
+    const timelineInfo = document.getElementById("timelineInfo");
+
+    function buildLevelButtons() {
+      levelButtons.innerHTML = "";
+      for (const level of LEVELS) {
+        const btn = document.createElement("button");
+        btn.className = `chip ${level === appState.engine.level ? "active" : ""}`;
+        btn.textContent = level;
+        btn.onclick = () => {
+          appState.engine.level = level;
+          buildLevelButtons();
+          renderInspector();
+        };
+        levelButtons.appendChild(btn);
+      }
+    }
+
+    function buildLibrary() {
+      effectList.innerHTML = "";
+      for (const Ctor of Object.values(EffectRegistry)) {
+        const card = document.createElement("div");
+        card.className = "effect-card";
+        card.draggable = true;
+        card.dataset.effect = Ctor.key;
+        card.innerHTML = `
+          <div class="effect-top">
+            <div class="effect-name">${Ctor.displayName}</div>
+            <span class="badge">${Ctor.attribution.origin_year}</span>
+          </div>
+          <div class="effect-meta">${Ctor.attribution.origin_hardware}<br>${Ctor.attribution.technique}</div>
+        `;
+        card.addEventListener("dragstart", e => {
+          e.dataTransfer.setData("text/effect", Ctor.key);
+        });
+        effectList.appendChild(card);
+      }
+    }
+
+    function buildRuler() {
+      timeRuler.innerHTML = "";
+      for (let i = 0; i <= 12; i++) {
+        const tick = document.createElement("div");
+        tick.className = "ruler-tick";
+        tick.style.left = `${(i / 12) * 100}%`;
+        timeRuler.appendChild(tick);
+        if (i < 12) {
+          const label = document.createElement("div");
+          label.className = "ruler-label";
+          label.style.left = `calc(${(i / 12) * 100}% + 4px)`;
+          label.textContent = `${i}s`;
+          timeRuler.appendChild(label);
+        }
+      }
+      const ph = document.createElement("div");
+      ph.className = "playhead";
+      ph.id = "rulerPlayhead";
+      timeRuler.appendChild(ph);
+    }
+
+    function findSelectedClip() {
+      return appState.engine.timeline.clips.find(c => c.id === appState.selectedClipId) || null;
+    }
+
+    function renderTimeline() {
+      timelineTrack.innerHTML = "";
+      const clips = appState.engine.timeline.clips;
+      timelineInfo.textContent = `${clips.length} clip${clips.length > 1 ? "s" : ""} · BPM ${BPM}`;
+      timelineDropzone.style.display = clips.length ? "none" : "grid";
+      for (const clip of clips) {
+        const el = document.createElement("div");
+        const left = clip.startMs * PIXELS_PER_MS;
+        const width = Math.max(60, clip.durationMs * PIXELS_PER_MS);
+        el.className = `clip ${clip.id === appState.selectedClipId ? "active" : ""}`;
+        el.style.left = `${left}px`;
+        el.style.width = `${width}px`;
+        el.dataset.id = clip.id;
+        el.innerHTML = `
+          <div class="clip-title">${clip.label}</div>
+          <div class="clip-sub">${fmtTime(clip.startMs)} → ${fmtTime(clip.startMs + clip.durationMs)}</div>
+          <div class="resize-handle"></div>
+        `;
+        el.addEventListener("click", e => {
+          e.stopPropagation();
+          appState.selectedClipId = clip.id;
+          renderTimeline();
+          renderInspector();
+        });
+        el.addEventListener("mousedown", e => {
+          if (e.target.classList.contains("resize-handle")) {
+            appState.resizingClipId = clip.id;
+            appState.dragOriginX = e.clientX;
+            appState.resizeStartMs = clip.durationMs;
+          } else {
+            appState.draggingClipId = clip.id;
+            appState.dragOriginX = e.clientX;
+            appState.dragStartMs = clip.startMs;
+          }
+          appState.selectedClipId = clip.id;
+          renderInspector();
+        });
+        timelineTrack.appendChild(el);
+      }
+      updatePlayheadUI();
+    }
+
+    function updatePlayheadUI() {
+      const x = appState.engine.playheadMs * PIXELS_PER_MS;
+      const ph1 = document.getElementById("rulerPlayhead");
+      if (ph1) ph1.style.left = `${(appState.engine.playheadMs / DURATION_MS) * 100}%`;
+      let ph2 = document.getElementById("trackPlayhead");
+      if (!ph2) {
+        ph2 = document.createElement("div");
+        ph2.id = "trackPlayhead";
+        ph2.className = "playhead";
+        timelineTrack.appendChild(ph2);
+      }
+      ph2.style.left = `${x}px`;
+      statusRight.textContent = `${fmtTime(appState.engine.playheadMs)} / ${fmtTime(DURATION_MS)}`;
+      const selected = findSelectedClip();
+      statusLeft.textContent = selected
+        ? `${selected.label} · ${EffectRegistry[selected.effectKey].attribution.origin_hardware}`
+        : "No clip selected";
+    }
+
+    function schemaFor(effectClass) {
+      return {
+        barCount: { type: "range", min: 2, max: 32, step: 1, label: "Bar count" },
+        barHeight: { type: "range", min: 4, max: 80, step: 1, label: "Bar height" },
+        speed: { type: "range", min: 0.1, max: 10, step: 0.1, label: "Speed" },
+        amplitude: { type: "range", min: 0, max: 120, step: 1, label: "Amplitude" },
+        frequency: { type: "range", min: 0.1, max: 4, step: 0.1, label: "Frequency" },
+        beatSync: { type: "checkbox", label: "Beat sync" },
+        blendMode: { type: "select", options: ["normal", "screen", "lighter"], label: "Blend" },
+        text: { type: "textarea", label: "Text" },
+        fontColor: { type: "color", label: "Font color" },
+        scrollSpeed: { type: "range", min: 1, max: 8, step: 1, label: "Scroll speed" },
+        waveAmplitude: { type: "range", min: 0, max: 40, step: 1, label: "Wave amplitude" },
+        waveFrequency: { type: "range", min: 0.02, max: 0.5, step: 0.01, label: "Wave frequency" },
+        waveSpeed: { type: "range", min: 0.1, max: 10, step: 0.1, label: "Wave speed" },
+        yPosition: { type: "range", min: 0, max: 240, step: 1, label: "Y position" },
+        paletteCycling: { type: "checkbox", label: "Palette cycling" },
+        cycleSpeed: { type: "range", min: 0, max: 360, step: 1, label: "Cycle speed" },
+        charSpacing: { type: "range", min: 0, max: 6, step: 1, label: "Char spacing" },
+        shadow: { type: "checkbox", label: "Shadow" },
+        starCount: { type: "range", min: 50, max: 600, step: 10, label: "Star count" },
+        fieldOfView: { type: "range", min: 100, max: 500, step: 10, label: "Field of view" },
+        starColor: { type: "select", options: ["depth", "#ffffff", "#66ccff", "#ffcc66"], label: "Star color" },
+        maxSize: { type: "range", min: 1, max: 6, step: 1, label: "Max size" },
+        warpMode: { type: "checkbox", label: "Warp mode" },
+        warpLength: { type: "range", min: 2, max: 40, step: 1, label: "Warp length" }
+      };
+    }
+
+    function renderField(container, clip, key, config) {
+      const wrap = document.createElement("div");
+      wrap.className = "kv";
+      const left = document.createElement("div");
+      left.innerHTML = `<label>${config.label}</label><small>${key}</small>`;
+      const right = document.createElement("div");
+      right.className = "field";
+      const val = clip.effect.params[key];
+      let input;
+      if (config.type === "range") {
+        input = document.createElement("input");
+        input.type = "range";
+        input.min = config.min;
+        input.max = config.max;
+        input.step = config.step;
+        input.value = val;
+        const valueLabel = document.createElement("small");
+        valueLabel.textContent = val;
+        input.oninput = () => {
+          clip.effect.params[key] = Number(input.value);
+          valueLabel.textContent = input.value;
+        };
+        right.appendChild(input);
+        right.appendChild(valueLabel);
+      } else if (config.type === "color") {
+        input = document.createElement("input");
+        input.type = "color";
+        input.value = /^#/.test(val) ? val : "#66ffcc";
+        input.oninput = () => clip.effect.params[key] = input.value;
+        right.appendChild(input);
+      } else if (config.type === "checkbox") {
+        input = document.createElement("input");
+        input.type = "checkbox";
+        input.checked = !!val;
+        input.oninput = () => clip.effect.params[key] = input.checked;
+        right.appendChild(input);
+      } else if (config.type === "textarea") {
+        input = document.createElement("textarea");
+        input.value = val;
+        input.oninput = () => clip.effect.params[key] = input.value;
+        right.appendChild(input);
+      } else if (config.type === "select") {
+        input = document.createElement("select");
+        for (const opt of config.options) {
+          const o = document.createElement("option");
+          o.value = opt;
+          o.textContent = opt;
+          if (opt === val) o.selected = true;
+          input.appendChild(o);
+        }
+        input.oninput = () => clip.effect.params[key] = input.value;
+        right.appendChild(input);
+      }
+      wrap.appendChild(left);
+      wrap.appendChild(right);
+      container.appendChild(wrap);
+    }
+
+    function renderInspector() {
+      const clip = findSelectedClip();
+      if (!clip) {
+        inspectorRoot.innerHTML = `<div class="selection-empty">Sélectionne un clip dans la timeline. Le niveau actuel <strong>${appState.engine.level}</strong> réduit ou expose les paramètres sans changer le moteur sous-jacent.</div>`;
+        return;
+      }
+      const Ctor = EffectRegistry[clip.effectKey];
+      const visible = Ctor.visibleParams(appState.engine.level);
+      const schema = schemaFor(Ctor);
+      inspectorRoot.innerHTML = "";
+      const top = document.createElement("div");
+      top.className = "section";
+      top.innerHTML = `
+        <div style="display:flex;justify-content:space-between;gap:8px;align-items:flex-start">
+          <div>
+            <div style="font-size:20px;font-weight:800">${Ctor.displayName}</div>
+            <div class="effect-meta">${Ctor.attribution.origin_year} · ${Ctor.attribution.origin_hardware}</div>
+          </div>
+          <span class="badge">${appState.engine.level}</span>
+        </div>
+      `;
+      const actions = document.createElement("div");
+      actions.className = "inspector-actions";
+      const attribBtn = document.createElement("button");
+      attribBtn.className = "btn";
+      attribBtn.textContent = "📖 Attribution";
+      attribBtn.onclick = () => showAttribution(Ctor);
+      const delBtn = document.createElement("button");
+      delBtn.className = "btn";
+      delBtn.textContent = "🗑 Remove clip";
+      delBtn.onclick = () => {
+        appState.engine.timeline.remove(clip.id);
+        appState.selectedClipId = null;
+        renderTimeline();
+        renderInspector();
+      };
+      actions.appendChild(attribBtn);
+      actions.appendChild(delBtn);
+      top.appendChild(document.createElement("div")).style.height = "12px";
+      top.appendChild(actions);
+      inspectorRoot.appendChild(top);
+
+      const timing = document.createElement("div");
+      timing.className = "section";
+      timing.innerHTML = `<strong>Clip timing</strong>`;
+      renderField(timing, {
+        effect: { params: { startMs: clip.startMs } }
+      }, "startMs", { type: "range", min: 0, max: DURATION_MS - 500, step: 100, label: "Start" });
+      timing.querySelector("input").oninput = e => {
+        clip.startMs = Number(e.target.value);
+        timing.querySelector("small").textContent = fmtTime(clip.startMs);
+        appState.engine.timeline.sort();
+        renderTimeline();
+      };
+      timing.querySelector("small").textContent = fmtTime(clip.startMs);
+      const timing2 = document.createElement("div");
+      renderField(timing2, {
+        effect: { params: { durationMs: clip.durationMs } }
+      }, "durationMs", { type: "range", min: 500, max: DURATION_MS, step: 100, label: "Duration" });
+      timing2.querySelector("input").oninput = e => {
+        clip.durationMs = Number(e.target.value);
+        timing2.querySelector("small").textContent = fmtTime(clip.durationMs);
+        renderTimeline();
+      };
+      timing2.querySelector("small").textContent = fmtTime(clip.durationMs);
+      timing.appendChild(timing2.firstChild);
+      inspectorRoot.appendChild(timing);
+
+      const params = document.createElement("div");
+      params.className = "section";
+      params.innerHTML = `<strong>Parameters</strong>`;
+      for (const key of visible) {
+        if (schema[key]) renderField(params, clip, key, schema[key]);
+      }
+      inspectorRoot.appendChild(params);
+
+      const observe = document.createElement("div");
+      observe.className = "footer-note";
+      observe.innerHTML = `Mode observe : un utilisateur <strong>LAME</strong> peut voir le rendu d’un clip plus complexe, mais l’UI limite les champs éditables.`;
+      inspectorRoot.appendChild(observe);
+    }
+
+    function showAttribution(Ctor) {
+      const a = Ctor.attribution;
+      attribBody.innerHTML = `
+        <div style="font-size:22px;font-weight:800;margin-bottom:6px">${Ctor.displayName}</div>
+        <div class="effect-meta">${a.origin_year} · ${a.origin_hardware}</div>
+        <h3>Contexte</h3>
+        <div class="attrib-grid">
+          <div class="attrib-item"><strong>Hardware</strong>${a.origin_hardware}</div>
+          <div class="attrib-item"><strong>Groupe</strong>${a.origin_group || "—"}</div>
+          <div class="attrib-item"><strong>Codeur</strong>${a.origin_coder || "—"}</div>
+          <div class="attrib-item"><strong>Première prod</strong>${a.first_prod || "—"}</div>
+          <div class="attrib-item"><strong>Ère</strong>${a.era}</div>
+          <div class="attrib-item"><strong>Difficulté</strong>${a.difficulty}/5</div>
+        </div>
+        <h3>Technique</h3>
+        <div class="attrib-item">${a.technique}</div>
+        <h3>Tags</h3>
+        <div class="attrib-item">${a.tags.join(", ")}</div>
+        <h3>Référence</h3>
+        <div class="attrib-item mono">${a.reference_url}</div>
+      `;
+      attribPanel.classList.add("open");
+    }
+
+    function wireTimelineDnD() {
+      timelineDropzone.addEventListener("dragover", e => e.preventDefault());
+      timelineTrack.addEventListener("dragover", e => e.preventDefault());
+      const drop = e => {
+        e.preventDefault();
+        const effectKey = e.dataTransfer.getData("text/effect");
+        if (!effectKey) return;
+        const rect = timelineTrack.getBoundingClientRect();
+        const x = clamp(e.clientX - rect.left, 0, rect.width);
+        const startMs = Math.floor((x / PIXELS_PER_MS) / 100) * 100;
+        const clip = appState.engine.timeline.add(effectKey, startMs, 3000);
+        appState.selectedClipId = clip.id;
+        renderTimeline();
+        renderInspector();
+      };
+      timelineDropzone.addEventListener("drop", drop);
+      timelineTrack.addEventListener("drop", drop);
+      timelineTrack.addEventListener("dblclick", e => {
+        const rect = timelineTrack.getBoundingClientRect();
+        const x = clamp(e.clientX - rect.left, 0, rect.width);
+        const ms = Math.floor((x / PIXELS_PER_MS) / 100) * 100;
+        appState.engine.setPlayhead(ms);
+        updatePlayheadUI();
+      });
+      timelineTrack.addEventListener("click", e => {
+        if (e.target === timelineTrack) {
+          appState.selectedClipId = null;
+          renderTimeline();
+          renderInspector();
+        }
+      });
+      window.addEventListener("mousemove", e => {
+        if (appState.draggingClipId) {
+          const clip = appState.engine.timeline.clips.find(c => c.id === appState.draggingClipId);
+          const dx = e.clientX - appState.dragOriginX;
+          clip.startMs = clamp(Math.floor((appState.dragStartMs + dx / PIXELS_PER_MS) / 100) * 100, 0, DURATION_MS - 100);
+          appState.engine.timeline.sort();
+          renderTimeline();
+        }
+        if (appState.resizingClipId) {
+          const clip = appState.engine.timeline.clips.find(c => c.id === appState.resizingClipId);
+          const dx = e.clientX - appState.dragOriginX;
+          clip.durationMs = clamp(Math.floor((appState.resizeStartMs + dx / PIXELS_PER_MS) / 100) * 100, 500, DURATION_MS - clip.startMs);
+          renderTimeline();
+        }
+      });
+      window.addEventListener("mouseup", () => {
+        appState.draggingClipId = null;
+        appState.resizingClipId = null;
+      });
+    }
+
+    function applyPreset() {
+      const tl = appState.engine.timeline;
+      tl.clips = [];
+      const a = tl.add("CopperBars", 0, 12000);
+      const b = tl.add("Starfield3D", 0, 12000);
+      const c = tl.add("SinusScroller", 1800, 10200);
+      c.effect.params.text = "* DEMOFORGE MVP * COPPER + STARS + SCROLLER * DRAG EFFECTS FROM THE LIBRARY * ";
+      c.effect.params.yPosition = 210;
+      a.effect.params.barCount = 10;
+      b.effect.params.warpMode = false;
+      appState.selectedClipId = c.id;
+      renderTimeline();
+      renderInspector();
+    }
+
+    function exportJson() {
+      const data = appState.engine.exportProject();
+      const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(blob);
+      a.download = "demoforge-project.json";
+      a.click();
+      URL.revokeObjectURL(a.href);
+    }
+
+    function bindToolbar() {
+      document.getElementById("playBtn").onclick = () => appState.engine.play();
+      document.getElementById("pauseBtn").onclick = () => appState.engine.pause();
+      document.getElementById("stopBtn").onclick = () => { appState.engine.stop(); updatePlayheadUI(); };
+      document.getElementById("presetBtn").onclick = applyPreset;
+      document.getElementById("exportBtn").onclick = exportJson;
+      document.getElementById("closeAttribBtn").onclick = () => attribPanel.classList.remove("open");
+      window.addEventListener("keydown", e => {
+        if (e.code === "Space") {
+          e.preventDefault();
+          appState.engine.isPlaying ? appState.engine.pause() : appState.engine.play();
+        }
+        if (e.key === "Escape") {
+          appState.selectedClipId = null;
+          attribPanel.classList.remove("open");
+          renderTimeline();
+          renderInspector();
+        }
+        if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "e") {
+          e.preventDefault();
+          exportJson();
+        }
+      });
+    }
+
+    function tickUI() {
+      updatePlayheadUI();
+      requestAnimationFrame(tickUI);
+    }
+
+    function seedVideoSyncDemo() {
+      if (appState.engine.timeline.clips.length) return;
+      const clip = appState.engine.timeline.add("VideoSilhouetteSync", 0, 12000);
+      clip.effect.params.tintMode = "state02";
+      clip.effect.params.threshold = 122;
+      clip.effect.params.contrast = 1.45;
+      clip.effect.params.glow = 86;
+      clip.effect.params.pulseBoost = 18;
+      clip.effect.params.fit = "contain";
+      clip.effect.params.scale = 1;
+      clip.effect.params.videoUrl = "";
+      appState.selectedClipId = clip.id;
+    }
+
+    function boot() {
+      appState.engine = new Engine(previewCanvas);
+      buildLibrary();
+      buildLevelButtons();
+      buildRuler();
+      bindToolbar();
+      wireTimelineDnD();
+      seedVideoSyncDemo();
+      renderTimeline();
+      renderInspector();
+      appState.engine.init();
+      applyPreset();
+      tickUI();
+    }
+
+    boot();
+  </script>
+</body>
+</html>

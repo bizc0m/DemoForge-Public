@@ -1,0 +1,918 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DEMOFORGE 2030 — V1.0 Foundation</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=JetBrains+Mono:wght@300;400;700&family=Inter:wght@300;400;600;700&display=swap');
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#07070f;--panel:#0c0c1a;--border:#1a1a35;
+  --cyan:#00f0ff;--magenta:#ff00aa;--lime:#39ff14;--gold:#ffd700;--orange:#ff6622;
+  --text:#d0d0e8;--muted:#5a5a7a;--dim:#2a2a4a;
+}
+html,body{height:100%;overflow:hidden}
+body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;display:flex;flex-direction:column}
+
+/* HEADER */
+.header{display:flex;align-items:center;justify-content:space-between;padding:8px 16px;background:var(--panel);border-bottom:1px solid var(--border);height:48px;flex-shrink:0}
+.header .logo{font-family:'Orbitron',monospace;font-weight:900;font-size:1.1rem;background:linear-gradient(135deg,var(--cyan),var(--magenta));-webkit-background-clip:text;-webkit-text-fill-color:transparent;letter-spacing:3px}
+.header .version{font-family:'JetBrains Mono',monospace;font-size:.65rem;color:var(--muted);padding:3px 8px;border:1px solid var(--border);border-radius:4px}
+.header .clock{font-family:'Orbitron',monospace;font-size:.7rem;color:var(--cyan)}
+.header .level-tabs{display:flex;gap:2px}
+.header .level-tab{font-family:'Orbitron',monospace;font-size:.6rem;padding:4px 10px;border:1px solid var(--border);border-radius:4px;cursor:pointer;background:transparent;color:var(--muted);transition:all .2s;letter-spacing:1px}
+.header .level-tab.active{color:var(--lime);border-color:var(--lime);background:rgba(57,255,20,.08)}
+.header .level-tab:hover{border-color:var(--cyan);color:var(--cyan)}
+
+/* MAIN LAYOUT */
+.main{display:flex;flex:1;overflow:hidden}
+
+/* LEFT PANEL — Modules */
+.panel-left{width:240px;background:var(--panel);border-right:1px solid var(--border);display:flex;flex-direction:column;flex-shrink:0}
+.panel-title{font-family:'Orbitron',monospace;font-size:.65rem;letter-spacing:2px;color:var(--muted);padding:10px 12px 6px;text-transform:uppercase}
+.module-list{flex:1;overflow-y:auto;padding:4px 8px}
+.module-item{display:flex;align-items:center;gap:8px;padding:7px 10px;border-radius:6px;cursor:pointer;transition:all .2s;margin-bottom:2px;border:1px solid transparent}
+.module-item:hover{background:rgba(0,240,255,.04);border-color:var(--border)}
+.module-item.active{background:rgba(0,240,255,.08);border-color:rgba(0,240,255,.2)}
+.module-item .m-id{font-family:'JetBrains Mono',monospace;font-size:.6rem;color:var(--cyan);min-width:28px}
+.module-item .m-name{font-size:.75rem;color:var(--text)}
+.module-item .m-era{font-size:.55rem;color:var(--muted);margin-left:auto;font-family:'JetBrains Mono',monospace}
+.module-item .m-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+
+/* CENTER — Canvas viewport */
+.viewport{flex:1;display:flex;flex-direction:column;position:relative}
+.canvas-wrap{flex:1;position:relative;background:#000;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.canvas-wrap canvas{display:block}
+.canvas-info{position:absolute;top:8px;right:12px;font-family:'JetBrains Mono',monospace;font-size:.6rem;color:var(--muted);display:flex;gap:12px}
+.canvas-info span{padding:2px 6px;background:rgba(0,0,0,.6);border-radius:3px}
+.effect-title-bar{position:absolute;bottom:0;left:0;right:0;padding:8px 16px;background:linear-gradient(transparent,rgba(0,0,0,.8));display:flex;align-items:center;gap:12px}
+.effect-title-bar .et-name{font-family:'Orbitron',monospace;font-size:.8rem;color:var(--cyan)}
+.effect-title-bar .et-origin{font-size:.65rem;color:var(--muted);font-family:'JetBrains Mono',monospace}
+
+/* RIGHT PANEL — Params */
+.panel-right{width:260px;background:var(--panel);border-left:1px solid var(--border);display:flex;flex-direction:column;flex-shrink:0}
+.param-section{padding:10px 12px;border-bottom:1px solid var(--border)}
+.param-section .ps-title{font-family:'Orbitron',monospace;font-size:.6rem;color:var(--gold);letter-spacing:2px;margin-bottom:8px}
+.param-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}
+.param-row label{font-size:.7rem;color:var(--muted)}
+.param-row input[type=range]{width:100px;accent-color:var(--cyan);height:4px}
+.param-row .param-val{font-family:'JetBrains Mono',monospace;font-size:.65rem;color:var(--cyan);min-width:30px;text-align:right}
+.param-row select{background:var(--bg);color:var(--text);border:1px solid var(--border);border-radius:4px;padding:2px 6px;font-size:.7rem;font-family:'JetBrains Mono',monospace}
+
+/* BOTTOM — Timeline */
+.timeline{height:100px;background:var(--panel);border-top:1px solid var(--border);display:flex;flex-direction:column;flex-shrink:0}
+.timeline-header{display:flex;align-items:center;padding:4px 12px;gap:10px;border-bottom:1px solid var(--border)}
+.timeline-header .tl-title{font-family:'Orbitron',monospace;font-size:.6rem;color:var(--muted);letter-spacing:2px}
+.tl-btn{background:transparent;border:1px solid var(--border);color:var(--text);padding:3px 10px;border-radius:4px;cursor:pointer;font-family:'JetBrains Mono',monospace;font-size:.65rem;transition:all .2s}
+.tl-btn:hover{border-color:var(--cyan);color:var(--cyan)}
+.tl-btn.playing{border-color:var(--lime);color:var(--lime);background:rgba(57,255,20,.08)}
+.timeline-tracks{flex:1;display:flex;overflow-x:auto;padding:6px 12px;gap:4px}
+.tl-track{height:100%;min-width:80px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:.6rem;cursor:pointer;border:1px solid;transition:all .2s;padding:0 8px}
+.tl-track:hover{transform:scaleY(1.05)}
+
+/* HISTORY PANEL (overlay) */
+.history-overlay{display:none;position:absolute;top:0;left:0;right:0;bottom:0;background:rgba(7,7,15,.92);z-index:100;padding:30px;overflow-y:auto}
+.history-overlay.show{display:block}
+.history-overlay h2{font-family:'Orbitron',monospace;color:var(--gold);font-size:1.1rem;margin-bottom:16px;letter-spacing:2px}
+.history-overlay p{font-size:.82rem;color:var(--text);line-height:1.6;margin-bottom:10px}
+.history-overlay .close-btn{position:absolute;top:16px;right:20px;background:none;border:1px solid var(--border);color:var(--muted);padding:4px 12px;border-radius:4px;cursor:pointer;font-family:'Orbitron',monospace;font-size:.65rem}
+.history-overlay .close-btn:hover{color:var(--cyan);border-color:var(--cyan)}
+.history-overlay .era-badge{display:inline-block;padding:3px 10px;border-radius:20px;font-family:'Orbitron',monospace;font-size:.6rem;margin-bottom:12px;border:1px solid var(--cyan);color:var(--cyan);background:rgba(0,240,255,.06)}
+.history-overlay .hw-badge{display:inline-block;padding:3px 10px;border-radius:20px;font-family:'Orbitron',monospace;font-size:.6rem;margin-bottom:12px;margin-left:6px;border:1px solid var(--magenta);color:var(--magenta);background:rgba(255,0,170,.06)}
+
+/* Scrollbar */
+::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--dim);border-radius:2px}
+::-webkit-scrollbar-thumb:hover{background:var(--muted)}
+
+/* Toast */
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(80px);opacity:0;background:var(--panel);border:1px solid var(--cyan);color:var(--cyan);padding:8px 20px;border-radius:8px;font-family:'JetBrains Mono',monospace;font-size:.75rem;z-index:200;transition:all .4s ease;pointer-events:none}
+.toast.show{transform:translateX(-50%) translateY(0);opacity:1}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div style="display:flex;align-items:center;gap:14px">
+    <div class="logo">DEMOFORGE</div>
+    <div class="version">V1.0 · Foundation · 2030</div>
+  </div>
+  <div class="level-tabs">
+    <div class="level-tab active" data-level="LAME" onclick="setLevel('LAME')">LAME</div>
+    <div class="level-tab" data-level="NOOB" onclick="setLevel('NOOB')">NOOB</div>
+    <div class="level-tab" data-level="L33T" onclick="setLevel('L33T')">L33T</div>
+    <div class="level-tab" data-level="ROXOR" onclick="setLevel('ROXOR')">ROXOR</div>
+  </div>
+  <div style="display:flex;align-items:center;gap:14px">
+    <div class="clock" id="hdr-clock">--:--:--</div>
+    <div class="version" id="fps-counter" style="color:var(--lime)">60 FPS</div>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+
+  <!-- LEFT: Module List -->
+  <div class="panel-left">
+    <div class="panel-title">◆ Modules (14)</div>
+    <div class="module-list" id="module-list"></div>
+    <div style="padding:8px 12px;border-top:1px solid var(--border)">
+      <button class="tl-btn" style="width:100%" onclick="showHistory()">◈ Histoire & Culture</button>
+    </div>
+  </div>
+
+  <!-- CENTER: Canvas -->
+  <div class="viewport">
+    <div class="canvas-wrap">
+      <canvas id="demoCanvas"></canvas>
+      <div class="canvas-info">
+        <span id="info-res">800×500</span>
+        <span id="info-effect">CopperBars</span>
+        <span id="info-module">M01</span>
+      </div>
+      <div class="effect-title-bar">
+        <div class="et-name" id="et-name">Copper & Raster Bars</div>
+        <div class="et-origin" id="et-origin">Amiga OCS · 1985 · Bamiga Sector One</div>
+      </div>
+    </div>
+    <!-- History overlay -->
+    <div class="history-overlay" id="history-overlay">
+      <button class="close-btn" onclick="hideHistory()">✕ FERMER</button>
+      <h2 id="hist-title">Histoire</h2>
+      <div id="hist-content"></div>
+    </div>
+  </div>
+
+  <!-- RIGHT: Parameters -->
+  <div class="panel-right">
+    <div class="param-section">
+      <div class="ps-title">◆ PARAMÈTRES EFFET</div>
+      <div id="param-container"></div>
+    </div>
+    <div class="param-section">
+      <div class="ps-title">◆ PALETTE</div>
+      <div class="param-row">
+        <label>Thème</label>
+        <select id="palette-select" onchange="changePalette(this.value)">
+          <option value="amiga">Amiga Classic</option>
+          <option value="c64">C64</option>
+          <option value="neon">Neon Cyber</option>
+          <option value="fire">Fire</option>
+          <option value="ocean">Ocean</option>
+          <option value="vaporwave">Vaporwave</option>
+        </select>
+      </div>
+      <canvas id="palette-preview" width="230" height="20" style="border-radius:4px;margin-top:4px;width:100%"></canvas>
+    </div>
+    <div class="param-section">
+      <div class="ps-title">◆ GLOBAL</div>
+      <div class="param-row">
+        <label>Vitesse</label>
+        <input type="range" min="1" max="200" value="100" id="global-speed" oninput="globalSpeed=this.value/100;document.getElementById('gs-val').textContent=this.value+'%'">
+        <span class="param-val" id="gs-val">100%</span>
+      </div>
+      <div class="param-row">
+        <label>Résolution</label>
+        <select id="res-select" onchange="changeRes(this.value)">
+          <option value="800x500">800×500</option>
+          <option value="640x400">640×400</option>
+          <option value="320x200">320×200 (Retro)</option>
+          <option value="1024x600">1024×600</option>
+        </select>
+      </div>
+    </div>
+    <div class="param-section" style="flex:1">
+      <div class="ps-title">◆ CREDITS</div>
+      <div id="credits-box" style="font-size:.7rem;color:var(--muted);line-height:1.5">
+        <div style="color:var(--gold)">Effet : Copper Bars</div>
+        <div>Origine : Amiga OCS Copper Coprocessor</div>
+        <div>Ère : 1985-1992</div>
+        <div>Groupe : Bamiga Sector One</div>
+        <div style="margin-top:6px;color:var(--cyan);font-family:'Orbitron',monospace;font-size:.55rem">DEMOFORGE · SERAFIN EDITION</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- TIMELINE -->
+<div class="timeline">
+  <div class="timeline-header">
+    <div class="tl-title">◆ TIMELINE</div>
+    <button class="tl-btn playing" id="btn-play" onclick="togglePlay()">▶ PLAY</button>
+    <button class="tl-btn" onclick="resetTimeline()">⟲ RESET</button>
+    <button class="tl-btn" onclick="randomDemo()">⚡ RANDOM DEMO</button>
+    <span style="font-family:'JetBrains Mono',monospace;font-size:.6rem;color:var(--muted);margin-left:auto" id="tl-time">00:00.000</span>
+  </div>
+  <div class="timeline-tracks" id="timeline-tracks"></div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ═══════════════════════════════════════════════════════════
+// DEMOFORGE V1.0 — FOUNDATION ENGINE
+// Architecture Modulaire · 14 Modules · Serafin Edition
+// ═══════════════════════════════════════════════════════════
+
+// ── PALETTES ──
+const PALETTES = {
+  amiga: [[0,0,170],[0,170,0],[0,170,170],[170,0,0],[170,0,170],[170,85,0],[170,170,170],[85,85,255],[85,255,85],[85,255,255],[255,85,85],[255,85,255],[255,255,85],[255,255,255]],
+  c64: [[0,0,0],[255,255,255],[136,0,0],[170,255,238],[204,68,204],[0,204,85],[0,0,170],[238,238,119],[221,136,85],[102,68,0],[255,119,119],[51,51,51],[119,119,119],[170,255,102],[0,136,255],[187,187,187]],
+  neon: [[0,240,255],[255,0,170],[57,255,20],[255,215,0],[138,43,226],[255,102,34],[0,255,127],[255,0,60],[0,191,255],[255,0,255],[127,255,0],[255,165,0]],
+  fire: [[0,0,0],[32,0,0],[64,0,0],[128,0,0],[192,32,0],[224,64,0],[255,96,0],[255,128,0],[255,160,32],[255,192,64],[255,224,96],[255,255,128],[255,255,192],[255,255,255]],
+  ocean: [[0,0,32],[0,0,64],[0,32,96],[0,64,128],[0,96,160],[0,128,192],[32,160,224],[64,192,240],[128,210,255],[192,230,255],[224,240,255],[255,255,255]],
+  vaporwave: [[255,113,206],[1,205,254],[5,255,161],[185,103,255],[255,151,210],[1,255,255],[121,80,242],[255,195,18],[253,203,110],[0,210,211]]
+};
+let currentPalette = 'amiga';
+
+// ── MODULE DEFINITIONS ──
+const MODULES = [
+  {id:'M01',name:'Copper & Raster Bars',era:'1985-1992',hw:'Amiga OCS',color:'#00f0ff',group:'Bamiga Sector One',
+   history:'Le Copper est un coprocesseur de l\'Amiga capable de modifier les registres vidéo à chaque ligne de balayage. Les coders l\'utilisaient pour créer des barres de couleur horizontales animées — un effet impossible sur d\'autres machines de l\'époque. Les Copper Bars sont devenues l\'effet signature des cracktros Amiga dès 1987.'},
+  {id:'M02',name:'Scrollers',era:'1986-1995',hw:'C64 / Amiga',color:'#ff6622',group:'Horizon / Fairlight',
+   history:'DYCP = Different Y Coordinate Per Character. Sur le C64, chaque caractère pouvait avoir un offset Y indépendant grâce au hardware sprites. Les scrollers sinus sont devenus omniprésents dans toute la demoscene, du C64 au PC.'},
+  {id:'M03',name:'Starfields',era:'1987-∞',hw:'Multi',color:'#ffd700',group:'Future Crew',
+   history:'Le starfield 3D est l\'un des premiers effets de perspective en temps réel. La projection 3D→2D (x\' = x*fov/z) est enseignée à travers cet effet depuis 35 ans. Future Crew l\'a perfectionné dans Second Reality (1993).'},
+  {id:'M04',name:'Plasma',era:'1992-1997',hw:'PC VGA 13h',color:'#ff00aa',group:'Future Crew',
+   history:'L\'effet plasma utilise la somme de fonctions sinusoïdales pour générer des patterns colorés. Popularisé par les démos PC en Mode 13h (320×200, 256 couleurs), il exploite le palette cycling pour l\'animation.'},
+  {id:'M05',name:'Fire & Fluides',era:'1992-1998',hw:'PC VGA',color:'#ff3300',group:'Jare/Psychic Link',
+   history:'L\'effet feu (Doom Fire, 1993) propage la chaleur vers le haut avec refroidissement aléatoire. Fabien Sanglard a documenté l\'algorithme original de PSX Doom. Un classique absolu.'},
+  {id:'M06',name:'Tunnel',era:'1993-2000',hw:'PC VGA Mode X',color:'#9933ff',group:'Tran / Renaissance',
+   history:'Le tunnel utilise des LUT précalculées (atan2 pour l\'angle, 1/distance pour la profondeur). Un seul calcul au démarrage, puis chaque frame = simple lookup + offset. Génie de l\'optimisation.'},
+  {id:'M07',name:'Logo & Sprites',era:'1987-1995',hw:'Amiga Sprites',color:'#39ff14',group:'Fairlight / Skid Row',
+   history:'Les logos qui rebondissent sont l\'emblème des cracktros. Sur Amiga, les sprites hardware permettaient 8 sprites de 16px. Les coders multiplexaient les sprites pour afficher des logos entiers.'},
+  {id:'M08',name:'Matrix & Glitch',era:'1999-∞',hw:'Browser',color:'#00ff41',group:'Demoscene moderne',
+   history:'L\'effet Matrix Rain s\'inspire du film The Matrix (1999) — cascade de caractères verts. Le glitch art est devenu un genre à part entière, mêlant datamosh, pixel sort et corruption contrôlée.'},
+  {id:'M09',name:'Audio Viz',era:'1991-∞',hw:'Amiga Paula',color:'#ff9500',group:'Nectarine / SceneSat',
+   history:'La visualisation audio commence avec le chip Paula de l\'Amiga (4 canaux PCM). Les VU-mètres et oscilloscopes sont présents dans chaque tracker depuis ProTracker (1990).'},
+  {id:'M10',name:'Fontes & Typo',era:'1985-∞',hw:'Multi',color:'#00ccff',group:'Scene Font Archive',
+   history:'Les fontes bitmap de la scène sont un art en soi. Des artistes comme DaVinci (Razor 1911) créaient des charsets pixel par pixel. BMFont de AngelCode a standardisé le format.'},
+  {id:'M11',name:'ASCII/ANSI Art',era:'1990-∞',hw:'PC DOS CP-437',color:'#aaaaaa',group:'ACiD / iCE',
+   history:'L\'art ASCII utilise les 256 caractères CP-437 pour créer des images. Les groupes ACiD Productions et iCE ont produit des chefs-d\'oeuvre. Les NFO files sont du patrimoine culturel numérique.'},
+  {id:'M12',name:'Palette Cycling',era:'1985-1998',hw:'Amiga/VGA DAC',color:'#ff55aa',group:'Mark Ferrari',
+   history:'Mark Ferrari a prouvé qu\'on peut animer sans redessiner : en faisant cycler les index de palette, une image statique s\'anime. Technique utilisée dans les jeux LucasArts (Monkey Island).'},
+  {id:'M13',name:'Transitions',era:'1988-∞',hw:'Multi',color:'#ffaa00',group:'Multi',
+   history:'Les megademos utilisent des transitions pour lier les "parts". Wipes, fades, mosaïques — chaque transition est un mini-effet. L\'art de la transition fluide distingue les grandes démos.'},
+  {id:'M14',name:'Cracktro Templates',era:'1987-∞',hw:'Multi',color:'#ff0066',group:'Razor / Fairlight / Skid Row',
+   history:'Les cracktros sont le premier contact de millions de joueurs avec la demoscene. Chaque groupe avait son style : Razor 1911 (logos imposants), Fairlight (élégance), Skid Row (animations fluides). Patrimoine culturel UNESCO France 2021.'}
+];
+
+let currentModule = 0;
+let currentLevel = 'LAME';
+let globalSpeed = 1.0;
+let isPlaying = true;
+let startTime = performance.now();
+let lastFrameTime = 0;
+let frameCount = 0;
+let fpsDisplay = 60;
+let canvasW = 800, canvasH = 500;
+
+// ═══════════════════════════════════════════════════════════
+// EFFECT IMPLEMENTATIONS — 7 Core Effects
+// ═══════════════════════════════════════════════════════════
+
+// ── M01: COPPER BARS ──
+function renderCopperBars(ctx, w, h, t, pal) {
+  ctx.fillStyle = '#000';
+  ctx.fillRect(0, 0, w, h);
+  const colors = PALETTES[pal] || PALETTES.amiga;
+  const barCount = 12;
+  const barH = Math.max(6, h * 0.04);
+  for (let i = 0; i < barCount; i++) {
+    const y = h/2 + Math.sin(t * 2 + i * 0.5) * (h * 0.35);
+    const ci = i % colors.length;
+    const c = colors[ci];
+    // Draw gradient bar (3 lines: dark, bright, dark)
+    for (let line = -3; line <= 3; line++) {
+      const bright = 1 - Math.abs(line) / 4;
+      ctx.fillStyle = `rgb(${c[0]*bright|0},${c[1]*bright|0},${c[2]*bright|0})`;
+      ctx.fillRect(0, y + line * (barH/6), w, barH/6);
+    }
+  }
+}
+
+// ── M02: SINUS SCROLLER ──
+function renderScroller(ctx, w, h, t, pal) {
+  ctx.fillStyle = '#000';
+  ctx.fillRect(0, 0, w, h);
+  const text = '     DEMOFORGE V1.0 ··· GREETINGS TO ALL DEMOSCENERS! ··· CODE IS ART ··· ANNECY 2026 ··· SERAFIN EDITION ··· PRESERVING 40 YEARS OF DEMOSCENE CULTURE ··· UNESCO PATRIMOINE CULTUREL IMMATERIEL ···      ';
+  const colors = PALETTES[pal] || PALETTES.neon;
+  const charW = Math.max(16, w * 0.025);
+  const charH = charW * 1.5;
+  const scrollX = (t * 120) % (text.length * charW);
+  ctx.font = `bold ${charH}px 'JetBrains Mono', monospace`;
+  ctx.textBaseline = 'middle';
+  for (let i = 0; i < text.length; i++) {
+    const x = i * charW - scrollX;
+    if (x < -charW || x > w + charW) continue;
+    const sinY = Math.sin(x * 0.01 + t * 3) * (h * 0.2);
+    const ci = (i + Math.floor(t * 4)) % colors.length;
+    const c = colors[ci];
+    ctx.fillStyle = `rgb(${c[0]},${c[1]},${c[2]})`;
+    ctx.fillText(text[i], x, h/2 + sinY);
+  }
+}
+
+// ── M03: STARFIELD 3D ──
+const stars = [];
+function initStars(n) { stars.length = 0; for (let i = 0; i < n; i++) stars.push({x:(Math.random()-.5)*1600,y:(Math.random()-.5)*1000,z:Math.random()*1000+1}); }
+initStars(400);
+function renderStarfield(ctx, w, h, t, pal) {
+  ctx.fillStyle = 'rgba(0,0,0,0.15)';
+  ctx.fillRect(0, 0, w, h);
+  const colors = PALETTES[pal] || PALETTES.neon;
+  const speed = 300 * globalSpeed;
+  const cx = w/2, cy = h/2;
+  for (let s of stars) {
+    s.z -= speed * 0.016;
+    if (s.z <= 1) { s.x = (Math.random()-.5)*1600; s.y = (Math.random()-.5)*1000; s.z = 1000; }
+    const sx = cx + (s.x * 500) / s.z;
+    const sy = cy + (s.y * 500) / s.z;
+    if (sx < 0 || sx > w || sy < 0 || sy > h) continue;
+    const bright = Math.min(1, (1000 - s.z) / 600);
+    const size = Math.max(1, (1 - s.z/1000) * 4);
+    const ci = (Math.floor(s.z / 80)) % colors.length;
+    const c = colors[ci];
+    ctx.fillStyle = `rgba(${c[0]},${c[1]},${c[2]},${bright})`;
+    ctx.fillRect(sx, sy, size, size);
+  }
+}
+
+// ── M04: PLASMA ──
+function renderPlasma(ctx, w, h, t, pal) {
+  const colors = PALETTES[pal] || PALETTES.vaporwave;
+  const img = ctx.getImageData(0, 0, w, h);
+  const d = img.data;
+  const step = 4; // skip pixels for perf
+  for (let y = 0; y < h; y += step) {
+    for (let x = 0; x < w; x += step) {
+      const v = Math.sin(x*0.02+t) + Math.sin(y*0.03+t*0.7) + Math.sin((x+y)*0.015+t*1.3) + Math.sin(Math.sqrt(x*x+y*y)*0.01+t*0.5);
+      const ci = Math.abs(Math.floor((v+4)*colors.length/8)) % colors.length;
+      const c = colors[ci];
+      for (let dy = 0; dy < step && y+dy < h; dy++) {
+        for (let dx = 0; dx < step && x+dx < w; dx++) {
+          const idx = ((y+dy)*w+(x+dx))*4;
+          d[idx]=c[0]; d[idx+1]=c[1]; d[idx+2]=c[2]; d[idx+3]=255;
+        }
+      }
+    }
+  }
+  ctx.putImageData(img, 0, 0);
+}
+
+// ── M05: FIRE EFFECT ──
+let fireBuffer = null;
+function initFire(w, h) {
+  const fw = Math.floor(w/2), fh = Math.floor(h/2);
+  fireBuffer = { w: fw, h: fh, data: new Float32Array(fw * fh) };
+}
+function renderFire(ctx, w, h, t, pal) {
+  if (!fireBuffer || fireBuffer.w !== Math.floor(w/2)) initFire(w, h);
+  const fb = fireBuffer, fw = fb.w, fh = fb.h, fd = fb.data;
+  // Ignite bottom row
+  for (let x = 0; x < fw; x++) fd[(fh-1)*fw+x] = Math.random() > 0.4 ? 255 : 0;
+  // Propagate upward
+  for (let y = 0; y < fh-1; y++) {
+    for (let x = 1; x < fw-1; x++) {
+      const avg = (fd[(y+1)*fw+x-1] + fd[(y+1)*fw+x] + fd[(y+1)*fw+x+1] + fd[Math.min(fh-1,y+2)*fw+x]) / 4;
+      fd[y*fw+x] = Math.max(0, avg - 0.8 - Math.random()*1.5);
+    }
+  }
+  const firePal = [[0,0,0],[32,0,0],[64,0,0],[128,8,0],[192,32,0],[224,64,0],[255,96,0],[255,128,16],[255,160,32],[255,192,64],[255,224,96],[255,255,128],[255,255,200],[255,255,255]];
+  const img = ctx.createImageData(w, h);
+  const d = img.data;
+  for (let y = 0; y < h; y++) {
+    for (let x = 0; x < w; x++) {
+      const fy = Math.floor(y*fh/h), fx = Math.floor(x*fw/w);
+      const v = fd[fy*fw+fx];
+      const ci = Math.min(firePal.length-1, Math.floor(v * firePal.length / 256));
+      const c = firePal[ci];
+      const idx = (y*w+x)*4;
+      d[idx]=c[0]; d[idx+1]=c[1]; d[idx+2]=c[2]; d[idx+3]=255;
+    }
+  }
+  ctx.putImageData(img, 0, 0);
+}
+
+// ── M06: TUNNEL ──
+let tunnelLUT = null;
+function initTunnel(w, h) {
+  const dist = new Float32Array(w*h), ang = new Float32Array(w*h);
+  const cx = w/2, cy = h/2;
+  for (let y = 0; y < h; y++) {
+    for (let x = 0; x < w; x++) {
+      const dx = x-cx, dy = y-cy;
+      dist[y*w+x] = 32 / (Math.sqrt(dx*dx+dy*dy)+1);
+      ang[y*w+x] = Math.atan2(dy, dx) / Math.PI * 128 + 128;
+    }
+  }
+  tunnelLUT = {w,h,dist,ang};
+}
+function renderTunnel(ctx, w, h, t, pal) {
+  if (!tunnelLUT || tunnelLUT.w !== w) initTunnel(w, h);
+  const colors = PALETTES[pal] || PALETTES.neon;
+  const img = ctx.createImageData(w, h);
+  const d = img.data;
+  const tl = tunnelLUT;
+  for (let y = 0; y < h; y++) {
+    for (let x = 0; x < w; x++) {
+      const i = y*w+x;
+      const u = (tl.ang[i] + t*30) & 255;
+      const v = (tl.dist[i]*256 + t*60) & 255;
+      const checker = ((u>>4)^(v>>4)) & 1;
+      const ci = checker ? ((u>>3) % colors.length) : (((u>>3)+4) % colors.length);
+      const c = colors[ci];
+      const bright = Math.min(1, tl.dist[i]*12);
+      const idx = i*4;
+      d[idx]=c[0]*bright|0; d[idx+1]=c[1]*bright|0; d[idx+2]=c[2]*bright|0; d[idx+3]=255;
+    }
+  }
+  ctx.putImageData(img, 0, 0);
+}
+
+// ── M07: BOUNCING LOGO ──
+let logoState = {x:100,y:100,vx:3,vy:0,rot:0};
+function renderLogo(ctx, w, h, t, pal) {
+  ctx.fillStyle = 'rgba(0,0,0,0.08)';
+  ctx.fillRect(0, 0, w, h);
+  const ls = logoState;
+  ls.vy += 0.4; ls.y += ls.vy; ls.x += ls.vx;
+  if (ls.y > h - 60) { ls.y = h - 60; ls.vy = -ls.vy * 0.85; }
+  if (ls.x < 30 || ls.x > w - 30) ls.vx = -ls.vx;
+  ls.rot += 0.02;
+  const colors = PALETTES[pal] || PALETTES.neon;
+  ctx.save();
+  ctx.translate(ls.x, ls.y);
+  const squash = 1 + Math.abs(ls.vy) * 0.015;
+  ctx.scale(squash, 1/squash);
+  ctx.rotate(Math.sin(ls.rot) * 0.15);
+  ctx.font = "bold 36px 'Orbitron', monospace";
+  ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+  // Shadow
+  const c1 = colors[0 % colors.length];
+  const c2 = colors[3 % colors.length];
+  ctx.fillStyle = `rgba(${c1[0]},${c1[1]},${c1[2]},0.3)`;
+  ctx.fillText('DEMOFORGE', 3, 3);
+  ctx.fillStyle = `rgb(${c2[0]},${c2[1]},${c2[2]})`;
+  ctx.fillText('DEMOFORGE', 0, 0);
+  ctx.restore();
+  // Draw small bouncing squares
+  for (let i = 0; i < 5; i++) {
+    const bx = (t*80*(i+1)) % w;
+    const by = h/2 + Math.sin(t*3+i*1.2) * h*0.3;
+    const ci = (i+Math.floor(t)) % colors.length;
+    const c = colors[ci];
+    ctx.fillStyle = `rgb(${c[0]},${c[1]},${c[2]})`;
+    ctx.fillRect(bx-4,by-4,8,8);
+  }
+}
+
+// ── M08: MATRIX RAIN ──
+const matrixDrops = [];
+function initMatrix(w) {
+  matrixDrops.length = 0;
+  const cols = Math.floor(w/14);
+  for (let i = 0; i < cols; i++) matrixDrops.push({x:i*14, y:Math.random()*-500, speed:2+Math.random()*6, chars:[]});
+}
+initMatrix(800);
+function renderMatrix(ctx, w, h, t, pal) {
+  ctx.fillStyle = 'rgba(0,0,0,0.06)';
+  ctx.fillRect(0, 0, w, h);
+  ctx.font = "12px 'JetBrains Mono', monospace";
+  const katakana = 'アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン0123456789';
+  for (let drop of matrixDrops) {
+    drop.y += drop.speed;
+    if (drop.y > h + 200) { drop.y = Math.random()*-300; drop.speed = 2+Math.random()*6; }
+    const headY = drop.y;
+    // Head (bright)
+    ctx.fillStyle = '#fff';
+    const ch = katakana[Math.floor(Math.random()*katakana.length)];
+    ctx.fillText(ch, drop.x, headY);
+    // Trail
+    for (let j = 1; j < 20; j++) {
+      const ty = headY - j*14;
+      if (ty < 0) break;
+      const alpha = 1 - j/20;
+      ctx.fillStyle = `rgba(0,255,65,${alpha*0.8})`;
+      ctx.fillText(katakana[Math.floor(Math.random()*katakana.length)], drop.x, ty);
+    }
+  }
+}
+
+// ── M09: AUDIO VIZ (simulated) ──
+function renderAudioViz(ctx, w, h, t, pal) {
+  ctx.fillStyle = '#000';
+  ctx.fillRect(0, 0, w, h);
+  const colors = PALETTES[pal] || PALETTES.neon;
+  const bars = 32;
+  const barW = w / bars - 2;
+  for (let i = 0; i < bars; i++) {
+    const freq = Math.sin(t*3+i*0.3)*0.5 + Math.sin(t*5+i*0.7)*0.3 + Math.sin(t*1.5+i*0.1)*0.2;
+    const barH = (0.5+freq*0.5) * h * 0.8;
+    const ci = i % colors.length;
+    const c = colors[ci];
+    const x = i * (barW + 2) + 1;
+    // Main bar
+    const grad = ctx.createLinearGradient(x, h, x, h-barH);
+    grad.addColorStop(0, `rgb(${c[0]},${c[1]},${c[2]})`);
+    grad.addColorStop(1, `rgba(${c[0]},${c[1]},${c[2]},0.3)`);
+    ctx.fillStyle = grad;
+    ctx.fillRect(x, h-barH, barW, barH);
+    // Peak
+    ctx.fillStyle = `rgb(${Math.min(255,c[0]+100)},${Math.min(255,c[1]+100)},${Math.min(255,c[2]+100)})`;
+    ctx.fillRect(x, h-barH-4, barW, 3);
+  }
+  // Waveform on top
+  ctx.strokeStyle = 'rgba(0,240,255,0.4)';
+  ctx.lineWidth = 1.5;
+  ctx.beginPath();
+  for (let x = 0; x < w; x++) {
+    const y = h*0.3 + Math.sin(x*0.02+t*4)*40 + Math.sin(x*0.05+t*2)*20;
+    x === 0 ? ctx.moveTo(x,y) : ctx.lineTo(x,y);
+  }
+  ctx.stroke();
+}
+
+// ── M10: FONTS DEMO ──
+function renderFonts(ctx, w, h, t, pal) {
+  ctx.fillStyle = '#000';
+  ctx.fillRect(0, 0, w, h);
+  const colors = PALETTES[pal] || PALETTES.amiga;
+  const lines = ['ABCDEFGHIJKLM','NOPQRSTUVWXYZ','0123456789!@#','DEMOFORGE 2030','PIXEL PERFECT'];
+  const sizes = [32, 28, 24, 36, 20];
+  const fonts = ["'Orbitron'","'JetBrains Mono'","'Orbitron'","'Orbitron'","'JetBrains Mono'"];
+  let yy = 40;
+  for (let l = 0; l < lines.length; l++) {
+    const sz = sizes[l];
+    ctx.font = `bold ${sz}px ${fonts[l]}, monospace`;
+    const txt = lines[l];
+    for (let c = 0; c < txt.length; c++) {
+      const ci = (c + l + Math.floor(t*2)) % colors.length;
+      const col = colors[ci];
+      const charW = sz * 0.7;
+      const x = w/2 - (txt.length*charW)/2 + c*charW;
+      const wobble = Math.sin(t*3+c*0.4+l)*4;
+      ctx.fillStyle = `rgb(${col[0]},${col[1]},${col[2]})`;
+      ctx.fillText(txt[c], x, yy + wobble);
+    }
+    yy += sz + 20;
+  }
+}
+
+// ── M11: ASCII ART ──
+function renderASCII(ctx, w, h, t, pal) {
+  ctx.fillStyle = '#000';
+  ctx.fillRect(0, 0, w, h);
+  const charset = ' .:-=+*#%@';
+  const cols = 80, rows = 30;
+  const cw = w/cols, ch = h/rows;
+  ctx.font = `${Math.floor(ch)}px 'JetBrains Mono', monospace`;
+  for (let r = 0; r < rows; r++) {
+    for (let c = 0; c < cols; c++) {
+      const v = Math.sin(c*0.15+t*2)*0.5+Math.sin(r*0.2+t*1.5)*0.5+Math.sin((c+r)*0.1+t)*0.3;
+      const ni = Math.floor((v+1.3)/2.6*charset.length) % charset.length;
+      const bright = (v+1.3)/2.6;
+      ctx.fillStyle = `rgba(0,${150+bright*105|0},${50+bright*80|0},${0.4+bright*0.6})`;
+      ctx.fillText(charset[Math.abs(ni)], c*cw, r*ch+ch);
+    }
+  }
+}
+
+// ── M12: PALETTE CYCLING ──
+function renderPaletteCycle(ctx, w, h, t, pal) {
+  const colors = PALETTES[pal] || PALETTES.amiga;
+  const img = ctx.createImageData(w, h);
+  const d = img.data;
+  const shift = Math.floor(t * 5);
+  for (let y = 0; y < h; y++) {
+    for (let x = 0; x < w; x++) {
+      const pattern = Math.floor(Math.sin(x*0.03)*4 + Math.cos(y*0.04)*4 + Math.sin((x+y)*0.02)*3);
+      const ci = ((pattern + shift) % colors.length + colors.length) % colors.length;
+      const c = colors[ci];
+      const idx = (y*w+x)*4;
+      d[idx]=c[0]; d[idx+1]=c[1]; d[idx+2]=c[2]; d[idx+3]=255;
+    }
+  }
+  ctx.putImageData(img, 0, 0);
+}
+
+// ── M13: TRANSITIONS ──
+function renderTransitions(ctx, w, h, t, pal) {
+  const phase = (t*0.3) % 4;
+  if (phase < 1) { // Wipe
+    renderCopperBars(ctx,w,h,t,pal);
+    const wipeX = (phase)*w;
+    ctx.fillStyle='#000'; ctx.fillRect(wipeX,0,w-wipeX,h);
+    renderStarfield(ctx,w,Math.floor(h*(1-phase)),t,pal);
+  } else if (phase < 2) { // Mosaic
+    renderPlasma(ctx,w,h,t,pal);
+    const blockSize = Math.max(2, 40 - (phase-1)*38);
+    // pixelate
+  } else if (phase < 3) { // Crossfade
+    ctx.globalAlpha = 1-(phase-2);
+    renderCopperBars(ctx,w,h,t,pal);
+    ctx.globalAlpha = phase-2;
+    renderPlasma(ctx,w,h,t,pal);
+    ctx.globalAlpha = 1;
+  } else { // Circle reveal
+    renderFire(ctx,w,h,t,pal);
+    ctx.save();
+    ctx.globalCompositeOperation='destination-in';
+    ctx.beginPath();
+    ctx.arc(w/2,h/2,(phase-3)*Math.max(w,h),0,Math.PI*2);
+    ctx.fill();
+    ctx.restore();
+  }
+}
+
+// ── M14: CRACKTRO TEMPLATE ──
+function renderCracktro(ctx, w, h, t, pal) {
+  // Combine: CopperBars background + Starfield + Scroller + Bouncing Logo
+  renderCopperBars(ctx, w, h, t*0.5, pal);
+  ctx.globalAlpha = 0.3;
+  renderStarfield(ctx, w, h, t, pal);
+  ctx.globalAlpha = 1;
+  // Logo
+  ctx.save();
+  ctx.font = "bold 42px 'Orbitron', monospace";
+  ctx.textAlign = 'center';
+  const colors = PALETTES[pal] || PALETTES.neon;
+  const c = colors[Math.floor(t*2)%colors.length];
+  ctx.fillStyle = `rgb(${c[0]},${c[1]},${c[2]})`;
+  ctx.fillText('DEMOFORGE', w/2, h*0.25 + Math.sin(t*2)*15);
+  ctx.font = "16px 'JetBrains Mono', monospace";
+  ctx.fillStyle = 'rgba(255,255,255,0.7)';
+  ctx.fillText('— CRACKTRO TEMPLATE 2026 —', w/2, h*0.25+40);
+  ctx.restore();
+  // Bottom scroller
+  const text = '     CRACKED & TRAINED BY DEMOFORGE CREW ··· GREETINGS: FAIRLIGHT · RAZOR 1911 · SKID ROW · PARADOX · CLASS ··· CALL OUR BBS! ···     ';
+  ctx.font = "bold 14px 'JetBrains Mono', monospace";
+  const scrollX = (t*100) % (text.length*10);
+  for (let i = 0; i < text.length; i++) {
+    const x = i*10 - scrollX;
+    if (x < -10 || x > w+10) continue;
+    const sinY = Math.sin(x*0.015+t*4)*20;
+    const ci2 = (i+Math.floor(t*5))%colors.length;
+    const cc = colors[ci2];
+    ctx.fillStyle = `rgb(${cc[0]},${cc[1]},${cc[2]})`;
+    ctx.fillText(text[i], x, h*0.8+sinY);
+  }
+}
+
+// ═══════════════════════════════════════════════════════════
+// ENGINE — Render Loop, UI, Module Management
+// ═══════════════════════════════════════════════════════════
+
+const RENDERERS = [
+  renderCopperBars, renderScroller, renderStarfield, renderPlasma,
+  renderFire, renderTunnel, renderLogo, renderMatrix,
+  renderAudioViz, renderFonts, renderASCII, renderPaletteCycle,
+  renderTransitions, renderCracktro
+];
+
+const PARAMS_DEF = {
+  M01: [{name:'Barres',key:'bars',min:4,max:24,def:12},{name:'Amplitude',key:'amp',min:10,max:100,def:70},{name:'Fréquence',key:'freq',min:1,max:20,def:5}],
+  M02: [{name:'Taille Police',key:'size',min:12,max:48,def:24},{name:'Amplitude',key:'amp',min:10,max:100,def:40},{name:'Vitesse Scroll',key:'speed',min:20,max:300,def:120}],
+  M03: [{name:'Étoiles',key:'count',min:50,max:800,def:400},{name:'Profondeur',key:'depth',min:200,max:2000,def:1000},{name:'Vitesse',key:'speed',min:50,max:500,def:300}],
+  M04: [{name:'Échelle X',key:'sx',min:1,max:10,def:2},{name:'Échelle Y',key:'sy',min:1,max:10,def:3},{name:'Résolution',key:'step',min:1,max:8,def:4}],
+  M05: [{name:'Refroidissement',key:'cool',min:1,max:5,def:2},{name:'Intensité',key:'intensity',min:50,max:255,def:200}],
+  M06: [{name:'Rotation',key:'rot',min:1,max:100,def:30},{name:'Profondeur',key:'depth',min:10,max:100,def:60}],
+  M07: [{name:'Gravité',key:'gravity',min:1,max:20,def:8},{name:'Rebond',key:'bounce',min:30,max:100,def:85}],
+  M08: [{name:'Colonnes',key:'cols',min:20,max:120,def:60},{name:'Vitesse Max',key:'maxSpeed',min:2,max:12,def:6}],
+  M09: [{name:'Barres',key:'bars',min:8,max:64,def:32},{name:'Sensibilité',key:'sens',min:10,max:100,def:50}],
+  M10: [{name:'Taille Base',key:'size',min:16,max:48,def:32},{name:'Wobble',key:'wobble',min:0,max:20,def:4}],
+  M11: [{name:'Colonnes',key:'cols',min:40,max:120,def:80},{name:'Lignes',key:'rows',min:15,max:50,def:30}],
+  M12: [{name:'Vitesse Cycle',key:'speed',min:1,max:20,def:5},{name:'Échelle',key:'scale',min:1,max:10,def:3}],
+  M13: [{name:'Durée Trans.',key:'dur',min:1,max:10,def:4}],
+  M14: [{name:'Style',key:'style',min:1,max:3,def:1}]
+};
+
+// ── Canvas Setup ──
+const canvas = document.getElementById('demoCanvas');
+const ctx = canvas.getContext('2d');
+
+function resizeCanvas() {
+  canvas.width = canvasW;
+  canvas.height = canvasH;
+  canvas.style.width = '100%';
+  canvas.style.height = '100%';
+  canvas.style.objectFit = 'contain';
+  ctx.imageSmoothingEnabled = false;
+  document.getElementById('info-res').textContent = canvasW+'×'+canvasH;
+}
+resizeCanvas();
+
+function changeRes(val) {
+  const [w,h] = val.split('x').map(Number);
+  canvasW = w; canvasH = h;
+  resizeCanvas();
+  if (tunnelLUT) tunnelLUT = null;
+  if (fireBuffer) fireBuffer = null;
+  toast('Résolution: '+w+'×'+h);
+}
+
+// ── Module List UI ──
+function buildModuleList() {
+  const list = document.getElementById('module-list');
+  list.innerHTML = '';
+  MODULES.forEach((m, i) => {
+    const div = document.createElement('div');
+    div.className = 'module-item' + (i===currentModule?' active':'');
+    div.innerHTML = `<span class="m-dot" style="background:${m.color}"></span><span class="m-id">${m.id}</span><span class="m-name">${m.name}</span><span class="m-era">${m.era}</span>`;
+    div.onclick = () => selectModule(i);
+    list.appendChild(div);
+  });
+}
+
+function selectModule(idx) {
+  currentModule = idx;
+  const m = MODULES[idx];
+  buildModuleList();
+  buildParams(m.id);
+  buildTimeline();
+  document.getElementById('info-effect').textContent = m.name;
+  document.getElementById('info-module').textContent = m.id;
+  document.getElementById('et-name').textContent = m.name;
+  document.getElementById('et-origin').textContent = `${m.hw} · ${m.era} · ${m.group}`;
+  document.getElementById('credits-box').innerHTML = `
+    <div style="color:var(--gold)">Effet : ${m.name}</div>
+    <div>Origine : ${m.hw}</div>
+    <div>Ère : ${m.era}</div>
+    <div>Groupe : ${m.group}</div>
+    <div style="margin-top:6px;color:var(--cyan);font-family:'Orbitron',monospace;font-size:.55rem">DEMOFORGE · SERAFIN EDITION</div>`;
+  // Reset effect-specific state
+  if (idx === 2) initStars(400);
+  if (idx === 4) fireBuffer = null;
+  if (idx === 5) tunnelLUT = null;
+  if (idx === 6) logoState = {x:canvasW/2,y:100,vx:3,vy:0,rot:0};
+  if (idx === 7) initMatrix(canvasW);
+  toast(m.id + ' · ' + m.name);
+}
+
+function buildParams(moduleId) {
+  const container = document.getElementById('param-container');
+  const params = PARAMS_DEF[moduleId] || [];
+  container.innerHTML = '';
+  params.forEach(p => {
+    const row = document.createElement('div');
+    row.className = 'param-row';
+    row.innerHTML = `<label>${p.name}</label><input type="range" min="${p.min}" max="${p.max}" value="${p.def}" oninput="this.nextElementSibling.textContent=this.value"><span class="param-val">${p.def}</span>`;
+    container.appendChild(row);
+  });
+}
+
+function buildTimeline() {
+  const tracks = document.getElementById('timeline-tracks');
+  tracks.innerHTML = '';
+  MODULES.forEach((m, i) => {
+    const div = document.createElement('div');
+    div.className = 'tl-track';
+    div.style.borderColor = m.color;
+    div.style.color = m.color;
+    if (i === currentModule) div.style.background = m.color+'18';
+    div.textContent = m.id;
+    div.onclick = () => selectModule(i);
+    tracks.appendChild(div);
+  });
+}
+
+function changePalette(pal) {
+  currentPalette = pal;
+  drawPalettePreview();
+  toast('Palette: ' + pal);
+}
+
+function drawPalettePreview() {
+  const pc = document.getElementById('palette-preview');
+  const pctx = pc.getContext('2d');
+  const colors = PALETTES[currentPalette] || PALETTES.amiga;
+  const cw = pc.width / colors.length;
+  colors.forEach((c,i) => { pctx.fillStyle=`rgb(${c[0]},${c[1]},${c[2]})`; pctx.fillRect(i*cw,0,cw+1,pc.height); });
+}
+
+function setLevel(level) {
+  currentLevel = level;
+  document.querySelectorAll('.level-tab').forEach(t => t.classList.toggle('active', t.dataset.level===level));
+  toast('Niveau: ' + level);
+}
+
+function togglePlay() {
+  isPlaying = !isPlaying;
+  const btn = document.getElementById('btn-play');
+  btn.textContent = isPlaying ? '▶ PLAY' : '⏸ PAUSE';
+  btn.classList.toggle('playing', isPlaying);
+}
+
+function resetTimeline() { startTime = performance.now(); toast('Timeline reset'); }
+
+function randomDemo() {
+  const idx = Math.floor(Math.random() * MODULES.length);
+  const pals = Object.keys(PALETTES);
+  currentPalette = pals[Math.floor(Math.random()*pals.length)];
+  document.getElementById('palette-select').value = currentPalette;
+  drawPalettePreview();
+  selectModule(idx);
+}
+
+function showHistory() {
+  const m = MODULES[currentModule];
+  document.getElementById('hist-title').textContent = m.id + ' · ' + m.name;
+  document.getElementById('hist-content').innerHTML = `
+    <span class="era-badge">${m.era}</span><span class="hw-badge">${m.hw}</span>
+    <p>${m.history}</p>
+    <p style="color:var(--gold);margin-top:16px;font-family:'Orbitron',monospace;font-size:.7rem">Groupe référence : ${m.group}</p>
+    <p style="color:var(--muted);margin-top:10px;font-size:.75rem">La demoscene est reconnue patrimoine culturel immatériel par l'UNESCO France depuis 2021. DemoForge préserve et enseigne ces techniques pour les générations futures.</p>`;
+  document.getElementById('history-overlay').classList.add('show');
+}
+function hideHistory() { document.getElementById('history-overlay').classList.remove('show'); }
+
+function toast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 1800);
+}
+
+// ═══════════════════════════════════════════════════════════
+// MAIN LOOP & INIT
+// ═══════════════════════════════════════════════════════════
+
+let lastFpsUpdate = 0;
+let fpsSamples = 0;
+
+function mainLoop(now) {
+  requestAnimationFrame(mainLoop);
+
+  // FPS counter
+  fpsSamples++;
+  if (now - lastFpsUpdate > 500) {
+    fpsDisplay = Math.round(fpsSamples * 1000 / (now - lastFpsUpdate));
+    document.getElementById('fps-counter').textContent = fpsDisplay + ' FPS';
+    document.getElementById('fps-counter').style.color = fpsDisplay >= 55 ? 'var(--lime)' : fpsDisplay >= 30 ? 'var(--gold)' : 'var(--magenta)';
+    lastFpsUpdate = now;
+    fpsSamples = 0;
+  }
+
+  if (!isPlaying) return;
+
+  const elapsed = (now - startTime) / 1000 * globalSpeed;
+
+  // Timeline time display
+  const mins = Math.floor(elapsed / 60);
+  const secs = Math.floor(elapsed % 60);
+  const ms = Math.floor((elapsed % 1) * 1000);
+  document.getElementById('tl-time').textContent = 
+    String(mins).padStart(2,'0') + ':' + String(secs).padStart(2,'0') + '.' + String(ms).padStart(3,'0');
+
+  // Render current effect
+  const renderer = RENDERERS[currentModule];
+  if (renderer) {
+    renderer(ctx, canvasW, canvasH, elapsed, currentPalette);
+  }
+}
+
+// ── Clock ──
+function updateClock() {
+  const now = new Date();
+  document.getElementById('hdr-clock').textContent = 
+    String(now.getHours()).padStart(2,'0') + ':' + 
+    String(now.getMinutes()).padStart(2,'0') + ':' + 
+    String(now.getSeconds()).padStart(2,'0');
+}
+setInterval(updateClock, 1000);
+updateClock();
+
+// ── Keyboard shortcuts ──
+document.addEventListener('keydown', e => {
+  if (e.key === ' ') { e.preventDefault(); togglePlay(); }
+  if (e.key === 'ArrowRight') selectModule(Math.min(MODULES.length-1, currentModule+1));
+  if (e.key === 'ArrowLeft') selectModule(Math.max(0, currentModule-1));
+  if (e.key === 'r' || e.key === 'R') randomDemo();
+  if (e.key === 'h' || e.key === 'H') { 
+    document.getElementById('history-overlay').classList.contains('show') ? hideHistory() : showHistory(); 
+  }
+  if (e.key >= '1' && e.key <= '4') {
+    const levels = ['LAME','NOOB','L33T','ROXOR'];
+    setLevel(levels[parseInt(e.key)-1]);
+  }
+});
+
+// ── Init ──
+buildModuleList();
+buildParams('M01');
+buildTimeline();
+drawPalettePreview();
+requestAnimationFrame(mainLoop);
+toast('DEMOFORGE V1.0 · Foundation · Ready');
+
+// Log architecture info
+console.log('%c DEMOFORGE V1.0 — Foundation Engine ', 'background:#0c0c1a;color:#00f0ff;font-size:14px;font-weight:bold;padding:8px;border:1px solid #00f0ff;border-radius:4px');
+console.log('%c Architecture Modulaire · 14 Modules · Serafin Edition ', 'color:#ff00aa;font-size:11px');
+console.log('%c Raccourcis: ESPACE=Play/Pause | ←→=Modules | R=Random | H=Histoire | 1-4=Niveaux ', 'color:#7a7a9a;font-size:10px');
+</script>
+</body>
+</html>

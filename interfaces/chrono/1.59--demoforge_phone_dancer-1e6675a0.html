@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>State Of The Art - Silhouette Study</title>
+<style>
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{
+  overflow:hidden;
+  background:#000;
+  font-family:sans-serif;
+}
+
+.scene{
+  position:relative;
+  width:100%;
+  height:100%;
+  display:grid;
+  place-items:center;
+  background:#000;
+}
+
+.frame{
+  position:relative;
+  width:min(78vw,960px);
+  aspect-ratio:4/3;
+  overflow:hidden;
+  background:
+    radial-gradient(circle at 74% 70%, rgba(239,255,104,.96) 0 18%, rgba(239,255,104,.72) 18%, rgba(239,255,104,.18) 34%, transparent 52%),
+    radial-gradient(circle at 62% 60%, rgba(241,255,164,.58) 0 16%, transparent 44%),
+    linear-gradient(180deg, #f3f4ea 0%, #efefe4 100%);
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,.06),
+    0 28px 90px rgba(0,0,0,.65);
+}
+
+.frame::before{
+  content:"";
+  position:absolute;
+  left:34%;
+  top:-7%;
+  width:9%;
+  height:58%;
+  background:linear-gradient(180deg, rgba(246,255,103,.9), rgba(234,255,96,.1));
+  filter:blur(10px);
+  transform:rotate(19deg);
+  opacity:.95;
+}
+
+.frame::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:
+    repeating-linear-gradient(180deg, rgba(255,255,255,.028) 0 2px, transparent 2px 4px),
+    radial-gradient(circle at 50% 50%, transparent 58%, rgba(0,0,0,.08) 100%);
+  mix-blend-mode:multiply;
+  pointer-events:none;
+}
+
+.silhouette{
+  position:absolute;
+  left:50%;
+  bottom:-2%;
+  width:48%;
+  height:92%;
+  transform:translateX(-50%);
+  transform-origin:50% 86%;
+  animation:groove 2.7s ease-in-out infinite;
+  filter:drop-shadow(0 0 1px rgba(0,0,0,.25));
+}
+
+.silhouette svg{
+  width:100%;
+  height:100%;
+  display:block;
+  overflow:visible;
+}
+
+.body{fill:#0b0b0b}
+
+.head,
+.torso,
+.hip,
+.arm-left,
+.arm-right,
+.leg-left,
+.leg-right{
+  transform-box:fill-box;
+}
+
+.head{
+  transform-origin:58% 90%;
+  animation:headMove 2.7s ease-in-out infinite;
+}
+
+.torso{
+  transform-origin:50% 32%;
+  animation:torsoMove 2.7s ease-in-out infinite;
+}
+
+.hip{
+  transform-origin:50% 14%;
+  animation:hipMove 2.7s ease-in-out infinite;
+}
+
+.arm-left{
+  transform-origin:82% 12%;
+  animation:armLeftMove 2.7s ease-in-out infinite;
+}
+
+.arm-right{
+  transform-origin:18% 16%;
+  animation:armRightMove 2.7s ease-in-out infinite;
+}
+
+.phone{
+  transform-box:fill-box;
+  transform-origin:50% 50%;
+  animation:phoneMove 2.7s ease-in-out infinite;
+}
+
+.leg-left{
+  transform-origin:62% 8%;
+  animation:legLeftMove 2.7s ease-in-out infinite;
+}
+
+.leg-right{
+  transform-origin:40% 8%;
+  animation:legRightMove 2.7s ease-in-out infinite;
+}
+
+.grain{
+  position:absolute;
+  inset:0;
+  opacity:.08;
+  background-image:
+    radial-gradient(circle at 20% 30%, #000 0 .7px, transparent .8px),
+    radial-gradient(circle at 70% 40%, #000 0 .7px, transparent .8px),
+    radial-gradient(circle at 40% 80%, #000 0 .7px, transparent .8px);
+  background-size:11px 11px, 15px 15px, 17px 17px;
+  mix-blend-mode:multiply;
+  pointer-events:none;
+}
+
+@keyframes groove{
+  0%,100%{transform:translateX(-50%) translateY(0) rotate(-1.2deg)}
+  25%{transform:translateX(-50%) translateY(-1.2%) rotate(.8deg)}
+  50%{transform:translateX(-50%) translateY(-3.2%) rotate(-1.8deg)}
+  75%{transform:translateX(-50%) translateY(-1%) rotate(1.2deg)}
+}
+
+@keyframes headMove{
+  0%,100%{transform:rotate(-7deg)}
+  50%{transform:rotate(-1deg)}
+}
+
+@keyframes torsoMove{
+  0%,100%{transform:rotate(-2deg)}
+  50%{transform:rotate(2deg)}
+}
+
+@keyframes hipMove{
+  0%,100%{transform:rotate(1deg)}
+  50%{transform:rotate(-2.5deg)}
+}
+
+@keyframes armLeftMove{
+  0%,100%{transform:rotate(-2deg)}
+  50%{transform:rotate(10deg)}
+}
+
+@keyframes armRightMove{
+  0%,100%{transform:rotate(-6deg)}
+  50%{transform:rotate(-14deg)}
+}
+
+@keyframes phoneMove{
+  0%,100%{transform:rotate(-6deg) translateY(0)}
+  50%{transform:rotate(-1deg) translateY(-2%)}
+}
+
+@keyframes legLeftMove{
+  0%,100%{transform:rotate(1deg)}
+  50%{transform:rotate(-4deg)}
+}
+
+@keyframes legRightMove{
+  0%,100%{transform:rotate(-1deg)}
+  50%{transform:rotate(5deg)}
+}
+
+@media (max-width: 900px){
+  .frame{width:min(92vw,960px)}
+  .silhouette{width:54%;height:94%}
+}
+</style>
+</head>
+<body>
+<main class="scene">
+  <div class="frame">
+    <div class="silhouette" aria-hidden="true">
+      <svg viewBox="0 0 380 520" role="img" aria-label="Silhouette dansante">
+        <g>
+          <g class="head">
+            <path class="body" d="M157 67C165 46 181 34 200 35C222 36 240 52 245 74C249 94 241 113 225 124C206 136 180 137 162 126C148 117 139 99 142 82C144 75 149 70 157 67Z"/>
+            <path class="body" d="M150 70C156 46 173 30 196 28C218 27 238 38 249 56C256 68 259 83 258 95C247 94 237 90 225 82C217 77 211 72 206 66C201 79 190 90 174 100C164 106 154 110 145 111C143 97 144 83 150 70Z"/>
+          </g>
+
+          <g class="torso">
+            <path class="body" d="M161 130C175 123 195 122 214 128C233 134 246 149 253 169C258 186 264 202 273 216C283 232 287 248 284 266C281 286 269 302 251 313C234 323 212 328 188 328C164 327 145 321 132 309C116 296 109 278 109 255C109 230 119 208 132 191C144 175 152 159 155 143C156 137 157 133 161 130Z"/>
+          </g>
+
+          <g class="arm-left">
+            <path class="body" d="M132 177C113 185 97 198 88 214C80 228 79 243 86 254C93 264 104 266 111 258C117 251 119 240 120 228C122 210 126 193 141 181Z"/>
+            <path class="body" d="M82 214C69 225 60 238 56 250C52 263 54 274 62 281C70 288 80 285 86 276C91 268 92 258 91 247C90 236 92 225 98 216Z"/>
+            <path class="body" d="M50 276C47 287 50 295 58 301C66 306 75 303 79 295C82 288 81 281 77 274Z"/>
+          </g>
+
+          <g class="arm-right">
+            <path class="body" d="M239 175C253 184 264 194 271 208C277 220 280 232 280 243C279 252 274 258 266 259C258 259 251 255 247 248C243 241 241 232 240 222C239 208 236 194 229 183Z"/>
+            <path class="body" d="M270 209C281 216 289 226 294 238C298 248 298 257 294 264C290 271 282 272 274 268C266 264 261 257 258 247C255 236 257 224 270 209Z"/>
+            <path class="body" d="M287 237C295 240 301 245 304 252C307 258 306 264 301 267C296 270 289 269 283 264C278 260 276 252 287 237Z"/>
+          </g>
+
+          <g class="phone">
+            <rect class="body" x="292" y="232" width="17" height="28" rx="3"/>
+          </g>
+
+          <g class="hip">
+            <path class="body" d="M151 318C170 327 194 331 224 323C231 344 229 368 222 393C216 417 212 443 213 473H189C186 446 184 420 180 394C177 369 167 344 151 318Z"/>
+          </g>
+
+          <g class="leg-left">
+            <path class="body" d="M190 386C201 405 208 427 211 454C213 478 210 497 201 512C193 526 182 531 172 525C163 519 159 508 160 493C161 476 162 459 160 443C158 424 154 405 146 388Z"/>
+          </g>
+
+          <g class="leg-right">
+            <path class="body" d="M172 386C165 404 152 422 135 440C119 458 109 476 105 495C102 509 95 518 83 519C72 520 64 512 63 499C62 482 68 463 80 444C94 424 103 403 108 381Z"/>
+          </g>
+        </g>
+      </svg>
+    </div>
+    <div class="grain"></div>
+  </div>
+</main>
+</body>
+</html>

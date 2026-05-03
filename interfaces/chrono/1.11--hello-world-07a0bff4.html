@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hello World × 25</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0f;
+    --surface: #111118;
+    --border: #1e1e2e;
+    --gold: #c9a84c;
+    --gold-light: #e8c97a;
+    --white: #f0ede8;
+    --muted: #5a5870;
+    --accent: #8b6fcb;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--white);
+    font-family: 'Space Mono', monospace;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    position: relative;
+  }
+
+  /* Grain texture */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 100;
+    opacity: 0.4;
+  }
+
+  /* Radial glow */
+  body::after {
+    content: '';
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(139,111,203,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .container {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    padding: 2rem;
+  }
+
+  .eyebrow {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.35em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+    opacity: 0;
+    animation: fadeUp 0.6s ease forwards 0.2s;
+  }
+
+  .main-hello {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(4rem, 15vw, 9rem);
+    font-weight: 900;
+    line-height: 0.9;
+    letter-spacing: -0.02em;
+    color: var(--white);
+    opacity: 0;
+    animation: fadeUp 0.7s ease forwards 0.4s;
+    position: relative;
+    display: inline-block;
+    cursor: default;
+  }
+
+  .main-hello .word {
+    display: inline-block;
+    transition: transform 0.3s ease;
+  }
+
+  .main-hello:hover .word {
+    transform: skewX(-3deg) scale(1.02);
+  }
+
+  /* Gold underline */
+  .main-hello::after {
+    content: '';
+    position: absolute;
+    bottom: 4px;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    opacity: 0;
+    animation: fadeIn 1s ease forwards 1.2s;
+  }
+
+  .language-tag {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    color: var(--gold-light);
+    text-transform: uppercase;
+    margin-top: 0.8rem;
+    opacity: 0;
+    animation: fadeUp 0.6s ease forwards 0.6s;
+    min-height: 1.2em;
+  }
+
+  .btn-wrap {
+    margin-top: 3rem;
+    opacity: 0;
+    animation: fadeUp 0.6s ease forwards 0.8s;
+  }
+
+  .btn {
+    background: transparent;
+    border: 1px solid var(--gold);
+    color: var(--gold);
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    padding: 0.9rem 2.5rem;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: color 0.3s ease;
+  }
+
+  .btn::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--gold);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .btn:hover::before { transform: scaleX(1); }
+  .btn:hover { color: var(--bg); }
+
+  .btn span { position: relative; z-index: 1; }
+
+  /* Counter */
+  .counter {
+    margin-top: 2rem;
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    color: var(--muted);
+    opacity: 0;
+    animation: fadeIn 0.5s ease forwards 1s;
+  }
+
+  .counter strong {
+    color: var(--accent);
+    font-weight: 700;
+  }
+
+  /* Floating language pills */
+  .pills {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+  }
+
+  .pill {
+    position: absolute;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.55rem;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    opacity: 0;
+    white-space: nowrap;
+    animation: floatUp var(--dur, 8s) ease-in var(--delay, 0s) infinite;
+  }
+
+  /* Decorative corners */
+  .corner {
+    position: fixed;
+    width: 40px;
+    height: 40px;
+    opacity: 0.3;
+  }
+  .corner-tl { top: 2rem; left: 2rem; border-top: 1px solid var(--gold); border-left: 1px solid var(--gold); }
+  .corner-tr { top: 2rem; right: 2rem; border-top: 1px solid var(--gold); border-right: 1px solid var(--gold); }
+  .corner-bl { bottom: 2rem; left: 2rem; border-bottom: 1px solid var(--gold); border-left: 1px solid var(--gold); }
+  .corner-br { bottom: 2rem; right: 2rem; border-bottom: 1px solid var(--gold); border-right: 1px solid var(--gold); }
+
+  /* Orbit ring */
+  .ring {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 320px;
+    height: 320px;
+    border: 1px solid rgba(201,168,76,0.08);
+    border-radius: 50%;
+    pointer-events: none;
+    animation: spin 20s linear infinite;
+  }
+
+  .ring::before {
+    content: '';
+    position: absolute;
+    top: -4px;
+    left: 50%;
+    width: 8px;
+    height: 8px;
+    background: var(--gold);
+    border-radius: 50%;
+    transform: translateX(-50%);
+    box-shadow: 0 0 10px var(--gold);
+  }
+
+  /* Transitions */
+  .fade-out { animation: fadeOut 0.3s ease forwards !important; }
+  .fade-in-fast { animation: fadeInFast 0.4s ease forwards !important; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  @keyframes fadeOut {
+    to { opacity: 0; transform: translateY(-15px) scale(0.97); }
+  }
+  @keyframes fadeInFast {
+    from { opacity: 0; transform: translateY(15px) scale(0.97); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+  }
+  @keyframes floatUp {
+    0% { opacity: 0; transform: translateY(0); }
+    10% { opacity: 0.6; }
+    90% { opacity: 0.3; }
+    100% { opacity: 0; transform: translateY(-100px); }
+  }
+  @keyframes spin {
+    from { transform: translate(-50%, -50%) rotate(0deg); }
+    to { transform: translate(-50%, -50%) rotate(360deg); }
+  }
+</style>
+</head>
+<body>
+
+<div class="corner corner-tl"></div>
+<div class="corner corner-tr"></div>
+<div class="corner corner-bl"></div>
+<div class="corner corner-br"></div>
+
+<div class="pills" id="pills"></div>
+
+<div class="container">
+  <div class="ring"></div>
+
+  <p class="eyebrow">Hello World — 25 langues</p>
+
+  <div class="main-hello" id="helloText">
+    <span class="word">Bonjour</span>
+  </div>
+
+  <p class="language-tag" id="langTag">Français</p>
+
+  <div class="btn-wrap">
+    <button class="btn" onclick="nextHello()">
+      <span>Suivant →</span>
+    </button>
+  </div>
+
+  <p class="counter">
+    <strong id="countNum">1</strong> / 25 langues
+  </p>
+</div>
+
+<script>
+  const hellos = [
+    { word: "Bonjour",      lang: "Français",    flag: "🇫🇷" },
+    { word: "Hello",        lang: "Anglais",      flag: "🇬🇧" },
+    { word: "Hola",         lang: "Espagnol",     flag: "🇪🇸" },
+    { word: "Ciao",         lang: "Italien",      flag: "🇮🇹" },
+    { word: "Hallo",        lang: "Allemand",     flag: "🇩🇪" },
+    { word: "Olá",          lang: "Portugais",    flag: "🇵🇹" },
+    { word: "Привет",       lang: "Russe",        flag: "🇷🇺" },
+    { word: "你好",          lang: "Chinois",      flag: "🇨🇳" },
+    { word: "こんにちは",    lang: "Japonais",     flag: "🇯🇵" },
+    { word: "안녕하세요",    lang: "Coréen",       flag: "🇰🇷" },
+    { word: "مرحبا",        lang: "Arabe",        flag: "🇸🇦" },
+    { word: "Merhaba",      lang: "Turc",         flag: "🇹🇷" },
+    { word: "Namaste",      lang: "Hindi",        flag: "🇮🇳" },
+    { word: "Hej",          lang: "Suédois",      flag: "🇸🇪" },
+    { word: "Hei",          lang: "Norvégien",    flag: "🇳🇴" },
+    { word: "Γεια σας",     lang: "Grec",         flag: "🇬🇷" },
+    { word: "Shalom",       lang: "Hébreu",       flag: "🇮🇱" },
+    { word: "Sawubona",     lang: "Zoulou",       flag: "🇿🇦" },
+    { word: "Mbote",        lang: "Lingala",      flag: "🇨🇩" },
+    { word: "Szia",         lang: "Hongrois",     flag: "🇭🇺" },
+    { word: "Tere",         lang: "Estonien",     flag: "🇪🇪" },
+    { word: "Salut",        lang: "Roumain",      flag: "🇷🇴" },
+    { word: "Cześć",        lang: "Polonais",     flag: "🇵🇱" },
+    { word: "สวัสดี",       lang: "Thaïlandais",  flag: "🇹🇭" },
+    { word: "Xin chào",     lang: "Vietnamien",   flag: "🇻🇳" },
+  ];
+
+  // Shuffle
+  function shuffle(arr) {
+    const a = [...arr];
+    for (let i = a.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+  }
+
+  let queue = shuffle(hellos);
+  let idx = 0;
+
+  const helloText = document.getElementById('helloText');
+  const langTag = document.getElementById('langTag');
+  const countNum = document.getElementById('countNum');
+
+  // Show first
+  show(queue[0]);
+
+  function show(item) {
+    helloText.querySelector('.word').textContent = item.word;
+    langTag.textContent = `${item.flag}  ${item.lang}`;
+    countNum.textContent = idx + 1;
+  }
+
+  function nextHello() {
+    // Fade out
+    helloText.classList.remove('fade-in-fast');
+    langTag.classList.remove('fade-in-fast');
+    helloText.classList.add('fade-out');
+    langTag.classList.add('fade-out');
+
+    setTimeout(() => {
+      idx = (idx + 1) % queue.length;
+      if (idx === 0) queue = shuffle(hellos);
+
+      show(queue[idx]);
+
+      helloText.classList.remove('fade-out');
+      langTag.classList.remove('fade-out');
+      helloText.classList.add('fade-in-fast');
+      langTag.classList.add('fade-in-fast');
+
+      spawnPill(queue[(idx - 1 + queue.length) % queue.length]);
+    }, 280);
+  }
+
+  // Floating pills
+  const pillsEl = document.getElementById('pills');
+
+  function spawnPill(item) {
+    const p = document.createElement('div');
+    p.className = 'pill';
+    p.textContent = `${item.word} · ${item.lang}`;
+    p.style.left = `${10 + Math.random() * 80}%`;
+    p.style.bottom = `${5 + Math.random() * 20}%`;
+    p.style.setProperty('--dur', `${5 + Math.random() * 4}s`);
+    p.style.setProperty('--delay', '0s');
+    pillsEl.appendChild(p);
+    setTimeout(() => p.remove(), 9000);
+  }
+
+  // Keyboard support
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'Enter') nextHello();
+  });
+</script>
+</body>
+</html>

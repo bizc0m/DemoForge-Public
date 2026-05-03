@@ -1,2 +1,14 @@
+# OS / editor noise
 .DS_Store
-subrepos/
+__MACOSX/
+._*
+Thumbs.db
+.vscode/
+.idea/
+
+# generated / caches
+node_modules/
+dist/
+build/
+.cache/
+*.log

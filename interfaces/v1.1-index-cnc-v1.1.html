@@ -1,0 +1,2406 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CNC Coding Is Not A Crime</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Share+Tech+Mono&family=Silkscreen:wght@400;700&family=VT323&family=IBM+Plex+Mono:wght@400;600&display=swap');
+    /* Font sources used with permissive web embedding:
+       - Press Start 2P: https://fonts.google.com/specimen/Press+Start+2P
+       - Share Tech Mono: https://fonts.google.com/specimen/Share+Tech+Mono
+       - Silkscreen: https://fonts.google.com/specimen/Silkscreen
+       - VT323: https://fonts.google.com/specimen/VT323
+       - IBM Plex Mono: https://fonts.google.com/specimen/IBM+Plex+Mono
+       Proposed but not embedded directly:
+       - Oldschool PC Font Resource: direct webfont package exists, but no single stable pinned file URL is bundled here. Source: https://int10h.org/oldschool-pc-fonts/
+       - BitmapFont Collection / archive fonts: licensing and redistribution status not clear enough for auto-bundling here. Source: https://korben.info/bitmapfont-collection-polices-issues-demoscene.html
+       - Fonts In Use demo references are editorial examples, not an install source. Source: https://fontsinuse.com/sets/15109/demoscene
+       - EESAB Pirates-Typographes is documentation/research, not a font CDN. Source: https://u270d.eesab.fr/ressources/pirates-typographes/
+    */
+    :root {
+      --bg-1: #09101e;
+      --bg-2: #03070f;
+      --panel: rgba(11, 17, 33, 0.92);
+      --panel-2: rgba(18, 28, 51, 0.96);
+      --line: rgba(150, 199, 255, 0.18);
+      --text: #eef5ff;
+      --muted: #9db0d8;
+      --accent: #58dcff;
+      --accent-2: #ffd760;
+      --ok: #70ffb0;
+      --warn: #ffc15e;
+      --shadow: 0 22px 58px rgba(0, 0, 0, 0.34);
+      --radius: 22px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "Trebuchet MS", Verdana, sans-serif;
+      font-size: 12px;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 10% 14%, rgba(88, 220, 255, 0.2), transparent 24%),
+        radial-gradient(circle at 88% 8%, rgba(255, 215, 96, 0.14), transparent 16%),
+        linear-gradient(180deg, var(--bg-1), var(--bg-2));
+    }
+
+    .app {
+      width: min(1450px, calc(100% - 20px));
+      margin: 10px auto 24px;
+      display: grid;
+      grid-template-columns: 390px minmax(0, 1fr) 360px;
+      gap: 16px;
+      align-items: start;
+    }
+
+    .panel,
+    .stage,
+    .footer-note {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(10px);
+    }
+
+    .panel,
+    .stage {
+      padding: 14px;
+      display: grid;
+      gap: 14px;
+    }
+
+    .footer-note {
+      grid-column: 1 / -1;
+      padding: 12px 14px;
+      display: grid;
+      gap: 12px;
+    }
+
+    h1,
+    h2,
+    h3,
+    p {
+      margin: 0;
+    }
+
+    .hero {
+      padding: 12px;
+      border-radius: 18px;
+      background:
+        linear-gradient(135deg, rgba(88, 220, 255, 0.14), rgba(255, 215, 96, 0.14)),
+        rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      display: grid;
+      gap: 8px;
+    }
+
+    .hero h1 {
+      font-size: 0.96rem;
+      line-height: 1.05;
+      white-space: nowrap;
+    }
+
+    .muted,
+    .tiny,
+    .source-note {
+      color: var(--muted);
+    }
+
+    .section {
+      display: grid;
+      gap: 10px;
+    }
+
+    .section-title {
+      font-size: 0.76rem;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      color: #deebff;
+    }
+
+    .grid-2,
+    .grid-3 {
+      display: grid;
+      gap: 10px;
+    }
+
+    .grid-2 {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .grid-3 {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    button,
+    input,
+    select,
+    textarea {
+      font: inherit;
+      color: var(--text);
+      border-radius: 15px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+    }
+
+    button {
+      min-height: 36px;
+      padding: 7px 9px;
+      cursor: pointer;
+      font-weight: 700;
+      background: linear-gradient(180deg, rgba(116, 166, 255, 0.26), rgba(50, 83, 160, 0.18));
+      transition: transform 120ms ease, border-color 120ms ease, background 120ms ease;
+    }
+
+    button:hover,
+    button:focus-visible {
+      transform: translateY(-1px);
+      border-color: rgba(255, 255, 255, 0.34);
+    }
+
+    button.primary {
+      background: linear-gradient(180deg, rgba(112, 255, 176, 0.3), rgba(34, 124, 72, 0.22));
+      border-color: rgba(112, 255, 176, 0.44);
+    }
+
+    button.warning {
+      background: linear-gradient(180deg, rgba(255, 193, 94, 0.28), rgba(163, 103, 21, 0.18));
+    }
+
+    button.small {
+      min-height: 38px;
+      padding: 7px 9px;
+      font-size: 0.9rem;
+    }
+
+    label {
+      display: grid;
+      gap: 6px;
+      font-weight: 700;
+    }
+
+    input[type="text"],
+    input[type="url"],
+    select,
+    textarea {
+      width: 100%;
+      padding: 8px 10px;
+      background: rgba(5, 10, 20, 0.92);
+    }
+
+    textarea {
+      min-height: 72px;
+      resize: vertical;
+    }
+
+    input[type="range"] {
+      width: 100%;
+      accent-color: var(--accent);
+    }
+
+    .range-line {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .pill {
+      padding: 4px 8px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.08);
+      font-size: 0.68rem;
+      white-space: nowrap;
+    }
+
+    .stage {
+      gap: 12px;
+    }
+
+    .stage-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .canvas-shell {
+      position: relative;
+      overflow: hidden;
+      border-radius: 18px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: #000;
+      aspect-ratio: 16 / 10;
+      min-height: 320px;
+    }
+
+    .export-preview-shell {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 220px;
+      gap: 14px;
+      align-items: stretch;
+    }
+
+    .export-preview-shell.side-disabled {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .watermark-side {
+      border-radius: 16px;
+      border: 1px dashed rgba(255, 255, 255, 0.12);
+      background: rgba(255, 255, 255, 0.03);
+      padding: 16px;
+      display: grid;
+      align-content: end;
+      gap: 8px;
+      min-height: 100%;
+    }
+
+    canvas {
+      display: block;
+      width: 100%;
+      height: 100%;
+      image-rendering: pixelated;
+    }
+
+    .canvas-caption {
+      position: absolute;
+      left: 14px;
+      right: 14px;
+      bottom: 14px;
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      pointer-events: none;
+      color: rgba(255, 255, 255, 0.82);
+      font-size: 0.72rem;
+    }
+
+    .layers-list,
+    .versions-list,
+    .resources-list,
+    .timeline-list {
+      display: grid;
+      gap: 10px;
+    }
+
+    .layer-card,
+    .version-card,
+    .resource-card,
+    .timeline-card {
+      padding: 10px;
+      border-radius: 16px;
+      background: var(--panel-2);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      display: grid;
+      gap: 6px;
+    }
+
+    .timeline-track {
+      position: relative;
+      height: 54px;
+      border-radius: 14px;
+      background:
+        linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px) 0 0 / 10% 100%,
+        rgba(5, 10, 20, 0.96);
+      overflow: hidden;
+      cursor: pointer;
+    }
+
+    .timeline-block {
+      position: absolute;
+      top: 8px;
+      bottom: 8px;
+      min-width: 32px;
+      border-radius: 10px;
+      border: 1px solid rgba(255,255,255,0.18);
+      background: linear-gradient(180deg, rgba(88,220,255,0.22), rgba(58,96,188,0.18));
+      padding: 8px 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      white-space: nowrap;
+      overflow: hidden;
+      user-select: none;
+    }
+
+    .timeline-block.selected {
+      border-color: rgba(255,215,96,0.75);
+      box-shadow: 0 0 0 1px rgba(255,215,96,0.18) inset;
+    }
+
+    .timeline-handle {
+      flex: 0 0 10px;
+      align-self: stretch;
+      border-left: 1px solid rgba(255,255,255,0.32);
+      cursor: ew-resize;
+    }
+
+    .timeline-head {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: var(--accent-2);
+      box-shadow: 0 0 12px rgba(255,215,96,0.72);
+      pointer-events: none;
+    }
+
+    .hidden-by-level {
+      display: none !important;
+    }
+
+    .layer-card.active {
+      border-color: rgba(88, 220, 255, 0.55);
+      box-shadow: 0 0 0 1px rgba(88, 220, 255, 0.22) inset;
+    }
+
+    .row-between {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .mini-actions {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+    }
+
+    .source-box {
+      min-height: 180px;
+      font-family: "Courier New", monospace;
+      font-size: 0.66rem;
+      line-height: 1.4;
+    }
+
+    .param-help {
+      color: var(--muted);
+      font-weight: 400;
+      font-size: 0.66rem;
+      line-height: 1.35;
+    }
+
+    a {
+      color: #9ee7ff;
+    }
+
+    @media (max-width: 1220px) {
+      .app {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 720px) {
+      .grid-2,
+      .grid-3,
+      .mini-actions {
+        grid-template-columns: 1fr;
+      }
+
+      .hero h1 {
+        font-size: 0.98rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="app">
+    <aside class="panel">
+      <div class="hero">
+        <h1>CNC Coding Is Not A Crime</h1>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Niveau d'edition</div>
+        <label for="levelMode">Mode
+          <select id="levelMode">
+            <option value="0">0 - Lame / Noob</option>
+            <option value="3">3 - Sceener</option>
+            <option value="7">7 - Leet</option>
+            <option value="10">10 - R0x0r</option>
+          </select>
+        </label>
+        <div class="row-between">
+          <span class="pill" id="levelPill">Niveau: 0</span>
+          <span class="pill" id="timePill">Temps: 0.0s</span>
+        </div>
+        <p class="muted" id="levelCaption">Mode simple: texte, transparence, vitesse, taille et lecture.</p>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Versions</div>
+        <div class="grid-2">
+          <button id="saveVersionButton" class="primary">Sauver version</button>
+          <button id="exportVersionJsonButton">JSON version</button>
+        </div>
+        <div class="row-between">
+          <span class="pill" id="currentVersionPill">Version: V1</span>
+          <span class="pill" id="demoNamePill">Demo: State of the Art</span>
+        </div>
+        <div class="version-card">
+          <strong id="demoTitleLine">V1 - State of the Art</strong>
+          <a id="demoLinkLine" href="https://demozoo.org/productions/2/" target="_blank" rel="noreferrer">Voir State of the Art sur Demozoo</a>
+          <span class="muted" id="demoSubtitleLine">Nom automatique de demo connue pour cette version.</span>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Sets sauvegardables</div>
+        <label for="setNameInput">Nom du set
+          <input id="setNameInput" type="text" value="Set de depart">
+        </label>
+        <div class="grid-2">
+          <button id="saveSetButton" class="primary">Sauver set</button>
+          <button id="exportSetJsonButton">JSON set</button>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Presets rapides</div>
+        <div class="grid-2">
+          <button class="primary" data-scene="starter">Scene facile</button>
+          <button data-scene="space">Space kid</button>
+          <button data-scene="plasma">Plasma pop</button>
+          <button data-scene="mix">Mega mix</button>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Ajouter un calque</div>
+        <div class="grid-2">
+          <button data-add-layer="stars">Etoiles</button>
+          <button data-add-layer="plasma">Plasma</button>
+          <button data-add-layer="rasters">Barres</button>
+          <button data-add-layer="text">Texte</button>
+          <button data-add-layer="scroll">Scroller</button>
+          <button data-add-layer="image">Image URL</button>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Scene</div>
+        <label for="globalPalette">Palette
+          <select id="globalPalette">
+            <option value="ocean">Ocean retro</option>
+            <option value="sunset">Coucher de soleil</option>
+            <option value="mint">Menthe arcade</option>
+            <option value="candy">Bonbon pop</option>
+            <option value="lava">Lave rouge</option>
+            <option value="ice">Glace bleue</option>
+            <option value="forest">Foret neon</option>
+            <option value="gold">Or machine</option>
+            <option value="violet">Violet flash</option>
+            <option value="peach">Peche soft</option>
+            <option value="storm">Orage synth</option>
+            <option value="acid">Acid lime</option>
+            <option value="rose">Rose chrome</option>
+            <option value="mono">Monochrome</option>
+            <option value="copper">Cuivre feu</option>
+            <option value="deepsea">Grand bleu</option>
+            <option value="aurora">Aurore</option>
+            <option value="ember">Braise</option>
+          </select>
+        </label>
+        <label for="globalSpeed">Vitesse generale
+          <div class="range-line">
+            <input id="globalSpeed" type="range" min="1" max="10" value="5">
+            <span class="pill" id="globalSpeedValue">5</span>
+          </div>
+        </label>
+        <label for="globalFont">Fonte principale
+          <select id="globalFont">
+            <option value="'Trebuchet MS', Verdana, sans-serif">Trebuchet UI</option>
+            <option value="'Press Start 2P', monospace">Press Start 2P</option>
+            <option value="'Share Tech Mono', monospace">Share Tech Mono</option>
+            <option value="'Silkscreen', monospace">Silkscreen</option>
+            <option value="'VT323', monospace">VT323</option>
+            <option value="'IBM Plex Mono', monospace">IBM Plex Mono</option>
+            <option disabled>Oldschool PC Font Resource (propose)</option>
+            <option disabled>BitmapFont Collection (propose)</option>
+          </select>
+        </label>
+        <div class="grid-3">
+          <button id="playPauseButton">Pause</button>
+          <button id="savePngButton">Image PNG</button>
+          <button id="resetButton" class="warning">Reset</button>
+        </div>
+        <div class="grid-2">
+          <button id="exportHtmlButton" class="primary">Export HTML</button>
+          <button id="exportDemoOnlyButton">Export demo seule</button>
+        </div>
+        <div class="grid-2">
+          <button id="refreshSourceButton">Voir le code</button>
+          <button id="copySourceButton" class="small">Copier le code</button>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Watermark export</div>
+        <label for="watermarkEnabled">
+          <span>Afficher le watermark</span>
+          <select id="watermarkEnabled">
+            <option value="yes">Oui</option>
+            <option value="no">Non</option>
+          </select>
+        </label>
+        <label for="watermarkMode">Placement
+          <select id="watermarkMode">
+            <option value="layer">Dans le rendu / comme un calque</option>
+            <option value="right">Sur le cote droit</option>
+          </select>
+        </label>
+        <label for="watermarkText">Texte du watermark
+          <input id="watermarkText" type="text" value="CNC CODING IS NOT A CRIME">
+        </label>
+      </div>
+
+    </aside>
+
+    <section class="stage">
+      <div class="stage-top">
+        <div>
+          <h2>Apercu en direct</h2>
+          <p class="muted">Tu peux empiler les calques, changer leur transparence et leur effet, puis exporter la demo.</p>
+        </div>
+        <div class="grid-2">
+          <span class="pill" id="statusPill">Animation: ON</span>
+          <span class="pill" id="layerCountPill">Calques: 0</span>
+        </div>
+      </div>
+
+      <div class="canvas-shell">
+        <div id="exportPreviewShell" class="export-preview-shell side-disabled">
+          <canvas id="demoCanvas" width="960" height="600"></canvas>
+          <div id="watermarkSidePreview" class="watermark-side" hidden>
+            <strong>Watermark</strong>
+            <div id="watermarkSidePreviewText">CNC CODING IS NOT A CRIME</div>
+            <div class="muted">Visible sur le cote droit dans l'export.</div>
+          </div>
+        </div>
+        <div class="canvas-caption">
+          <span id="canvasVersionCaption">V1 - State of the Art</span>
+          <span id="canvasModeCaption">HTML Canvas demo editor</span>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="row-between">
+          <div class="section-title">Timeline</div>
+          <span class="pill">Debut / duree par calque</span>
+        </div>
+        <label for="timelineRange">Lecture
+          <div class="range-line">
+            <input id="timelineRange" type="range" min="0" max="20" step="0.01" value="0">
+            <span class="pill" id="timelineRangeValue">0.0s</span>
+          </div>
+        </label>
+        <div id="timelineList" class="timeline-list"></div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Ordre des calques</div>
+        <div id="layersList" class="layers-list"></div>
+      </div>
+
+      <div class="section">
+        <div class="row-between">
+          <div class="section-title">Code source modifiable</div>
+          <span class="pill">Source live</span>
+        </div>
+        <textarea id="sourceView" class="source-box" spellcheck="false"></textarea>
+      </div>
+    </section>
+
+    <aside class="panel">
+      <div class="section">
+        <div class="section-title">Calque selectionne</div>
+        <p class="muted">Tous les reglages ci-dessous modifient uniquement le calque selectionne. Le texte, sa taille, sa vitesse, sa position et les parametres restent modifiables ici.</p>
+        <label for="layerName">Nom
+          <input id="layerName" type="text" value="">
+        </label>
+        <div class="grid-3">
+          <label for="layerEnabled">Etat
+            <select id="layerEnabled">
+              <option value="yes">Actif</option>
+              <option value="no">Muet</option>
+            </select>
+            <span class="param-help">Permet d'activer ou couper ce calque sans le supprimer.</span>
+          </label>
+          <label for="layerStart">Debut (s)
+            <input id="layerStart" type="number" min="0" max="20" step="0.1" value="0">
+            <span class="param-help">Moment d'apparition du calque sur la timeline.</span>
+          </label>
+          <label for="layerDuration">Duree (s)
+            <input id="layerDuration" type="number" min="0.5" max="20" step="0.1" value="8">
+            <span class="param-help">Temps pendant lequel le calque reste visible.</span>
+          </label>
+        </div>
+        <label for="layerType">Type
+          <select id="layerType">
+            <option value="stars">Etoiles</option>
+            <option value="plasma">Plasma</option>
+            <option value="rasters">Barres</option>
+            <option value="text">Texte geant</option>
+            <option value="scroll">Scroller</option>
+            <option value="image">Image URL</option>
+          </select>
+          <span class="param-help">Choisit la famille d'effet ou de contenu du calque.</span>
+        </label>
+        <label for="layerBlend" data-min-level="7">Effet du calque
+          <select id="layerBlend">
+            <option value="normal">Normal</option>
+            <option value="screen">Lumiere</option>
+            <option value="lighter">Flash</option>
+            <option value="multiply">Ombre</option>
+            <option value="overlay">Overlay</option>
+          </select>
+          <span class="param-help">Mode de fusion du calque avec les autres effets.</span>
+        </label>
+        <label for="layerFont" data-min-level="3">Fonte du calque
+          <select id="layerFont">
+            <option value="">Auto</option>
+            <option value="'Press Start 2P', monospace">Press Start 2P</option>
+            <option value="'Share Tech Mono', monospace">Share Tech Mono</option>
+            <option value="'Silkscreen', monospace">Silkscreen</option>
+            <option value="'VT323', monospace">VT323</option>
+            <option value="'IBM Plex Mono', monospace">IBM Plex Mono</option>
+            <option value="'Trebuchet MS', Verdana, sans-serif">Trebuchet UI</option>
+            <option disabled>Razor/Amiga bitmap archives (propose)</option>
+          </select>
+          <span class="param-help">Change la police du texte, du titre ou du scroller.</span>
+        </label>
+        <label for="layerOpacity">Transparence
+          <div class="range-line">
+            <input id="layerOpacity" type="range" min="0" max="100" value="100">
+            <span class="pill" id="layerOpacityValue">100%</span>
+          </div>
+          <span class="param-help">Dosage visuel du calque dans le mélange global.</span>
+        </label>
+        <label for="layerSpeed">Vitesse
+          <div class="range-line">
+            <input id="layerSpeed" type="range" min="1" max="10" value="5">
+            <span class="pill" id="layerSpeedValue">5</span>
+          </div>
+          <span class="param-help">Agit sur la vitesse du mouvement ou de l'animation de l'effet.</span>
+        </label>
+        <label for="layerScale">Taille
+          <div class="range-line">
+            <input id="layerScale" type="range" min="1" max="10" value="5">
+            <span class="pill" id="layerScaleValue">5</span>
+          </div>
+          <span class="param-help">Agrandit ou réduit le texte, l'effet ou l'image du calque.</span>
+        </label>
+        <label for="layerText">Texte / note / URL ressource
+          <textarea id="layerText"></textarea>
+          <span class="param-help">Le contenu interne du texte, du scroller ou l'URL de l'image est éditable ici.</span>
+        </label>
+        <label for="layerSourceLabel" data-min-level="3">Source a citer
+          <input id="layerSourceLabel" type="text" placeholder="Ex: CODEF, image perso, archive demoscene">
+          <span class="param-help">Nom court de la ressource ou du site a créditer.</span>
+        </label>
+        <label for="layerSourceUrl" data-min-level="3">Lien source
+          <input id="layerSourceUrl" type="url" placeholder="https://...">
+          <span class="param-help">Lien exact vers la source de l'effet, de l'image ou de l'inspiration.</span>
+        </label>
+        <div class="section-title" data-min-level="3">8 Parametres de l'effet</div>
+        <label for="param1" data-min-level="3">Parametre 1
+          <div class="range-line"><input id="param1" type="range" min="0" max="100" value="50"><span class="pill" id="param1Value">50</span></div>
+          <span class="param-help">Parametre de base de l'effet: souvent taille secondaire, densite ou intensite.</span>
+        </label>
+        <label for="param2" data-min-level="3">Parametre 2
+          <div class="range-line"><input id="param2" type="range" min="0" max="100" value="50"><span class="pill" id="param2Value">50</span></div>
+          <span class="param-help">Souvent position verticale, decalage ou variation secondaire.</span>
+        </label>
+        <label for="param3" data-min-level="3">Parametre 3
+          <div class="range-line"><input id="param3" type="range" min="0" max="100" value="50"><span class="pill" id="param3Value">50</span></div>
+          <span class="param-help">Agit souvent sur la luminosite, l'epaisseur ou la taille de rendu.</span>
+        </label>
+        <label for="param4" data-min-level="7">Parametre 4
+          <div class="range-line"><input id="param4" type="range" min="0" max="100" value="50"><span class="pill" id="param4Value">50</span></div>
+          <span class="param-help">Reglage avance lie a l'onde, au glow ou a la deformation.</span>
+        </label>
+        <label for="param5" data-min-level="7">Parametre 5
+          <div class="range-line"><input id="param5" type="range" min="0" max="100" value="50"><span class="pill" id="param5Value">50</span></div>
+          <span class="param-help">Reglage avance lie a la vitesse fine ou au defilement.</span>
+        </label>
+        <label for="param6" data-min-level="7">Parametre 6
+          <div class="range-line"><input id="param6" type="range" min="0" max="100" value="50"><span class="pill" id="param6Value">50</span></div>
+          <span class="param-help">Reglage avance de contraste, de densite ou de modulation.</span>
+        </label>
+        <label for="param7" data-min-level="10">Parametre 7
+          <div class="range-line"><input id="param7" type="range" min="0" max="100" value="50"><span class="pill" id="param7Value">50</span></div>
+          <span class="param-help">Reglage expert pour pousser l'effet dans un mode plus technique.</span>
+        </label>
+        <label for="param8" data-min-level="10">Parametre 8
+          <div class="range-line"><input id="param8" type="range" min="0" max="100" value="50"><span class="pill" id="param8Value">50</span></div>
+          <span class="param-help">Dernier parametre expert pour les variations fines ou extremes.</span>
+        </label>
+        <div class="grid-3">
+          <button id="moveUpButton">Monter</button>
+          <button id="moveDownButton">Descendre</button>
+          <button id="deleteLayerButton" class="warning">Supprimer</button>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Musique et .MOD</div>
+        <p class="muted">Audio web supporte: URL directe en mp3, ogg ou wav. Les fichiers .mod/.xm/.s3m ne sont pas lus nativement par le navigateur sans player tracker dedie, donc on les garde comme source referencee si besoin.</p>
+        <label for="musicUrl">URL audio ou module
+          <input id="musicUrl" type="url" placeholder="https://.../music.mp3 ou demo.mod">
+        </label>
+        <label for="musicSourceLabel">Source musique
+          <input id="musicSourceLabel" type="text" placeholder="Ex: Pouet, archive perso, scene.org">
+        </label>
+        <label for="musicSourceUrl">Lien source musique
+          <input id="musicSourceUrl" type="url" placeholder="https://...">
+        </label>
+        <audio id="musicPlayer" controls preload="none" style="width:100%"></audio>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Historique local</div>
+        <p class="muted">Les versions sauvees sont gardees dans le navigateur avec numero, nom de demo, date, JSON et HTML.</p>
+        <div id="versionsList" class="versions-list"></div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Liste des sets</div>
+        <p class="muted">Un set est une scene reutilisable. Tu peux la recharger sans toucher a la numerotation des versions.</p>
+        <div id="setsList" class="versions-list"></div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Sources d'inspiration</div>
+        <div class="source-note">
+          <p><a href="https://codef.santo.fr/" target="_blank" rel="noreferrer">CODEF</a>: esprit des demos web oldschool sur canvas.</p>
+          <p><a href="https://namwollem.blogspot.com/p/codef-basics.html" target="_blank" rel="noreferrer">Namwollem / Mellow Man</a>: approche pas-a-pas pour debuter avec starfield, scrolltext et effets de scene.</p>
+          <p><a href="https://democyclopedie.wordpress.com/2015/04/01/liste-des-effets/" target="_blank" rel="noreferrer">Democyclopedie - Liste des effets</a>: plasma, rasters, menu, scrollers.</p>
+          <p><a href="https://democyclopedie.wordpress.com/2017/04/03/differents-types-de-demos/" target="_blank" rel="noreferrer">Democyclopedie - Types de demos</a>: culture et structure demoscene.</p>
+          <p><a href="https://www.pouet.net/" target="_blank" rel="noreferrer">Pouet.net</a>: reference demoscene pour les prods, groupes, commentaires et parfois les infos sur assets/music.</p>
+          <p>Les liens Perplexity fournis dans le brief sont conserves comme pistes editoriales, mais les references actives de cette page viennent des sources publiques accessibles directement.</p>
+        </div>
+      </div>
+    </aside>
+
+    <section class="footer-note">
+      <h3>Culture demoscene</h3>
+      <p class="muted">Chaque version prend automatiquement le nom d'une demo connue et propose un lien Demozoo. La page ajoute aussi des liens culturels et evenementiels en bas.</p>
+      <div class="section">
+        <div class="section-title">Ressources externes citees</div>
+        <p class="muted">Les ressources utilisees par la scene sont listees ici. Elles sont aussi reprises dans l'export HTML et dans le code source genere.</p>
+        <div id="resourcesList" class="resources-list"></div>
+      </div>
+      <p><a href="https://www.demoparty.net/" target="_blank" rel="noreferrer">https://www.demoparty.net/</a></p>
+      <p><a href="https://www.culture.gouv.fr/thematiques/patrimoine-culturel-immateriel/vivre-le-patrimoine-culturel-immateriel/reportages/la-demoscene-une-culture-libre-a-la-croisee-des-arts-et-de-la-technique" target="_blank" rel="noreferrer">https://www.culture.gouv.fr/thematiques/patrimoine-culturel-immateriel/vivre-le-patrimoine-culturel-immateriel/reportages/la-demoscene-une-culture-libre-a-la-croisee-des-arts-et-de-la-technique</a></p>
+    </section>
+  </main>
+
+  <script>
+    const canvas = document.getElementById("demoCanvas");
+    const ctx = canvas.getContext("2d");
+
+    const storageKey = "cnc_demoscene_versions";
+    const setStorageKey = "cnc_demoscene_sets";
+    const sourceView = document.getElementById("sourceView");
+    const layersList = document.getElementById("layersList");
+    const timelineList = document.getElementById("timelineList");
+    const timelineRange = document.getElementById("timelineRange");
+    const timelineRangeValue = document.getElementById("timelineRangeValue");
+    const resourcesList = document.getElementById("resourcesList");
+    const versionsList = document.getElementById("versionsList");
+    const statusPill = document.getElementById("statusPill");
+    const layerCountPill = document.getElementById("layerCountPill");
+    const currentVersionPill = document.getElementById("currentVersionPill");
+    const demoNamePill = document.getElementById("demoNamePill");
+    const demoTitleLine = document.getElementById("demoTitleLine");
+    const demoLinkLine = document.getElementById("demoLinkLine");
+    const demoSubtitleLine = document.getElementById("demoSubtitleLine");
+    const canvasVersionCaption = document.getElementById("canvasVersionCaption");
+
+    const globalPalette = document.getElementById("globalPalette");
+    const globalSpeed = document.getElementById("globalSpeed");
+    const globalSpeedValue = document.getElementById("globalSpeedValue");
+    const globalFont = document.getElementById("globalFont");
+    const levelMode = document.getElementById("levelMode");
+    const levelPill = document.getElementById("levelPill");
+    const levelCaption = document.getElementById("levelCaption");
+    const timePill = document.getElementById("timePill");
+    const playPauseButton = document.getElementById("playPauseButton");
+    const savePngButton = document.getElementById("savePngButton");
+    const resetButton = document.getElementById("resetButton");
+    const exportHtmlButton = document.getElementById("exportHtmlButton");
+    const exportDemoOnlyButton = document.getElementById("exportDemoOnlyButton");
+    const exportVersionJsonButton = document.getElementById("exportVersionJsonButton");
+    const saveVersionButton = document.getElementById("saveVersionButton");
+    const refreshSourceButton = document.getElementById("refreshSourceButton");
+    const copySourceButton = document.getElementById("copySourceButton");
+    const watermarkEnabled = document.getElementById("watermarkEnabled");
+    const watermarkMode = document.getElementById("watermarkMode");
+    const watermarkText = document.getElementById("watermarkText");
+
+    const layerName = document.getElementById("layerName");
+    const layerEnabled = document.getElementById("layerEnabled");
+    const layerStart = document.getElementById("layerStart");
+    const layerDuration = document.getElementById("layerDuration");
+    const layerType = document.getElementById("layerType");
+    const layerBlend = document.getElementById("layerBlend");
+    const layerFont = document.getElementById("layerFont");
+    const layerOpacity = document.getElementById("layerOpacity");
+    const layerOpacityValue = document.getElementById("layerOpacityValue");
+    const layerSpeed = document.getElementById("layerSpeed");
+    const layerSpeedValue = document.getElementById("layerSpeedValue");
+    const layerScale = document.getElementById("layerScale");
+    const layerScaleValue = document.getElementById("layerScaleValue");
+    const layerText = document.getElementById("layerText");
+    const layerSourceLabel = document.getElementById("layerSourceLabel");
+    const layerSourceUrl = document.getElementById("layerSourceUrl");
+    const moveUpButton = document.getElementById("moveUpButton");
+    const moveDownButton = document.getElementById("moveDownButton");
+    const deleteLayerButton = document.getElementById("deleteLayerButton");
+    const setNameInput = document.getElementById("setNameInput");
+    const saveSetButton = document.getElementById("saveSetButton");
+    const exportSetJsonButton = document.getElementById("exportSetJsonButton");
+    const setsList = document.getElementById("setsList");
+    const musicUrl = document.getElementById("musicUrl");
+    const musicSourceLabel = document.getElementById("musicSourceLabel");
+    const musicSourceUrl = document.getElementById("musicSourceUrl");
+    const musicPlayer = document.getElementById("musicPlayer");
+    const exportPreviewShell = document.getElementById("exportPreviewShell");
+    const watermarkSidePreview = document.getElementById("watermarkSidePreview");
+    const watermarkSidePreviewText = document.getElementById("watermarkSidePreviewText");
+    const canvasModeCaption = document.getElementById("canvasModeCaption");
+    const paramInputs = Array.from({ length: 8 }, (_, index) => document.getElementById(`param${index + 1}`));
+    const paramValueSpans = Array.from({ length: 8 }, (_, index) => document.getElementById(`param${index + 1}Value`));
+
+    const palettes = {
+      ocean: ["#03111b", "#0d2f67", "#1ec6ff", "#dff8ff", "#7effcb"],
+      sunset: ["#17061e", "#631150", "#ff666d", "#ffc95c", "#fff2bf"],
+      mint: ["#03150f", "#0c615a", "#4dffcf", "#d7fff4", "#8ddcff"],
+      candy: ["#180733", "#7030ff", "#ff54aa", "#ffd166", "#fff5e3"]
+      ,lava: ["#180403", "#6a1208", "#ff5b2e", "#ffb347", "#fff0cf"]
+      ,ice: ["#04131a", "#0a4f7a", "#6fdcff", "#dff7ff", "#ffffff"]
+      ,forest: ["#041109", "#0f5f2f", "#39d98a", "#bdf7cb", "#effff2"]
+      ,gold: ["#140f04", "#6f4c05", "#d8a63c", "#ffe08a", "#fff8dc"]
+      ,violet: ["#150626", "#4c1d95", "#9f67ff", "#d9b8ff", "#fff0ff"]
+      ,peach: ["#2a0d0d", "#a64b4b", "#ff9e7a", "#ffd1b3", "#fff4eb"]
+      ,storm: ["#060b14", "#23395d", "#547aa5", "#9ec1d9", "#f0f7ff"]
+      ,acid: ["#101704", "#4f7b00", "#b5ff00", "#edff89", "#fbffe8"]
+      ,rose: ["#220712", "#8f2d56", "#ff5c8a", "#ffc1d6", "#fff1f7"]
+      ,mono: ["#050505", "#3a3a3a", "#7a7a7a", "#cfcfcf", "#ffffff"]
+      ,copper: ["#160b07", "#6b3e26", "#b87333", "#e7b587", "#fff1e5"]
+      ,deepsea: ["#021018", "#003049", "#0077b6", "#90e0ef", "#caf0f8"]
+      ,aurora: ["#06111d", "#184e77", "#34a0a4", "#76c893", "#d9ed92"]
+      ,ember: ["#160606", "#7f1d1d", "#dc2626", "#fb923c", "#ffedd5"]
+    };
+
+    const famousDemos = [
+      { name: "State of the Art", url: "https://demozoo.org/productions/2/" },
+      { name: "Second Reality", url: "https://demozoo.org/productions/108/" },
+      { name: "Desert Dream", url: "https://demozoo.org/productions/142/" },
+      { name: "Hardwired", url: "https://demozoo.org/productions/1913/" },
+      { name: "Coma", url: "https://demozoo.org/productions/117/" },
+      { name: "Mnemonics", url: "https://demozoo.org/productions/229/" },
+      { name: "Mental Hangover", url: "https://demozoo.org/productions/22186/" },
+      { name: "Global Trash", url: "https://demozoo.org/productions/710/" }
+    ];
+
+    const state = {
+      palette: "ocean",
+      globalSpeed: 5,
+      globalFont: "'Press Start 2P', monospace",
+      level: 0,
+      playing: true,
+      selectedLayerId: null,
+      frame: 0,
+      currentTime: 0,
+      timelineDuration: 20,
+      timelineDrag: null,
+      layers: [],
+      imageCache: new Map(),
+      versionNumber: 1,
+      currentDemo: famousDemos[0],
+      versions: [],
+      sets: [],
+      music: {
+        url: "",
+        sourceLabel: "",
+        sourceUrl: ""
+      },
+      watermark: {
+        enabled: true,
+        mode: "layer",
+        text: "CNC CODING IS NOT A CRIME"
+      }
+    };
+
+    function uid() {
+      return Math.random().toString(36).slice(2, 10);
+    }
+
+    function normalizeVersionNumber(number) {
+      return Math.round(Number(number || 1) * 10) / 10;
+    }
+
+    function incrementVersionNumber(number) {
+      return normalizeVersionNumber(normalizeVersionNumber(number) + 0.1);
+    }
+
+    function padVersion(number) {
+      const normalized = normalizeVersionNumber(number);
+      if (Math.abs(normalized - Math.round(normalized)) < 0.001) {
+        return "V" + String(Math.round(normalized));
+      }
+      return "V" + normalized.toFixed(1);
+    }
+
+    function deepClone(data) {
+      return JSON.parse(JSON.stringify(data));
+    }
+
+    function createStars(seedCount = 120) {
+      return Array.from({ length: seedCount }, () => ({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        z: 0.2 + Math.random() * 1.4,
+        size: 0.5 + Math.random() * 2.1
+      }));
+    }
+
+    function normalizedLayersForSave(layers) {
+      return layers.map((layer) => ({
+        id: layer.id,
+        name: layer.name,
+        type: layer.type,
+        enabled: layer.enabled !== false,
+        start: Number(layer.start || 0),
+        duration: Number(layer.duration || 8),
+        blend: layer.blend,
+        opacity: layer.opacity,
+        speed: layer.speed,
+        scale: layer.scale,
+        text: layer.text || "",
+        sourceLabel: layer.sourceLabel || "",
+        sourceUrl: layer.sourceUrl || "",
+        params: deepClone(layer.params || [50, 50, 50, 50, 50, 50, 50, 50]),
+        fontFamily: layer.fontFamily || ""
+      }));
+    }
+
+    function normalizedWatermarkForSave(watermark) {
+      return {
+        enabled: watermark?.enabled !== false,
+        mode: watermark?.mode === "right" ? "right" : "layer",
+        text: (watermark?.text || "CNC CODING IS NOT A CRIME").trim() || "CNC CODING IS NOT A CRIME"
+      };
+    }
+
+    function makeLayer(type, overrides = {}) {
+      const defaults = {
+        stars: {
+          name: "Etoiles",
+          type: "stars",
+          enabled: true,
+          start: 0,
+          duration: 20,
+          blend: "normal",
+          opacity: 100,
+          speed: 5,
+          scale: 5,
+          fontFamily: "'Share Tech Mono', monospace",
+          text: "",
+          sourceLabel: "CODEF",
+          sourceUrl: "https://codef.santo.fr/",
+          stars: createStars(130),
+          params: [50, 60, 45, 55, 40, 50, 50, 50]
+        },
+        plasma: {
+          name: "Plasma",
+          type: "plasma",
+          enabled: true,
+          start: 0,
+          duration: 20,
+          blend: "screen",
+          opacity: 72,
+          speed: 5,
+          scale: 5,
+          fontFamily: "'VT323', monospace",
+          text: "",
+          sourceLabel: "Democyclopedie - liste des effets",
+          sourceUrl: "https://democyclopedie.wordpress.com/2015/04/01/liste-des-effets/",
+          params: [55, 65, 60, 50, 55, 45, 50, 40]
+        },
+        rasters: {
+          name: "Barres",
+          type: "rasters",
+          enabled: true,
+          start: 0,
+          duration: 20,
+          blend: "screen",
+          opacity: 62,
+          speed: 4,
+          scale: 5,
+          text: "",
+          sourceLabel: "Namwollem / CODEF basics",
+          sourceUrl: "https://namwollem.blogspot.com/p/codef-basics.html",
+          params: [52, 50, 48, 50, 55, 50, 50, 45]
+        },
+        text: {
+          name: "Titre",
+          type: "text",
+          enabled: true,
+          start: 0,
+          duration: 10,
+          blend: "normal",
+          opacity: 100,
+          speed: 5,
+          scale: 5,
+          fontFamily: "'Press Start 2P', monospace",
+          text: "BONJOUR DEMOSCENE",
+          sourceLabel: "",
+          sourceUrl: "",
+          params: [50, 50, 50, 50, 50, 50, 50, 50]
+        },
+        scroll: {
+          name: "Scroller",
+          type: "scroll",
+          enabled: true,
+          start: 2,
+          duration: 18,
+          blend: "lighter",
+          opacity: 100,
+          speed: 5,
+          scale: 5,
+          fontFamily: "'Silkscreen', monospace",
+          text: "SALUT LES AMIS - TESTE LES CALQUES - MONTE LES BARRES - CHANGE LA TRANSPARENCE -",
+          sourceLabel: "Democyclopedie - liste des effets",
+          sourceUrl: "https://democyclopedie.wordpress.com/2015/04/01/liste-des-effets/",
+          offsetX: canvas.width,
+          params: [50, 50, 60, 45, 55, 50, 50, 50]
+        },
+        image: {
+          name: "Image URL",
+          type: "image",
+          enabled: true,
+          start: 0,
+          duration: 12,
+          blend: "normal",
+          opacity: 85,
+          speed: 1,
+          scale: 5,
+          fontFamily: "",
+          text: "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1200&q=80",
+          sourceLabel: "Image de demonstration externe",
+          sourceUrl: "https://images.unsplash.com/",
+          params: [50, 50, 50, 50, 50, 50, 50, 50]
+        }
+      };
+
+      return {
+        id: uid(),
+        ...deepClone(defaults[type] || defaults.text),
+        ...overrides
+      };
+    }
+
+    function setVersionIdentity(number) {
+      state.versionNumber = normalizeVersionNumber(number);
+      const demoIndex = Math.max(0, Math.round((state.versionNumber - 1) * 10));
+      state.currentDemo = famousDemos[demoIndex % famousDemos.length];
+    }
+
+    function starterScene() {
+      state.layers = [
+        makeLayer("stars", { name: "Fond etoiles", opacity: 100, blend: "normal", speed: 5 }),
+        makeLayer("rasters", { name: "Rasters doux", opacity: 55, blend: "screen", speed: 4 }),
+        makeLayer("text", { name: "Titre principal", text: "KID DEMO", opacity: 100, scale: 6, start: 1, duration: 6 }),
+        makeLayer("scroll", { name: "Scroller", opacity: 100, blend: "lighter", speed: 5, start: 3, duration: 17 })
+      ];
+      state.selectedLayerId = state.layers[0].id;
+      state.currentTime = 0;
+    }
+
+    function sceneSpace() {
+      state.layers = [
+        makeLayer("stars", { name: "Grand starfield", opacity: 100, scale: 7, speed: 7 }),
+        makeLayer("text", { name: "Message", text: "SPACE FUN", opacity: 100, scale: 7, start: 1, duration: 6 }),
+        makeLayer("scroll", { name: "Bas ecran", opacity: 100, speed: 6, blend: "lighter", start: 4, duration: 16 })
+      ];
+      state.selectedLayerId = state.layers[0].id;
+      state.currentTime = 0;
+    }
+
+    function scenePlasma() {
+      state.layers = [
+        makeLayer("plasma", { name: "Plasma fond", opacity: 78, scale: 6, speed: 6 }),
+        makeLayer("rasters", { name: "Lignes", opacity: 48, scale: 4, speed: 5, blend: "overlay", start: 0.5, duration: 19.5 }),
+        makeLayer("text", { name: "Texte", text: "PLASMA POP", opacity: 100, scale: 6, start: 1.5, duration: 6 })
+      ];
+      state.selectedLayerId = state.layers[0].id;
+      state.currentTime = 0;
+    }
+
+    function sceneMix() {
+      state.layers = [
+        makeLayer("stars", { name: "Fond etoiles", opacity: 100, speed: 6, scale: 6 }),
+        makeLayer("plasma", { name: "Plasma", opacity: 54, speed: 5, scale: 5, blend: "screen" }),
+        makeLayer("rasters", { name: "Barres", opacity: 44, speed: 4, scale: 6, blend: "lighter", start: 0.5, duration: 19.5 }),
+        makeLayer("text", { name: "Titre", text: "MEGA MIX", opacity: 100, scale: 6, start: 1, duration: 6 }),
+        makeLayer("scroll", { name: "Scroller", opacity: 100, speed: 6, scale: 6, blend: "lighter", start: 4, duration: 16 })
+      ];
+      state.selectedLayerId = state.layers[0].id;
+      state.currentTime = 0;
+    }
+
+    function loadScene(name) {
+      if (name === "space") sceneSpace();
+      else if (name === "plasma") scenePlasma();
+      else if (name === "mix") sceneMix();
+      else starterScene();
+      updateAll();
+    }
+
+    function safeOpacity(value) {
+      return Math.max(0, Math.min(1, value / 100));
+    }
+
+    function labelForType(type) {
+      return {
+        stars: "Etoiles",
+        plasma: "Plasma",
+        rasters: "Barres",
+        text: "Texte",
+        scroll: "Scroller",
+        image: "Image"
+      }[type] || "Calque";
+    }
+
+    function labelForBlend(blend) {
+      return {
+        normal: "Normal",
+        screen: "Lumiere",
+        lighter: "Flash",
+        multiply: "Ombre",
+        overlay: "Overlay"
+      }[blend] || blend;
+    }
+
+    function actualBlendMode(blend) {
+      return blend === "normal" ? "source-over" : blend;
+    }
+
+    function getSelectedLayer() {
+      return state.layers.find((layer) => layer.id === state.selectedLayerId) || null;
+    }
+
+    function ensureImage(url) {
+      if (!url) return null;
+      if (state.imageCache.has(url)) return state.imageCache.get(url);
+      const image = new Image();
+      image.crossOrigin = "anonymous";
+      image.src = url;
+      state.imageCache.set(url, image);
+      return image;
+    }
+
+    function getVersionPayload() {
+      return {
+        versionNumber: state.versionNumber,
+        versionLabel: padVersion(state.versionNumber),
+        demoName: state.currentDemo.name,
+        demoUrl: state.currentDemo.url,
+        savedAt: new Date().toISOString(),
+        palette: state.palette,
+        globalSpeed: state.globalSpeed,
+        globalFont: state.globalFont,
+        level: state.level,
+        timelineDuration: state.timelineDuration,
+        music: deepClone(state.music),
+        watermark: normalizedWatermarkForSave(state.watermark),
+        layers: normalizedLayersForSave(state.layers),
+        inspirations: [
+          "https://codef.santo.fr/",
+          "https://namwollem.blogspot.com/p/codef-basics.html",
+          "https://democyclopedie.wordpress.com/2015/04/01/liste-des-effets/",
+          "https://democyclopedie.wordpress.com/2017/04/03/differents-types-de-demos/",
+          "https://www.pouet.net/"
+        ],
+        footerLinks: [
+          "https://www.demoparty.net/",
+          "https://www.culture.gouv.fr/thematiques/patrimoine-culturel-immateriel/vivre-le-patrimoine-culturel-immateriel/reportages/la-demoscene-une-culture-libre-a-la-croisee-des-arts-et-de-la-technique"
+        ]
+      };
+    }
+
+    function getSetPayload(name) {
+      return {
+        setName: name,
+        savedAt: new Date().toISOString(),
+        palette: state.palette,
+        globalSpeed: state.globalSpeed,
+        globalFont: state.globalFont,
+        level: state.level,
+        timelineDuration: state.timelineDuration,
+        music: deepClone(state.music),
+        watermark: normalizedWatermarkForSave(state.watermark),
+        layers: normalizedLayersForSave(state.layers)
+      };
+    }
+
+    function buildDemoOnlyHtml(payload) {
+      return buildExportHtml(payload)
+        .replace('<section class="card">\\n      <h2>Ressources et inspirations</h2>', '<section class="card" style="display:none">\\n      <h2>Ressources et inspirations</h2>')
+        .replace('<section class="card">\\n      <p><a href="https://www.demoparty.net/"', '<section class="card" style="display:none">\\n      <p><a href="https://www.demoparty.net/"');
+    }
+
+    function escapeHtml(value) {
+      return String(value)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;");
+    }
+
+    function getSourceCreditsBlock() {
+      const credits = [];
+      normalizedLayersForSave(state.layers).forEach((layer) => {
+        if (layer.sourceLabel || layer.sourceUrl) {
+          credits.push(`- ${layer.name}: ${layer.sourceLabel || "Source"}${layer.sourceUrl ? " -> " + layer.sourceUrl : ""}`);
+        }
+      });
+      return credits.join("\n");
+    }
+
+    function buildExportHtml(payload) {
+      const payloadJson = JSON.stringify(payload, null, 2);
+      const showSideWatermark = payload.watermark?.enabled && payload.watermark?.mode === "right";
+      return `<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>${escapeHtml(payload.versionLabel)} - ${escapeHtml(payload.demoName)}</title>
+  <!-- Sources d'inspiration:
+  https://codef.santo.fr/
+  https://namwollem.blogspot.com/p/codef-basics.html
+  https://democyclopedie.wordpress.com/2015/04/01/liste-des-effets/
+  https://democyclopedie.wordpress.com/2017/04/03/differents-types-de-demos/
+  https://www.pouet.net/
+  -->
+  <!-- Ressources utilisees:
+${getSourceCreditsBlock()}
+  -->
+  <!-- Music source:
+  ${payload.music?.sourceLabel || "No music source specified"}${payload.music?.sourceUrl ? " -> " + payload.music.sourceUrl : ""}
+  -->
+  <!-- Unsupported integration notes:
+  ${payload.music?.url && /\.(mod|xm|s3m|it)$/i.test(payload.music.url) ? "Tracker module URL kept as source only because the browser export has no bundled tracker player: " + payload.music.url : "No blocking issue detected"}
+  -->
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Share+Tech+Mono&family=Silkscreen:wght@400;700&family=VT323&family=IBM+Plex+Mono:wght@400;600&display=swap');
+    body{margin:0;background:#050913;color:#eef5ff;font-family:${payload.globalFont || "'Trebuchet MS', Verdana, sans-serif"};}
+    .wrap{width:min(1100px,calc(100% - 20px));margin:16px auto;display:grid;gap:16px;}
+    .card{background:rgba(11,17,33,.92);border:1px solid rgba(150,199,255,.18);border-radius:20px;padding:16px;}
+    .top{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;}
+    .export-stage{display:grid;grid-template-columns:${showSideWatermark ? "minmax(0,1fr) 220px" : "minmax(0,1fr)"};gap:14px;align-items:stretch;}
+    canvas{display:block;width:100%;height:auto;background:#000;border-radius:16px;image-rendering:pixelated;}
+    a{color:#9ee7ff;}
+    .muted{color:#9db0d8;}
+    ul{margin:8px 0 0 18px;}
+    .watermark-side{border-radius:16px;border:1px dashed rgba(255,255,255,.12);background:rgba(255,255,255,.03);padding:16px;display:grid;align-content:end;gap:8px;}
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <section class="card">
+      <div class="top">
+        <div>
+          <h1>${escapeHtml(payload.versionLabel)} - ${escapeHtml(payload.demoName)}</h1>
+          <p class="muted">Export HTML direct depuis CNC Coding Is Not A Crime</p>
+        </div>
+        <div>
+          <a href="${payload.demoUrl}" target="_blank" rel="noreferrer">Lien Demozoo</a>
+        </div>
+      </div>
+    </section>
+    <section class="card">
+      <div class="export-stage">
+        <canvas id="demoCanvas" width="960" height="600"></canvas>
+        ${showSideWatermark ? `<aside class="watermark-side">
+          <strong>Watermark</strong>
+          <div>${escapeHtml(payload.watermark.text)}</div>
+          <div class="muted">Visible sur le cote droit.</div>
+        </aside>` : ""}
+      </div>
+    </section>
+    ${payload.music?.url ? `<section class="card">
+      <h2>Musique</h2>
+      ${/\.(mod|xm|s3m|it)$/i.test(payload.music.url) ? `<p class="muted">Module tracker reference only: browser export needs a dedicated module player for direct playback.</p>` : `<audio controls preload="none" src="${payload.music.url}"></audio>`}
+      <p class="muted">${payload.music.sourceLabel || ""}</p>
+      ${payload.music.sourceUrl ? `<p><a href="${payload.music.sourceUrl}" target="_blank" rel="noreferrer">${payload.music.sourceUrl}</a></p>` : ""}
+    </section>` : ""}
+    <section class="card">
+      <h2>Ressources et inspirations</h2>
+      <ul>
+        <li><a href="https://codef.santo.fr/" target="_blank" rel="noreferrer">CODEF</a></li>
+        <li><a href="https://namwollem.blogspot.com/p/codef-basics.html" target="_blank" rel="noreferrer">Namwollem / Mellow Man</a></li>
+        <li><a href="https://democyclopedie.wordpress.com/2015/04/01/liste-des-effets/" target="_blank" rel="noreferrer">Democyclopedie - Liste des effets</a></li>
+        <li><a href="https://democyclopedie.wordpress.com/2017/04/03/differents-types-de-demos/" target="_blank" rel="noreferrer">Democyclopedie - Types de demos</a></li>
+        <li><a href="https://www.pouet.net/" target="_blank" rel="noreferrer">Pouet.net</a></li>
+      </ul>
+    </section>
+    <section class="card">
+      <p><a href="https://www.demoparty.net/" target="_blank" rel="noreferrer">demoparty.net</a></p>
+      <p><a href="https://www.culture.gouv.fr/thematiques/patrimoine-culturel-immateriel/vivre-le-patrimoine-culturel-immateriel/reportages/la-demoscene-une-culture-libre-a-la-croisee-des-arts-et-de-la-technique" target="_blank" rel="noreferrer">Article du Ministere de la Culture</a></p>
+    </section>
+  </main>
+  <script>
+    const payload = ${payloadJson};
+    const canvas = document.getElementById("demoCanvas");
+    const ctx = canvas.getContext("2d");
+    const palettes = {
+      ocean: ["#03111b", "#0d2f67", "#1ec6ff", "#dff8ff", "#7effcb"],
+      sunset: ["#17061e", "#631150", "#ff666d", "#ffc95c", "#fff2bf"],
+      mint: ["#03150f", "#0c615a", "#4dffcf", "#d7fff4", "#8ddcff"],
+      candy: ["#180733", "#7030ff", "#ff54aa", "#ffd166", "#fff5e3"],
+      lava: ["#180403", "#6a1208", "#ff5b2e", "#ffb347", "#fff0cf"],
+      ice: ["#04131a", "#0a4f7a", "#6fdcff", "#dff7ff", "#ffffff"],
+      forest: ["#041109", "#0f5f2f", "#39d98a", "#bdf7cb", "#effff2"],
+      gold: ["#140f04", "#6f4c05", "#d8a63c", "#ffe08a", "#fff8dc"],
+      violet: ["#150626", "#4c1d95", "#9f67ff", "#d9b8ff", "#fff0ff"],
+      peach: ["#2a0d0d", "#a64b4b", "#ff9e7a", "#ffd1b3", "#fff4eb"],
+      storm: ["#060b14", "#23395d", "#547aa5", "#9ec1d9", "#f0f7ff"],
+      acid: ["#101704", "#4f7b00", "#b5ff00", "#edff89", "#fbffe8"],
+      rose: ["#220712", "#8f2d56", "#ff5c8a", "#ffc1d6", "#fff1f7"],
+      mono: ["#050505", "#3a3a3a", "#7a7a7a", "#cfcfcf", "#ffffff"],
+      copper: ["#160b07", "#6b3e26", "#b87333", "#e7b587", "#fff1e5"],
+      deepsea: ["#021018", "#003049", "#0077b6", "#90e0ef", "#caf0f8"],
+      aurora: ["#06111d", "#184e77", "#34a0a4", "#76c893", "#d9ed92"],
+      ember: ["#160606", "#7f1d1d", "#dc2626", "#fb923c", "#ffedd5"]
+    };
+    const colors = palettes[payload.palette] || palettes.ocean;
+    const state = {frame:0, currentTime:0, imageCache:new Map()};
+    payload.layers.forEach((layer)=>{ if(layer.type==="scroll") layer.offsetX = canvas.width; if(layer.type==="stars"){ layer.stars = Array.from({length:130},()=>({x:Math.random()*canvas.width,y:Math.random()*canvas.height,z:0.2+Math.random()*1.4,size:0.5+Math.random()*2.1})); } });
+    function safeOpacity(value){ return Math.max(0, Math.min(1, value / 100)); }
+    function blendMode(value){ return value === "normal" ? "source-over" : value; }
+    function isActive(layer){ if(layer.enabled===false) return false; const start=Number(layer.start||0); const duration=Number(layer.duration||8); return state.currentTime >= start && state.currentTime <= start + duration; }
+    function ensureImage(url){ if(!url) return null; if(state.imageCache.has(url)) return state.imageCache.get(url); const image = new Image(); image.crossOrigin = "anonymous"; image.src = url; state.imageCache.set(url,image); return image; }
+    function background(){ const g=ctx.createLinearGradient(0,0,0,canvas.height); g.addColorStop(0,colors[0]); g.addColorStop(.55,colors[1]); g.addColorStop(1,"#000"); ctx.fillStyle=g; ctx.fillRect(0,0,canvas.width,canvas.height); }
+    function stars(layer){ for(const star of layer.stars){ star.x -= star.z * (0.7 + payload.globalSpeed * (layer.speed / 5) * 0.8); if(star.x < -12){ star.x = canvas.width + Math.random() * 90; star.y = Math.random() * canvas.height; } ctx.fillStyle = colors[3]; ctx.globalAlpha = safeOpacity(layer.opacity) * Math.min(1, 0.35 + star.z * 0.55); ctx.fillRect(star.x, star.y, star.size + layer.scale * 0.08, star.size + layer.scale * 0.08); } ctx.globalAlpha = 1; }
+    function plasma(layer){ const cell = Math.max(8, 28 - layer.scale * 2); const speed = payload.globalSpeed * (layer.speed / 5); for(let y=0;y<canvas.height;y+=cell){ for(let x=0;x<canvas.width;x+=cell){ const v = Math.sin((x + state.frame * speed * 2.1) * .018) + Math.sin((y - state.frame * speed * 1.6) * .024) + Math.sin((x + y + state.frame * speed) * .016); if(v < -.7) ctx.fillStyle = colors[0]; else if(v < .05) ctx.fillStyle = colors[1]; else if(v < .85) ctx.fillStyle = colors[2]; else ctx.fillStyle = colors[4]; ctx.globalAlpha = safeOpacity(layer.opacity) * (.18 + ((v + 3) / 6) * .52); ctx.fillRect(x,y,cell+1,cell+1);} } ctx.globalAlpha = 1; }
+    function rasters(layer){ const speed = payload.globalSpeed * (layer.speed / 5); const height = 20 + layer.scale * 2; for(let y=0;y<canvas.height;y+=height){ const wave = Math.sin((y * .03) + state.frame * .03 * speed); ctx.fillStyle = wave > 0 ? colors[2] : colors[4]; ctx.globalAlpha = safeOpacity(layer.opacity) * (.25 + ((wave + 1) * .14)); ctx.fillRect(0, y + Math.sin(state.frame * .04 + y * .03) * 9, canvas.width, height - 3); } ctx.globalAlpha = 1; }
+    function text(layer){ const speed = payload.globalSpeed * (layer.speed / 5); const wave = Math.sin(state.frame * .05 * speed) * (6 + layer.scale * 1.6); ctx.save(); ctx.textAlign="center"; ctx.textBaseline="middle"; ctx.globalAlpha=safeOpacity(layer.opacity); ctx.font=\`900 \${64 + layer.scale * 6}px \${layer.fontFamily || payload.globalFont || "'Trebuchet MS', Verdana, sans-serif"}\`; ctx.fillStyle="rgba(0,0,0,.38)"; ctx.fillText(layer.text || "TEXTE", canvas.width / 2 + 5, canvas.height / 2 + 6 + wave); ctx.fillStyle=colors[4]; ctx.shadowColor=colors[2]; ctx.shadowBlur=24; ctx.fillText(layer.text || "TEXTE", canvas.width / 2, canvas.height / 2 + wave); ctx.restore(); }
+    function scroll(layer){ const speed = payload.globalSpeed * (layer.speed / 5); const textValue = " " + (layer.text || "SCROLLER").trim() + " "; ctx.save(); ctx.globalAlpha=safeOpacity(layer.opacity); ctx.font=\`900 \${24 + layer.scale * 1.8}px \${layer.fontFamily || payload.globalFont || "'Trebuchet MS', Verdana, sans-serif"}\`; ctx.textBaseline="middle"; const y = canvas.height - 58 + Math.sin(state.frame * .05 * speed) * 8; ctx.fillStyle="rgba(0,0,0,.42)"; ctx.fillRect(0, canvas.height - 96, canvas.width, 74); ctx.fillStyle=colors[2]; ctx.shadowColor=colors[4]; ctx.shadowBlur=20; ctx.fillText(textValue, layer.offsetX, y); const width = ctx.measureText(textValue).width; layer.offsetX -= 2 + speed; if(layer.offsetX < -width - 12) layer.offsetX = canvas.width + 10; ctx.restore(); }
+    function image(layer){ const img = ensureImage((layer.text || "").trim()); if(!img || !img.complete || !img.naturalWidth) return; const scale = .45 + layer.scale * .12; const targetWidth = canvas.width * Math.min(1.2, scale); const ratio = img.naturalHeight / img.naturalWidth; const targetHeight = targetWidth * ratio; const x = (canvas.width - targetWidth) / 2; const y = (canvas.height - targetHeight) / 2; ctx.save(); ctx.globalAlpha=safeOpacity(layer.opacity); ctx.drawImage(img, x, y, targetWidth, targetHeight); ctx.restore(); }
+    function drawWatermark(){ if(!payload.watermark?.enabled || payload.watermark?.mode!=="layer") return; ctx.save(); ctx.globalAlpha=.55; ctx.textAlign="right"; ctx.textBaseline="bottom"; ctx.font=\`700 16px \${payload.globalFont || "'Trebuchet MS', Verdana, sans-serif"}\`; ctx.fillStyle="rgba(255,255,255,.75)"; ctx.fillText(payload.watermark.text || "CNC CODING IS NOT A CRIME", canvas.width - 20, canvas.height - 18); ctx.restore(); }
+    function frameChrome(){ ctx.save(); ctx.strokeStyle="rgba(255,255,255,.12)"; ctx.lineWidth=3; ctx.strokeRect(10,10,canvas.width-20,canvas.height-20); ctx.restore(); }
+    function render(){ background(); for(let i=payload.layers.length - 1; i>=0; i--){ const layer = payload.layers[i]; if(!isActive(layer)) continue; ctx.save(); ctx.globalCompositeOperation = blendMode(layer.blend); if(layer.type==="stars") stars(layer); if(layer.type==="plasma") plasma(layer); if(layer.type==="rasters") rasters(layer); if(layer.type==="text") text(layer); if(layer.type==="scroll") scroll(layer); if(layer.type==="image") image(layer); ctx.restore(); } drawWatermark(); frameChrome(); }
+    function tick(){ state.frame += 1; state.currentTime += 1 / 60; if(state.currentTime > (payload.timelineDuration || 20)) state.currentTime = 0; render(); requestAnimationFrame(tick); }
+    tick();
+  <\/script>
+</body>
+</html>`;
+    }
+
+    function updateSourceView() {
+      sourceView.value = buildExportHtml(getVersionPayload());
+    }
+
+    function downloadText(filename, content, type) {
+      const blob = new Blob([content], { type });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = filename;
+      link.click();
+      setTimeout(() => URL.revokeObjectURL(url), 2000);
+    }
+
+    function persistVersions() {
+      localStorage.setItem(storageKey, JSON.stringify(state.versions));
+    }
+
+    function persistSets() {
+      localStorage.setItem(setStorageKey, JSON.stringify(state.sets));
+    }
+
+    function loadPersistedVersions() {
+      try {
+        state.versions = JSON.parse(localStorage.getItem(storageKey) || "[]");
+      } catch {
+        state.versions = [];
+      }
+    }
+
+    function loadPersistedSets() {
+      try {
+        state.sets = JSON.parse(localStorage.getItem(setStorageKey) || "[]");
+      } catch {
+        state.sets = [];
+      }
+    }
+
+    function renderVersionIdentity() {
+      const label = padVersion(state.versionNumber);
+      currentVersionPill.textContent = "Version: " + label;
+      demoNamePill.textContent = "Demo: " + state.currentDemo.name;
+      demoTitleLine.textContent = label + " - " + state.currentDemo.name;
+      demoLinkLine.href = state.currentDemo.url;
+      demoLinkLine.textContent = "Voir " + state.currentDemo.name + " sur Demozoo";
+      demoSubtitleLine.textContent = "Nom automatique de demo connue pour cette version.";
+      canvasVersionCaption.textContent = label + " - " + state.currentDemo.name;
+    }
+
+    function renderWatermarkControls() {
+      watermarkEnabled.value = state.watermark.enabled ? "yes" : "no";
+      watermarkMode.value = state.watermark.mode;
+      watermarkText.value = state.watermark.text;
+      watermarkMode.disabled = !state.watermark.enabled;
+      watermarkText.disabled = !state.watermark.enabled;
+      const sideVisible = state.watermark.enabled && state.watermark.mode === "right";
+      exportPreviewShell.classList.toggle("side-disabled", !sideVisible);
+      watermarkSidePreview.hidden = !sideVisible;
+      watermarkSidePreviewText.textContent = state.watermark.text;
+      canvasModeCaption.textContent = sideVisible ? "HTML Canvas demo editor + watermark a droite" : "HTML Canvas demo editor";
+    }
+
+    function renderResources() {
+      resourcesList.innerHTML = "";
+      const creditedLayers = normalizedLayersForSave(state.layers).filter((layer) => layer.sourceLabel || layer.sourceUrl);
+      if (!creditedLayers.length && !state.music.url && !state.music.sourceLabel && !state.music.sourceUrl) {
+        const card = document.createElement("div");
+        card.className = "resource-card";
+        card.innerHTML = "<strong>Aucune ressource citee</strong><p class='muted'>Ajoute une source pour un calque ou une image externe.</p>";
+        resourcesList.append(card);
+      }
+      creditedLayers.forEach((layer) => {
+        const card = document.createElement("div");
+        card.className = "resource-card";
+        card.innerHTML = `
+          <div class="row-between">
+            <strong>${layer.name}</strong>
+            <span class="pill">${labelForType(layer.type)}</span>
+          </div>
+          <div class="muted">${layer.sourceLabel || "Source"}</div>
+          ${layer.sourceUrl ? `<a href="${layer.sourceUrl}" target="_blank" rel="noreferrer">${layer.sourceUrl}</a>` : ""}
+        `;
+        resourcesList.append(card);
+      });
+      if (state.music.url || state.music.sourceLabel || state.music.sourceUrl) {
+        const card = document.createElement("div");
+        card.className = "resource-card";
+        card.innerHTML = `
+          <div class="row-between">
+            <strong>Musique</strong>
+            <span class="pill">${state.music.url && /\.(mod|xm|s3m|it)$/i.test(state.music.url) ? ".MOD/Tracker" : "Audio web"}</span>
+          </div>
+          <div class="muted">${state.music.sourceLabel || "Source musique"}</div>
+          ${state.music.sourceUrl ? `<a href="${state.music.sourceUrl}" target="_blank" rel="noreferrer">${state.music.sourceUrl}</a>` : ""}
+        `;
+        resourcesList.append(card);
+      }
+    }
+
+    function renderVersionsList() {
+      versionsList.innerHTML = "";
+      if (!state.versions.length) {
+        const card = document.createElement("div");
+        card.className = "version-card";
+        card.innerHTML = "<strong>Aucune version sauvee</strong><p class='muted'>Clique sur Sauver version pour garder une copie locale numerotee.</p>";
+        versionsList.append(card);
+        return;
+      }
+
+      state.versions
+        .slice()
+        .sort((a, b) => b.versionNumber - a.versionNumber)
+        .forEach((version) => {
+          const card = document.createElement("div");
+          card.className = "version-card";
+
+          const head = document.createElement("div");
+          head.className = "row-between";
+          head.innerHTML = `
+            <strong>${version.versionLabel} - ${version.demoName}</strong>
+            <span class="pill">${version.layers.length} calques</span>
+          `;
+
+          const meta = document.createElement("div");
+          meta.className = "muted";
+          meta.textContent = new Date(version.savedAt).toLocaleString("fr-FR");
+
+          const link = document.createElement("a");
+          link.href = version.demoUrl;
+          link.target = "_blank";
+          link.rel = "noreferrer";
+          link.textContent = "Lien Demozoo";
+
+          const actions = document.createElement("div");
+          actions.className = "mini-actions";
+
+          const loadButton = document.createElement("button");
+          loadButton.className = "small";
+          loadButton.textContent = "Charger";
+          loadButton.addEventListener("click", () => loadVersion(version.versionNumber));
+
+          const jsonButton = document.createElement("button");
+          jsonButton.className = "small";
+          jsonButton.textContent = "JSON";
+          jsonButton.addEventListener("click", () => downloadText(`${version.versionLabel}-${version.demoName}.json`.replaceAll(" ", "_"), JSON.stringify(version, null, 2), "application/json"));
+
+          const htmlButton = document.createElement("button");
+          htmlButton.className = "small";
+          htmlButton.textContent = "HTML";
+          htmlButton.addEventListener("click", () => downloadText(`${version.versionLabel}-${version.demoName}.html`.replaceAll(" ", "_"), version.exportHtml, "text/html"));
+
+          actions.append(loadButton, jsonButton, htmlButton);
+          card.append(head, meta, link, actions);
+          versionsList.append(card);
+        });
+    }
+
+    function renderSetsList() {
+      setsList.innerHTML = "";
+      if (!state.sets.length) {
+        const card = document.createElement("div");
+        card.className = "version-card";
+        card.innerHTML = "<strong>Aucun set sauve</strong><p class='muted'>Un set garde la scene actuelle pour la rejouer plus tard.</p>";
+        setsList.append(card);
+        return;
+      }
+
+      state.sets
+        .slice()
+        .sort((a, b) => a.setName.localeCompare(b.setName, "fr"))
+        .forEach((setItem) => {
+          const card = document.createElement("div");
+          card.className = "version-card";
+          card.innerHTML = `
+            <div class="row-between">
+              <strong>${setItem.setName}</strong>
+              <span class="pill">${setItem.layers.length} calques</span>
+            </div>
+            <div class="muted">${new Date(setItem.savedAt).toLocaleString("fr-FR")}</div>
+          `;
+
+          const actions = document.createElement("div");
+          actions.className = "mini-actions";
+
+          const loadButton = document.createElement("button");
+          loadButton.className = "small";
+          loadButton.textContent = "Charger";
+          loadButton.addEventListener("click", () => loadSet(setItem.setName));
+
+          const jsonButton = document.createElement("button");
+          jsonButton.className = "small";
+          jsonButton.textContent = "JSON";
+          jsonButton.addEventListener("click", () => {
+            downloadText(`${setItem.setName}.set.json`.replaceAll(" ", "_"), JSON.stringify(setItem, null, 2), "application/json");
+          });
+
+          const deleteButton = document.createElement("button");
+          deleteButton.className = "small";
+          deleteButton.textContent = "Effacer";
+          deleteButton.addEventListener("click", () => deleteSet(setItem.setName));
+
+          actions.append(loadButton, jsonButton, deleteButton);
+          card.append(actions);
+          setsList.append(card);
+        });
+    }
+
+    function renderLayersList() {
+      layersList.innerHTML = "";
+      state.layers.forEach((layer, index) => {
+        const card = document.createElement("div");
+        card.className = "layer-card" + (layer.id === state.selectedLayerId ? " active" : "");
+        card.innerHTML = `
+          <div class="row-between">
+            <div>
+              <strong>${layer.name}</strong>
+              <div class="muted">${labelForType(layer.type)} | ${labelForBlend(layer.blend)} | ${layer.opacity}% | ${layer.enabled === false ? "muet" : "actif"}</div>
+              <div class="tiny">Ordre ${index + 1} / ${state.layers.length} | Debut ${Number(layer.start || 0).toFixed(1)}s | Duree ${Number(layer.duration || 8).toFixed(1)}s</div>
+            </div>
+            <button class="small">Choisir</button>
+          </div>
+        `;
+        card.querySelector("button").addEventListener("click", () => {
+          state.selectedLayerId = layer.id;
+          updateAll();
+        });
+
+        const actions = document.createElement("div");
+        actions.className = "mini-actions";
+
+        const up = document.createElement("button");
+        up.className = "small";
+        up.textContent = "Monter";
+        up.disabled = index === 0;
+        up.addEventListener("click", () => moveLayer(index, -1));
+
+        const down = document.createElement("button");
+        down.className = "small";
+        down.textContent = "Descendre";
+        down.disabled = index === state.layers.length - 1;
+        down.addEventListener("click", () => moveLayer(index, 1));
+
+          const copy = document.createElement("button");
+          copy.className = "small";
+          copy.textContent = "Dupliquer";
+          copy.addEventListener("click", () => duplicateLayer(index));
+
+        const remove = document.createElement("button");
+        remove.className = "small";
+        remove.textContent = "Suppr.";
+        remove.addEventListener("click", () => {
+          state.selectedLayerId = layer.id;
+          deleteSelectedLayer();
+        });
+
+        actions.append(up, down, copy, remove);
+        card.append(actions);
+        layersList.append(card);
+      });
+      layerCountPill.textContent = "Calques: " + state.layers.length;
+    }
+
+    function renderTimeline() {
+      timelineRange.max = String(state.timelineDuration);
+      timelineRange.value = String(state.currentTime);
+      timelineRangeValue.textContent = state.currentTime.toFixed(1) + "s";
+      timelineList.innerHTML = "";
+      state.layers.forEach((layer) => {
+        const card = document.createElement("div");
+        card.className = "timeline-card";
+        const top = document.createElement("div");
+        top.className = "row-between";
+        top.innerHTML = `<strong>${layer.name}</strong><span class="pill">${Number(layer.start || 0).toFixed(1)}s - ${(Number(layer.start || 0) + Number(layer.duration || 8)).toFixed(1)}s</span>`;
+
+        const track = document.createElement("div");
+        track.className = "timeline-track";
+
+        const block = document.createElement("div");
+        block.className = "timeline-block" + (layer.id === state.selectedLayerId ? " selected" : "");
+        block.style.left = ((Number(layer.start || 0) / state.timelineDuration) * 100) + "%";
+        block.style.width = Math.max((Number(layer.duration || 8) / state.timelineDuration) * 100, 4) + "%";
+        block.innerHTML = `<span>${labelForType(layer.type)}</span><span class="timeline-handle"></span>`;
+
+        block.addEventListener("pointerdown", (event) => {
+          const handle = event.target.classList.contains("timeline-handle");
+          state.selectedLayerId = layer.id;
+          state.timelineDrag = {
+            layerId: layer.id,
+            mode: handle ? "resize" : "move",
+            startX: event.clientX,
+            width: track.getBoundingClientRect().width,
+            originalStart: Number(layer.start || 0),
+            originalDuration: Number(layer.duration || 8)
+          };
+          block.setPointerCapture(event.pointerId);
+          updateAll();
+        });
+
+        track.addEventListener("click", (event) => {
+          if (state.timelineDrag) return;
+          const rect = track.getBoundingClientRect();
+          const ratio = Math.max(0, Math.min(1, (event.clientX - rect.left) / rect.width));
+          state.currentTime = ratio * state.timelineDuration;
+          updateAll();
+        });
+
+        const head = document.createElement("div");
+        head.className = "timeline-head";
+        head.style.left = ((state.currentTime / state.timelineDuration) * 100) + "%";
+
+        track.append(block, head);
+        card.append(top, track);
+        timelineList.append(card);
+      });
+    }
+
+    function renderLevelUi() {
+      const label = state.level === 10 ? "R0x0r" : state.level === 7 ? "Leet" : state.level === 3 ? "Sceener" : "Lame / Noob";
+      const caption = state.level === 10
+        ? "Mode brut: tous les parametres et le mix sont visibles."
+        : state.level === 7
+          ? "Mode avance: blend et parametres 4 a 6 visibles."
+          : state.level === 3
+            ? "Mode intermediaire: fontes, sources et parametres 1 a 3 visibles."
+            : "Mode simple: texte, transparence, vitesse, taille et lecture.";
+      levelMode.value = String(state.level);
+      levelPill.textContent = "Niveau: " + label;
+      levelCaption.textContent = caption;
+      timePill.textContent = "Temps: " + state.currentTime.toFixed(1) + "s";
+      document.querySelectorAll("[data-min-level]").forEach((node) => {
+        node.classList.toggle("hidden-by-level", state.level < Number(node.dataset.minLevel));
+      });
+    }
+
+    function renderInspector() {
+      const layer = getSelectedLayer();
+      const disabled = !layer;
+      [
+        layerName,
+        layerEnabled,
+        layerStart,
+        layerDuration,
+        layerType,
+        layerBlend,
+        layerFont,
+        layerOpacity,
+        layerSpeed,
+        layerScale,
+        layerText,
+        layerSourceLabel,
+        layerSourceUrl,
+        moveUpButton,
+        moveDownButton,
+        deleteLayerButton
+      ].concat(paramInputs).forEach((node) => { node.disabled = disabled; });
+
+      if (!layer) {
+        layerName.value = "";
+        layerText.value = "";
+        return;
+      }
+
+      layerName.value = layer.name;
+      layerEnabled.value = layer.enabled === false ? "no" : "yes";
+      layerStart.value = Number(layer.start || 0).toFixed(1);
+      layerDuration.value = Number(layer.duration || 8).toFixed(1);
+      layerType.value = layer.type;
+      layerBlend.value = layer.blend;
+      layerFont.value = layer.fontFamily || "";
+      layerOpacity.value = layer.opacity;
+      layerSpeed.value = layer.speed;
+      layerScale.value = layer.scale;
+      layerText.value = layer.text || "";
+      layerSourceLabel.value = layer.sourceLabel || "";
+      layerSourceUrl.value = layer.sourceUrl || "";
+      layerOpacityValue.textContent = layer.opacity + "%";
+      layerSpeedValue.textContent = String(layer.speed);
+      layerScaleValue.textContent = String(layer.scale);
+      const params = layer.params || [50, 50, 50, 50, 50, 50, 50, 50];
+      paramInputs.forEach((input, index) => {
+        input.value = params[index];
+        paramValueSpans[index].textContent = String(params[index]);
+      });
+
+      const index = state.layers.findIndex((entry) => entry.id === layer.id);
+      moveUpButton.disabled = index <= 0;
+      moveDownButton.disabled = index === -1 || index >= state.layers.length - 1;
+    }
+
+    function renderControls() {
+      globalPalette.value = state.palette;
+      globalSpeed.value = state.globalSpeed;
+      globalFont.value = state.globalFont;
+      globalSpeedValue.textContent = String(state.globalSpeed);
+      playPauseButton.textContent = state.playing ? "Pause" : "Lecture";
+      statusPill.textContent = "Animation: " + (state.playing ? "ON" : "OFF");
+      musicUrl.value = state.music.url || "";
+      musicSourceLabel.value = state.music.sourceLabel || "";
+      musicSourceUrl.value = state.music.sourceUrl || "";
+      if (state.music.url && !/\.(mod|xm|s3m|it)$/i.test(state.music.url)) {
+        musicPlayer.src = state.music.url;
+      } else {
+        musicPlayer.removeAttribute("src");
+        musicPlayer.load();
+      }
+    }
+
+    function updateAll() {
+      renderVersionIdentity();
+      renderLevelUi();
+      renderControls();
+      renderTimeline();
+      renderLayersList();
+      renderInspector();
+      renderResources();
+      renderVersionsList();
+      renderSetsList();
+      renderWatermarkControls();
+      updateSourceView();
+    }
+
+    function moveLayer(index, direction) {
+      const next = index + direction;
+      if (next < 0 || next >= state.layers.length) return;
+      const current = state.layers[index];
+      state.layers[index] = state.layers[next];
+      state.layers[next] = current;
+      updateAll();
+    }
+
+    function duplicateLayer(index) {
+      const original = state.layers[index];
+      const copy = makeLayer(original.type, deepClone(original));
+      copy.id = uid();
+      copy.name = original.name + " copie";
+      if (copy.type === "stars") copy.stars = createStars(130);
+      if (copy.type === "scroll") copy.offsetX = canvas.width;
+      state.layers.splice(index + 1, 0, copy);
+      state.selectedLayerId = copy.id;
+      updateAll();
+    }
+
+    function deleteSelectedLayer() {
+      const index = state.layers.findIndex((layer) => layer.id === state.selectedLayerId);
+      if (index === -1) return;
+      state.layers.splice(index, 1);
+      state.selectedLayerId = state.layers[Math.max(0, index - 1)]?.id || null;
+      updateAll();
+    }
+
+    function addLayer(type) {
+      const layer = makeLayer(type);
+      layer.start = Number(state.currentTime.toFixed(1));
+      state.layers.unshift(layer);
+      state.selectedLayerId = layer.id;
+      updateAll();
+    }
+
+    function drawBackground() {
+      const colors = palettes[state.palette];
+      const gradient = ctx.createLinearGradient(0, 0, 0, canvas.height);
+      gradient.addColorStop(0, colors[0]);
+      gradient.addColorStop(0.55, colors[1]);
+      gradient.addColorStop(1, "#000000");
+      ctx.fillStyle = gradient;
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+    }
+
+    function drawStarsLayer(layer, colors) {
+      const speed = state.globalSpeed * (layer.speed / 5);
+      const params = layer.params || [50, 50, 50, 50, 50, 50, 50, 50];
+      const drift = 0.5 + params[0] / 50;
+      for (const star of layer.stars) {
+        star.x -= star.z * (0.4 + speed * 0.5) * drift;
+        star.y += Math.sin((state.frame + star.x) * 0.01) * ((params[1] - 50) / 250);
+        if (star.x < -12) {
+          star.x = canvas.width + Math.random() * 90;
+          star.y = Math.random() * canvas.height;
+        }
+        ctx.fillStyle = colors[3];
+        ctx.globalAlpha = safeOpacity(layer.opacity) * Math.min(1, 0.2 + star.z * (0.3 + params[2] / 100));
+        ctx.fillRect(star.x, star.y, star.size + layer.scale * 0.08 + params[3] / 40, star.size + layer.scale * 0.08 + params[3] / 40);
+      }
+      ctx.globalAlpha = 1;
+    }
+
+    function drawPlasmaLayer(layer, colors) {
+      const cell = Math.max(8, 28 - layer.scale * 2);
+      const speed = state.globalSpeed * (layer.speed / 5);
+      const params = layer.params || [50, 50, 50, 50, 50, 50, 50, 50];
+      for (let y = 0; y < canvas.height; y += cell) {
+        for (let x = 0; x < canvas.width; x += cell) {
+          const v =
+            Math.sin((x + state.frame * speed * (1 + params[0] / 80)) * (0.01 + params[1] / 5000)) +
+            Math.sin((y - state.frame * speed * (1 + params[2] / 80)) * (0.012 + params[3] / 5000)) +
+            Math.sin((x + y + state.frame * speed) * (0.01 + params[4] / 5000));
+          if (v < -0.7) ctx.fillStyle = colors[0];
+          else if (v < 0.05) ctx.fillStyle = colors[1];
+          else if (v < 0.85) ctx.fillStyle = colors[2];
+          else ctx.fillStyle = colors[4];
+          ctx.globalAlpha = safeOpacity(layer.opacity) * (0.08 + ((v + 3) / 6) * (0.25 + params[5] / 150));
+          ctx.fillRect(x, y, cell + 1, cell + 1);
+        }
+      }
+      ctx.globalAlpha = 1;
+    }
+
+    function drawRastersLayer(layer, colors) {
+      const speed = state.globalSpeed * (layer.speed / 5);
+      const params = layer.params || [50, 50, 50, 50, 50, 50, 50, 50];
+      const height = 20 + layer.scale * 2;
+      for (let y = 0; y < canvas.height; y += height) {
+        const wave = Math.sin((y * (0.01 + params[0] / 2500)) + state.frame * (0.01 + params[1] / 2500) * speed);
+        ctx.fillStyle = wave > 0 ? colors[2] : colors[4];
+        ctx.globalAlpha = safeOpacity(layer.opacity) * (0.1 + ((wave + 1) * (0.08 + params[2] / 500)));
+        ctx.fillRect(0, y + Math.sin(state.frame * 0.04 + y * (0.01 + params[3] / 2500)) * (3 + params[4] / 8), canvas.width, height - 3);
+      }
+      ctx.globalAlpha = 1;
+    }
+
+    function drawTextLayer(layer, colors) {
+      const speed = state.globalSpeed * (layer.speed / 5);
+      const params = layer.params || [50, 50, 50, 50, 50, 50, 50, 50];
+      const wave = Math.sin(state.frame * (0.02 + params[0] / 1500) * speed) * (3 + layer.scale + params[1] / 6);
+      ctx.save();
+      ctx.textAlign = "center";
+      ctx.textBaseline = "middle";
+      ctx.globalAlpha = safeOpacity(layer.opacity);
+      ctx.font = `900 ${42 + layer.scale * 6 + params[2] / 3}px ${layer.fontFamily || state.globalFont}`;
+      ctx.fillStyle = "rgba(0,0,0,0.38)";
+      ctx.fillText(layer.text || "TEXTE", canvas.width / 2 + 5, canvas.height / 2 + 6 + wave);
+      ctx.fillStyle = colors[4];
+      ctx.shadowColor = colors[2];
+      ctx.shadowBlur = 8 + params[3] / 2;
+      ctx.fillText(layer.text || "TEXTE", canvas.width / 2, canvas.height / 2 + wave);
+      ctx.restore();
+    }
+
+    function drawScrollLayer(layer, colors) {
+      const speed = state.globalSpeed * (layer.speed / 5);
+      const params = layer.params || [50, 50, 50, 50, 50, 50, 50, 50];
+      const text = " " + (layer.text || "SCROLLER").trim() + " ";
+      ctx.save();
+      ctx.globalAlpha = safeOpacity(layer.opacity);
+      ctx.font = `900 ${20 + layer.scale * 1.8 + params[0] / 5}px ${layer.fontFamily || state.globalFont}`;
+      ctx.textBaseline = "middle";
+      const y = canvas.height - (40 + params[1] / 2) + Math.sin(state.frame * 0.05 * speed) * (2 + params[2] / 10);
+      ctx.fillStyle = "rgba(0,0,0,0.42)";
+      ctx.fillRect(0, canvas.height - 96, canvas.width, 74);
+      ctx.fillStyle = colors[2];
+      ctx.shadowColor = colors[4];
+      ctx.shadowBlur = 6 + params[3] / 3;
+      ctx.fillText(text, layer.offsetX, y);
+      const width = ctx.measureText(text).width;
+      layer.offsetX -= 1 + speed + params[4] / 30;
+      if (layer.offsetX < -width - 12) layer.offsetX = canvas.width + 10;
+      ctx.restore();
+    }
+
+    function drawImageLayer(layer) {
+      const image = ensureImage((layer.text || "").trim());
+      if (!image || !image.complete || !image.naturalWidth) return;
+      const params = layer.params || [50, 50, 50, 50, 50, 50, 50, 50];
+      const scale = 0.3 + layer.scale * 0.08 + params[0] / 250;
+      const targetWidth = canvas.width * Math.min(1.2, scale);
+      const ratio = image.naturalHeight / image.naturalWidth;
+      const targetHeight = targetWidth * ratio;
+      const x = (canvas.width - targetWidth) / 2 + (params[1] - 50) * 4;
+      const y = (canvas.height - targetHeight) / 2 + (params[2] - 50) * 3;
+      ctx.save();
+      ctx.globalAlpha = safeOpacity(layer.opacity);
+      ctx.drawImage(image, x, y, targetWidth, targetHeight);
+      ctx.restore();
+    }
+
+    function drawFrameChrome() {
+      ctx.save();
+      ctx.strokeStyle = "rgba(255,255,255,0.12)";
+      ctx.lineWidth = 3;
+      ctx.strokeRect(10, 10, canvas.width - 20, canvas.height - 20);
+      ctx.restore();
+    }
+
+    function layerIsActive(layer) {
+      if (layer.enabled === false) return false;
+      const start = Number(layer.start || 0);
+      const duration = Number(layer.duration || 8);
+      return state.currentTime >= start && state.currentTime <= start + duration;
+    }
+
+    function renderCanvas() {
+      const colors = palettes[state.palette];
+      drawBackground();
+      for (let i = state.layers.length - 1; i >= 0; i -= 1) {
+        const layer = state.layers[i];
+        if (!layerIsActive(layer)) continue;
+        ctx.save();
+        ctx.globalCompositeOperation = actualBlendMode(layer.blend);
+        if (layer.type === "stars") drawStarsLayer(layer, colors);
+        if (layer.type === "plasma") drawPlasmaLayer(layer, colors);
+        if (layer.type === "rasters") drawRastersLayer(layer, colors);
+        if (layer.type === "text") drawTextLayer(layer, colors);
+        if (layer.type === "scroll") drawScrollLayer(layer, colors);
+        if (layer.type === "image") drawImageLayer(layer);
+        ctx.restore();
+      }
+      drawWatermarkLayer();
+      drawFrameChrome();
+    }
+
+    function drawWatermarkLayer() {
+      if (!state.watermark.enabled || state.watermark.mode !== "layer") return;
+      ctx.save();
+      ctx.globalAlpha = 0.55;
+      ctx.textAlign = "right";
+      ctx.textBaseline = "bottom";
+      ctx.font = `700 16px ${state.globalFont}`;
+      ctx.fillStyle = "rgba(255,255,255,0.75)";
+      ctx.fillText(state.watermark.text || "CNC CODING IS NOT A CRIME", canvas.width - 20, canvas.height - 18);
+      ctx.restore();
+    }
+
+    function tick() {
+      if (state.playing) {
+        state.frame += 1;
+        state.currentTime += 1 / 60;
+        if (state.currentTime > state.timelineDuration) {
+          state.currentTime = 0;
+        }
+      }
+      renderCanvas();
+      renderLevelUi();
+      renderTimeline();
+      requestAnimationFrame(tick);
+    }
+
+    function saveCurrentVersion() {
+      const payload = getVersionPayload();
+      payload.exportHtml = buildExportHtml(payload);
+      state.versions.push(payload);
+      persistVersions();
+      setVersionIdentity(incrementVersionNumber(state.versionNumber));
+      updateAll();
+    }
+
+    function saveCurrentSet() {
+      const rawName = setNameInput.value.trim();
+      const name = rawName || `${padVersion(state.versionNumber)} Set`;
+      const payload = getSetPayload(name);
+      state.sets = state.sets.filter((entry) => entry.setName !== name);
+      state.sets.push(payload);
+      persistSets();
+      setNameInput.value = name;
+      updateAll();
+    }
+
+    function loadSet(name) {
+      const setItem = state.sets.find((entry) => entry.setName === name);
+      if (!setItem) return;
+      state.palette = setItem.palette;
+      state.globalSpeed = setItem.globalSpeed;
+      state.globalFont = setItem.globalFont || "'Press Start 2P', monospace";
+      state.level = Number(setItem.level || 0);
+      state.timelineDuration = Number(setItem.timelineDuration || 20);
+      state.currentTime = 0;
+      state.music = deepClone(setItem.music || { url: "", sourceLabel: "", sourceUrl: "" });
+      state.watermark = normalizedWatermarkForSave(setItem.watermark);
+      state.layers = setItem.layers.map((layer) => {
+        const rebuilt = makeLayer(layer.type, deepClone(layer));
+        if (rebuilt.type === "stars") rebuilt.stars = createStars(130);
+        if (rebuilt.type === "scroll") rebuilt.offsetX = canvas.width;
+        return rebuilt;
+      });
+      state.selectedLayerId = state.layers[0]?.id || null;
+      setNameInput.value = setItem.setName;
+      updateAll();
+    }
+
+    function deleteSet(name) {
+      state.sets = state.sets.filter((entry) => entry.setName !== name);
+      persistSets();
+      updateAll();
+    }
+
+    function loadVersion(number) {
+      const version = state.versions.find((entry) => entry.versionNumber === number);
+      if (!version) return;
+      state.palette = version.palette;
+      state.globalSpeed = version.globalSpeed;
+      state.globalFont = version.globalFont || "'Press Start 2P', monospace";
+      state.level = Number(version.level || 0);
+      state.timelineDuration = Number(version.timelineDuration || 20);
+      state.currentTime = 0;
+      state.music = deepClone(version.music || { url: "", sourceLabel: "", sourceUrl: "" });
+      state.watermark = normalizedWatermarkForSave(version.watermark);
+      state.layers = version.layers.map((layer) => {
+        const rebuilt = makeLayer(layer.type, deepClone(layer));
+        if (rebuilt.type === "stars") rebuilt.stars = createStars(130);
+        if (rebuilt.type === "scroll") rebuilt.offsetX = canvas.width;
+        return rebuilt;
+      });
+      state.selectedLayerId = state.layers[0]?.id || null;
+      const nextNumber = incrementVersionNumber(Math.max(1, ...state.versions.map((entry) => normalizeVersionNumber(entry.versionNumber))));
+      setVersionIdentity(nextNumber);
+      updateAll();
+    }
+
+    function exportCurrentJson() {
+      const payload = getVersionPayload();
+      downloadText(`${payload.versionLabel}-${payload.demoName}.json`.replaceAll(" ", "_"), JSON.stringify(payload, null, 2), "application/json");
+    }
+
+    function exportCurrentSetJson() {
+      const rawName = setNameInput.value.trim();
+      const name = rawName || `${padVersion(state.versionNumber)} Set`;
+      const payload = getSetPayload(name);
+      downloadText(`${name}.set.json`.replaceAll(" ", "_"), JSON.stringify(payload, null, 2), "application/json");
+    }
+
+    function exportCurrentHtml() {
+      const payload = getVersionPayload();
+      downloadText(`index-CNC-${payload.versionLabel}.html`.replaceAll(" ", "_"), buildExportHtml(payload), "text/html");
+    }
+
+    function exportCurrentDemoOnlyHtml() {
+      const payload = getVersionPayload();
+      downloadText(`index-CNC-${payload.versionLabel}-demo-only.html`.replaceAll(" ", "_"), buildDemoOnlyHtml(payload), "text/html");
+    }
+
+    document.querySelectorAll("[data-add-layer]").forEach((button) => {
+      button.addEventListener("click", () => addLayer(button.dataset.addLayer));
+    });
+
+    document.querySelectorAll("[data-scene]").forEach((button) => {
+      button.addEventListener("click", () => loadScene(button.dataset.scene));
+    });
+
+    globalPalette.addEventListener("change", () => {
+      state.palette = globalPalette.value;
+      updateAll();
+    });
+
+    levelMode.addEventListener("change", () => {
+      state.level = Number(levelMode.value);
+      updateAll();
+    });
+
+    timelineRange.addEventListener("input", () => {
+      state.currentTime = Number(timelineRange.value);
+      updateAll();
+    });
+
+    globalSpeed.addEventListener("input", () => {
+      state.globalSpeed = Number(globalSpeed.value);
+      globalSpeedValue.textContent = globalSpeed.value;
+      updateSourceView();
+    });
+
+    globalFont.addEventListener("change", () => {
+      state.globalFont = globalFont.value;
+      updateAll();
+    });
+
+    watermarkEnabled.addEventListener("change", () => {
+      state.watermark.enabled = watermarkEnabled.value === "yes";
+      updateAll();
+    });
+
+    watermarkMode.addEventListener("change", () => {
+      state.watermark.mode = watermarkMode.value === "right" ? "right" : "layer";
+      updateAll();
+    });
+
+    watermarkText.addEventListener("input", () => {
+      state.watermark.text = watermarkText.value.trim() || "CNC CODING IS NOT A CRIME";
+      updateAll();
+    });
+
+    playPauseButton.addEventListener("click", () => {
+      state.playing = !state.playing;
+      renderControls();
+    });
+
+    savePngButton.addEventListener("click", () => {
+      const link = document.createElement("a");
+      link.href = canvas.toDataURL("image/png");
+      link.download = `${padVersion(state.versionNumber)}-${state.currentDemo.name}.png`.replaceAll(" ", "_");
+      link.click();
+    });
+
+    resetButton.addEventListener("click", () => loadScene("starter"));
+    exportHtmlButton.addEventListener("click", exportCurrentHtml);
+    exportDemoOnlyButton.addEventListener("click", exportCurrentDemoOnlyHtml);
+    exportVersionJsonButton.addEventListener("click", exportCurrentJson);
+    saveVersionButton.addEventListener("click", saveCurrentVersion);
+    saveSetButton.addEventListener("click", saveCurrentSet);
+    refreshSourceButton.addEventListener("click", updateSourceView);
+    exportSetJsonButton.addEventListener("click", exportCurrentSetJson);
+
+    copySourceButton.addEventListener("click", async () => {
+      try {
+        await navigator.clipboard.writeText(sourceView.value);
+        copySourceButton.textContent = "Code copie";
+        setTimeout(() => {
+          copySourceButton.textContent = "Copier le code";
+        }, 1500);
+      } catch {
+        copySourceButton.textContent = "Copie impossible";
+      }
+    });
+
+    layerName.addEventListener("input", () => {
+      const layer = getSelectedLayer();
+      if (!layer) return;
+      layer.name = layerName.value || "Calque";
+      updateAll();
+    });
+
+    layerEnabled.addEventListener("change", () => {
+      const layer = getSelectedLayer();
+      if (!layer) return;
+      layer.enabled = layerEnabled.value === "yes";
+      updateAll();
+    });
+
+    layerStart.addEventListener("input", () => {
+      const layer = getSelectedLayer();
+      if (!layer) return;
+      layer.start = Math.max(0, Math.min(state.timelineDuration - 0.1, Number(layerStart.value)));
+      updateAll();
+    });
+
+    layerDuration.addEventListener("input", () => {
+      const layer = getSelectedLayer();
+      if (!layer) return;
+      layer.duration = Math.max(0.5, Math.min(state.timelineDuration, Number(layerDuration.value)));
+      updateAll();
+    });
+
+    layerType.addEventListener("change", () => {
+      const layer = getSelectedLayer();
+      if (!layer) return;
+      const updated = makeLayer(layerType.value, {
+        id: layer.id,
+        name: layer.name,
+        blend: layer.blend,
+        fontFamily: layer.fontFamily,
+        opacity: layer.opacity,
+        speed: layer.speed,
+        scale: layer.scale,
+        text: layer.text,
+        sourceLabel: layer.sourceLabel,
+        sourceUrl: layer.sourceUrl
+      });
+      const index = state.layers.findIndex((item) => item.id === layer.id);
+      state.layers[index] = updated;
+      updateAll();
+    });
+
+    layerBlend.addEventListener("change", () => {
+      const layer = getSelectedLayer();
+      if (!layer) return;
+      layer.blend = layerBlend.value;
+      updateAll();
+    });
+
+    layerFont.addEventListener("change", () => {
+      const layer = getSelectedLayer();
+      if (!layer) return;
+      layer.fontFamily = layerFont.value;
+      updateAll();
+    });
+
+    layerOpacity.addEventListener("input", () => {
+      const layer = getSelectedLayer();
+      if (!layer) return;
+      layer.opacity = Number(layerOpacity.value);
+      layerOpacityValue.textContent = layer.opacity + "%";
+      updateAll();
+    });
+
+    layerSpeed.addEventListener("input", () => {
+      const layer = getSelectedLayer();
+      if (!layer) return;
+      layer.speed = Number(layerSpeed.value);
+      layerSpeedValue.textContent = String(layer.speed);
+      updateSourceView();
+    });
+
+    layerScale.addEventListener("input", () => {
+      const layer = getSelectedLayer();
+      if (!layer) return;
+      layer.scale = Number(layerScale.value);
+      layerScaleValue.textContent = String(layer.scale);
+      updateSourceView();
+    });
+
+    layerText.addEventListener("input", () => {
+      const layer = getSelectedLayer();
+      if (!layer) return;
+      layer.text = layer.type === "image" ? layerText.value.trim() : layerText.value.toUpperCase();
+      if (layer.type === "scroll") layer.offsetX = canvas.width;
+      updateAll();
+    });
+
+    layerSourceLabel.addEventListener("input", () => {
+      const layer = getSelectedLayer();
+      if (!layer) return;
+      layer.sourceLabel = layerSourceLabel.value;
+      updateAll();
+    });
+
+    layerSourceUrl.addEventListener("input", () => {
+      const layer = getSelectedLayer();
+      if (!layer) return;
+      layer.sourceUrl = layerSourceUrl.value;
+      updateAll();
+    });
+
+    musicUrl.addEventListener("input", () => {
+      state.music.url = musicUrl.value.trim();
+      renderControls();
+      renderResources();
+      updateSourceView();
+    });
+
+    musicSourceLabel.addEventListener("input", () => {
+      state.music.sourceLabel = musicSourceLabel.value;
+      renderResources();
+      updateSourceView();
+    });
+
+    musicSourceUrl.addEventListener("input", () => {
+      state.music.sourceUrl = musicSourceUrl.value.trim();
+      renderResources();
+      updateSourceView();
+    });
+
+    paramInputs.forEach((input, index) => {
+      input.addEventListener("input", () => {
+        const layer = getSelectedLayer();
+        if (!layer) return;
+        if (!layer.params) layer.params = [50, 50, 50, 50, 50, 50, 50, 50];
+        layer.params[index] = Number(input.value);
+        paramValueSpans[index].textContent = input.value;
+        updateSourceView();
+      });
+    });
+
+    moveUpButton.addEventListener("click", () => {
+      const index = state.layers.findIndex((layer) => layer.id === state.selectedLayerId);
+      moveLayer(index, -1);
+    });
+
+    moveDownButton.addEventListener("click", () => {
+      const index = state.layers.findIndex((layer) => layer.id === state.selectedLayerId);
+      moveLayer(index, 1);
+    });
+
+    deleteLayerButton.addEventListener("click", deleteSelectedLayer);
+
+    document.addEventListener("pointermove", (event) => {
+      if (!state.timelineDrag) return;
+      const layer = state.layers.find((item) => item.id === state.timelineDrag.layerId);
+      if (!layer) return;
+      const deltaRatio = (event.clientX - state.timelineDrag.startX) / state.timelineDrag.width;
+      const deltaTime = deltaRatio * state.timelineDuration;
+      if (state.timelineDrag.mode === "move") {
+        layer.start = Math.max(0, Math.min(state.timelineDuration - 0.1, state.timelineDrag.originalStart + deltaTime));
+      } else {
+        layer.duration = Math.max(0.5, Math.min(state.timelineDuration - Number(layer.start || 0), state.timelineDrag.originalDuration + deltaTime));
+      }
+      renderTimeline();
+      renderInspector();
+    });
+
+    document.addEventListener("pointerup", () => {
+      state.timelineDrag = null;
+    });
+
+    loadPersistedVersions();
+    loadPersistedSets();
+    if (state.versions.length) {
+      const maxNumber = Math.max(...state.versions.map((version) => normalizeVersionNumber(version.versionNumber)));
+      setVersionIdentity(incrementVersionNumber(maxNumber));
+    } else {
+      setVersionIdentity(1);
+    }
+    starterScene();
+    updateAll();
+    tick();
+  </script>
+</body>
+</html>
