@@ -1,4 +1,4 @@
-# Brief V2 - CNC Coding Is Not A Crime
+# CNC : Brief V2 - CNC Coding Is Not A Crime
 
 ## Vision
 
