@@ -7,6 +7,12 @@ Please be kind — I’m still learning, and I honestly understand very little a
 > Started as a hidden screen experiment...
 > 3 weeks later... a little DemoMaker appeared.
 
+There is 3/4 Project
+- Demoforge is the main project : The DemoMaker
+- Motion/ Ansi : Convert Video 2 (Ansi / Ascii Art) to Html to import in Demoforge (Working , but Import in demoforge don't working well)
+- 4K is a 4K Demo (for fun) Not a priority
+
+
 ## Open
 
 Open `index.html` at the repository root.
