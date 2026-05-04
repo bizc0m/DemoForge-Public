@@ -1,6 +1,5 @@
-# Demoforge-Public
+# Demoforge-Doc
 
-Base publique de travail pour Demo Forge.
+All Sources - Docs etc
 
-Fichiers initiaux :
-- `V15.html`
+
