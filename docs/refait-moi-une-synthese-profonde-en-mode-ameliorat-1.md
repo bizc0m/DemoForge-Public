@@ -1,6 +1,6 @@
-<img src="https://r2cdn.perplexity.ai/pplx-full-logo-primary-dark%402x.png" style="height:64px;margin-right:32px"/>
 
-# refait moi une synthèse profonde en mode amelioration d’une systeme de demos
+
+# _refait moi une synthèse profonde en mode amelioration d’une systeme de demos
 
 analyse moi les 150
 effet de demo de la
